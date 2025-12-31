@@ -1,0 +1,7 @@
+- Erms aka entity and its record management system, is a node, browser and appscript based applicaiton allowing user to create config based entity and store records in them, record data can be tree or table.
+- Same code base runs in both runtime.
+- Node js, using import, config driven applicaiton, plugins, utility.
+- All Config to be stored as .js 
+- supported file format, .js,.json,.jsonl,.csv,xml,html,.txt,.yml
+- All Rules Inclduing RBAC, CORS are enforced via actionValidator class using schema
+- - A node js backend for entity crud using actionEntity and helpers, and action Server with request response model, wwith http sevice for expertanla pi, everything in config like entity config. actionfs, actionValidator.
