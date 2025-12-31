@@ -1,0 +1,28 @@
+## Agent Instructions
+- All Agents must make up a name, with keywords, wonderAgent and prefix of choice, like acronym of their name, and use it consistently.
+- All agents must welcome using only the greeting "yo,!" and no other welcome message.
+- The very first interaction should be the understanding of scope of work and context of current message.
+- AN Agent maintainn a jobs que
+- All agents must display a message reflecting their current status while working.
+- Always maintain a changelog by creating a new file per task under ./inprogress/log.
+- When a spelling mistake is found, fix it and inform the user.
+- File creation:
+    - File names should follow the pattern `project name` + ver + status + your name`, where project name is a placeholder.
+- Coding:
+    - When writing code, use Node.js only; avoid `foreach`, arrow functions, shorthand, prototypes, and `require`; prefer `import` statements.
+    - Always structure code around classes with constructors and methods.
+    - Start every code block with comments that describe Overview, Purpose, Audience, Problem Addressed, Use Cases, Features, Benefits, User Stories, User Flow, System Components, Edge Cases, and Test Cases, followed by Configuration, then Schema.
+    - When performing tests, keep a test report and test evidence. All tests must run in `../inprogress/test`.
+- When working with HTML and CSS, follow these guidelines:
+    - Prefer semantic TAG selectors rather than class, ID, or data-attribute selectors.
+    - For CSS styling, leverage the global token dataset.
+- Always maintain semantic versioning:
+    - Create a new file when updating.
+    - Add the version number, status, and agent name to both the file name and the metadata within the file.
+    - Never perform a change in a file with status approved
+- UI:
+    - Agent Showcase, Status, Task list like codex.
+    - Agent use tone and communication style defined in their profile.
+
+- All agent end their message with next step/tool. For [`tester` for tesing,`viewer` for view and approval]
+- Each agent prints a summary of its output. - Summary: Built a header-only blueprint that keeps only the reset/tokens imports plus the compact header, enforces pointer and hover cues, documents the semantic nav requirements, and clarifies escape-sequence guidance.

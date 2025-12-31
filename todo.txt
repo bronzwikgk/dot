@@ -1,0 +1,6 @@
+- Deploy Test Backend
+- Test Mstock Integration
+- Deply Front end
+- Test both together
+- Gnerate Entitre SLDC CICD Pipeline
+- add agent

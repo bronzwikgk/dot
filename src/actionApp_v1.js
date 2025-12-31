@@ -1,822 +1,1653 @@
-// Import dependencies
-const express = require('express');
-const Joi = require('joi');
-const fs = require('fs').promises;
-const path = require('path');
-const cors = require('cors');
-const helmet = require('helmet');
-const rateLimit = require('express-rate-limit');
-const { default: axios } = require('axios');
+// ============================================================================
+// PRODUCTION-GRADE ACTION FRAMEWORK v2.0
+// ============================================================================
+// Universal framework for browser and Node.js
+// Features:
+// - Platform-aware runtime with auto-detection
+// - Comprehensive configuration system
+// - Production error handling with configurable messages
+// - RBAC permissions and validation
+// - Multi-storage support (IndexedDB, LocalStorage, FileSystem)
+// - Built-in synchronization
+// - Health monitoring and logging
+// ============================================================================
 
-// Configuration Constants
-const ENTITY_CONFIG = {
-  user: {
-    name: 'user',
-    collection: 'users',
-    fields: [
-      { name: 'id', type: 'string', required: true, validation: Joi.string().required() },
-      { name: 'name', type: 'string', required: true, validation: Joi.string().min(2).max(100).required() },
-      { name: 'email', type: 'string', required: true, validation: Joi.string().email().required() },
-      { name: 'age', type: 'number', required: false, validation: Joi.number().min(0).max(150).optional() },
-      { name: 'roles', type: 'array', required: false, validation: Joi.array().items(Joi.string()).optional() }
-    ],
-    permissions: {
-      admin: ['create', 'update', 'delete', 'list'],
-      user: ['read', 'update_self'],
-      guest: ['read']
-    }
-  },
-  product: {
-    name: 'product',
-    collection: 'products',
-    fields: [
-      { name: 'id', type: 'string', required: true },
-      { name: 'name', type: 'string', required: true },
-      { name: 'price', type: 'number', required: true },
-      { name: 'category', type: 'string', required: false }
-    ]
-  }
-};
+import { RUNTIME } from './config/runtime.js';
+import { ERROR_CONFIG } from './config/errorConfig.js';
+import { APP_CONFIG } from './config/appConfig.js';
 
-const SERVER_CONFIG = {
-  name: 'ActionServer',
-  version: '1.0.0',
-  port: process.env.PORT || 3000,
-  environment: process.env.NODE_ENV || 'development',
-  http: {
-    enabled: true,
-    cors: {
-      origin: process.env.CORS_ORIGIN || '*',
-      credentials: true
-    },
-    helmet: {
-      contentSecurityPolicy: {
-        directives: {
-          defaultSrc: ["'self'"],
-          styleSrc: ["'self'", "'unsafe-inline'"],
-          scriptSrc: ["'self'"],
-          imgSrc: ["'self'", "data:", "https:"]
-        }
-      }
-    },
-    rateLimit: {
-      enabled: true,
-      options: {
-        windowMs: 15 * 60 * 1000, // 15 minutes
-        max: 100, // limit each IP to 100 requests per windowMs
-        message: 'Too many requests from this IP, please try again later'
-      }
-    },
-    routes: {
-      user: {
-        '/': { method: 'GET', action: 'list' },
-        '/:id': { method: 'GET', action: 'get' },
-        '/': { method: 'POST', action: 'create' },
-        '/:id': { method: 'PUT', action: 'update' },
-        '/:id': { method: 'DELETE', action: 'delete' }
-      }
-    }
-  },
-  database: {
-    type: process.env.DB_TYPE || 'memory',
-    connection: process.env.DB_CONNECTION || null
-  },
-  logging: {
-    level: process.env.LOG_LEVEL || 'info',
-    format: process.env.LOG_FORMAT || 'json'
-  }
-};
+// Configurations centralized in src/config/*
 
-const ACTION_CONFIG = {
-  basePath: './data/actions',
-  defaultPermissions: ['admin'],
-  validationOptions: {
-    abortEarly: false,
-    stripUnknown: true,
-    convert: true
-  },
-  hooks: {
-    preAction: [],
-    postAction: []
-  },
-  externalAPIs: {
-    defaultTimeout: 5000,
-    retryAttempts: 3
-  }
-};
-
-const VALIDATOR_SCHEMAS = {
-  id: Joi.string().regex(/^[0-9a-fA-F]{24}$/).message('Invalid ID format'),
-  email: Joi.string().email().required(),
-  pagination: Joi.object({
-    page: Joi.number().integer().min(1).default(1),
-    limit: Joi.number().integer().min(1).max(100).default(10),
-    sort: Joi.string(),
-    order: Joi.string().valid('asc', 'desc').default('desc')
-  }),
-  search: Joi.object({
-    query: Joi.string().min(1),
-    fields: Joi.array().items(Joi.string())
-  })
-};
-
-// Core Classes
-class RequestResponseModel {
-  constructor(options = {}) {
-    this.success = options.success !== undefined ? options.success : true;
-    this.data = options.data || null;
-    this.error = options.error || null;
-    this.message = options.message || '';
-    this.timestamp = new Date();
-    this.requestId = options.requestId || null;
-    this.metadata = options.metadata || {};
+// ============================================================================
+// 4. ACTIONERROR CLASS - Production error handling
+// ============================================================================
+class ActionError extends Error {
+  constructor(category, code, message, details = {}, context = {}) {
+    const errorConfig = ERROR_CONFIG.categories[category] || ERROR_CONFIG.categories.system;
+    const errorCode = `${errorConfig.code}_${code.toString().padStart(3, '0')}`;
+    const userMessage = ERROR_CONFIG.messages[APP_CONFIG.i18n.defaultLocale]?.[errorCode] || 
+                       errorConfig.defaultMessage;
     
-    if (this.success && this.error) {
-      this.success = false;
+    super(userMessage);
+    
+    this.name = 'ActionError';
+    this.category = category;
+    this.code = errorCode;
+    this.level = errorConfig.level;
+    this.recoverable = errorConfig.recoverable;
+    this.timestamp = new Date().toISOString();
+    this.details = details;
+    this.context = {
+      requestId: context.requestId,
+      userId: context.userId,
+      sessionId: context.sessionId,
+      ...context
+    };
+    this.suggestions = errorConfig.suggestions;
+    this.httpStatus = ERROR_CONFIG.httpStatus[errorCode] || 500;
+    
+    // Capture stack trace
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, ActionError);
     }
-  }
-
-  static success(data, message = 'Operation successful') {
-    return new RequestResponseModel({
-      success: true,
-      data,
-      message
-    });
-  }
-
-  static error(error, message = 'Operation failed') {
-    return new RequestResponseModel({
-      success: false,
-      error: error.message || error,
-      message
-    });
   }
 
   toJSON() {
-    return {
-      success: this.success,
-      data: this.data,
-      error: this.error,
-      message: this.message,
-      timestamp: this.timestamp,
-      requestId: this.requestId,
-      metadata: this.metadata
+    const base = {
+      success: false,
+      error: {
+        code: this.code,
+        message: this.message,
+        category: this.category,
+        level: this.level,
+        timestamp: this.timestamp,
+        suggestions: this.suggestions
+      }
     };
+
+    // Include details in development
+    if (APP_CONFIG.meta.environment !== 'production') {
+      base.error.details = this.details;
+      base.error.stack = this.stack;
+      base.error.context = this.context;
+    }
+
+    // Include request context if available
+    if (this.context.requestId) {
+      base.requestId = this.context.requestId;
+    }
+
+    return base;
+  }
+
+  log() {
+    const logger = ActionFramework.getLogger();
+    const logData = {
+      error: this.code,
+      message: this.message,
+      category: this.category,
+      level: this.level,
+      timestamp: this.timestamp,
+      context: this.context
+    };
+
+    switch (this.level) {
+      case 'critical':
+      case 'error':
+        logger.error(logData);
+        break;
+      case 'warn':
+        logger.warn(logData);
+        break;
+      case 'info':
+        logger.info(logData);
+        break;
+      default:
+        logger.debug(logData);
+    }
+
+    // Notify monitoring system
+    if (APP_CONFIG.monitoring.enabled) {
+      ActionFramework.getMonitor().recordError(this);
+    }
+  }
+
+  static fromError(error, context = {}) {
+    if (error instanceof ActionError) {
+      return error;
+    }
+
+    // Map generic errors to ActionError
+    let category = 'system';
+    let code = '001';
+    let details = {};
+
+    if (error.name === 'ValidationError') {
+      category = 'validation';
+      code = '001';
+      details = { validationErrors: error.errors };
+    } else if (error.name === 'TypeError') {
+      category = 'validation';
+      code = '002';
+    } else if (error.message?.includes('permission') || error.message?.includes('unauthorized')) {
+      category = 'authorization';
+      code = '001';
+    } else if (error.message?.includes('auth') || error.message?.includes('login')) {
+      category = 'authentication';
+      code = '001';
+    } else if (error.code === 'ENOENT' || error.message?.includes('file')) {
+      category = 'database';
+      code = '002';
+    }
+
+    return new ActionError(
+      category,
+      code,
+      error.message || 'An unexpected error occurred',
+      details,
+      context
+    );
   }
 }
 
+// ============================================================================
+// 5. ACTIONENTITY CLASS - Enhanced with production features
+// ============================================================================
 class ActionEntity {
-  constructor(config) {
-    this.name = config.name;
-    this.schema = config.schema || {};
-    this.collection = config.collection;
-    this.actions = new Map();
-    this.hooks = new Map();
-    this.validators = new Map();
-    this.permissions = config.permissions || {};
-    this.dataStore = new Map();
-    this.lastId = 0;
+  constructor(entityName, options = {}) {
+    this.name = entityName;
+    this.config = APP_CONFIG.entities[entityName];
     
+    if (!this.config) {
+      throw new ActionError('system', '001', `Entity configuration not found: ${entityName}`);
+    }
+
+    this.storage = this.initStorage();
+    this.cache = this.initCache();
+    this.validator = this.initValidator();
+    this.hooks = this.initHooks();
+    this.permissions = this.config.permissions || {};
+    
+    // Performance metrics
+    this.metrics = {
+      operations: new Map(),
+      errors: new Map(),
+      latency: new Map()
+    };
+
     this.initialize();
   }
 
-  initialize() {
-    console.log(`Initializing entity: ${this.name}`);
-    this.registerDefaultActions();
-  }
+  initStorage() {
+    const storageConfig = this.config.storage;
+    const providerName = storageConfig.primary;
+    const providerConfig = APP_CONFIG.storage.providers[providerName];
 
-  registerDefaultActions() {
-    const defaultActions = {
-      create: {
-        handler: this.handleCreate.bind(this),
-        validation: this.createValidationSchema('create'),
-        permissions: this.permissions.create || ['admin'],
-        description: 'Create a new record'
-      },
-      get: {
-        handler: this.handleGet.bind(this),
-        validation: Joi.object({ id: VALIDATOR_SCHEMAS.id.required() }),
-        permissions: this.permissions.read || ['admin', 'user', 'guest'],
-        description: 'Get a single record by ID'
-      },
-      list: {
-        handler: this.handleList.bind(this),
-        validation: VALIDATOR_SCHEMAS.pagination,
-        permissions: this.permissions.list || ['admin', 'user'],
-        description: 'List records with pagination'
-      },
-      update: {
-        handler: this.handleUpdate.bind(this),
-        validation: this.createValidationSchema('update'),
-        permissions: this.permissions.update || ['admin'],
-        description: 'Update an existing record'
-      },
-      delete: {
-        handler: this.handleDelete.bind(this),
-        validation: Joi.object({ id: VALIDATOR_SCHEMAS.id.required() }),
-        permissions: this.permissions.delete || ['admin'],
-        description: 'Delete a record'
-      }
-    };
-
-    Object.entries(defaultActions).forEach(([name, config]) => {
-      this.registerAction(name, config);
-    });
-  }
-
-  createValidationSchema(actionType) {
-    if (!ENTITY_CONFIG[this.name]?.fields) return Joi.object();
-    
-    const fields = ENTITY_CONFIG[this.name].fields;
-    const schema = {};
-    
-    fields.forEach(field => {
-      if (field.validation) {
-        if (actionType === 'create' && field.required) {
-          schema[field.name] = field.validation.required();
-        } else if (actionType === 'update') {
-          schema[field.name] = field.validation.optional();
+    if (!providerConfig || !providerConfig.enabled) {
+      // Try fallback
+      for (const fallback of APP_CONFIG.storage.fallbackOrder) {
+        if (APP_CONFIG.storage.providers[fallback]?.enabled) {
+          return this.createStorageProvider(fallback);
         }
       }
+      throw new ActionError('system', '003', 'No storage provider available');
+    }
+
+    return this.createStorageProvider(providerName);
+  }
+
+  createStorageProvider(providerName) {
+    const providerConfig = APP_CONFIG.storage.providers[providerName];
+    
+    switch (providerName) {
+      case 'indexeddb':
+        return new IndexedDBStorage({
+          dbName: providerConfig.name,
+          storeName: this.config.storage.options.indexeddb.storeName,
+          version: providerConfig.version,
+          indexes: this.config.storage.options.indexeddb.indexes
+        });
+        
+      case 'localStorage':
+        return new LocalStorage({
+          prefix: providerConfig.prefix + this.name + '_',
+          quota: providerConfig.quota
+        });
+        
+      case 'file':
+        return new FileStorage({
+          basePath: providerConfig.basePath,
+          entityName: this.name,
+          encoding: providerConfig.encoding
+        });
+        
+      case 'memory':
+        return new MemoryStorage({
+          maxItems: providerConfig.maxItems,
+          ttl: providerConfig.ttl
+        });
+        
+      default:
+        throw new ActionError('system', '004', `Unsupported storage provider: ${providerName}`);
+    }
+  }
+
+  initCache() {
+    return new CacheManager({
+      provider: APP_CONFIG.cache.provider,
+      ttl: APP_CONFIG.cache.ttl[this.name] || APP_CONFIG.cache.ttl.default,
+      prefix: `cache_${this.name}_`
+    });
+  }
+
+  initValidator() {
+    return new Validator({
+      schema: this.config.schema,
+      strict: true,
+      coerceTypes: true,
+      removeAdditional: true
+    });
+  }
+
+  initHooks() {
+    const hooks = {};
+    const hookConfig = this.config.hooks || {};
+    
+    Object.entries(hookConfig).forEach(([hookName, hookFunctions]) => {
+      hooks[hookName] = hookFunctions.map(fnName => {
+        const hook = ActionFramework.getHook(fnName);
+        if (!hook) {
+          console.warn(`Hook not found: ${fnName}`);
+          return null;
+        }
+        return hook;
+      }).filter(Boolean);
     });
     
-    if (actionType === 'create') {
-      return Joi.object(schema).min(1);
-    }
-    
-    return Joi.object(schema).min(1);
-  }
-
-  registerAction(name, config) {
-    this.actions.set(name, {
-      name,
-      handler: config.handler,
-      validation: config.validation,
-      permissions: config.permissions,
-      description: config.description
-    });
-    console.log(`Registered action: ${this.name}.${name}`);
-  }
-
-  async execute(actionName, data, context = {}) {
-    const action = this.actions.get(actionName);
-    
-    if (!action) {
-      throw new Error(`Action ${actionName} not found for entity ${this.name}`);
-    }
-
-    await this.validatePermissions(action, context);
-    await this.validateInput(action, data);
-    
-    await this.executeHook('pre', actionName, { data, context });
-    const result = await action.handler(data, context);
-    await this.executeHook('post', actionName, { data, context, result });
-    
-    return result;
-  }
-
-  async validatePermissions(action, context) {
-    if (action.permissions) {
-      const userRoles = context?.user?.roles || ['guest'];
-      const hasPermission = action.permissions.some(role => 
-        userRoles.includes(role)
-      );
-      
-      if (!hasPermission) {
-        throw new Error(`Insufficient permissions for action ${action.name}`);
-      }
-    }
-  }
-
-  async validateInput(action, data) {
-    if (action.validation) {
-      const { error, value } = action.validation.validate(data, ACTION_CONFIG.validationOptions);
-      if (error) {
-        throw new Error(`Validation failed: ${error.message}`);
-      }
-      return value;
-    }
-    return data;
-  }
-
-  async executeHook(hookType, actionName, hookData) {
-    const hook = this.hooks.get(`${hookType}_${actionName}`);
-    if (hook) {
-      await hook(hookData);
-    }
-  }
-
-  async handleCreate(data, context) {
-    const id = (++this.lastId).toString();
-    const record = {
-      id,
-      ...data,
-      createdAt: new Date(),
-      createdBy: context.user?.id,
-      updatedAt: new Date()
-    };
-    
-    this.dataStore.set(id, record);
-    return RequestResponseModel.success(record, `${this.name} created successfully`);
-  }
-
-  async handleGet(data) {
-    const record = this.dataStore.get(data.id);
-    if (!record) {
-      throw new Error(`${this.name} not found`);
-    }
-    return RequestResponseModel.success(record, `${this.name} retrieved successfully`);
-  }
-
-  async handleList(data) {
-    const { page = 1, limit = 10 } = data;
-    const startIndex = (page - 1) * limit;
-    const records = Array.from(this.dataStore.values());
-    
-    const paginatedRecords = records.slice(startIndex, startIndex + limit);
-    
-    return RequestResponseModel.success({
-      items: paginatedRecords,
-      pagination: {
-        page,
-        limit,
-        total: records.length,
-        pages: Math.ceil(records.length / limit)
-      }
-    }, `${this.name} list retrieved successfully`);
-  }
-
-  async handleUpdate(data, context) {
-    const record = this.dataStore.get(data.id);
-    if (!record) {
-      throw new Error(`${this.name} not found`);
-    }
-    
-    const updatedRecord = {
-      ...record,
-      ...data,
-      updatedAt: new Date(),
-      updatedBy: context.user?.id
-    };
-    
-    this.dataStore.set(data.id, updatedRecord);
-    return RequestResponseModel.success(updatedRecord, `${this.name} updated successfully`);
-  }
-
-  async handleDelete(data) {
-    if (!this.dataStore.has(data.id)) {
-      throw new Error(`${this.name} not found`);
-    }
-    
-    this.dataStore.delete(data.id);
-    return RequestResponseModel.success(null, `${this.name} deleted successfully`);
-  }
-
-  addHook(hookType, actionName, hookFunction) {
-    this.hooks.set(`${hookType}_${actionName}`, hookFunction);
-  }
-}
-
-class ActionServer {
-  constructor(config = SERVER_CONFIG) {
-    this.config = config;
-    this.entities = new Map();
-    this.middlewares = [];
-    this.httpService = null;
-    this.isInitialized = false;
+    return hooks;
   }
 
   async initialize() {
-    if (this.isInitialized) return;
-    
-    console.log('Initializing ActionServer...');
-    await this.loadEntities();
-    
-    if (this.config.http.enabled) {
-      await this.initializeHttpService();
-    }
-    
-    this.isInitialized = true;
-    console.log('ActionServer initialized successfully');
-  }
-
-  async loadEntities() {
-    for (const entityName in ENTITY_CONFIG) {
-      const entityConfig = ENTITY_CONFIG[entityName];
-      const entity = new ActionEntity(entityConfig);
-      this.entities.set(entityName, entity);
-      console.log(`Loaded entity: ${entityName}`);
-    }
-  }
-
-  async initializeHttpService() {
-    const httpService = new HttpService(this.config.http);
-    await httpService.initialize(this);
-    this.httpService = httpService;
-    
-    for (const [entityName, entity] of this.entities) {
-      this.registerEntityRoutes(entityName, entity);
-    }
-  }
-
-  registerEntityRoutes(entityName, entity) {
-    const routes = this.config.http.routes[entityName] || {};
-    
-    Object.entries(routes).forEach(([routePath, routeConfig]) => {
-      this.httpService.app[routeConfig.method.toLowerCase()](
-        `/api/${entityName}${routePath}`,
-        async (req, res) => {
-          try {
-            const context = this.createContext(req);
-            const data = this.extractRequestData(req, routeConfig);
-            
-            const result = await entity.execute(routeConfig.action, data, context);
-            
-            const response = new RequestResponseModel({
-              success: true,
-              data: result.data,
-              message: result.message,
-              requestId: context.requestId
-            });
-            
-            res.json(response);
-          } catch (error) {
-            const response = new RequestResponseModel({
-              success: false,
-              error: error.message,
-              message: `Failed to execute ${entityName}.${routeConfig.action}`,
-              requestId: req.id
-            });
-            
-            res.status(error.statusCode || 500).json(response);
-          }
-        }
-      );
-      
-      console.log(`Registered route: ${routeConfig.method} /api/${entityName}${routePath}`);
-    });
-  }
-
-  createContext(req) {
-    return {
-      user: req.user || { id: 'anonymous', roles: ['guest'] },
-      requestId: req.id,
-      ip: req.ip,
-      timestamp: new Date(),
-      headers: req.headers
-    };
-  }
-
-  extractRequestData(req, routeConfig) {
-    switch (routeConfig.method) {
-      case 'GET':
-        return { ...req.query, ...req.params };
-      case 'POST':
-      case 'PUT':
-      case 'PATCH':
-        return { ...req.body, ...req.params };
-      case 'DELETE':
-        return { ...req.params, ...req.query };
-      default:
-        return {};
-    }
-  }
-
-  getEntity(entityName) {
-    const entity = this.entities.get(entityName);
-    if (!entity) {
-      throw new Error(`Entity ${entityName} not found`);
-    }
-    return entity;
-  }
-
-  async executeAction(entityName, actionName, data = {}, context = {}) {
-    const entity = this.getEntity(entityName);
-    return await entity.execute(actionName, data, context);
-  }
-
-  async start() {
-    await this.initialize();
-    
-    if (this.httpService) {
-      return this.httpService.start();
-    }
-    
-    console.log('ActionServer running (HTTP disabled)');
-    return this;
-  }
-}
-
-// Helper Classes
-class ActionValidator {
-  static validate(schema, data) {
-    return schema.validate(data, ACTION_CONFIG.validationOptions);
-  }
-
-  static createMiddleware(schema) {
-    return (req, res, next) => {
-      const data = req.method === 'GET' ? req.query : req.body;
-      const { error, value } = this.validate(schema, data);
-      
-      if (error) {
-        const response = new RequestResponseModel({
-          success: false,
-          error: error.details.map(d => d.message).join(', '),
-          message: 'Validation failed',
-          requestId: req.id
-        });
-        
-        return res.status(400).json(response);
-      }
-      
-      req.validatedData = value;
-      next();
-    };
-  }
-
-  static createEntityValidators(entityConfig) {
-    const validators = {};
-    
-    if (entityConfig.fields) {
-      const createSchema = {};
-      const updateSchema = {};
-      
-      entityConfig.fields.forEach(field => {
-        if (field.validation) {
-          if (field.required) {
-            createSchema[field.name] = field.validation.required();
-          } else {
-            createSchema[field.name] = field.validation.optional();
-          }
-          updateSchema[field.name] = field.validation.optional();
-        }
-      });
-      
-      validators.create = Joi.object(createSchema).min(1);
-      validators.update = Joi.object(updateSchema).min(1);
-    }
-    
-    validators.get = Joi.object({ id: VALIDATOR_SCHEMAS.id.required() });
-    validators.list = VALIDATOR_SCHEMAS.pagination;
-    validators.delete = Joi.object({ id: VALIDATOR_SCHEMAS.id.required() });
-    
-    return validators;
-  }
-}
-
-class ActionFs {
-  constructor(config = ACTION_CONFIG) {
-    this.config = config;
-    this.basePath = config.basePath || './data';
-  }
-
-  async ensureDirectory(dirPath) {
     try {
-      await fs.access(dirPath);
-    } catch {
-      await fs.mkdir(dirPath, { recursive: true });
-    }
-  }
-
-  async saveEntityData(entityName, data, filename = 'data.json') {
-    const entityPath = path.join(this.basePath, entityName);
-    await this.ensureDirectory(entityPath);
-    
-    const filePath = path.join(entityPath, filename);
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2), 'utf8');
-    
-    return { success: true, path: filePath };
-  }
-
-  async loadEntityData(entityName, filename = 'data.json') {
-    const filePath = path.join(this.basePath, entityName, filename);
-    
-    try {
-      const data = await fs.readFile(filePath, 'utf8');
-      return JSON.parse(data);
+      await this.storage.initialize();
+      await this.cache.initialize();
+      console.log(`Entity ${this.name} initialized successfully`);
     } catch (error) {
-      if (error.code === 'ENOENT') {
-        return null;
-      }
-      throw error;
+      throw ActionError.fromError(error, { entity: this.name, operation: 'initialize' });
     }
   }
 
-  async backupEntity(entityName) {
-    const data = await this.loadEntityData(entityName);
-    if (!data) return { success: false, message: 'No data to backup' };
+  // CRUD Operations with enhanced error handling
+  async create(data, context = {}) {
+    const startTime = Date.now();
+    const operation = 'create';
     
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const backupFilename = `backup-${timestamp}.json`;
+    try {
+      // 1. Permission check
+      this.checkPermission(operation, context);
+      
+      // 2. Run pre-hooks
+      await this.runHooks('beforeCreate', { data, context, operation });
+      
+      // 3. Validate data
+      const validatedData = await this.validator.validate(data, 'create');
+      
+      // 4. Generate metadata
+      const entityData = this.enrichData(validatedData, context, operation);
+      
+      // 5. Store data
+      const result = await this.storage.create(entityData);
+      
+      // 6. Update cache
+      await this.cache.set(result._id, result);
+      
+      // 7. Run post-hooks
+      await this.runHooks('afterCreate', { data: result, context, operation });
+      
+      // 8. Record metrics
+      this.recordMetrics(operation, Date.now() - startTime, true);
+      
+      // 9. Audit log
+      this.audit(operation, result, context);
+      
+      return this.formatResponse(operation, result);
+      
+    } catch (error) {
+      const actionError = ActionError.fromError(error, {
+        entity: this.name,
+        operation,
+        data,
+        context
+      });
+      
+      this.recordMetrics(operation, Date.now() - startTime, false);
+      actionError.log();
+      
+      throw actionError;
+    }
+  }
+
+  async read(query = {}, context = {}) {
+    const startTime = Date.now();
+    const operation = 'read';
     
-    await this.saveEntityData(entityName, data, backupFilename);
-    return { success: true, backupFile: backupFilename };
+    try {
+      // Permission check
+      this.checkPermission(operation, context);
+      
+      // Check cache first for single ID queries
+      if (query._id) {
+        const cached = await this.cache.get(query._id);
+        if (cached) {
+          this.recordMetrics(operation, Date.now() - startTime, true);
+          return this.formatResponse(operation, cached);
+        }
+      }
+      
+      // Query storage
+      const result = await this.storage.read(query);
+      
+      // Cache results
+      if (Array.isArray(result)) {
+        for (const item of result) {
+          await this.cache.set(item._id, item);
+        }
+      } else if (result) {
+        await this.cache.set(result._id, result);
+      }
+      
+      this.recordMetrics(operation, Date.now() - startTime, true);
+      return this.formatResponse(operation, result);
+      
+    } catch (error) {
+      const actionError = ActionError.fromError(error, {
+        entity: this.name,
+        operation,
+        query,
+        context
+      });
+      
+      this.recordMetrics(operation, Date.now() - startTime, false);
+      actionError.log();
+      
+      throw actionError;
+    }
+  }
+
+  async update(id, data, context = {}) {
+    const startTime = Date.now();
+    const operation = 'update';
+    
+    try {
+      this.checkPermission(operation, context);
+      
+      // Run pre-hooks
+      await this.runHooks('beforeUpdate', { id, data, context, operation });
+      
+      // Validate update data
+      const validatedData = await this.validator.validate(data, 'update');
+      
+      // Enrich with metadata
+      const updateData = this.enrichData(validatedData, context, operation);
+      
+      // Perform update
+      const result = await this.storage.update(id, updateData);
+      
+      // Update cache
+      await this.cache.set(id, result);
+      await this.cache.invalidatePattern(`${this.name}_list_*`);
+      
+      // Run post-hooks
+      await this.runHooks('afterUpdate', { id, data: result, context, operation });
+      
+      this.recordMetrics(operation, Date.now() - startTime, true);
+      this.audit(operation, { id, ...result }, context);
+      
+      return this.formatResponse(operation, result);
+      
+    } catch (error) {
+      const actionError = ActionError.fromError(error, {
+        entity: this.name,
+        operation,
+        id,
+        data,
+        context
+      });
+      
+      this.recordMetrics(operation, Date.now() - startTime, false);
+      actionError.log();
+      
+      throw actionError;
+    }
+  }
+
+  async delete(id, context = {}) {
+    const startTime = Date.now();
+    const operation = 'delete';
+    
+    try {
+      this.checkPermission(operation, context);
+      
+      // Check if exists
+      const existing = await this.storage.read({ _id: id });
+      if (!existing) {
+        throw new ActionError('validation', '004', 'Record not found', { id });
+      }
+      
+      // Run pre-hooks
+      await this.runHooks('beforeDelete', { id, context, operation });
+      
+      // Perform deletion
+      await this.storage.delete(id);
+      
+      // Clear cache
+      await this.cache.delete(id);
+      await this.cache.invalidatePattern(`${this.name}_list_*`);
+      
+      // Run post-hooks
+      await this.runHooks('afterDelete', { id, context, operation });
+      
+      this.recordMetrics(operation, Date.now() - startTime, true);
+      this.audit(operation, { id }, context);
+      
+      return this.formatResponse(operation, { id, deleted: true });
+      
+    } catch (error) {
+      const actionError = ActionError.fromError(error, {
+        entity: this.name,
+        operation,
+        id,
+        context
+      });
+      
+      this.recordMetrics(operation, Date.now() - startTime, false);
+      actionError.log();
+      
+      throw actionError;
+    }
+  }
+
+  // Helper methods
+  checkPermission(operation, context) {
+    const allowedRoles = this.permissions[operation];
+    const userRole = context.user?.role || 'guest';
+    
+    if (!allowedRoles || !allowedRoles.includes(userRole)) {
+      throw new ActionError('authorization', '001', 
+        `Permission denied for operation: ${operation}`, 
+        { 
+          operation, 
+          userRole, 
+          allowedRoles,
+          entity: this.name 
+        },
+        context
+      );
+    }
+  }
+
+  enrichData(data, context, operation) {
+    const enriched = { ...data };
+    const now = new Date().toISOString();
+    
+    if (operation === 'create') {
+      if (!enriched._id) {
+        enriched._id = this.generateId();
+      }
+      enriched.metadata = enriched.metadata || {};
+      enriched.metadata.createdAt = now;
+      enriched.metadata.createdBy = context.user?.userId || 'system';
+    }
+    
+    if (operation === 'create' || operation === 'update') {
+      enriched.metadata = enriched.metadata || {};
+      enriched.metadata.updatedAt = now;
+      enriched.metadata.updatedBy = context.user?.userId || 'system';
+    }
+    
+    return enriched;
+  }
+
+  async runHooks(hookName, data) {
+    const hooks = this.hooks[hookName] || [];
+    
+    for (const hook of hooks) {
+      try {
+        await hook(data, this);
+      } catch (error) {
+        console.error(`Hook ${hookName} failed:`, error);
+        // Don't throw from hooks to avoid breaking main operation
+      }
+    }
+  }
+
+  formatResponse(operation, data) {
+    return {
+      success: true,
+      operation: `${this.name}.${operation}`,
+      timestamp: new Date().toISOString(),
+      data: this.sanitizeResponse(data)
+    };
+  }
+
+  sanitizeResponse(data) {
+    if (Array.isArray(data)) {
+      return data.map(item => this.sanitizeItem(item));
+    }
+    return this.sanitizeItem(data);
+  }
+
+  sanitizeItem(item) {
+    if (!item || typeof item !== 'object') return item;
+    
+    const sanitized = { ...item };
+    
+    // Remove hidden fields
+    Object.entries(this.config.schema.fields).forEach(([fieldName, fieldConfig]) => {
+      if (fieldConfig.hidden && sanitized[fieldName] !== undefined) {
+        delete sanitized[fieldName];
+      }
+    });
+    
+    return sanitized;
+  }
+
+  generateId() {
+    return 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+
+  recordMetrics(operation, duration, success) {
+    const key = `${this.name}.${operation}`;
+    
+    if (!this.metrics.operations.has(key)) {
+      this.metrics.operations.set(key, { count: 0, success: 0, errors: 0 });
+    }
+    
+    const metric = this.metrics.operations.get(key);
+    metric.count++;
+    
+    if (success) {
+      metric.success++;
+    } else {
+      metric.errors++;
+    }
+    
+    // Record latency
+    if (!this.metrics.latency.has(key)) {
+      this.metrics.latency.set(key, []);
+    }
+    
+    const latencies = this.metrics.latency.get(key);
+    latencies.push(duration);
+    
+    // Keep only last 100 measurements
+    if (latencies.length > 100) {
+      latencies.shift();
+    }
+  }
+
+  audit(operation, data, context) {
+    if (!APP_CONFIG.logging.levels.audit) return;
+    
+    const logger = ActionFramework.getLogger();
+    logger.audit({
+      entity: this.name,
+      operation,
+      data,
+      user: context.user,
+      timestamp: new Date().toISOString(),
+      requestId: context.requestId
+    });
+  }
+
+  getMetrics() {
+    const metrics = {};
+    
+    for (const [key, value] of this.metrics.operations) {
+      metrics[key] = {
+        ...value,
+        errorRate: value.errors / value.count,
+        avgLatency: this.calculateAverageLatency(key)
+      };
+    }
+    
+    return metrics;
+  }
+
+  calculateAverageLatency(key) {
+    const latencies = this.metrics.latency.get(key) || [];
+    if (latencies.length === 0) return 0;
+    
+    return latencies.reduce((sum, latency) => sum + latency, 0) / latencies.length;
   }
 }
 
-class HttpService {
-  constructor(config = SERVER_CONFIG.http) {
-    this.config = config;
-    this.app = express();
-    this.server = null;
-    this.actionServer = null;
+// ============================================================================
+// 6. STORAGE PROVIDERS
+// ============================================================================
+
+class IndexedDBStorage {
+  constructor(options) {
+    this.options = options;
+    this.db = null;
   }
 
-  async initialize(actionServer) {
-    this.actionServer = actionServer;
-    
-    this.app.use(express.json());
-    this.app.use(express.urlencoded({ extended: true }));
-    this.app.use(cors(this.config.cors));
-    this.app.use(helmet(this.config.helmet));
-    
-    if (this.config.rateLimit.enabled) {
-      const limiter = rateLimit(this.config.rateLimit.options);
-      this.app.use('/api/', limiter);
-    }
-    
-    this.app.use((req, res, next) => {
-      req.id = Date.now().toString(36) + Math.random().toString(36).substr(2);
-      console.log(`[${new Date().toISOString()}] ${req.id} ${req.method} ${req.url}`);
-      next();
-    });
-    
-    this.app.get('/health', (req, res) => {
-      res.json({
-        status: 'healthy',
-        timestamp: new Date(),
-        service: SERVER_CONFIG.name,
-        version: SERVER_CONFIG.version
-      });
-    });
-    
-    this.app.use('*', (req, res) => {
-      const response = new RequestResponseModel({
-        success: false,
-        error: 'Route not found',
-        message: `Cannot ${req.method} ${req.originalUrl}`,
-        requestId: req.id
-      });
-      
-      res.status(404).json(response);
-    });
-    
-    this.app.use((error, req, res, next) => {
-      console.error(`[ERROR] ${req.id}:`, error);
-      
-      const response = new RequestResponseModel({
-        success: false,
-        error: error.message,
-        message: 'Internal server error',
-        requestId: req.id
-      });
-      
-      res.status(error.status || 500).json(response);
-    });
-    
-    return this;
-  }
-
-  async start() {
+  async initialize() {
     return new Promise((resolve, reject) => {
-      this.server = this.app.listen(SERVER_CONFIG.port, () => {
-        console.log(`${SERVER_CONFIG.name} running on port ${SERVER_CONFIG.port}`);
-        console.log(`Environment: ${SERVER_CONFIG.environment}`);
-        console.log(`Health check: http://localhost:${SERVER_CONFIG.port}/health`);
-        resolve(this.server);
-      });
-      
-      this.server.on('error', reject);
-    });
-  }
+      if (typeof indexedDB === 'undefined') {
+        reject(new Error('IndexedDB not supported'));
+        return;
+      }
 
-  async callExternalAPI(apiConfig, data = {}) {
-    try {
-      const config = {
-        method: apiConfig.method || 'GET',
-        url: apiConfig.url,
-        headers: apiConfig.headers || {},
-        data: apiConfig.method !== 'GET' ? data : undefined,
-        params: apiConfig.method === 'GET' ? data : undefined,
-        timeout: apiConfig.timeout || ACTION_CONFIG.externalAPIs.defaultTimeout
+      const request = indexedDB.open(this.options.dbName, this.options.version);
+      
+      request.onerror = () => reject(request.error);
+      request.onsuccess = () => {
+        this.db = request.result;
+        resolve();
       };
       
-      if (apiConfig.auth) {
-        if (apiConfig.auth.type === 'bearer') {
-          config.headers.Authorization = `Bearer ${apiConfig.auth.token}`;
-        } else if (apiConfig.auth.type === 'basic') {
-          const credentials = Buffer.from(
-            `${apiConfig.auth.username}:${apiConfig.auth.password}`
-          ).toString('base64');
-          config.headers.Authorization = `Basic ${credentials}`;
+      request.onupgradeneeded = (event) => {
+        const db = event.target.result;
+        
+        if (!db.objectStoreNames.contains(this.options.storeName)) {
+          const store = db.createObjectStore(this.options.storeName, {
+            keyPath: this.options.keyPath
+          });
+          
+          // Create indexes
+          this.options.indexes.forEach(index => {
+            store.createIndex(index.name, index.keyPath, { unique: index.unique });
+          });
+        }
+      };
+    });
+  }
+
+  async create(data) {
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction([this.options.storeName], 'readwrite');
+      const store = transaction.objectStore(this.options.storeName);
+      
+      const request = store.add(data);
+      
+      request.onsuccess = () => resolve({ ...data, _id: request.result });
+      request.onerror = () => reject(request.error);
+    });
+  }
+
+  async read(query) {
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction([this.options.storeName], 'readonly');
+      const store = transaction.objectStore(this.options.storeName);
+      
+      if (query._id) {
+        const request = store.get(query._id);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      } else {
+        const request = store.getAll();
+        request.onsuccess = () => {
+          let results = request.result;
+          
+          // Apply filters
+          Object.keys(query).forEach(key => {
+            if (key !== '_id') {
+              results = results.filter(item => item[key] === query[key]);
+            }
+          });
+          
+          resolve(results);
+        };
+        request.onerror = () => reject(request.error);
+      }
+    });
+  }
+
+  async update(id, data) {
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction([this.options.storeName], 'readwrite');
+      const store = transaction.objectStore(this.options.storeName);
+      
+      const getRequest = store.get(id);
+      
+      getRequest.onsuccess = () => {
+        const existing = getRequest.result;
+        if (!existing) {
+          reject(new Error('Record not found'));
+          return;
+        }
+        
+        const updated = { ...existing, ...data };
+        const putRequest = store.put(updated);
+        
+        putRequest.onsuccess = () => resolve(updated);
+        putRequest.onerror = () => reject(putRequest.error);
+      };
+      
+      getRequest.onerror = () => reject(getRequest.error);
+    });
+  }
+
+  async delete(id) {
+    return new Promise((resolve, reject) => {
+      const transaction = this.db.transaction([this.options.storeName], 'readwrite');
+      const store = transaction.objectStore(this.options.storeName);
+      
+      const request = store.delete(id);
+      
+      request.onsuccess = () => resolve({ id, deleted: true });
+      request.onerror = () => reject(request.error);
+    });
+  }
+}
+
+class LocalStorage {
+  constructor(options) {
+    this.prefix = options.prefix;
+    this.quota = options.quota;
+  }
+
+  async initialize() {
+    if (typeof localStorage === 'undefined') {
+      throw new Error('LocalStorage not supported');
+    }
+    return Promise.resolve();
+  }
+
+  async create(data) {
+    const id = data._id || this.generateId();
+    const key = this.prefix + id;
+    const item = { ...data, _id: id };
+    
+    localStorage.setItem(key, JSON.stringify(item));
+    return item;
+  }
+
+  async read(query) {
+    const results = [];
+    
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      
+      if (key.startsWith(this.prefix)) {
+        try {
+          const item = JSON.parse(localStorage.getItem(key));
+          
+          let match = true;
+          Object.keys(query).forEach(filterKey => {
+            if (item[filterKey] !== query[filterKey]) {
+              match = false;
+            }
+          });
+          
+          if (match) {
+            results.push(item);
+          }
+        } catch (e) {
+          // Skip invalid JSON
+        }
+      }
+    }
+    
+    if (query._id) {
+      return results[0] || null;
+    }
+    
+    return results;
+  }
+
+  async update(id, data) {
+    const key = this.prefix + id;
+    const existing = localStorage.getItem(key);
+    
+    if (!existing) {
+      throw new Error('Record not found');
+    }
+    
+    const updated = { ...JSON.parse(existing), ...data };
+    localStorage.setItem(key, JSON.stringify(updated));
+    
+    return updated;
+  }
+
+  async delete(id) {
+    const key = this.prefix + id;
+    localStorage.removeItem(key);
+    return { id, deleted: true };
+  }
+
+  generateId() {
+    return 'ls_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+}
+
+class MemoryStorage {
+  constructor(options) {
+    this.data = new Map();
+    this.maxItems = options.maxItems;
+    this.ttl = options.ttl;
+    this.expiry = new Map();
+    
+    // Cleanup expired items
+    setInterval(() => this.cleanup(), 60000); // Every minute
+  }
+
+  async initialize() {
+    return Promise.resolve();
+  }
+
+  async create(data) {
+    const id = data._id || this.generateId();
+    const item = { ...data, _id: id };
+    
+    if (this.data.size >= this.maxItems) {
+      // Remove oldest item
+      const oldestKey = this.data.keys().next().value;
+      this.data.delete(oldestKey);
+      this.expiry.delete(oldestKey);
+    }
+    
+    this.data.set(id, item);
+    this.expiry.set(id, Date.now() + this.ttl);
+    
+    return item;
+  }
+
+  async read(query) {
+    const results = [];
+    
+    for (const item of this.data.values()) {
+      let match = true;
+      
+      Object.keys(query).forEach(key => {
+        if (item[key] !== query[key]) {
+          match = false;
+        }
+      });
+      
+      if (match) {
+        results.push(item);
+      }
+    }
+    
+    if (query._id) {
+      return results[0] || null;
+    }
+    
+    return results;
+  }
+
+  async update(id, data) {
+    const existing = this.data.get(id);
+    
+    if (!existing) {
+      throw new Error('Record not found');
+    }
+    
+    const updated = { ...existing, ...data };
+    this.data.set(id, updated);
+    this.expiry.set(id, Date.now() + this.ttl);
+    
+    return updated;
+  }
+
+  async delete(id) {
+    this.data.delete(id);
+    this.expiry.delete(id);
+    return { id, deleted: true };
+  }
+
+  generateId() {
+    return 'mem_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+
+  cleanup() {
+    const now = Date.now();
+    
+    for (const [id, expiry] of this.expiry.entries()) {
+      if (now > expiry) {
+        this.data.delete(id);
+        this.expiry.delete(id);
+      }
+    }
+  }
+}
+
+// ============================================================================
+// 7. CACHE MANAGER
+// ============================================================================
+class CacheManager {
+  constructor(options) {
+    this.options = options;
+    this.storage = null;
+  }
+
+  async initialize() {
+    switch (this.options.provider) {
+      case 'localStorage':
+        this.storage = new LocalStorage({
+          prefix: this.options.prefix,
+          quota: 5242880
+        });
+        break;
+      case 'memory':
+        this.storage = new MemoryStorage({
+          maxItems: 1000,
+          ttl: this.options.ttl
+        });
+        break;
+      default:
+        throw new Error('Unsupported cache provider');
+    }
+    
+    await this.storage.initialize();
+  }
+
+  async get(key) {
+    try {
+      const result = await this.storage.read({ _id: key });
+      return result ? result.data : null;
+    } catch (error) {
+      return null;
+    }
+  }
+
+  async set(key, data) {
+    try {
+      await this.storage.create({
+        _id: key,
+        data,
+        timestamp: Date.now(),
+        ttl: Date.now() + this.options.ttl
+      });
+    } catch (error) {
+      // Cache failures shouldn't break application
+      console.warn('Cache set failed:', error);
+    }
+  }
+
+  async delete(key) {
+    try {
+      await this.storage.delete(key);
+    } catch (error) {
+      // Ignore cache deletion errors
+    }
+  }
+
+  async invalidatePattern(pattern) {
+    // Simple pattern matching for cache invalidation
+    if (this.options.provider === 'memory') {
+      const memoryStorage = this.storage;
+      for (const key of memoryStorage.data.keys()) {
+        if (key.includes(pattern)) {
+          await this.delete(key);
+        }
+      }
+    }
+  }
+}
+
+// ============================================================================
+// 8. VALIDATOR
+// ============================================================================
+class Validator {
+  constructor(options) {
+    this.schema = options.schema;
+    this.strict = options.strict;
+  }
+
+  validate(data, operation = 'create') {
+    const errors = [];
+    const validated = { ...data };
+    
+    // Validate each field
+    Object.entries(this.schema.fields).forEach(([fieldName, fieldConfig]) => {
+      const value = data[fieldName];
+      
+      // Check required fields
+      if (fieldConfig.required && operation === 'create') {
+        if (value === undefined || value === null || value === '') {
+          errors.push({
+            field: fieldName,
+            message: `Field '${fieldName}' is required`,
+            code: 'REQUIRED'
+          });
+          return;
         }
       }
       
-      const response = await axios(config);
+      // Skip validation if value is not provided
+      if (value === undefined || value === null) {
+        return;
+      }
       
-      return new RequestResponseModel({
-        success: true,
-        data: response.data,
-        message: 'External API call successful'
-      });
-    } catch (error) {
-      return new RequestResponseModel({
-        success: false,
-        error: error.message,
-        data: error.response?.data,
-        message: 'External API call failed'
-      });
+      // Type validation
+      if (!this.validateType(fieldName, value, fieldConfig.type)) {
+        errors.push({
+          field: fieldName,
+          message: `Field '${fieldName}' must be of type ${fieldConfig.type}`,
+          code: 'TYPE_MISMATCH'
+        });
+        return;
+      }
+      
+      // String validations
+      if (fieldConfig.type === 'string') {
+        if (fieldConfig.min && value.length < fieldConfig.min) {
+          errors.push({
+            field: fieldName,
+            message: `Field '${fieldName}' must be at least ${fieldConfig.min} characters`,
+            code: 'MIN_LENGTH'
+          });
+        }
+        
+        if (fieldConfig.max && value.length > fieldConfig.max) {
+          errors.push({
+            field: fieldName,
+            message: `Field '${fieldName}' must be at most ${fieldConfig.max} characters`,
+            code: 'MAX_LENGTH'
+          });
+        }
+        
+        if (fieldConfig.format === 'email' && !this.isValidEmail(value)) {
+          errors.push({
+            field: fieldName,
+            message: `Field '${fieldName}' must be a valid email address`,
+            code: 'INVALID_FORMAT'
+          });
+        }
+        
+        if (fieldConfig.enum && !fieldConfig.enum.includes(value)) {
+          errors.push({
+            field: fieldName,
+            message: `Field '${fieldName}' must be one of: ${fieldConfig.enum.join(', ')}`,
+            code: 'INVALID_VALUE'
+          });
+        }
+      }
+      
+      // Number validations
+      if (fieldConfig.type === 'number') {
+        if (fieldConfig.min !== undefined && value < fieldConfig.min) {
+          errors.push({
+            field: fieldName,
+            message: `Field '${fieldName}' must be at least ${fieldConfig.min}`,
+            code: 'MIN_VALUE'
+          });
+        }
+        
+        if (fieldConfig.max !== undefined && value > fieldConfig.max) {
+          errors.push({
+            field: fieldName,
+            message: `Field '${fieldName}' must be at most ${fieldConfig.max}`,
+            code: 'MAX_VALUE'
+          });
+        }
+      }
+      
+      // Array validations
+      if (fieldConfig.type === 'array') {
+        if (!Array.isArray(value)) {
+          errors.push({
+            field: fieldName,
+            message: `Field '${fieldName}' must be an array`,
+            code: 'TYPE_MISMATCH'
+          });
+        } else {
+          if (fieldConfig.minItems && value.length < fieldConfig.minItems) {
+            errors.push({
+              field: fieldName,
+              message: `Field '${fieldName}' must have at least ${fieldConfig.minItems} items`,
+              code: 'MIN_ITEMS'
+            });
+          }
+        }
+      }
+    });
+    
+    if (errors.length > 0) {
+      throw new ActionError('validation', '001', 'Validation failed', { errors });
     }
+    
+    return validated;
+  }
+
+  validateType(fieldName, value, expectedType) {
+    switch (expectedType) {
+      case 'string':
+        return typeof value === 'string';
+      case 'number':
+        return typeof value === 'number' && !isNaN(value);
+      case 'boolean':
+        return typeof value === 'boolean';
+      case 'array':
+        return Array.isArray(value);
+      case 'object':
+        return typeof value === 'object' && value !== null && !Array.isArray(value);
+      case 'timestamp':
+        return !isNaN(Date.parse(value));
+      default:
+        return true;
+    }
+  }
+
+  isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   }
 }
 
-// Example Usage
-const EXTERNAL_API_CONFIG = {
-  weather: {
-    url: 'https://api.weather.com/v1/current',
-    method: 'GET',
-    auth: {
-      type: 'bearer',
-      token: process.env.WEATHER_API_KEY
-    },
-    timeout: 10000
+// ============================================================================
+// 9. ACTIONFRAMEWORK MAIN CLASS
+// ============================================================================
+class ActionFramework {
+  static instance = null;
+  
+  constructor(config = {}) {
+    if (ActionFramework.instance) {
+      return ActionFramework.instance;
+    }
+    
+    // Merge config with defaults
+    this.config = this.mergeConfigs(APP_CONFIG, config);
+    
+    // Initialize components
+    this.entities = new Map();
+    this.logger = this.initLogger();
+    this.monitor = this.initMonitor();
+    this.hooks = this.initHooks();
+    this.cache = new CacheManager({
+      provider: this.config.cache.provider,
+      ttl: this.config.cache.ttl.default
+    });
+    
+    // Register error handler
+    this.registerErrorHandler();
+    
+    ActionFramework.instance = this;
+    
+    console.log(`ActionFramework v${this.config.meta.version} initialized in ${this.config.meta.environment} mode`);
   }
-};
-
-// Initialize and start the server
-async function main() {
-  try {
-    const actionServer = new ActionServer();
+  
+  mergeConfigs(base, override) {
+    const result = { ...base };
     
-    // Add custom hooks to user entity
-    const userEntity = actionServer.getEntity('user');
-    userEntity.addHook('pre', 'create', async ({ data }) => {
-      console.log('Before creating user:', data.email);
-      data.createdAt = new Date();
-    });
-    
-    userEntity.addHook('post', 'create', async ({ result }) => {
-      console.log('User created successfully:', result.data.id);
-    });
-    
-    // Start the server
-    await actionServer.start();
-    
-    // Example: Execute action programmatically
-    const context = {
-      user: { id: 'admin-1', roles: ['admin'] }
+    const deepMerge = (target, source) => {
+      for (const key in source) {
+        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+          target[key] = deepMerge(target[key] || {}, source[key]);
+        } else {
+          target[key] = source[key];
+        }
+      }
+      return target;
     };
     
-    const createResult = await actionServer.executeAction(
-      'user',
-      'create',
-      {
-        name: 'John Doe',
-        email: 'john@example.com',
-        age: 30,
-        roles: ['user']
+    return deepMerge(result, override);
+  }
+  
+  initLogger() {
+    return {
+      log: (level, message, meta = {}) => {
+        const timestamp = new Date().toISOString();
+        const logEntry = {
+          timestamp,
+          level,
+          message,
+          ...meta,
+          environment: this.config.meta.environment,
+          instance: this.config.meta.instance
+        };
+        
+        if (this.config.logging.transports.console.enabled) {
+          const format = this.config.logging.transports.console.format;
+          if (format === 'json') {
+            console.log(JSON.stringify(logEntry));
+          } else {
+            console.log(`[${timestamp}] ${level.toUpperCase()}: ${message}`);
+          }
+        }
       },
-      context
-    );
-    
-    console.log('Create result:', createResult);
-    
-    // Example: Use file system helper
-    const actionFs = new ActionFs();
-    await actionFs.saveEntityData('users', { test: 'data' });
-    
-    // Example: Use HTTP service for external API
-    if (actionServer.httpService) {
-      const weatherResult = await actionServer.httpService.callExternalAPI(
-        EXTERNAL_API_CONFIG.weather,
-        { city: 'London' }
-      );
-      console.log('Weather API result:', weatherResult);
+      
+      error: (data) => this.log('error', data.message || 'Error occurred', data),
+      warn: (data) => this.log('warn', data.message || 'Warning', data),
+      info: (data) => this.log('info', data.message || 'Info', data),
+      debug: (data) => {
+        if (this.config.runtime.debug) {
+          this.log('debug', data.message || 'Debug', data);
+        }
+      },
+      audit: (data) => {
+        if (this.config.logging.levels.audit) {
+          this.log('audit', data.message || 'Audit', data);
+        }
+      }
+    };
+  }
+  
+  initMonitor() {
+    return {
+      metrics: {
+        requests: [],
+        errors: [],
+        latency: []
+      },
+      
+      recordRequest: (request) => {
+        if (this.metrics.requests.length > 1000) {
+          this.metrics.requests.shift();
+        }
+        this.metrics.requests.push({
+          ...request,
+          timestamp: Date.now()
+        });
+      },
+      
+      recordError: (error) => {
+        if (this.metrics.errors.length > 1000) {
+          this.metrics.errors.shift();
+        }
+        this.metrics.errors.push({
+          code: error.code,
+          category: error.category,
+          timestamp: Date.now()
+        });
+      },
+      
+      recordLatency: (operation, duration) => {
+        if (this.metrics.latency.length > 1000) {
+          this.metrics.latency.shift();
+        }
+        this.metrics.latency.push({
+          operation,
+          duration,
+          timestamp: Date.now()
+        });
+      },
+      
+      getMetrics: () => {
+        const now = Date.now();
+        const lastMinute = now - 60000;
+        
+        const recentRequests = this.metrics.requests.filter(r => r.timestamp > lastMinute);
+        const recentErrors = this.metrics.errors.filter(e => e.timestamp > lastMinute);
+        
+        return {
+          requestsPerMinute: recentRequests.length,
+          errorsPerMinute: recentErrors.length,
+          errorRate: recentRequests.length > 0 ? recentErrors.length / recentRequests.length : 0,
+          latency: this.calculateLatencyMetrics()
+        };
+      },
+      
+      calculateLatencyMetrics: () => {
+        if (this.metrics.latency.length === 0) return { avg: 0, p95: 0, p99: 0 };
+        
+        const sorted = [...this.metrics.latency].sort((a, b) => a.duration - b.duration);
+        const avg = sorted.reduce((sum, item) => sum + item.duration, 0) / sorted.length;
+        const p95 = sorted[Math.floor(sorted.length * 0.95)]?.duration || 0;
+        const p99 = sorted[Math.floor(sorted.length * 0.99)]?.duration || 0;
+        
+        return { avg, p95, p99 };
+      }
+    };
+  }
+  
+  initHooks() {
+    return {
+      generateId: (data) => {
+        data.data._id = 'id_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      },
+      
+      setTimestamps: (data) => {
+        const now = new Date().toISOString();
+        if (!data.data.metadata) {
+          data.data.metadata = {};
+        }
+        
+        if (data.operation === 'create') {
+          data.data.metadata.createdAt = now;
+          data.data.metadata.createdBy = data.context.user?.userId || 'system';
+        }
+        
+        if (data.operation === 'create' || data.operation === 'update') {
+          data.data.metadata.updatedAt = now;
+          data.data.metadata.updatedBy = data.context.user?.userId || 'system';
+        }
+      },
+      
+      validateSchema: async (data, entity) => {
+        // Schema validation happens in entity
+      },
+      
+      cache: async (data, entity) => {
+        await entity.cache.set(data.data._id, data.data);
+      },
+      
+      clearCache: async (data, entity) => {
+        await entity.cache.delete(data.id);
+        await entity.cache.invalidatePattern(`${entity.name}_list_*`);
+      }
+    };
+  }
+  
+  registerErrorHandler() {
+    // Global error handler
+    if (typeof window !== 'undefined') {
+      window.addEventListener('error', (event) => {
+        const error = ActionError.fromError(event.error, { source: 'window.error' });
+        error.log();
+      });
+      
+      window.addEventListener('unhandledrejection', (event) => {
+        const error = ActionError.fromError(event.reason, { source: 'unhandledrejection' });
+        error.log();
+      });
     }
     
-  } catch (error) {
-    console.error('Failed to start server:', error);
-    process.exit(1);
+    if (typeof process !== 'undefined') {
+      process.on('uncaughtException', (error) => {
+        const actionError = ActionError.fromError(error, { source: 'uncaughtException' });
+        actionError.log();
+        
+        if (!actionError.recoverable) {
+          console.error('Unrecoverable error, exiting...');
+          process.exit(1);
+        }
+      });
+      
+      process.on('unhandledRejection', (reason, promise) => {
+        const actionError = ActionError.fromError(reason, { source: 'unhandledRejection' });
+        actionError.log();
+      });
+    }
+  }
+  
+  getEntity(entityName) {
+    if (!this.entities.has(entityName)) {
+      const entity = new ActionEntity(entityName);
+      this.entities.set(entityName, entity);
+    }
+    return this.entities.get(entityName);
+  }
+  
+  static getLogger() {
+    return ActionFramework.instance?.logger || console;
+  }
+  
+  static getMonitor() {
+    return ActionFramework.instance?.monitor;
+  }
+  
+  static getHook(hookName) {
+    return ActionFramework.instance?.hooks[hookName];
+  }
+  
+  async health() {
+    const health = {
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      version: this.config.meta.version,
+      environment: this.config.meta.environment,
+      platform: RUNTIME.platform,
+      entities: {}
+    };
+    
+    // Check entity health
+    for (const [entityName, entity] of this.entities) {
+      try {
+        const metrics = entity.getMetrics();
+        health.entities[entityName] = {
+          status: 'healthy',
+          operations: metrics
+        };
+      } catch (error) {
+        health.entities[entityName] = {
+          status: 'unhealthy',
+          error: error.message
+        };
+        health.status = 'degraded';
+      }
+    }
+    
+    // Check storage health
+    try {
+      await this.cache.initialize();
+      health.cache = 'healthy';
+    } catch (error) {
+      health.cache = 'unhealthy';
+      health.status = 'degraded';
+    }
+    
+    // Get system metrics
+    if (RUNTIME.platform === 'node') {
+      health.system = {
+        memory: process.memoryUsage(),
+        uptime: process.uptime()
+      };
+    }
+    
+    return health;
+  }
+  
+  async startServer(port = this.config.runtime.server?.port || 3000) {
+    if (RUNTIME.platform !== 'node') {
+      throw new Error('HTTP server only available in Node.js');
+    }
+    
+    const http = require('http');
+    
+    const server = http.createServer(async (req, res) => {
+      const requestId = 'req_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      const startTime = Date.now();
+      
+      // Set CORS headers
+      if (this.config.runtime.security.cors.enabled) {
+        const origin = req.headers.origin;
+        const allowedOrigins = this.config.runtime.security.cors.origins;
+        
+        if (allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+          res.setHeader('Access-Control-Allow-Origin', origin || '*');
+          res.setHeader('Access-Control-Allow-Methods', 
+            this.config.runtime.security.cors.methods.join(','));
+          res.setHeader('Access-Control-Allow-Headers',
+            this.config.runtime.security.cors.headers.join(','));
+          
+          if (this.config.runtime.security.cors.credentials) {
+            res.setHeader('Access-Control-Allow-Credentials', 'true');
+          }
+        }
+        
+        if (req.method === 'OPTIONS') {
+          res.writeHead(204);
+          res.end();
+          return;
+        }
+      }
+      
+      // Parse request
+      let body = '';
+      req.on('data', chunk => body += chunk.toString());
+      
+      req.on('end', async () => {
+        try {
+          const url = new URL(req.url, `http://${req.headers.host}`);
+          const route = `${req.method} ${url.pathname}`;
+          
+          // Find matching route
+          const routeConfig = this.config.routes.endpoints.find(endpoint => {
+            const routePattern = endpoint.path.replace(/:\w+/g, '([^/]+)');
+            const regex = new RegExp(`^${routePattern}$`);
+            return req.method === endpoint.method && regex.test(url.pathname);
+          });
+          
+          if (!routeConfig) {
+            throw new ActionError('validation', '005', 'Route not found', { route });
+          }
+          
+          // Parse body
+          let data = {};
+          if (body) {
+            try {
+              data = JSON.parse(body);
+            } catch {
+              throw new ActionError('validation', '006', 'Invalid JSON body');
+            }
+          }
+          
+          // Extract path parameters
+          const pathParams = {};
+          const pathParts = url.pathname.split('/');
+          const configParts = routeConfig.path.split('/');
+          
+          configParts.forEach((part, index) => {
+            if (part.startsWith(':')) {
+              const paramName = part.substring(1);
+              pathParams[paramName] = pathParts[index];
+            }
+          });
+          
+          // Create context
+          const context = {
+            requestId,
+            user: { userId: 'guest', role: 'guest' }, // Would come from auth middleware
+            headers: req.headers,
+            ip: req.headers['x-forwarded-for'] || req.socket.remoteAddress
+          };
+          
+          // Merge data
+          const requestData = { ...data, ...pathParams, ...Object.fromEntries(url.searchParams) };
+          
+          // Execute action
+          const [entityName, action] = routeConfig.action.split('.');
+          const entity = this.getEntity(entityName);
+          
+          let result;
+          switch (action) {
+            case 'create':
+              result = await entity.create(requestData, context);
+              break;
+            case 'read':
+              result = await entity.read(requestData, context);
+              break;
+            case 'readOne':
+              result = await entity.read({ _id: requestData.id }, context);
+              break;
+            case 'update':
+              result = await entity.update(requestData.id, requestData, context);
+              break;
+            case 'delete':
+              result = await entity.delete(requestData.id, context);
+              break;
+            default:
+              throw new ActionError('validation', '007', `Unknown action: ${action}`);
+          }
+          
+          // Send response
+          res.writeHead(200, {
+            'Content-Type': 'application/json',
+            'X-Request-ID': requestId
+          });
+          
+          res.end(JSON.stringify(result));
+          
+          // Record metrics
+          const duration = Date.now() - startTime;
+          this.monitor.recordLatency(route, duration);
+          this.monitor.recordRequest({
+            route,
+            method: req.method,
+            status: 200,
+            duration
+          });
+          
+        } catch (error) {
+          const actionError = ActionError.fromError(error, { requestId });
+          
+          res.writeHead(actionError.httpStatus, {
+            'Content-Type': 'application/json',
+            'X-Request-ID': requestId
+          });
+          
+          res.end(JSON.stringify(actionError.toJSON()));
+          
+          actionError.log();
+          
+          // Record error metrics
+          this.monitor.recordError(actionError);
+        }
+      });
+    });
+    
+    return new Promise((resolve) => {
+      server.listen(port, () => {
+        console.log(`ActionFramework server listening on port ${port}`);
+        console.log(`Environment: ${this.config.meta.environment}`);
+        console.log(`Health endpoint: http://localhost:${port}/health`);
+        console.log(`API prefix: ${this.config.routes.api.prefix}`);
+        resolve(server);
+      });
+    });
   }
 }
 
+// ============================================================================
+// 10. EXPORT AND INITIALIZATION
+// ============================================================================
+
 // Export everything
-module.exports = {
-  RequestResponseModel,
+export {
+  RUNTIME,
+  ERROR_CONFIG,
+  APP_CONFIG,
+  ActionError,
   ActionEntity,
-  ActionServer,
-  ActionValidator,
-  ActionFs,
-  HttpService,
-  ENTITY_CONFIG,
-  SERVER_CONFIG,
-  ACTION_CONFIG,
-  VALIDATOR_SCHEMAS,
-  EXTERNAL_API_CONFIG,
-  main
+  ActionFramework,
+  IndexedDBStorage,
+  LocalStorage,
+  MemoryStorage,
+  CacheManager,
+  Validator
 };
 
-// Start if this is the main module
-if (require.main === module) {
-  main();
+// Auto-initialize in browser
+if (typeof window !== 'undefined') {
+  window.ActionFramework = ActionFramework;
 }
+
+// Usage example
+/*
+// 1. Initialize framework
+const framework = new ActionFramework();
+
+// 2. Get entity
+const userEntity = framework.getEntity('user');
+
+// 3. Create record
+try {
+  const result = await userEntity.create({
+    username: 'john_doe',
+    email: 'john@example.com',
+    password: 'secure123'
+  }, {
+    user: { userId: 'system', role: 'admin' },
+    requestId: 'req_123'
+  });
+  console.log('Created:', result);
+} catch (error) {
+  console.error('Error:', error.toJSON());
+}
+
+// 4. Start server (Node.js only)
+if (RUNTIME.platform === 'node') {
+  await framework.startServer();
+}
+
+// 5. Check health
+const health = await framework.health();
+console.log('Health:', health);
+*/
+
+// Export default
+export default ActionFramework;
