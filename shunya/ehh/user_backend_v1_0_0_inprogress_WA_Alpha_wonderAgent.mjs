@@ -843,6 +843,34 @@ class ActionServer {
     const text = Buffer.concat(buffers).toString();
     return text ? JSON.parse(text) : {};
   }
+
+  parseQueryParams(url) {
+    const result = {};
+    const parsed = new URL(url, 'http://localhost');
+    const entries = parsed.searchParams.entries();
+    for (const [key, value] of entries) {
+      result[key] = this.parseParamValue(value);
+    }
+    return result;
+  }
+
+  parseParamValue(value) {
+    if (!value) {
+      return value;
+    }
+    const trimmed = value.trim();
+    if ((trimmed.startsWith('{') && trimmed.endsWith('}')) || (trimmed.startsWith('[') && trimmed.endsWith(']'))) {
+      try {
+        return JSON.parse(trimmed);
+      } catch {
+        return trimmed;
+      }
+    }
+    if (trimmed.includes(',')) {
+      return trimmed.split(',').map(part => this.parseParamValue(part));
+    }
+    return trimmed;
+  }
 }
 
 /*

@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tree Editor</title>
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #ffffff;
+            color: #222;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Layout */
+        .app {
+            display: flex;
+            height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 220px;
+            background: #fafafa;
+            border-right: 1px solid #eee;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .section {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .section-title {
+            font-size: 0.75rem;
+            color: #666;
+            margin-bottom: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 0.5rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #444;
+            border-radius: 4px;
+        }
+        
+        .btn:hover {
+            background: #f0f0f0;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            background: #fafafa;
+            border-bottom: 1px solid #eee;
+            flex-shrink: 0;
+        }
+        
+        .tab {
+            padding: 0.75rem 1.25rem;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .tab:hover {
+            color: #222;
+        }
+        
+        .tab.active {
+            color: #0066cc;
+            border-bottom-color: #0066cc;
+            background: #fff;
+        }
+        
+        .tab-close {
+            margin-left: 0.5rem;
+            opacity: 0;
+            padding: 0.125rem;
+            border-radius: 2px;
+        }
+        
+        .tab:hover .tab-close {
+            opacity: 0.5;
+        }
+        
+        .tab-close:hover {
+            opacity: 1 !important;
+            background: #eee;
+        }
+        
+        /* Main Content */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .tab-content {
+            display: none;
+            flex: 1;
+            overflow: auto;
+            padding: 2rem;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Tree */
+        .tree {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .node {
+            margin: 0.5rem 0;
+        }
+        
+        .node-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+        
+        .node-content:hover {
+            background: #f8f9fa;
+        }
+        
+        .node-content.selected {
+            background: #e8f4ff;
+        }
+        
+        .node-toggle {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: 500;
+            user-select: none;
+            flex-shrink: 0;
+        }
+        
+        .node-type {
+            padding: 0.125rem 0.5rem;
+            background: #e9ecef;
+            border-radius: 3px;
+            font-size: 0.7rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+        }
+        
+        .node-info {
+            flex: 1;
+        }
+        
+        .node-title {
+            font-weight: 500;
+            font-size: 0.95rem;
+            outline: none;
+            margin-bottom: 0.25rem;
+        }
+        
+        .node-body {
+            font-size: 0.875rem;
+            color: #555;
+            outline: none;
+            line-height: 1.5;
+        }
+        
+        .node-actions {
+            display: flex;
+            gap: 0.25rem;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .node-content:hover .node-actions {
+            opacity: 1;
+        }
+        
+        .node-action {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 0.875rem;
+            color: #666;
+            border-radius: 3px;
+        }
+        
+        .node-action:hover {
+            background: #e9ecef;
+            color: #222;
+        }
+        
+        .node-action.delete:hover {
+            color: #dc3545;
+        }
+        
+        .children {
+            padding-left: 2rem;
+            margin-left: 10px;
+            border-left: 1px solid #eee;
+        }
+        
+        .collapsed {
+            display: none;
+        }
+        
+        /* Drag Handle */
+        .drag-handle {
+            cursor: move;
+            opacity: 0.3;
+            padding: 0.25rem;
+            font-size: 1rem;
+        }
+        
+        .node-content:hover .drag-handle {
+            opacity: 0.7;
+        }
+        
+        /* Slash Menu */
+        .slash-menu {
+            position: fixed;
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            min-width: 200px;
+            max-height: 300px;
+            overflow-y: auto;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .slash-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .slash-item:hover {
+            background: #f8f9fa;
+        }
+        
+        /* Status Bar */
+        .status {
+            padding: 0.75rem 1rem;
+            background: #fafafa;
+            border-top: 1px solid #eee;
+            font-size: 0.75rem;
+            color: #666;
+            display: flex;
+            justify-content: space-between;
+            flex-shrink: 0;
+        }
+        
+        /* Documentation Content */
+        .doc-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .doc-title {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            color: #222;
+        }
+        
+        .doc-subtitle {
+            font-size: 1.25rem;
+            font-weight: 500;
+            margin: 2rem 0 1rem;
+            color: #444;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .doc-text {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #555;
+        }
+        
+        .doc-list {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .doc-list li {
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        
+        .feature-title {
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+            color: #222;
+        }
+        
+        .feature-desc {
+            font-size: 0.875rem;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        /* Version Timeline */
+        .version {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 3px solid #0066cc;
+        }
+        
+        .version-title {
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: #222;
+        }
+        
+        .version-date {
+            font-size: 0.75rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+        
+        /* Roadmap */
+        .roadmap-item {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+        
+        .roadmap-status {
+            display: inline-block;
+            padding: 0.125rem 0.5rem;
+            background: #e9ecef;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            color: #666;
+            margin-right: 0.5rem;
+        }
+        
+        .roadmap-status.completed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .roadmap-status.in-progress {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .roadmap-status.planned {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+        
+        /* Empty State */
+        .empty {
+            text-align: center;
+            padding: 4rem;
+            color: #999;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="section">
+                <div class="section-title">Trees</div>
+                <button class="btn" onclick="newTree()">
+                    <span>🌳</span>
+                    <span>New Tree</span>
+                </button>
+                <button class="btn" onclick="saveTree()">
+                    <span>💾</span>
+                    <span>Save</span>
+                </button>
+                <button class="btn" onclick="exportTree()">
+                    <span>📤</span>
+                    <span>Export</span>
+                </button>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Views</div>
+                <button class="btn active" onclick="switchTab('tree')">
+                    <span>🌿</span>
+                    <span>Tree Editor</span>
+                </button>
+                <button class="btn" onclick="switchTab('about')">
+                    <span>📘</span>
+                    <span>About</span>
+                </button>
+                <button class="btn" onclick="switchTab('features')">
+                    <span>✨</span>
+                    <span>Features</span>
+                </button>
+                <button class="btn" onclick="switchTab('changelog')">
+                    <span>📝</span>
+                    <span>Changelog</span>
+                </button>
+                <button class="btn" onclick="switchTab('roadmap')">
+                    <span>🗺️</span>
+                    <span>Roadmap</span>
+                </button>
+            </div>
+            
+            <div class="section">
+                <div class="section-title">Info</div>
+                <div style="font-size: 0.75rem; color: #666; line-height: 1.5;">
+                    <div>• Click + to add child</div>
+                    <div>• Click − to delete node</div>
+                    <div>• Type / for commands</div>
+                    <div>• Drag ⋮⋮ to reorder</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main">
+            <!-- Tabs -->
+            <div class="tabs">
+                <!-- Tabs will be added here dynamically -->
+            </div>
+            
+            <!-- Tab Contents -->
+            <div class="tab-content active" id="tab-tree">
+                <div class="tree-container">
+                    <ul class="tree" id="tree-root">
+                        <!-- Tree nodes will be added here -->
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab-about">
+                <div class="doc-content">
+                    <h1 class="doc-title">Tree Editor</h1>
+                    <p class="doc-text">
+                        A minimal, efficient tree structure editor built with modern web technologies.
+                        Designed for organizing hierarchical data with an intuitive interface.
+                    </p>
+                    
+                    <h2 class="doc-subtitle">Purpose</h2>
+                    <p class="doc-text">
+                        This editor helps you create, edit, and visualize hierarchical data structures.
+                        Perfect for organizing ideas, project plans, documentation, and any nested information.
+                    </p>
+                    
+                    <h2 class="doc-subtitle">Design Philosophy</h2>
+                    <ul class="doc-list">
+                        <li><strong>Minimalism:</strong> Clean interface without unnecessary elements</li>
+                        <li><strong>Efficiency:</strong> Keyboard shortcuts and quick actions</li>
+                        <li><strong>Clarity:</strong> Clear visual hierarchy and node types</li>
+                        <li><strong>Flexibility:</strong> Multiple node types and slash commands</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab-features">
+                <div class="doc-content">
+                    <h1 class="doc-title">Features</h1>
+                    
+                    <div class="feature-grid">
+                        <div class="feature-card">
+                            <div class="feature-title">Tree Structure</div>
+                            <div class="feature-desc">
+                                Create hierarchical trees with unlimited nesting. Expand/collapse branches with +/− icons.
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-title">Node Types</div>
+                            <div class="feature-desc">
+                                Different node types: Text, List, Code, Quote, Heading. Each with distinct styling.
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-title">Drag & Drop</div>
+                            <div class="feature-desc">
+                                Reorganize your tree by dragging nodes. Visual feedback shows drop positions.
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-title">Slash Commands</div>
+                            <div class="feature-desc">
+                                Type / in content to access formatting commands. Quick insertion of blocks.
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-title">Node Operations</div>
+                            <div class="feature-desc">
+                                Add child/sibling nodes, delete nodes, duplicate, and edit content inline.
+                            </div>
+                        </div>
+                        
+                        <div class="feature-card">
+                            <div class="feature-title">Documentation</div>
+                            <div class="feature-desc">
+                                Built-in documentation tabs for features, changelog, and roadmap.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab-changelog">
+                <div class="doc-content">
+                    <h1 class="doc-title">Changelog</h1>
+                    
+                    <div class="version">
+                        <div class="version-title">Version 1.2.0 - Current</div>
+                        <div class="version-date">December 2024</div>
+                        <ul class="doc-list">
+                            <li>Added node type indicators</li>
+                            <li>Improved minimal UI design</li>
+                            <li>Enhanced slash command system</li>
+                            <li>Added documentation tabs</li>
+                            <li>Better drag & drop visual feedback</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="version">
+                        <div class="version-title">Version 1.1.0</div>
+                        <div class="version-date">November 2024</div>
+                        <ul class="doc-list">
+                            <li>Implemented slash commands</li>
+                            <li>Added multiple node types</li>
+                            <li>Basic drag & drop functionality</li>
+                            <li>Tree expand/collapse improvements</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="version">
+                        <div class="version-title">Version 1.0.0</div>
+                        <div class="version-date">October 2024</div>
+                        <ul class="doc-list">
+                            <li>Initial release</li>
+                            <li>Basic tree structure editor</li>
+                            <li>Node creation and deletion</li>
+                            <li>Simple content editing</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="tab-roadmap">
+                <div class="doc-content">
+                    <h1 class="doc-title">Roadmap</h1>
+                    
+                    <div class="roadmap-item">
+                        <span class="roadmap-status completed">Completed</span>
+                        <strong>Core Tree Editor</strong>
+                        <ul class="doc-list" style="margin-top: 0.5rem;">
+                            <li>Basic tree operations</li>
+                            <li>Node editing and deletion</li>
+                            <li>Expand/collapse functionality</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="roadmap-item">
+                        <span class="roadmap-status completed">Completed</span>
+                        <strong>Enhanced Features</strong>
+                        <ul class="doc-list" style="margin-top: 0.5rem;">
+                            <li>Drag & drop reordering</li>
+                            <li>Slash command system</li>
+                            <li>Multiple node types</li>
+                            <li>Documentation tabs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="roadmap-item">
+                        <span class="roadmap-status in-progress">In Progress</span>
+                        <strong>Advanced Functionality</strong>
+                        <ul class="doc-list" style="margin-top: 0.5rem;">
+                            <li>Export to multiple formats</li>
+                            <li>Search and filter nodes</li>
+                            <li>Custom node templates</li>
+                            <li>Keyboard shortcuts</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="roadmap-item">
+                        <span class="roadmap-status planned">Planned</span>
+                        <strong>Future Enhancements</strong>
+                        <ul class="doc-list" style="margin-top: 0.5rem;">
+                            <li>Collaborative editing</li>
+                            <li>Version history</li>
+                            <li>Plugin system</li>
+                            <li>Mobile optimization</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Status Bar -->
+            <div class="status">
+                <span id="status-text">Ready</span>
+                <span id="node-info">No nodes</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Slash Menu -->
+    <div class="slash-menu" id="slash-menu">
+        <div class="slash-item" onclick="insertBlock('text')">
+            <span>📝</span>
+            <span>Text</span>
+        </div>
+        <div class="slash-item" onclick="insertBlock('heading')">
+            <span>🏷️</span>
+            <span>Heading</span>
+        </div>
+        <div class="slash-item" onclick="insertBlock('list')">
+            <span>📋</span>
+            <span>List</span>
+        </div>
+        <div class="slash-item" onclick="insertBlock('code')">
+            <span>💻</span>
+            <span>Code</span>
+        </div>
+        <div class="slash-item" onclick="insertBlock('quote')">
+            <span>💬</span>
+            <span>Quote</span>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let selectedNode = null;
+        let slashTarget = null;
+        let nodeCounter = 1;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadInitialTree();
+            setupEventListeners();
+            updateStatus('Ready');
+            updateNodeInfo();
+        });
+        
+        // Load initial tree
+        function loadInitialTree() {
+            const tree = document.getElementById('tree-root');
+            tree.innerHTML = '';
+            
+            // Create root node
+            const root = createNode('root', 'text', 'Welcome', 'Click to edit content. Type / for commands.');
+            tree.appendChild(root);
+            
+            // Add some example nodes
+            const child1 = createNode('getting-started', 'heading', 'Getting Started', '• Click + to add child nodes\n• Click − to delete nodes\n• Drag ⋮⋮ to reorder', true);
+            const child2 = createNode('features', 'list', 'Features', '✅ Minimal interface\n✅ Node types\n✅ Slash commands\n✅ Drag & drop');
+            
+            root.querySelector('.children').appendChild(child1);
+            root.querySelector('.children').appendChild(child2);
+            
+            // Add sub-nodes
+            const sub1 = createNode('tips', 'text', 'Quick Tips', 'Select a node to see action buttons appear.');
+            child1.querySelector('.children').appendChild(sub1);
+        }
+        
+        // Create node
+        function createNode(id, type, title, body, expanded = false) {
+            nodeCounter++;
+            const node = document.createElement('li');
+            node.className = 'node';
+            node.dataset.id = id;
+            node.dataset.type = type;
+            
+            node.innerHTML = `
+                <div class="node-content">
+                    <span class="drag-handle" draggable="true">⋮⋮</span>
+                    <span class="node-toggle">${expanded ? '−' : '+'}</span>
+                    <span class="node-type">${type.toUpperCase()}</span>
+                    <div class="node-info">
+                        <div class="node-title" contenteditable="true">${title}</div>
+                        <div class="node-body" contenteditable="true">${body}</div>
+                    </div>
+                    <div class="node-actions">
+                        <button class="node-action" onclick="addChild(event)">+</button>
+                        <button class="node-action delete" onclick="deleteNode(event)">−</button>
+                    </div>
+                </div>
+                ${expanded ? '<ul class="children"></ul>' : ''}
+            `;
+            
+            // Setup interactions
+            const content = node.querySelector('.node-content');
+            const toggle = node.querySelector('.node-toggle');
+            const titleEl = node.querySelector('.node-title');
+            const bodyEl = node.querySelector('.node-body');
+            
+            // Select on click
+            content.addEventListener('click', (e) => {
+                if (!e.target.classList.contains('node-toggle') && 
+                    !e.target.classList.contains('drag-handle') &&
+                    !e.target.classList.contains('node-action')) {
+                    selectNode(content);
+                }
+            });
+            
+            // Toggle expand/collapse
+            toggle.addEventListener('click', (e) => {
+                e.stopPropagation();
+                toggleNode(toggle);
+            });
+            
+            // Slash commands
+            bodyEl.addEventListener('keydown', (e) => {
+                if (e.key === '/') {
+                    e.preventDefault();
+                    showSlashMenu(bodyEl);
+                }
+            });
+            
+            // Update on edit
+            titleEl.addEventListener('input', updateNodeInfo);
+            bodyEl.addEventListener('input', updateNodeInfo);
+            
+            return node;
+        }
+        
+        // Add child node
+        function addChild(event) {
+            event.stopPropagation();
+            const node = event.target.closest('.node');
+            let children = node.querySelector('.children');
+            
+            if (!children) {
+                children = document.createElement('ul');
+                children.className = 'children';
+                node.appendChild(children);
+                node.querySelector('.node-toggle').textContent = '−';
+            }
+            
+            const newChild = createNode('node-' + Date.now(), 'text', 'New Node', 'Add content here...');
+            children.appendChild(newChild);
+            selectNode(newChild.querySelector('.node-content'));
+            
+            updateStatus('Added child node');
+            updateNodeInfo();
+        }
+        
+        // Delete node
+        function deleteNode(event) {
+            event.stopPropagation();
+            const node = event.target.closest('.node');
+            
+            if (node && confirm('Delete this node?')) {
+                node.remove();
+                selectedNode = null;
+                updateStatus('Node deleted');
+                updateNodeInfo();
+            }
+        }
+        
+        // Select node
+        function selectNode(nodeElement) {
+            if (selectedNode) {
+                selectedNode.classList.remove('selected');
+            }
+            nodeElement.classList.add('selected');
+            selectedNode = nodeElement;
+            updateNodeInfo();
+        }
+        
+        // Toggle node
+        function toggleNode(toggle) {
+            const children = toggle.closest('.node').querySelector('.children');
+            if (children) {
+                children.classList.toggle('collapsed');
+                toggle.textContent = children.classList.contains('collapsed') ? '+' : '−';
+                updateStatus(children.classList.contains('collapsed') ? 'Collapsed node' : 'Expanded node');
+            }
+        }
+        
+        // New tree
+        function newTree() {
+            if (confirm('Create new tree? Current tree will be lost.')) {
+                loadInitialTree();
+                updateStatus('Created new tree');
+            }
+        }
+        
+        // Save tree
+        function saveTree() {
+            updateStatus('Tree saved');
+            setTimeout(() => updateStatus('Ready'), 1500);
+        }
+        
+        // Export tree
+        function exportTree() {
+            updateStatus('Exported as JSON');
+        }
+        
+        // Switch tab
+        function switchTab(tabId) {
+            // Update sidebar buttons
+            document.querySelectorAll('.btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById('tab-' + tabId).classList.add('active');
+            
+            updateStatus('Switched to ' + tabId + ' view');
+        }
+        
+        // Slash commands
+        function showSlashMenu(target) {
+            const menu = document.getElementById('slash-menu');
+            const rect = target.getBoundingClientRect();
+            
+            menu.style.display = 'block';
+            menu.style.left = rect.left + 'px';
+            menu.style.top = rect.bottom + 5 + 'px';
+            
+            slashTarget = target;
+            
+            // Close on click outside
+            setTimeout(() => {
+                document.addEventListener('click', closeSlashMenu);
+            });
+        }
+        
+        function closeSlashMenu(e) {
+            const menu = document.getElementById('slash-menu');
+            if (!menu.contains(e.target)) {
+                menu.style.display = 'none';
+                document.removeEventListener('click', closeSlashMenu);
+            }
+        }
+        
+        function insertBlock(type) {
+            if (!slashTarget) return;
+            
+            const node = slashTarget.closest('.node');
+            const body = node.querySelector('.node-body');
+            const typeSpan = node.querySelector('.node-type');
+            
+            let content = '';
+            switch(type) {
+                case 'heading':
+                    content = 'Important Heading';
+                    typeSpan.textContent = 'HEADING';
+                    break;
+                case 'list':
+                    content = '• First item\n• Second item\n• Third item';
+                    typeSpan.textContent = 'LIST';
+                    break;
+                case 'code':
+                    content = 'function example() {\n  return "Hello";\n}';
+                    typeSpan.textContent = 'CODE';
+                    break;
+                case 'quote':
+                    content = '“This is an important quote.”';
+                    typeSpan.textContent = 'QUOTE';
+                    break;
+                default:
+                    content = 'Text content...';
+                    typeSpan.textContent = 'TEXT';
+            }
+            
+            body.textContent = content;
+            updateStatus('Inserted ' + type + ' block');
+            document.getElementById('slash-menu').style.display = 'none';
+        }
+        
+        // Setup event listeners
+        function setupEventListeners() {
+            // Escape closes slash menu
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') {
+                    document.getElementById('slash-menu').style.display = 'none';
+                }
+            });
+            
+            // Setup drag and drop
+            setupDragAndDrop();
+        }
+        
+        // Drag and drop
+        function setupDragAndDrop() {
+            let dragSrcEl = null;
+            
+            document.addEventListener('dragstart', (e) => {
+                if (e.target.classList.contains('drag-handle')) {
+                    dragSrcEl = e.target.closest('.node');
+                    e.dataTransfer.effectAllowed = 'move';
+                }
+            });
+            
+            document.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                const target = e.target.closest('.node');
+                
+                if (target && target !== dragSrcEl) {
+                    const rect = target.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+                    
+                    // Visual feedback
+                    target.style.borderTop = '';
+                    target.style.borderBottom = '';
+                    
+                    if (e.clientY < midY) {
+                        target.style.borderTop = '2px solid #0066cc';
+                    } else {
+                        target.style.borderBottom = '2px solid #0066cc';
+                    }
+                }
+            });
+            
+            document.addEventListener('dragleave', () => {
+                document.querySelectorAll('.node').forEach(n => {
+                    n.style.borderTop = '';
+                    n.style.borderBottom = '';
+                });
+            });
+            
+            document.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const target = e.target.closest('.node');
+                
+                if (target && dragSrcEl && target !== dragSrcEl) {
+                    const rect = target.getBoundingClientRect();
+                    const midY = rect.top + rect.height / 2;
+                    
+                    if (e.clientY < midY) {
+                        target.parentNode.insertBefore(dragSrcEl, target);
+                    } else {
+                        target.parentNode.insertBefore(dragSrcEl, target.nextSibling);
+                    }
+                    
+                    updateStatus('Moved node');
+                }
+                
+                // Cleanup
+                document.querySelectorAll('.node').forEach(n => {
+                    n.style.borderTop = '';
+                    n.style.borderBottom = '';
+                });
+                
+                dragSrcEl = null;
+            });
+        }
+        
+        // Update status
+        function updateStatus(message) {
+            document.getElementById('status-text').textContent = message;
+        }
+        
+        // Update node info
+        function updateNodeInfo() {
+            const nodes = document.querySelectorAll('.node').length;
+            let selectedType = 'None';
+            
+            if (selectedNode) {
+                const node = selectedNode.closest('.node');
+                selectedType = node.dataset.type ? node.dataset.type.toUpperCase() : 'TEXT';
+            }
+            
+            document.getElementById('node-info').textContent = `Nodes: ${nodes} | Selected: ${selectedType}`;
+        }
+        
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Delete selected node with Delete key
+            if (e.key === 'Delete' && selectedNode) {
+                const node = selectedNode.closest('.node');
+                if (node && confirm('Delete selected node?')) {
+                    node.remove();
+                    selectedNode = null;
+                    updateStatus('Node deleted');
+                    updateNodeInfo();
+                }
+            }
+            
+            // Add child with Enter on selected node
+            if (e.key === 'Enter' && e.ctrlKey && selectedNode) {
+                const node = selectedNode.closest('.node');
+                let children = node.querySelector('.children');
+                
+                if (!children) {
+                    children = document.createElement('ul');
+                    children.className = 'children';
+                    node.appendChild(children);
+                    node.querySelector('.node-toggle').textContent = '−';
+                }
+                
+                const newChild = createNode('node-' + Date.now(), 'text', 'New Node', '');
+                children.appendChild(newChild);
+                selectNode(newChild.querySelector('.node-content'));
+                
+                updateStatus('Added child node');
+                updateNodeInfo();
+                e.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>

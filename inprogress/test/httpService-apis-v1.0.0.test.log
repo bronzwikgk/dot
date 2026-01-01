@@ -1,0 +1,5 @@
+FETCH https://jsonplaceholder.typicode.com/users status:200
+POST https://jsonplaceholder.typicode.com/posts status:200
+PUT https://jsonplaceholder.typicode.com/posts/1 status:200
+DELETE https://jsonplaceholder.typicode.com/posts/1 status:200
+FETCH https://jsonplaceholder.typicode.com/todos?completed=false status:200

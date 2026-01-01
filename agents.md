@@ -27,3 +27,26 @@
 - All agent end their message with next step/tool. For [`tester` for tesing,`viewer` for view and approval].
 -in ur work log, always add my input message as it is without chanding any word.
 - Each agent prints a summary of its output. - Summary: Built a header-only blueprint that keeps only the reset/tokens imports plus the compact header, enforces pointer and hover cues, documents the semantic nav requirements, and clarifies escape-sequence guidance.
+Code & Implementation Constraints
+
+Use semantic HTML only
+
+Use semantic-tag-based CSS only
+
+No class-based CSS
+
+Avoid using any library or framework
+
+Always use import
+
+Never use require
+
+Never use arrow functions
+
+Everything should preferably be:
+
+Minimal
+
+Single-file
+
+Easy to test directly

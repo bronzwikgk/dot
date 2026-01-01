@@ -1,0 +1,13 @@
+// All line item with "-" is a node, its has a lable, name, type, child, sibling. It has seperator, comma means the node has a sibling, . means node has ended
+
+- load
+    - validate
+        - parse,
+            - validate,
+            - apply rules,
+                - tokenise,
+                    - apply rules
+                    - resolve directives and command.
+        - export
+- send
+- render

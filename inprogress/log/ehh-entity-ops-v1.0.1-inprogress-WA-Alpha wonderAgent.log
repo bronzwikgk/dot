@@ -1,0 +1,16 @@
+JSON | create | json_1767269147500
+JSON | update | processed
+JSON | delete | json_1767269147500
+JSONL | create | rows=3
+JSONL | read | rows=3
+JSONL | delete | file removed
+CSV | create | rows=3
+CSV | read | rows=3
+CSV | delete | file removed
+Cache | write | entries=3
+Cache | read | ts=2026-01-01T12:05:47.512Z
+Cache | delete | cache cleared
+Folder | create | D:\Users\0dot1\Documents\Github\dot\inprogress\test\ehh_entity_ops_data\node_ops
+Folder | rename | D:\Users\0dot1\Documents\Github\dot\inprogress\test\ehh_entity_ops_data\node_ops_renamed
+Folder | list | count=1
+Folder | cleanup | restored

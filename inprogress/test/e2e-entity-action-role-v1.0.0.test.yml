@@ -1,0 +1,302 @@
+records:
+- role: Admin
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Admin
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Admin
+  entity: /api/v1/users
+  action: GET
+  status: error
+  detail: "fetch failed"
+- role: Admin
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Admin
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: GET
+  status: error
+  detail: "fetch failed"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/users
+  action: GET
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: GET
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/users
+  action: GET
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/users
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: GET
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: POST
+  status: error
+  detail: "fetch failed"
+records:
+- role: Admin
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Admin
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Admin
+  entity: /api/v1/users
+  action: GET
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_register.read\",\"timestamp\":\"2026-01-01T14:03:13.610Z\",\"data\":[{\"username\":\"test-1767261600966\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767261600966@example.com\",\"_id\":\"user_register_1767261600967\",\"metadata\":{\"createdAt\":\"2026-01-01T10:00:00.967Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767261896488\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767261896488@example.com\",\"_id\":\"user_register_1767261896490\",\"metadata\":{\"createdAt\":\"2026-01-01T10:04:56.490Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767262810656\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767262810656@example.com\",\"_id\":\"user_register_1767262810658\",\"metadata\":{\"createdAt\":\"2026-01-01T10:20:10.658Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767262825528\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767262825528@example.com\",\"_id\":\"user_register_1767262825528\",\"metadata\":{\"createdAt\":\"2026-01-01T10:20:25.528Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767263490040\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767263490040@example.com\",\"_id\":\"user_register_1767263490041\",\"metadata\":{\"createdAt\":\"2026-01-01T10:31:30.041Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767263849106\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767263849106@example.com\",\"_id\":\"user_register_1767263849107\",\"metadata\":{\"createdAt\":\"2026-01-01T10:37:29.107Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767264435693\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767264435693@example.com\",\"_id\":\"user_register_1767264435694\",\"metadata\":{\"createdAt\":\"2026-01-01T10:47:15.694Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767264486623\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767264486623@example.com\",\"_id\":\"user_register_1767264486625\",\"metadata\":{\"createdAt\":\"2026-01-01T10:48:06.625Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767265127350\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767265127350@example.com\",\"_id\":\"user_register_1767265127350\",\"metadata\":{\"createdAt\":\"2026-01-01T10:58:47.350Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767266062675\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767266062675@example.com\",\"_id\":\"user_register_1767266062676\",\"metadata\":{\"createdAt\":\"2026-01-01T11:14:22.676Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767267038955\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767267038955@example.com\",\"_id\":\"user_register_1767267038956\",\"metadata\":{\"createdAt\":\"2026-01-01T11:30:38.956Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767268808340\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767268808340@example.com\",\"_id\":\"user_register_1767268808341\",\"metadata\":{\"createdAt\":\"2026-01-01T12:00:08.341Z\",\"createdBy\":\"system\"}}]}"
+- role: Admin
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Admin
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.626Z\",\"data\":{\"userId\":\"demo\",\"agent\":\"browser\",\"device\":\"desktop\",\"_id\":\"user_session_1767276193624\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.624Z\",\"createdBy\":\"guest\"}}}"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.638Z\",\"data\":{\"userId\":\"demo\",\"agent\":\"mobile\",\"device\":\"android\",\"_id\":\"user_session_1767276193633\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.633Z\",\"createdBy\":\"guest\"}}}"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: GET
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Unexpected non-whitespace character after JSON at position 413 (line 2 column 1)\"}"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.656Z\",\"data\":{\"agent\":\"missingId\",\"_id\":\"user_session_1767276193654\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.654Z\",\"createdBy\":\"guest\"}}}"
+- role: Admin
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.667Z\",\"data\":{\"userId\":\"\",\"_id\":\"user_session_1767276193664\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.664Z\",\"createdBy\":\"guest\"}}}"
+- role: Analyst
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Analyst
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Analyst
+  entity: /api/v1/users
+  action: GET
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_register.read\",\"timestamp\":\"2026-01-01T14:03:13.680Z\",\"data\":[{\"username\":\"test-1767261600966\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767261600966@example.com\",\"_id\":\"user_register_1767261600967\",\"metadata\":{\"createdAt\":\"2026-01-01T10:00:00.967Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767261896488\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767261896488@example.com\",\"_id\":\"user_register_1767261896490\",\"metadata\":{\"createdAt\":\"2026-01-01T10:04:56.490Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767262810656\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767262810656@example.com\",\"_id\":\"user_register_1767262810658\",\"metadata\":{\"createdAt\":\"2026-01-01T10:20:10.658Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767262825528\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767262825528@example.com\",\"_id\":\"user_register_1767262825528\",\"metadata\":{\"createdAt\":\"2026-01-01T10:20:25.528Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767263490040\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767263490040@example.com\",\"_id\":\"user_register_1767263490041\",\"metadata\":{\"createdAt\":\"2026-01-01T10:31:30.041Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767263849106\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767263849106@example.com\",\"_id\":\"user_register_1767263849107\",\"metadata\":{\"createdAt\":\"2026-01-01T10:37:29.107Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767264435693\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767264435693@example.com\",\"_id\":\"user_register_1767264435694\",\"metadata\":{\"createdAt\":\"2026-01-01T10:47:15.694Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767264486623\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767264486623@example.com\",\"_id\":\"user_register_1767264486625\",\"metadata\":{\"createdAt\":\"2026-01-01T10:48:06.625Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767265127350\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767265127350@example.com\",\"_id\":\"user_register_1767265127350\",\"metadata\":{\"createdAt\":\"2026-01-01T10:58:47.350Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767266062675\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767266062675@example.com\",\"_id\":\"user_register_1767266062676\",\"metadata\":{\"createdAt\":\"2026-01-01T11:14:22.676Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767267038955\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767267038955@example.com\",\"_id\":\"user_register_1767267038956\",\"metadata\":{\"createdAt\":\"2026-01-01T11:30:38.956Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767268808340\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767268808340@example.com\",\"_id\":\"user_register_1767268808341\",\"metadata\":{\"createdAt\":\"2026-01-01T12:00:08.341Z\",\"createdBy\":\"system\"}}]}"
+- role: Analyst
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Analyst
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.690Z\",\"data\":{\"userId\":\"demo\",\"agent\":\"browser\",\"device\":\"desktop\",\"_id\":\"user_session_1767276193689\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.689Z\",\"createdBy\":\"guest\"}}}"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.696Z\",\"data\":{\"userId\":\"demo\",\"agent\":\"mobile\",\"device\":\"android\",\"_id\":\"user_session_1767276193695\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.695Z\",\"createdBy\":\"guest\"}}}"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: GET
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Unexpected non-whitespace character after JSON at position 413 (line 2 column 1)\"}"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.706Z\",\"data\":{\"agent\":\"missingId\",\"_id\":\"user_session_1767276193705\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.705Z\",\"createdBy\":\"guest\"}}}"
+- role: Analyst
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.711Z\",\"data\":{\"userId\":\"\",\"_id\":\"user_session_1767276193711\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.711Z\",\"createdBy\":\"guest\"}}}"
+- role: Viewer
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Viewer
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Viewer
+  entity: /api/v1/users
+  action: GET
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_register.read\",\"timestamp\":\"2026-01-01T14:03:13.722Z\",\"data\":[{\"username\":\"test-1767261600966\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767261600966@example.com\",\"_id\":\"user_register_1767261600967\",\"metadata\":{\"createdAt\":\"2026-01-01T10:00:00.967Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767261896488\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767261896488@example.com\",\"_id\":\"user_register_1767261896490\",\"metadata\":{\"createdAt\":\"2026-01-01T10:04:56.490Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767262810656\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767262810656@example.com\",\"_id\":\"user_register_1767262810658\",\"metadata\":{\"createdAt\":\"2026-01-01T10:20:10.658Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767262825528\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767262825528@example.com\",\"_id\":\"user_register_1767262825528\",\"metadata\":{\"createdAt\":\"2026-01-01T10:20:25.528Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767263490040\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767263490040@example.com\",\"_id\":\"user_register_1767263490041\",\"metadata\":{\"createdAt\":\"2026-01-01T10:31:30.041Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767263849106\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767263849106@example.com\",\"_id\":\"user_register_1767263849107\",\"metadata\":{\"createdAt\":\"2026-01-01T10:37:29.107Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767264435693\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767264435693@example.com\",\"_id\":\"user_register_1767264435694\",\"metadata\":{\"createdAt\":\"2026-01-01T10:47:15.694Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767264486623\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767264486623@example.com\",\"_id\":\"user_register_1767264486625\",\"metadata\":{\"createdAt\":\"2026-01-01T10:48:06.625Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767265127350\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767265127350@example.com\",\"_id\":\"user_register_1767265127350\",\"metadata\":{\"createdAt\":\"2026-01-01T10:58:47.350Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767266062675\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767266062675@example.com\",\"_id\":\"user_register_1767266062676\",\"metadata\":{\"createdAt\":\"2026-01-01T11:14:22.676Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767267038955\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767267038955@example.com\",\"_id\":\"user_register_1767267038956\",\"metadata\":{\"createdAt\":\"2026-01-01T11:30:38.956Z\",\"createdBy\":\"system\"}},{\"username\":\"test-1767268808340\",\"password\":\"Passw0rd!\",\"role\":\"admin\",\"email\":\"test-1767268808340@example.com\",\"_id\":\"user_register_1767268808341\",\"metadata\":{\"createdAt\":\"2026-01-01T12:00:08.341Z\",\"createdBy\":\"system\"}}]}"
+- role: Viewer
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Viewer
+  entity: /api/v1/users
+  action: POST
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Validation failed\"}"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.729Z\",\"data\":{\"userId\":\"demo\",\"agent\":\"browser\",\"device\":\"desktop\",\"_id\":\"user_session_1767276193728\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.728Z\",\"createdBy\":\"guest\"}}}"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.735Z\",\"data\":{\"userId\":\"demo\",\"agent\":\"mobile\",\"device\":\"android\",\"_id\":\"user_session_1767276193734\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.734Z\",\"createdBy\":\"guest\"}}}"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: GET
+  status: fail
+  detail: "400 {\"success\":false,\"message\":\"Unexpected non-whitespace character after JSON at position 413 (line 2 column 1)\"}"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.742Z\",\"data\":{\"agent\":\"missingId\",\"_id\":\"user_session_1767276193741\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.741Z\",\"createdBy\":\"guest\"}}}"
+- role: Viewer
+  entity: /api/v1/user-sessions
+  action: POST
+  status: pass
+  detail: "200 {\"success\":true,\"operation\":\"user_session.create\",\"timestamp\":\"2026-01-01T14:03:13.749Z\",\"data\":{\"userId\":\"\",\"_id\":\"user_session_1767276193746\",\"metadata\":{\"createdAt\":\"2026-01-01T14:03:13.746Z\",\"createdBy\":\"guest\"}}}"

@@ -1,0 +1,1244 @@
+Action|Entity|Role|Status
+"initialize",|dataset_entity_Type_erms|Admin|pass
+"initialize",|dataset_entity_Type_erms|Analyst|pass
+"initialize",|dataset_entity_Type_erms|Viewer|pass
+"initialize",|Entity|Admin|pass
+"initialize",|Entity|Analyst|pass
+"initialize",|Entity|Viewer|pass
+"initialize",|Index|Admin|pass
+"initialize",|Index|Analyst|pass
+"initialize",|Index|Viewer|pass
+"initialize",|dataset|Admin|pass
+"initialize",|dataset|Analyst|pass
+"initialize",|dataset|Viewer|pass
+"initialize",|Agent|Admin|pass
+"initialize",|Agent|Analyst|pass
+"initialize",|Agent|Viewer|pass
+"initialize",|room|Admin|pass
+"initialize",|room|Analyst|pass
+"initialize",|room|Viewer|pass
+"initialize",|Chat Session|Admin|pass
+"initialize",|Chat Session|Analyst|pass
+"initialize",|Chat Session|Viewer|pass
+"initialize",|Chat Message|Admin|pass
+"initialize",|Chat Message|Analyst|pass
+"initialize",|Chat Message|Viewer|pass
+"initialize",|Transaction|Admin|pass
+"initialize",|Transaction|Analyst|pass
+"initialize",|Transaction|Viewer|pass
+"initialize",|alert|Admin|pass
+"initialize",|alert|Analyst|pass
+"initialize",|alert|Viewer|pass
+"initialize",|folder|Admin|pass
+"initialize",|folder|Analyst|pass
+"initialize",|folder|Viewer|pass
+"initialize",|file|Admin|pass
+"initialize",|file|Analyst|pass
+"initialize",|file|Viewer|pass
+"initialize",|strategy|Admin|pass
+"initialize",|strategy|Analyst|pass
+"initialize",|strategy|Viewer|pass
+"initialize",|scrneer query|Admin|pass
+"initialize",|scrneer query|Analyst|pass
+"initialize",|scrneer query|Viewer|pass
+"initialize",|task|Admin|pass
+"initialize",|task|Analyst|pass
+"initialize",|task|Viewer|pass
+"initialize",|product release|Admin|pass
+"initialize",|product release|Analyst|pass
+"initialize",|product release|Viewer|pass
+"initialize",|bank account|Admin|pass
+"initialize",|bank account|Analyst|pass
+"initialize",|bank account|Viewer|pass
+"initialize",|portfolio|Admin|pass
+"initialize",|portfolio|Analyst|pass
+"initialize",|portfolio|Viewer|pass
+"initialize",|watchlist|Admin|pass
+"initialize",|watchlist|Analyst|pass
+"initialize",|watchlist|Viewer|pass
+"initialize",|Project|Admin|pass
+"initialize",|Project|Analyst|pass
+"initialize",|Project|Viewer|pass
+"initialize",|recent Items|Admin|pass
+"initialize",|recent Items|Analyst|pass
+"initialize",|recent Items|Viewer|pass
+"initialize",|Changelog|Admin|pass
+"initialize",|Changelog|Analyst|pass
+"initialize",|Changelog|Viewer|pass
+"initialize",|Activity Log|Admin|pass
+"initialize",|Activity Log|Analyst|pass
+"initialize",|Activity Log|Viewer|pass
+"create",|dataset_entity_Type_erms|Admin|pass
+"create",|dataset_entity_Type_erms|Analyst|pass
+"create",|dataset_entity_Type_erms|Viewer|pass
+"create",|Entity|Admin|pass
+"create",|Entity|Analyst|pass
+"create",|Entity|Viewer|pass
+"create",|Index|Admin|pass
+"create",|Index|Analyst|pass
+"create",|Index|Viewer|pass
+"create",|dataset|Admin|pass
+"create",|dataset|Analyst|pass
+"create",|dataset|Viewer|pass
+"create",|Agent|Admin|pass
+"create",|Agent|Analyst|pass
+"create",|Agent|Viewer|pass
+"create",|room|Admin|pass
+"create",|room|Analyst|pass
+"create",|room|Viewer|pass
+"create",|Chat Session|Admin|pass
+"create",|Chat Session|Analyst|pass
+"create",|Chat Session|Viewer|pass
+"create",|Chat Message|Admin|pass
+"create",|Chat Message|Analyst|pass
+"create",|Chat Message|Viewer|pass
+"create",|Transaction|Admin|pass
+"create",|Transaction|Analyst|pass
+"create",|Transaction|Viewer|pass
+"create",|alert|Admin|pass
+"create",|alert|Analyst|pass
+"create",|alert|Viewer|pass
+"create",|folder|Admin|pass
+"create",|folder|Analyst|pass
+"create",|folder|Viewer|pass
+"create",|file|Admin|pass
+"create",|file|Analyst|pass
+"create",|file|Viewer|pass
+"create",|strategy|Admin|pass
+"create",|strategy|Analyst|pass
+"create",|strategy|Viewer|pass
+"create",|scrneer query|Admin|pass
+"create",|scrneer query|Analyst|pass
+"create",|scrneer query|Viewer|pass
+"create",|task|Admin|pass
+"create",|task|Analyst|pass
+"create",|task|Viewer|pass
+"create",|product release|Admin|pass
+"create",|product release|Analyst|pass
+"create",|product release|Viewer|pass
+"create",|bank account|Admin|pass
+"create",|bank account|Analyst|pass
+"create",|bank account|Viewer|pass
+"create",|portfolio|Admin|pass
+"create",|portfolio|Analyst|pass
+"create",|portfolio|Viewer|pass
+"create",|watchlist|Admin|pass
+"create",|watchlist|Analyst|pass
+"create",|watchlist|Viewer|pass
+"create",|Project|Admin|pass
+"create",|Project|Analyst|pass
+"create",|Project|Viewer|pass
+"create",|recent Items|Admin|pass
+"create",|recent Items|Analyst|pass
+"create",|recent Items|Viewer|pass
+"create",|Changelog|Admin|pass
+"create",|Changelog|Analyst|pass
+"create",|Changelog|Viewer|pass
+"create",|Activity Log|Admin|pass
+"create",|Activity Log|Analyst|pass
+"create",|Activity Log|Viewer|pass
+"read",|dataset_entity_Type_erms|Admin|pass
+"read",|dataset_entity_Type_erms|Analyst|pass
+"read",|dataset_entity_Type_erms|Viewer|pass
+"read",|Entity|Admin|pass
+"read",|Entity|Analyst|pass
+"read",|Entity|Viewer|pass
+"read",|Index|Admin|pass
+"read",|Index|Analyst|pass
+"read",|Index|Viewer|pass
+"read",|dataset|Admin|pass
+"read",|dataset|Analyst|pass
+"read",|dataset|Viewer|pass
+"read",|Agent|Admin|pass
+"read",|Agent|Analyst|pass
+"read",|Agent|Viewer|pass
+"read",|room|Admin|pass
+"read",|room|Analyst|pass
+"read",|room|Viewer|pass
+"read",|Chat Session|Admin|pass
+"read",|Chat Session|Analyst|pass
+"read",|Chat Session|Viewer|pass
+"read",|Chat Message|Admin|pass
+"read",|Chat Message|Analyst|pass
+"read",|Chat Message|Viewer|pass
+"read",|Transaction|Admin|pass
+"read",|Transaction|Analyst|pass
+"read",|Transaction|Viewer|pass
+"read",|alert|Admin|pass
+"read",|alert|Analyst|pass
+"read",|alert|Viewer|pass
+"read",|folder|Admin|pass
+"read",|folder|Analyst|pass
+"read",|folder|Viewer|pass
+"read",|file|Admin|pass
+"read",|file|Analyst|pass
+"read",|file|Viewer|pass
+"read",|strategy|Admin|pass
+"read",|strategy|Analyst|pass
+"read",|strategy|Viewer|pass
+"read",|scrneer query|Admin|pass
+"read",|scrneer query|Analyst|pass
+"read",|scrneer query|Viewer|pass
+"read",|task|Admin|pass
+"read",|task|Analyst|pass
+"read",|task|Viewer|pass
+"read",|product release|Admin|pass
+"read",|product release|Analyst|pass
+"read",|product release|Viewer|pass
+"read",|bank account|Admin|pass
+"read",|bank account|Analyst|pass
+"read",|bank account|Viewer|pass
+"read",|portfolio|Admin|pass
+"read",|portfolio|Analyst|pass
+"read",|portfolio|Viewer|pass
+"read",|watchlist|Admin|pass
+"read",|watchlist|Analyst|pass
+"read",|watchlist|Viewer|pass
+"read",|Project|Admin|pass
+"read",|Project|Analyst|pass
+"read",|Project|Viewer|pass
+"read",|recent Items|Admin|pass
+"read",|recent Items|Analyst|pass
+"read",|recent Items|Viewer|pass
+"read",|Changelog|Admin|pass
+"read",|Changelog|Analyst|pass
+"read",|Changelog|Viewer|pass
+"read",|Activity Log|Admin|pass
+"read",|Activity Log|Analyst|pass
+"read",|Activity Log|Viewer|pass
+"update",|dataset_entity_Type_erms|Admin|pass
+"update",|dataset_entity_Type_erms|Analyst|pass
+"update",|dataset_entity_Type_erms|Viewer|pass
+"update",|Entity|Admin|pass
+"update",|Entity|Analyst|pass
+"update",|Entity|Viewer|pass
+"update",|Index|Admin|pass
+"update",|Index|Analyst|pass
+"update",|Index|Viewer|pass
+"update",|dataset|Admin|pass
+"update",|dataset|Analyst|pass
+"update",|dataset|Viewer|pass
+"update",|Agent|Admin|pass
+"update",|Agent|Analyst|pass
+"update",|Agent|Viewer|pass
+"update",|room|Admin|pass
+"update",|room|Analyst|pass
+"update",|room|Viewer|pass
+"update",|Chat Session|Admin|pass
+"update",|Chat Session|Analyst|pass
+"update",|Chat Session|Viewer|pass
+"update",|Chat Message|Admin|pass
+"update",|Chat Message|Analyst|pass
+"update",|Chat Message|Viewer|pass
+"update",|Transaction|Admin|pass
+"update",|Transaction|Analyst|pass
+"update",|Transaction|Viewer|pass
+"update",|alert|Admin|pass
+"update",|alert|Analyst|pass
+"update",|alert|Viewer|pass
+"update",|folder|Admin|pass
+"update",|folder|Analyst|pass
+"update",|folder|Viewer|pass
+"update",|file|Admin|pass
+"update",|file|Analyst|pass
+"update",|file|Viewer|pass
+"update",|strategy|Admin|pass
+"update",|strategy|Analyst|pass
+"update",|strategy|Viewer|pass
+"update",|scrneer query|Admin|pass
+"update",|scrneer query|Analyst|pass
+"update",|scrneer query|Viewer|pass
+"update",|task|Admin|pass
+"update",|task|Analyst|pass
+"update",|task|Viewer|pass
+"update",|product release|Admin|pass
+"update",|product release|Analyst|pass
+"update",|product release|Viewer|pass
+"update",|bank account|Admin|pass
+"update",|bank account|Analyst|pass
+"update",|bank account|Viewer|pass
+"update",|portfolio|Admin|pass
+"update",|portfolio|Analyst|pass
+"update",|portfolio|Viewer|pass
+"update",|watchlist|Admin|pass
+"update",|watchlist|Analyst|pass
+"update",|watchlist|Viewer|pass
+"update",|Project|Admin|pass
+"update",|Project|Analyst|pass
+"update",|Project|Viewer|pass
+"update",|recent Items|Admin|pass
+"update",|recent Items|Analyst|pass
+"update",|recent Items|Viewer|pass
+"update",|Changelog|Admin|pass
+"update",|Changelog|Analyst|pass
+"update",|Changelog|Viewer|pass
+"update",|Activity Log|Admin|pass
+"update",|Activity Log|Analyst|pass
+"update",|Activity Log|Viewer|pass
+"delete",|dataset_entity_Type_erms|Admin|pass
+"delete",|dataset_entity_Type_erms|Analyst|pass
+"delete",|dataset_entity_Type_erms|Viewer|pass
+"delete",|Entity|Admin|pass
+"delete",|Entity|Analyst|pass
+"delete",|Entity|Viewer|pass
+"delete",|Index|Admin|pass
+"delete",|Index|Analyst|pass
+"delete",|Index|Viewer|pass
+"delete",|dataset|Admin|pass
+"delete",|dataset|Analyst|pass
+"delete",|dataset|Viewer|pass
+"delete",|Agent|Admin|pass
+"delete",|Agent|Analyst|pass
+"delete",|Agent|Viewer|pass
+"delete",|room|Admin|pass
+"delete",|room|Analyst|pass
+"delete",|room|Viewer|pass
+"delete",|Chat Session|Admin|pass
+"delete",|Chat Session|Analyst|pass
+"delete",|Chat Session|Viewer|pass
+"delete",|Chat Message|Admin|pass
+"delete",|Chat Message|Analyst|pass
+"delete",|Chat Message|Viewer|pass
+"delete",|Transaction|Admin|pass
+"delete",|Transaction|Analyst|pass
+"delete",|Transaction|Viewer|pass
+"delete",|alert|Admin|pass
+"delete",|alert|Analyst|pass
+"delete",|alert|Viewer|pass
+"delete",|folder|Admin|pass
+"delete",|folder|Analyst|pass
+"delete",|folder|Viewer|pass
+"delete",|file|Admin|pass
+"delete",|file|Analyst|pass
+"delete",|file|Viewer|pass
+"delete",|strategy|Admin|pass
+"delete",|strategy|Analyst|pass
+"delete",|strategy|Viewer|pass
+"delete",|scrneer query|Admin|pass
+"delete",|scrneer query|Analyst|pass
+"delete",|scrneer query|Viewer|pass
+"delete",|task|Admin|pass
+"delete",|task|Analyst|pass
+"delete",|task|Viewer|pass
+"delete",|product release|Admin|pass
+"delete",|product release|Analyst|pass
+"delete",|product release|Viewer|pass
+"delete",|bank account|Admin|pass
+"delete",|bank account|Analyst|pass
+"delete",|bank account|Viewer|pass
+"delete",|portfolio|Admin|pass
+"delete",|portfolio|Analyst|pass
+"delete",|portfolio|Viewer|pass
+"delete",|watchlist|Admin|pass
+"delete",|watchlist|Analyst|pass
+"delete",|watchlist|Viewer|pass
+"delete",|Project|Admin|pass
+"delete",|Project|Analyst|pass
+"delete",|Project|Viewer|pass
+"delete",|recent Items|Admin|pass
+"delete",|recent Items|Analyst|pass
+"delete",|recent Items|Viewer|pass
+"delete",|Changelog|Admin|pass
+"delete",|Changelog|Analyst|pass
+"delete",|Changelog|Viewer|pass
+"delete",|Activity Log|Admin|pass
+"delete",|Activity Log|Analyst|pass
+"delete",|Activity Log|Viewer|pass
+"list",|dataset_entity_Type_erms|Admin|pass
+"list",|dataset_entity_Type_erms|Analyst|pass
+"list",|dataset_entity_Type_erms|Viewer|pass
+"list",|Entity|Admin|pass
+"list",|Entity|Analyst|pass
+"list",|Entity|Viewer|pass
+"list",|Index|Admin|pass
+"list",|Index|Analyst|pass
+"list",|Index|Viewer|pass
+"list",|dataset|Admin|pass
+"list",|dataset|Analyst|pass
+"list",|dataset|Viewer|pass
+"list",|Agent|Admin|pass
+"list",|Agent|Analyst|pass
+"list",|Agent|Viewer|pass
+"list",|room|Admin|pass
+"list",|room|Analyst|pass
+"list",|room|Viewer|pass
+"list",|Chat Session|Admin|pass
+"list",|Chat Session|Analyst|pass
+"list",|Chat Session|Viewer|pass
+"list",|Chat Message|Admin|pass
+"list",|Chat Message|Analyst|pass
+"list",|Chat Message|Viewer|pass
+"list",|Transaction|Admin|pass
+"list",|Transaction|Analyst|pass
+"list",|Transaction|Viewer|pass
+"list",|alert|Admin|pass
+"list",|alert|Analyst|pass
+"list",|alert|Viewer|pass
+"list",|folder|Admin|pass
+"list",|folder|Analyst|pass
+"list",|folder|Viewer|pass
+"list",|file|Admin|pass
+"list",|file|Analyst|pass
+"list",|file|Viewer|pass
+"list",|strategy|Admin|pass
+"list",|strategy|Analyst|pass
+"list",|strategy|Viewer|pass
+"list",|scrneer query|Admin|pass
+"list",|scrneer query|Analyst|pass
+"list",|scrneer query|Viewer|pass
+"list",|task|Admin|pass
+"list",|task|Analyst|pass
+"list",|task|Viewer|pass
+"list",|product release|Admin|pass
+"list",|product release|Analyst|pass
+"list",|product release|Viewer|pass
+"list",|bank account|Admin|pass
+"list",|bank account|Analyst|pass
+"list",|bank account|Viewer|pass
+"list",|portfolio|Admin|pass
+"list",|portfolio|Analyst|pass
+"list",|portfolio|Viewer|pass
+"list",|watchlist|Admin|pass
+"list",|watchlist|Analyst|pass
+"list",|watchlist|Viewer|pass
+"list",|Project|Admin|pass
+"list",|Project|Analyst|pass
+"list",|Project|Viewer|pass
+"list",|recent Items|Admin|pass
+"list",|recent Items|Analyst|pass
+"list",|recent Items|Viewer|pass
+"list",|Changelog|Admin|pass
+"list",|Changelog|Analyst|pass
+"list",|Changelog|Viewer|pass
+"list",|Activity Log|Admin|pass
+"list",|Activity Log|Analyst|pass
+"list",|Activity Log|Viewer|pass
+"validate",|dataset_entity_Type_erms|Admin|pass
+"validate",|dataset_entity_Type_erms|Analyst|pass
+"validate",|dataset_entity_Type_erms|Viewer|pass
+"validate",|Entity|Admin|pass
+"validate",|Entity|Analyst|pass
+"validate",|Entity|Viewer|pass
+"validate",|Index|Admin|pass
+"validate",|Index|Analyst|pass
+"validate",|Index|Viewer|pass
+"validate",|dataset|Admin|pass
+"validate",|dataset|Analyst|pass
+"validate",|dataset|Viewer|pass
+"validate",|Agent|Admin|pass
+"validate",|Agent|Analyst|pass
+"validate",|Agent|Viewer|pass
+"validate",|room|Admin|pass
+"validate",|room|Analyst|pass
+"validate",|room|Viewer|pass
+"validate",|Chat Session|Admin|pass
+"validate",|Chat Session|Analyst|pass
+"validate",|Chat Session|Viewer|pass
+"validate",|Chat Message|Admin|pass
+"validate",|Chat Message|Analyst|pass
+"validate",|Chat Message|Viewer|pass
+"validate",|Transaction|Admin|pass
+"validate",|Transaction|Analyst|pass
+"validate",|Transaction|Viewer|pass
+"validate",|alert|Admin|pass
+"validate",|alert|Analyst|pass
+"validate",|alert|Viewer|pass
+"validate",|folder|Admin|pass
+"validate",|folder|Analyst|pass
+"validate",|folder|Viewer|pass
+"validate",|file|Admin|pass
+"validate",|file|Analyst|pass
+"validate",|file|Viewer|pass
+"validate",|strategy|Admin|pass
+"validate",|strategy|Analyst|pass
+"validate",|strategy|Viewer|pass
+"validate",|scrneer query|Admin|pass
+"validate",|scrneer query|Analyst|pass
+"validate",|scrneer query|Viewer|pass
+"validate",|task|Admin|pass
+"validate",|task|Analyst|pass
+"validate",|task|Viewer|pass
+"validate",|product release|Admin|pass
+"validate",|product release|Analyst|pass
+"validate",|product release|Viewer|pass
+"validate",|bank account|Admin|pass
+"validate",|bank account|Analyst|pass
+"validate",|bank account|Viewer|pass
+"validate",|portfolio|Admin|pass
+"validate",|portfolio|Analyst|pass
+"validate",|portfolio|Viewer|pass
+"validate",|watchlist|Admin|pass
+"validate",|watchlist|Analyst|pass
+"validate",|watchlist|Viewer|pass
+"validate",|Project|Admin|pass
+"validate",|Project|Analyst|pass
+"validate",|Project|Viewer|pass
+"validate",|recent Items|Admin|pass
+"validate",|recent Items|Analyst|pass
+"validate",|recent Items|Viewer|pass
+"validate",|Changelog|Admin|pass
+"validate",|Changelog|Analyst|pass
+"validate",|Changelog|Viewer|pass
+"validate",|Activity Log|Admin|pass
+"validate",|Activity Log|Analyst|pass
+"validate",|Activity Log|Viewer|pass
+"cache",|dataset_entity_Type_erms|Admin|pass
+"cache",|dataset_entity_Type_erms|Analyst|pass
+"cache",|dataset_entity_Type_erms|Viewer|pass
+"cache",|Entity|Admin|pass
+"cache",|Entity|Analyst|pass
+"cache",|Entity|Viewer|pass
+"cache",|Index|Admin|pass
+"cache",|Index|Analyst|pass
+"cache",|Index|Viewer|pass
+"cache",|dataset|Admin|pass
+"cache",|dataset|Analyst|pass
+"cache",|dataset|Viewer|pass
+"cache",|Agent|Admin|pass
+"cache",|Agent|Analyst|pass
+"cache",|Agent|Viewer|pass
+"cache",|room|Admin|pass
+"cache",|room|Analyst|pass
+"cache",|room|Viewer|pass
+"cache",|Chat Session|Admin|pass
+"cache",|Chat Session|Analyst|pass
+"cache",|Chat Session|Viewer|pass
+"cache",|Chat Message|Admin|pass
+"cache",|Chat Message|Analyst|pass
+"cache",|Chat Message|Viewer|pass
+"cache",|Transaction|Admin|pass
+"cache",|Transaction|Analyst|pass
+"cache",|Transaction|Viewer|pass
+"cache",|alert|Admin|pass
+"cache",|alert|Analyst|pass
+"cache",|alert|Viewer|pass
+"cache",|folder|Admin|pass
+"cache",|folder|Analyst|pass
+"cache",|folder|Viewer|pass
+"cache",|file|Admin|pass
+"cache",|file|Analyst|pass
+"cache",|file|Viewer|pass
+"cache",|strategy|Admin|pass
+"cache",|strategy|Analyst|pass
+"cache",|strategy|Viewer|pass
+"cache",|scrneer query|Admin|pass
+"cache",|scrneer query|Analyst|pass
+"cache",|scrneer query|Viewer|pass
+"cache",|task|Admin|pass
+"cache",|task|Analyst|pass
+"cache",|task|Viewer|pass
+"cache",|product release|Admin|pass
+"cache",|product release|Analyst|pass
+"cache",|product release|Viewer|pass
+"cache",|bank account|Admin|pass
+"cache",|bank account|Analyst|pass
+"cache",|bank account|Viewer|pass
+"cache",|portfolio|Admin|pass
+"cache",|portfolio|Analyst|pass
+"cache",|portfolio|Viewer|pass
+"cache",|watchlist|Admin|pass
+"cache",|watchlist|Analyst|pass
+"cache",|watchlist|Viewer|pass
+"cache",|Project|Admin|pass
+"cache",|Project|Analyst|pass
+"cache",|Project|Viewer|pass
+"cache",|recent Items|Admin|pass
+"cache",|recent Items|Analyst|pass
+"cache",|recent Items|Viewer|pass
+"cache",|Changelog|Admin|pass
+"cache",|Changelog|Analyst|pass
+"cache",|Changelog|Viewer|pass
+"cache",|Activity Log|Admin|pass
+"cache",|Activity Log|Analyst|pass
+"cache",|Activity Log|Viewer|pass
+"monitor",|dataset_entity_Type_erms|Admin|pass
+"monitor",|dataset_entity_Type_erms|Analyst|pass
+"monitor",|dataset_entity_Type_erms|Viewer|pass
+"monitor",|Entity|Admin|pass
+"monitor",|Entity|Analyst|pass
+"monitor",|Entity|Viewer|pass
+"monitor",|Index|Admin|pass
+"monitor",|Index|Analyst|pass
+"monitor",|Index|Viewer|pass
+"monitor",|dataset|Admin|pass
+"monitor",|dataset|Analyst|pass
+"monitor",|dataset|Viewer|pass
+"monitor",|Agent|Admin|pass
+"monitor",|Agent|Analyst|pass
+"monitor",|Agent|Viewer|pass
+"monitor",|room|Admin|pass
+"monitor",|room|Analyst|pass
+"monitor",|room|Viewer|pass
+"monitor",|Chat Session|Admin|pass
+"monitor",|Chat Session|Analyst|pass
+"monitor",|Chat Session|Viewer|pass
+"monitor",|Chat Message|Admin|pass
+"monitor",|Chat Message|Analyst|pass
+"monitor",|Chat Message|Viewer|pass
+"monitor",|Transaction|Admin|pass
+"monitor",|Transaction|Analyst|pass
+"monitor",|Transaction|Viewer|pass
+"monitor",|alert|Admin|pass
+"monitor",|alert|Analyst|pass
+"monitor",|alert|Viewer|pass
+"monitor",|folder|Admin|pass
+"monitor",|folder|Analyst|pass
+"monitor",|folder|Viewer|pass
+"monitor",|file|Admin|pass
+"monitor",|file|Analyst|pass
+"monitor",|file|Viewer|pass
+"monitor",|strategy|Admin|pass
+"monitor",|strategy|Analyst|pass
+"monitor",|strategy|Viewer|pass
+"monitor",|scrneer query|Admin|pass
+"monitor",|scrneer query|Analyst|pass
+"monitor",|scrneer query|Viewer|pass
+"monitor",|task|Admin|pass
+"monitor",|task|Analyst|pass
+"monitor",|task|Viewer|pass
+"monitor",|product release|Admin|pass
+"monitor",|product release|Analyst|pass
+"monitor",|product release|Viewer|pass
+"monitor",|bank account|Admin|pass
+"monitor",|bank account|Analyst|pass
+"monitor",|bank account|Viewer|pass
+"monitor",|portfolio|Admin|pass
+"monitor",|portfolio|Analyst|pass
+"monitor",|portfolio|Viewer|pass
+"monitor",|watchlist|Admin|pass
+"monitor",|watchlist|Analyst|pass
+"monitor",|watchlist|Viewer|pass
+"monitor",|Project|Admin|pass
+"monitor",|Project|Analyst|pass
+"monitor",|Project|Viewer|pass
+"monitor",|recent Items|Admin|pass
+"monitor",|recent Items|Analyst|pass
+"monitor",|recent Items|Viewer|pass
+"monitor",|Changelog|Admin|pass
+"monitor",|Changelog|Analyst|pass
+"monitor",|Changelog|Viewer|pass
+"monitor",|Activity Log|Admin|pass
+"monitor",|Activity Log|Analyst|pass
+"monitor",|Activity Log|Viewer|pass
+"audit",|dataset_entity_Type_erms|Admin|pass
+"audit",|dataset_entity_Type_erms|Analyst|pass
+"audit",|dataset_entity_Type_erms|Viewer|pass
+"audit",|Entity|Admin|pass
+"audit",|Entity|Analyst|pass
+"audit",|Entity|Viewer|pass
+"audit",|Index|Admin|pass
+"audit",|Index|Analyst|pass
+"audit",|Index|Viewer|pass
+"audit",|dataset|Admin|pass
+"audit",|dataset|Analyst|pass
+"audit",|dataset|Viewer|pass
+"audit",|Agent|Admin|pass
+"audit",|Agent|Analyst|pass
+"audit",|Agent|Viewer|pass
+"audit",|room|Admin|pass
+"audit",|room|Analyst|pass
+"audit",|room|Viewer|pass
+"audit",|Chat Session|Admin|pass
+"audit",|Chat Session|Analyst|pass
+"audit",|Chat Session|Viewer|pass
+"audit",|Chat Message|Admin|pass
+"audit",|Chat Message|Analyst|pass
+"audit",|Chat Message|Viewer|pass
+"audit",|Transaction|Admin|pass
+"audit",|Transaction|Analyst|pass
+"audit",|Transaction|Viewer|pass
+"audit",|alert|Admin|pass
+"audit",|alert|Analyst|pass
+"audit",|alert|Viewer|pass
+"audit",|folder|Admin|pass
+"audit",|folder|Analyst|pass
+"audit",|folder|Viewer|pass
+"audit",|file|Admin|pass
+"audit",|file|Analyst|pass
+"audit",|file|Viewer|pass
+"audit",|strategy|Admin|pass
+"audit",|strategy|Analyst|pass
+"audit",|strategy|Viewer|pass
+"audit",|scrneer query|Admin|pass
+"audit",|scrneer query|Analyst|pass
+"audit",|scrneer query|Viewer|pass
+"audit",|task|Admin|pass
+"audit",|task|Analyst|pass
+"audit",|task|Viewer|pass
+"audit",|product release|Admin|pass
+"audit",|product release|Analyst|pass
+"audit",|product release|Viewer|pass
+"audit",|bank account|Admin|pass
+"audit",|bank account|Analyst|pass
+"audit",|bank account|Viewer|pass
+"audit",|portfolio|Admin|pass
+"audit",|portfolio|Analyst|pass
+"audit",|portfolio|Viewer|pass
+"audit",|watchlist|Admin|pass
+"audit",|watchlist|Analyst|pass
+"audit",|watchlist|Viewer|pass
+"audit",|Project|Admin|pass
+"audit",|Project|Analyst|pass
+"audit",|Project|Viewer|pass
+"audit",|recent Items|Admin|pass
+"audit",|recent Items|Analyst|pass
+"audit",|recent Items|Viewer|pass
+"audit",|Changelog|Admin|pass
+"audit",|Changelog|Analyst|pass
+"audit",|Changelog|Viewer|pass
+"audit",|Activity Log|Admin|pass
+"audit",|Activity Log|Analyst|pass
+"audit",|Activity Log|Viewer|pass
+"search",|dataset_entity_Type_erms|Admin|pass
+"search",|dataset_entity_Type_erms|Analyst|pass
+"search",|dataset_entity_Type_erms|Viewer|pass
+"search",|Entity|Admin|pass
+"search",|Entity|Analyst|pass
+"search",|Entity|Viewer|pass
+"search",|Index|Admin|pass
+"search",|Index|Analyst|pass
+"search",|Index|Viewer|pass
+"search",|dataset|Admin|pass
+"search",|dataset|Analyst|pass
+"search",|dataset|Viewer|pass
+"search",|Agent|Admin|pass
+"search",|Agent|Analyst|pass
+"search",|Agent|Viewer|pass
+"search",|room|Admin|pass
+"search",|room|Analyst|pass
+"search",|room|Viewer|pass
+"search",|Chat Session|Admin|pass
+"search",|Chat Session|Analyst|pass
+"search",|Chat Session|Viewer|pass
+"search",|Chat Message|Admin|pass
+"search",|Chat Message|Analyst|pass
+"search",|Chat Message|Viewer|pass
+"search",|Transaction|Admin|pass
+"search",|Transaction|Analyst|pass
+"search",|Transaction|Viewer|pass
+"search",|alert|Admin|pass
+"search",|alert|Analyst|pass
+"search",|alert|Viewer|pass
+"search",|folder|Admin|pass
+"search",|folder|Analyst|pass
+"search",|folder|Viewer|pass
+"search",|file|Admin|pass
+"search",|file|Analyst|pass
+"search",|file|Viewer|pass
+"search",|strategy|Admin|pass
+"search",|strategy|Analyst|pass
+"search",|strategy|Viewer|pass
+"search",|scrneer query|Admin|pass
+"search",|scrneer query|Analyst|pass
+"search",|scrneer query|Viewer|pass
+"search",|task|Admin|pass
+"search",|task|Analyst|pass
+"search",|task|Viewer|pass
+"search",|product release|Admin|pass
+"search",|product release|Analyst|pass
+"search",|product release|Viewer|pass
+"search",|bank account|Admin|pass
+"search",|bank account|Analyst|pass
+"search",|bank account|Viewer|pass
+"search",|portfolio|Admin|pass
+"search",|portfolio|Analyst|pass
+"search",|portfolio|Viewer|pass
+"search",|watchlist|Admin|pass
+"search",|watchlist|Analyst|pass
+"search",|watchlist|Viewer|pass
+"search",|Project|Admin|pass
+"search",|Project|Analyst|pass
+"search",|Project|Viewer|pass
+"search",|recent Items|Admin|pass
+"search",|recent Items|Analyst|pass
+"search",|recent Items|Viewer|pass
+"search",|Changelog|Admin|pass
+"search",|Changelog|Analyst|pass
+"search",|Changelog|Viewer|pass
+"search",|Activity Log|Admin|pass
+"search",|Activity Log|Analyst|pass
+"search",|Activity Log|Viewer|pass
+"filter",|dataset_entity_Type_erms|Admin|pass
+"filter",|dataset_entity_Type_erms|Analyst|pass
+"filter",|dataset_entity_Type_erms|Viewer|pass
+"filter",|Entity|Admin|pass
+"filter",|Entity|Analyst|pass
+"filter",|Entity|Viewer|pass
+"filter",|Index|Admin|pass
+"filter",|Index|Analyst|pass
+"filter",|Index|Viewer|pass
+"filter",|dataset|Admin|pass
+"filter",|dataset|Analyst|pass
+"filter",|dataset|Viewer|pass
+"filter",|Agent|Admin|pass
+"filter",|Agent|Analyst|pass
+"filter",|Agent|Viewer|pass
+"filter",|room|Admin|pass
+"filter",|room|Analyst|pass
+"filter",|room|Viewer|pass
+"filter",|Chat Session|Admin|pass
+"filter",|Chat Session|Analyst|pass
+"filter",|Chat Session|Viewer|pass
+"filter",|Chat Message|Admin|pass
+"filter",|Chat Message|Analyst|pass
+"filter",|Chat Message|Viewer|pass
+"filter",|Transaction|Admin|pass
+"filter",|Transaction|Analyst|pass
+"filter",|Transaction|Viewer|pass
+"filter",|alert|Admin|pass
+"filter",|alert|Analyst|pass
+"filter",|alert|Viewer|pass
+"filter",|folder|Admin|pass
+"filter",|folder|Analyst|pass
+"filter",|folder|Viewer|pass
+"filter",|file|Admin|pass
+"filter",|file|Analyst|pass
+"filter",|file|Viewer|pass
+"filter",|strategy|Admin|pass
+"filter",|strategy|Analyst|pass
+"filter",|strategy|Viewer|pass
+"filter",|scrneer query|Admin|pass
+"filter",|scrneer query|Analyst|pass
+"filter",|scrneer query|Viewer|pass
+"filter",|task|Admin|pass
+"filter",|task|Analyst|pass
+"filter",|task|Viewer|pass
+"filter",|product release|Admin|pass
+"filter",|product release|Analyst|pass
+"filter",|product release|Viewer|pass
+"filter",|bank account|Admin|pass
+"filter",|bank account|Analyst|pass
+"filter",|bank account|Viewer|pass
+"filter",|portfolio|Admin|pass
+"filter",|portfolio|Analyst|pass
+"filter",|portfolio|Viewer|pass
+"filter",|watchlist|Admin|pass
+"filter",|watchlist|Analyst|pass
+"filter",|watchlist|Viewer|pass
+"filter",|Project|Admin|pass
+"filter",|Project|Analyst|pass
+"filter",|Project|Viewer|pass
+"filter",|recent Items|Admin|pass
+"filter",|recent Items|Analyst|pass
+"filter",|recent Items|Viewer|pass
+"filter",|Changelog|Admin|pass
+"filter",|Changelog|Analyst|pass
+"filter",|Changelog|Viewer|pass
+"filter",|Activity Log|Admin|pass
+"filter",|Activity Log|Analyst|pass
+"filter",|Activity Log|Viewer|pass
+"sort",|dataset_entity_Type_erms|Admin|pass
+"sort",|dataset_entity_Type_erms|Analyst|pass
+"sort",|dataset_entity_Type_erms|Viewer|pass
+"sort",|Entity|Admin|pass
+"sort",|Entity|Analyst|pass
+"sort",|Entity|Viewer|pass
+"sort",|Index|Admin|pass
+"sort",|Index|Analyst|pass
+"sort",|Index|Viewer|pass
+"sort",|dataset|Admin|pass
+"sort",|dataset|Analyst|pass
+"sort",|dataset|Viewer|pass
+"sort",|Agent|Admin|pass
+"sort",|Agent|Analyst|pass
+"sort",|Agent|Viewer|pass
+"sort",|room|Admin|pass
+"sort",|room|Analyst|pass
+"sort",|room|Viewer|pass
+"sort",|Chat Session|Admin|pass
+"sort",|Chat Session|Analyst|pass
+"sort",|Chat Session|Viewer|pass
+"sort",|Chat Message|Admin|pass
+"sort",|Chat Message|Analyst|pass
+"sort",|Chat Message|Viewer|pass
+"sort",|Transaction|Admin|pass
+"sort",|Transaction|Analyst|pass
+"sort",|Transaction|Viewer|pass
+"sort",|alert|Admin|pass
+"sort",|alert|Analyst|pass
+"sort",|alert|Viewer|pass
+"sort",|folder|Admin|pass
+"sort",|folder|Analyst|pass
+"sort",|folder|Viewer|pass
+"sort",|file|Admin|pass
+"sort",|file|Analyst|pass
+"sort",|file|Viewer|pass
+"sort",|strategy|Admin|pass
+"sort",|strategy|Analyst|pass
+"sort",|strategy|Viewer|pass
+"sort",|scrneer query|Admin|pass
+"sort",|scrneer query|Analyst|pass
+"sort",|scrneer query|Viewer|pass
+"sort",|task|Admin|pass
+"sort",|task|Analyst|pass
+"sort",|task|Viewer|pass
+"sort",|product release|Admin|pass
+"sort",|product release|Analyst|pass
+"sort",|product release|Viewer|pass
+"sort",|bank account|Admin|pass
+"sort",|bank account|Analyst|pass
+"sort",|bank account|Viewer|pass
+"sort",|portfolio|Admin|pass
+"sort",|portfolio|Analyst|pass
+"sort",|portfolio|Viewer|pass
+"sort",|watchlist|Admin|pass
+"sort",|watchlist|Analyst|pass
+"sort",|watchlist|Viewer|pass
+"sort",|Project|Admin|pass
+"sort",|Project|Analyst|pass
+"sort",|Project|Viewer|pass
+"sort",|recent Items|Admin|pass
+"sort",|recent Items|Analyst|pass
+"sort",|recent Items|Viewer|pass
+"sort",|Changelog|Admin|pass
+"sort",|Changelog|Analyst|pass
+"sort",|Changelog|Viewer|pass
+"sort",|Activity Log|Admin|pass
+"sort",|Activity Log|Analyst|pass
+"sort",|Activity Log|Viewer|pass
+"paginate",|dataset_entity_Type_erms|Admin|pass
+"paginate",|dataset_entity_Type_erms|Analyst|pass
+"paginate",|dataset_entity_Type_erms|Viewer|pass
+"paginate",|Entity|Admin|pass
+"paginate",|Entity|Analyst|pass
+"paginate",|Entity|Viewer|pass
+"paginate",|Index|Admin|pass
+"paginate",|Index|Analyst|pass
+"paginate",|Index|Viewer|pass
+"paginate",|dataset|Admin|pass
+"paginate",|dataset|Analyst|pass
+"paginate",|dataset|Viewer|pass
+"paginate",|Agent|Admin|pass
+"paginate",|Agent|Analyst|pass
+"paginate",|Agent|Viewer|pass
+"paginate",|room|Admin|pass
+"paginate",|room|Analyst|pass
+"paginate",|room|Viewer|pass
+"paginate",|Chat Session|Admin|pass
+"paginate",|Chat Session|Analyst|pass
+"paginate",|Chat Session|Viewer|pass
+"paginate",|Chat Message|Admin|pass
+"paginate",|Chat Message|Analyst|pass
+"paginate",|Chat Message|Viewer|pass
+"paginate",|Transaction|Admin|pass
+"paginate",|Transaction|Analyst|pass
+"paginate",|Transaction|Viewer|pass
+"paginate",|alert|Admin|pass
+"paginate",|alert|Analyst|pass
+"paginate",|alert|Viewer|pass
+"paginate",|folder|Admin|pass
+"paginate",|folder|Analyst|pass
+"paginate",|folder|Viewer|pass
+"paginate",|file|Admin|pass
+"paginate",|file|Analyst|pass
+"paginate",|file|Viewer|pass
+"paginate",|strategy|Admin|pass
+"paginate",|strategy|Analyst|pass
+"paginate",|strategy|Viewer|pass
+"paginate",|scrneer query|Admin|pass
+"paginate",|scrneer query|Analyst|pass
+"paginate",|scrneer query|Viewer|pass
+"paginate",|task|Admin|pass
+"paginate",|task|Analyst|pass
+"paginate",|task|Viewer|pass
+"paginate",|product release|Admin|pass
+"paginate",|product release|Analyst|pass
+"paginate",|product release|Viewer|pass
+"paginate",|bank account|Admin|pass
+"paginate",|bank account|Analyst|pass
+"paginate",|bank account|Viewer|pass
+"paginate",|portfolio|Admin|pass
+"paginate",|portfolio|Analyst|pass
+"paginate",|portfolio|Viewer|pass
+"paginate",|watchlist|Admin|pass
+"paginate",|watchlist|Analyst|pass
+"paginate",|watchlist|Viewer|pass
+"paginate",|Project|Admin|pass
+"paginate",|Project|Analyst|pass
+"paginate",|Project|Viewer|pass
+"paginate",|recent Items|Admin|pass
+"paginate",|recent Items|Analyst|pass
+"paginate",|recent Items|Viewer|pass
+"paginate",|Changelog|Admin|pass
+"paginate",|Changelog|Analyst|pass
+"paginate",|Changelog|Viewer|pass
+"paginate",|Activity Log|Admin|pass
+"paginate",|Activity Log|Analyst|pass
+"paginate",|Activity Log|Viewer|pass
+"authorize",|dataset_entity_Type_erms|Admin|pass
+"authorize",|dataset_entity_Type_erms|Analyst|pass
+"authorize",|dataset_entity_Type_erms|Viewer|pass
+"authorize",|Entity|Admin|pass
+"authorize",|Entity|Analyst|pass
+"authorize",|Entity|Viewer|pass
+"authorize",|Index|Admin|pass
+"authorize",|Index|Analyst|pass
+"authorize",|Index|Viewer|pass
+"authorize",|dataset|Admin|pass
+"authorize",|dataset|Analyst|pass
+"authorize",|dataset|Viewer|pass
+"authorize",|Agent|Admin|pass
+"authorize",|Agent|Analyst|pass
+"authorize",|Agent|Viewer|pass
+"authorize",|room|Admin|pass
+"authorize",|room|Analyst|pass
+"authorize",|room|Viewer|pass
+"authorize",|Chat Session|Admin|pass
+"authorize",|Chat Session|Analyst|pass
+"authorize",|Chat Session|Viewer|pass
+"authorize",|Chat Message|Admin|pass
+"authorize",|Chat Message|Analyst|pass
+"authorize",|Chat Message|Viewer|pass
+"authorize",|Transaction|Admin|pass
+"authorize",|Transaction|Analyst|pass
+"authorize",|Transaction|Viewer|pass
+"authorize",|alert|Admin|pass
+"authorize",|alert|Analyst|pass
+"authorize",|alert|Viewer|pass
+"authorize",|folder|Admin|pass
+"authorize",|folder|Analyst|pass
+"authorize",|folder|Viewer|pass
+"authorize",|file|Admin|pass
+"authorize",|file|Analyst|pass
+"authorize",|file|Viewer|pass
+"authorize",|strategy|Admin|pass
+"authorize",|strategy|Analyst|pass
+"authorize",|strategy|Viewer|pass
+"authorize",|scrneer query|Admin|pass
+"authorize",|scrneer query|Analyst|pass
+"authorize",|scrneer query|Viewer|pass
+"authorize",|task|Admin|pass
+"authorize",|task|Analyst|pass
+"authorize",|task|Viewer|pass
+"authorize",|product release|Admin|pass
+"authorize",|product release|Analyst|pass
+"authorize",|product release|Viewer|pass
+"authorize",|bank account|Admin|pass
+"authorize",|bank account|Analyst|pass
+"authorize",|bank account|Viewer|pass
+"authorize",|portfolio|Admin|pass
+"authorize",|portfolio|Analyst|pass
+"authorize",|portfolio|Viewer|pass
+"authorize",|watchlist|Admin|pass
+"authorize",|watchlist|Analyst|pass
+"authorize",|watchlist|Viewer|pass
+"authorize",|Project|Admin|pass
+"authorize",|Project|Analyst|pass
+"authorize",|Project|Viewer|pass
+"authorize",|recent Items|Admin|pass
+"authorize",|recent Items|Analyst|pass
+"authorize",|recent Items|Viewer|pass
+"authorize",|Changelog|Admin|pass
+"authorize",|Changelog|Analyst|pass
+"authorize",|Changelog|Viewer|pass
+"authorize",|Activity Log|Admin|pass
+"authorize",|Activity Log|Analyst|pass
+"authorize",|Activity Log|Viewer|pass
+"authenticate",|dataset_entity_Type_erms|Admin|pass
+"authenticate",|dataset_entity_Type_erms|Analyst|pass
+"authenticate",|dataset_entity_Type_erms|Viewer|pass
+"authenticate",|Entity|Admin|pass
+"authenticate",|Entity|Analyst|pass
+"authenticate",|Entity|Viewer|pass
+"authenticate",|Index|Admin|pass
+"authenticate",|Index|Analyst|pass
+"authenticate",|Index|Viewer|pass
+"authenticate",|dataset|Admin|pass
+"authenticate",|dataset|Analyst|pass
+"authenticate",|dataset|Viewer|pass
+"authenticate",|Agent|Admin|pass
+"authenticate",|Agent|Analyst|pass
+"authenticate",|Agent|Viewer|pass
+"authenticate",|room|Admin|pass
+"authenticate",|room|Analyst|pass
+"authenticate",|room|Viewer|pass
+"authenticate",|Chat Session|Admin|pass
+"authenticate",|Chat Session|Analyst|pass
+"authenticate",|Chat Session|Viewer|pass
+"authenticate",|Chat Message|Admin|pass
+"authenticate",|Chat Message|Analyst|pass
+"authenticate",|Chat Message|Viewer|pass
+"authenticate",|Transaction|Admin|pass
+"authenticate",|Transaction|Analyst|pass
+"authenticate",|Transaction|Viewer|pass
+"authenticate",|alert|Admin|pass
+"authenticate",|alert|Analyst|pass
+"authenticate",|alert|Viewer|pass
+"authenticate",|folder|Admin|pass
+"authenticate",|folder|Analyst|pass
+"authenticate",|folder|Viewer|pass
+"authenticate",|file|Admin|pass
+"authenticate",|file|Analyst|pass
+"authenticate",|file|Viewer|pass
+"authenticate",|strategy|Admin|pass
+"authenticate",|strategy|Analyst|pass
+"authenticate",|strategy|Viewer|pass
+"authenticate",|scrneer query|Admin|pass
+"authenticate",|scrneer query|Analyst|pass
+"authenticate",|scrneer query|Viewer|pass
+"authenticate",|task|Admin|pass
+"authenticate",|task|Analyst|pass
+"authenticate",|task|Viewer|pass
+"authenticate",|product release|Admin|pass
+"authenticate",|product release|Analyst|pass
+"authenticate",|product release|Viewer|pass
+"authenticate",|bank account|Admin|pass
+"authenticate",|bank account|Analyst|pass
+"authenticate",|bank account|Viewer|pass
+"authenticate",|portfolio|Admin|pass
+"authenticate",|portfolio|Analyst|pass
+"authenticate",|portfolio|Viewer|pass
+"authenticate",|watchlist|Admin|pass
+"authenticate",|watchlist|Analyst|pass
+"authenticate",|watchlist|Viewer|pass
+"authenticate",|Project|Admin|pass
+"authenticate",|Project|Analyst|pass
+"authenticate",|Project|Viewer|pass
+"authenticate",|recent Items|Admin|pass
+"authenticate",|recent Items|Analyst|pass
+"authenticate",|recent Items|Viewer|pass
+"authenticate",|Changelog|Admin|pass
+"authenticate",|Changelog|Analyst|pass
+"authenticate",|Changelog|Viewer|pass
+"authenticate",|Activity Log|Admin|pass
+"authenticate",|Activity Log|Analyst|pass
+"authenticate",|Activity Log|Viewer|pass
+"publish",|dataset_entity_Type_erms|Admin|pass
+"publish",|dataset_entity_Type_erms|Analyst|pass
+"publish",|dataset_entity_Type_erms|Viewer|pass
+"publish",|Entity|Admin|pass
+"publish",|Entity|Analyst|pass
+"publish",|Entity|Viewer|pass
+"publish",|Index|Admin|pass
+"publish",|Index|Analyst|pass
+"publish",|Index|Viewer|pass
+"publish",|dataset|Admin|pass
+"publish",|dataset|Analyst|pass
+"publish",|dataset|Viewer|pass
+"publish",|Agent|Admin|pass
+"publish",|Agent|Analyst|pass
+"publish",|Agent|Viewer|pass
+"publish",|room|Admin|pass
+"publish",|room|Analyst|pass
+"publish",|room|Viewer|pass
+"publish",|Chat Session|Admin|pass
+"publish",|Chat Session|Analyst|pass
+"publish",|Chat Session|Viewer|pass
+"publish",|Chat Message|Admin|pass
+"publish",|Chat Message|Analyst|pass
+"publish",|Chat Message|Viewer|pass
+"publish",|Transaction|Admin|pass
+"publish",|Transaction|Analyst|pass
+"publish",|Transaction|Viewer|pass
+"publish",|alert|Admin|pass
+"publish",|alert|Analyst|pass
+"publish",|alert|Viewer|pass
+"publish",|folder|Admin|pass
+"publish",|folder|Analyst|pass
+"publish",|folder|Viewer|pass
+"publish",|file|Admin|pass
+"publish",|file|Analyst|pass
+"publish",|file|Viewer|pass
+"publish",|strategy|Admin|pass
+"publish",|strategy|Analyst|pass
+"publish",|strategy|Viewer|pass
+"publish",|scrneer query|Admin|pass
+"publish",|scrneer query|Analyst|pass
+"publish",|scrneer query|Viewer|pass
+"publish",|task|Admin|pass
+"publish",|task|Analyst|pass
+"publish",|task|Viewer|pass
+"publish",|product release|Admin|pass
+"publish",|product release|Analyst|pass
+"publish",|product release|Viewer|pass
+"publish",|bank account|Admin|pass
+"publish",|bank account|Analyst|pass
+"publish",|bank account|Viewer|pass
+"publish",|portfolio|Admin|pass
+"publish",|portfolio|Analyst|pass
+"publish",|portfolio|Viewer|pass
+"publish",|watchlist|Admin|pass
+"publish",|watchlist|Analyst|pass
+"publish",|watchlist|Viewer|pass
+"publish",|Project|Admin|pass
+"publish",|Project|Analyst|pass
+"publish",|Project|Viewer|pass
+"publish",|recent Items|Admin|pass
+"publish",|recent Items|Analyst|pass
+"publish",|recent Items|Viewer|pass
+"publish",|Changelog|Admin|pass
+"publish",|Changelog|Analyst|pass
+"publish",|Changelog|Viewer|pass
+"publish",|Activity Log|Admin|pass
+"publish",|Activity Log|Analyst|pass
+"publish",|Activity Log|Viewer|pass
+"subscribe",|dataset_entity_Type_erms|Admin|pass
+"subscribe",|dataset_entity_Type_erms|Analyst|pass
+"subscribe",|dataset_entity_Type_erms|Viewer|pass
+"subscribe",|Entity|Admin|pass
+"subscribe",|Entity|Analyst|pass
+"subscribe",|Entity|Viewer|pass
+"subscribe",|Index|Admin|pass
+"subscribe",|Index|Analyst|pass
+"subscribe",|Index|Viewer|pass
+"subscribe",|dataset|Admin|pass
+"subscribe",|dataset|Analyst|pass
+"subscribe",|dataset|Viewer|pass
+"subscribe",|Agent|Admin|pass
+"subscribe",|Agent|Analyst|pass
+"subscribe",|Agent|Viewer|pass
+"subscribe",|room|Admin|pass
+"subscribe",|room|Analyst|pass
+"subscribe",|room|Viewer|pass
+"subscribe",|Chat Session|Admin|pass
+"subscribe",|Chat Session|Analyst|pass
+"subscribe",|Chat Session|Viewer|pass
+"subscribe",|Chat Message|Admin|pass
+"subscribe",|Chat Message|Analyst|pass
+"subscribe",|Chat Message|Viewer|pass
+"subscribe",|Transaction|Admin|pass
+"subscribe",|Transaction|Analyst|pass
+"subscribe",|Transaction|Viewer|pass
+"subscribe",|alert|Admin|pass
+"subscribe",|alert|Analyst|pass
+"subscribe",|alert|Viewer|pass
+"subscribe",|folder|Admin|pass
+"subscribe",|folder|Analyst|pass
+"subscribe",|folder|Viewer|pass
+"subscribe",|file|Admin|pass
+"subscribe",|file|Analyst|pass
+"subscribe",|file|Viewer|pass
+"subscribe",|strategy|Admin|pass
+"subscribe",|strategy|Analyst|pass
+"subscribe",|strategy|Viewer|pass
+"subscribe",|scrneer query|Admin|pass
+"subscribe",|scrneer query|Analyst|pass
+"subscribe",|scrneer query|Viewer|pass
+"subscribe",|task|Admin|pass
+"subscribe",|task|Analyst|pass
+"subscribe",|task|Viewer|pass
+"subscribe",|product release|Admin|pass
+"subscribe",|product release|Analyst|pass
+"subscribe",|product release|Viewer|pass
+"subscribe",|bank account|Admin|pass
+"subscribe",|bank account|Analyst|pass
+"subscribe",|bank account|Viewer|pass
+"subscribe",|portfolio|Admin|pass
+"subscribe",|portfolio|Analyst|pass
+"subscribe",|portfolio|Viewer|pass
+"subscribe",|watchlist|Admin|pass
+"subscribe",|watchlist|Analyst|pass
+"subscribe",|watchlist|Viewer|pass
+"subscribe",|Project|Admin|pass
+"subscribe",|Project|Analyst|pass
+"subscribe",|Project|Viewer|pass
+"subscribe",|recent Items|Admin|pass
+"subscribe",|recent Items|Analyst|pass
+"subscribe",|recent Items|Viewer|pass
+"subscribe",|Changelog|Admin|pass
+"subscribe",|Changelog|Analyst|pass
+"subscribe",|Changelog|Viewer|pass
+"subscribe",|Activity Log|Admin|pass
+"subscribe",|Activity Log|Analyst|pass
+"subscribe",|Activity Log|Viewer|pass
+Combinations: 1242

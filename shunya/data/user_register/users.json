@@ -108,5 +108,27 @@
       "createdAt": "2026-01-01T11:14:22.676Z",
       "createdBy": "system"
     }
+  },
+  {
+    "username": "test-1767267038955",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767267038955@example.com",
+    "_id": "user_register_1767267038956",
+    "metadata": {
+      "createdAt": "2026-01-01T11:30:38.956Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767268808340",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767268808340@example.com",
+    "_id": "user_register_1767268808341",
+    "metadata": {
+      "createdAt": "2026-01-01T12:00:08.341Z",
+      "createdBy": "system"
+    }
   }
 ]

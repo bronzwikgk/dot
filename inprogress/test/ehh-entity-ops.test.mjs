@@ -18,7 +18,7 @@ Schema: The test simply orchestrates the demo so it inherits the user register/s
 import { appendFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { EntityOpsDemo } from '../../shunya/ehh/ehh-entity-ops-v1.0.0-inprogress-WA-Alpha wonderAgent.mjs';
+import { EntityOpsDemo } from '../../shunya/ehh/ehh_entity_ops_v1_0_0_inprogress_WA_Alpha_wonderAgent.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const markerPath = resolve(__dirname, 'ehh-entity-ops.log');

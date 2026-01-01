@@ -8,3 +8,8 @@
 2026-01-01T04:33:39.134Z - Read count 1
 2026-01-01T04:33:39.134Z - Updated status to processed
 2026-01-01T04:33:39.134Z - Deleted ent_1767242019132_vivbsykzf (deleted flag true)
+2026-01-01T11:59:56.985Z - Initiating create flow test
+2026-01-01T11:59:56.992Z - Created entity ent_1767268796992_k52iusi28
+2026-01-01T11:59:56.993Z - Read count 1
+2026-01-01T11:59:56.996Z - Updated status to processed
+2026-01-01T11:59:56.997Z - Deleted ent_1767268796992_k52iusi28 (deleted flag true)

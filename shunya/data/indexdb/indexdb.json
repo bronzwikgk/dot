@@ -366,5 +366,191 @@
       "createdAt": "2026-01-01T11:14:22.782Z",
       "createdBy": "guest"
     }
+  },
+  {
+    "username": "test-1767267038955",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767267038955@example.com",
+    "_id": "user_register_1767267038956",
+    "metadata": {
+      "createdAt": "2026-01-01T11:30:38.956Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767267038968",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767267038968@example.com",
+    "sessionId": "sess-1767267038968",
+    "userId": "test-1767267038968",
+    "appToken": "token-1767267038968",
+    "expiresAt": "2026-01-01T11:40:38.968Z",
+    "createdAt": "2026-01-01T11:30:38.968Z",
+    "status": "active",
+    "_id": "user_session_1767267038969",
+    "metadata": {
+      "createdAt": "2026-01-01T11:30:38.969Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767267038997",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767267038997@example.com",
+    "_id": "user_register_1767267039056",
+    "metadata": {
+      "createdAt": "2026-01-01T11:30:39.056Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "username": "test-1767268808340",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767268808340@example.com",
+    "_id": "user_register_1767268808341",
+    "metadata": {
+      "createdAt": "2026-01-01T12:00:08.341Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767268808348",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767268808348@example.com",
+    "sessionId": "sess-1767268808348",
+    "userId": "test-1767268808348",
+    "appToken": "token-1767268808348",
+    "expiresAt": "2026-01-01T12:10:08.348Z",
+    "createdAt": "2026-01-01T12:00:08.348Z",
+    "status": "active",
+    "_id": "user_session_1767268808348",
+    "metadata": {
+      "createdAt": "2026-01-01T12:00:08.348Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767268808371",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767268808371@example.com",
+    "_id": "user_register_1767268808406",
+    "metadata": {
+      "createdAt": "2026-01-01T12:00:08.406Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "userId": "demo",
+    "agent": "browser",
+    "device": "desktop",
+    "_id": "user_session_1767276193624",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.624Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "userId": "demo",
+    "agent": "mobile",
+    "device": "android",
+    "_id": "user_session_1767276193633",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.633Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "agent": "missingId",
+    "_id": "user_session_1767276193654",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.654Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "userId": "",
+    "_id": "user_session_1767276193664",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.664Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "userId": "demo",
+    "agent": "browser",
+    "device": "desktop",
+    "_id": "user_session_1767276193689",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.689Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "userId": "demo",
+    "agent": "mobile",
+    "device": "android",
+    "_id": "user_session_1767276193695",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.695Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "agent": "missingId",
+    "_id": "user_session_1767276193705",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.705Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "userId": "",
+    "_id": "user_session_1767276193711",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.711Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "userId": "demo",
+    "agent": "browser",
+    "device": "desktop",
+    "_id": "user_session_1767276193728",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.728Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "userId": "demo",
+    "agent": "mobile",
+    "device": "android",
+    "_id": "user_session_1767276193734",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.734Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "agent": "missingId",
+    "_id": "user_session_1767276193741",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.741Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "userId": "",
+    "_id": "user_session_1767276193746",
+    "metadata": {
+      "createdAt": "2026-01-01T14:03:13.746Z",
+      "createdBy": "guest"
+    }
   }
 ]

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>EH Client Demo v1.0.1</title>
+  <style>
+    :root {
+      font-family: system-ui, Arial, sans-serif;
+      color: #111;
+      background: #f9fbff;
+      --accent:#1070ff;
+    }
+    body {
+      margin:0;
+    }
+    main {
+      display:grid;
+      grid-template-columns:250px 1fr;
+      min-height:100vh;
+    }
+    nav,section,aside,header,footer {
+      padding:1rem;
+    }
+    nav {
+      background:#fff;
+      border-right:1px solid #ddd;
+    }
+    section {
+      background:#fff;
+      border-bottom:1px solid #ddd;
+    }
+    aside {
+      padding:1rem;
+      background:#f1f4ff;
+      border-left:1px solid #ddd;
+    }
+    button {
+      font:inherit;
+      margin:0.25rem 0;
+      width:100%;
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      padding:0.75rem;
+      cursor:pointer;
+    }
+    button:disabled {
+      opacity:0.6;
+      cursor:not-allowed;
+    }
+    pre {
+      background:#0f172a;
+      color:#e2e8f0;
+      padding:0.75rem;
+      overflow:auto;
+      max-height:200px;
+    }
+    .log {
+      font-size:0.9rem;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <nav aria-label="Demo navigation">
+      <header>
+        <strong>EH Diagnostics</strong>
+        <p>Multi-role action matrix</p>
+      </header>
+      <button id="runBrowser" type="button">Run Browser Matrix</button>
+      <button id="runBackend" type="button">Run Backend Matrix</button>
+      <button id="clearLog" type="button">Clear Log</button>
+      <section>
+        <p>Last test status:</p>
+        <pre id="log" class="log">awaiting run...</pre>
+      </section>
+    </nav>
+    <section aria-label="Live report">
+      <article>
+        <header>
+          <h1>LocalStorage / IndexedDB</h1>
+          <p>Snapshots capture entity id, role, and flow.</p>
+        </header>
+        <button id="storageTest" type="button">Check Storage</button>
+        <p id="storageStatus">No storage snapshot yet.</p>
+      </article>
+      <article>
+        <header>
+          <h1>Backend diagnostics</h1>
+          <p>Calls ActionApp HTTP routes with RBAC header.</p>
+        </header>
+        <div>
+          <button data-action="createUser">Create User</button>
+          <button data-action="createSession">Create Session</button>
+          <button data-action="batchReport">Batch Report</button>
+        </div>
+        <p id="backendStatus">backend idle</p>
+      </article>
+    </section>
+    <aside aria-label="Instructions">
+      <h2>Instructions</h2>
+      <ol>
+        <li>Start backend on <code>localhost:4173</code>. (Already running if see logs.)</li>
+        <li>Use buttons to drive storage and HTTP actions.</li>
+        <li>Inspect persistent logs in <code>inprogress/test</code> after each run.</li>
+      </ol>
+    </aside>
+  </main>
+  <script>
+    const logEl = document.querySelector('#log');
+    const storageStatus = document.querySelector('#storageStatus');
+    const backendStatus = document.querySelector('#backendStatus');
+    const log = (message) => {
+      const time = new Date().toISOString();
+      logEl.textContent = `${time} - ${message}\\n` + logEl.textContent;
+    };
+    document.querySelector('#storageTest').addEventListener('click', () => {
+      const data = { id: 'user-' + Date.now(), role: 'tester' };
+      localStorage.setItem('ehh-user', JSON.stringify(data));
+      const stored = JSON.parse(localStorage.getItem('ehh-user'));
+      storageStatus.textContent = JSON.stringify(stored);
+      log(`LocalStorage test passed (snapshot: ${JSON.stringify(stored)})`);
+      const dbRequest = indexedDB.open('ehh-demo');
+      dbRequest.onupgradeneeded = () => {
+        dbRequest.result.createObjectStore('records', { keyPath: 'id' });
+      };
+      dbRequest.onsuccess = () => {
+        const tx = dbRequest.result.transaction('records', 'readwrite');
+        tx.objectStore('records').put({ id: 'rec-' + Date.now(), value: 'demo' });
+        tx.oncomplete = () => {
+          const rtx = dbRequest.result.transaction('records', 'readonly');
+          rtx.objectStore('records').getAll().onsuccess = (event) => {
+            log(`IndexedDB stored and read ${JSON.stringify(event.target.result[event.target.result.length - 1])}`);
+          };
+        };
+      };
+    });
+    document.querySelectorAll('[data-action]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const action = button.dataset.action;
+        const roles = ['guest','user','manager','admin'];
+        backendStatus.textContent = 'running ' + action;
+        for (const role of roles) {
+          try {
+            const response = await fetch(`http://localhost:4173/api/v1/${action.replace(/([A-Z])/g, '-$1').toLowerCase()}`, {
+              method: 'POST',
+              headers: {
+                'content-type': 'application/json',
+                'x-role': role
+              },
+              body: JSON.stringify({ actor: role })
+            });
+            log(`backend ${action} [${role}] ${response.ok ? 'ok' : 'failed'}: ${response.status}`);
+          } catch (error) {
+            log(`backend ${action} [${role}] failed: ${error.message}`);
+          }
+        }
+        backendStatus.textContent = 'ready';
+      });
+    });
+    document.querySelector('#runBrowser').addEventListener('click', () => {
+      log('Browser matrix started');
+    });
+    document.querySelector('#runBackend').addEventListener('click', () => {
+      log('Backend matrix started');
+    });
+    document.querySelector('#clearLog').addEventListener('click', () => {
+      logEl.textContent = '';
+    });
+  </script>
+</body>
+</html>

@@ -77,6 +77,20 @@ function sendRequest(method, path, data, port) {
   });
 }
 
+function buildQuery(params) {
+  const searchParams = new URLSearchParams();
+  const entries = Object.entries(params);
+  for (let i = 0; i < entries.length; i += 1) {
+    const [key, value] = entries[i];
+    if (value === undefined || value === null) {
+      continue;
+    }
+    const payload = typeof value === 'string' ? value : JSON.stringify(value);
+    searchParams.append(key, payload);
+  }
+  return searchParams.toString();
+}
+
 async function run() {
   await logResult('Test run starting');
   var app = new ActionApp({ port: 0 });
@@ -148,6 +162,21 @@ async function run() {
   });
   await executeTest('http delete session', function () {
     return sendRequest('DELETE', `/api/v1/user-sessions/${sessionId || 'unknown'}`, null, port);
+  });
+  const userQuery = buildQuery({
+    filter: { role: 'admin' },
+    sort: 'username:asc',
+    search: 'test'
+  });
+  await executeTest('http filtered users', function () {
+    return sendRequest('GET', `/api/v1/users?${userQuery}`, null, port);
+  });
+  const sessionQuery = buildQuery({
+    filter: { status: 'active' },
+    search: 'token'
+  });
+  await executeTest('http filtered sessions', function () {
+    return sendRequest('GET', `/api/v1/user-sessions?${sessionQuery}`, null, port);
   });
 
   server.close();
