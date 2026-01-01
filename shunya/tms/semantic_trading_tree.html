@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Semantic Trading Tree Checklist</title>
+<style>
+  body {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 1rem;
+  }
+  main {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  details {
+    margin-left: 1rem;
+  }
+  summary {
+    cursor: pointer;
+    font-weight: bold;
+  }
+  ul {
+    list-style: none;
+    padding-left: 1rem;
+  }
+  li {
+    margin: 0.25rem 0;
+  }
+</style>
+</head>
+<body>
+<header>
+  <h1>Rule-Based Trading System Tree</h1>
+</header>
+<main>
+  <!-- Step 1 -->
+  <article>
+    <section>
+      <h2>Step 1: Strategy Definition & Universe Selection</h2>
+      <details open>
+        <summary>Trading Universe</summary>
+        <ul>
+          <li><input type="checkbox" id="universe1"><label for="universe1">Stocks</label></li>
+          <li><input type="checkbox" id="universe2"><label for="universe2">Indices</label></li>
+          <li><input type="checkbox" id="universe3"><label for="universe3">ETFs</label></li>
+        </ul>
+      </details>
+      <details>
+        <summary>Signal Rules</summary>
+        <details>
+          <summary>Entry Conditions</summary>
+          <ul>
+            <li><input type="checkbox" id="entry1"><label for="entry1">EMA/SMA Crossover</label></li>
+            <li><input type="checkbox" id="entry2"><label for="entry2">RSI Levels</label></li>
+            <li><input type="checkbox" id="entry3"><label for="entry3">VWAP Breakouts</label></li>
+          </ul>
+        </details>
+        <details>
+          <summary>Exit Conditions</summary>
+          <ul>
+            <li><input type="checkbox" id="exit1"><label for="exit1">Target Price</label></li>
+            <li><input type="checkbox" id="exit2"><label for="exit2">Stop-loss</label></li>
+            <li><input type="checkbox" id="exit3"><label for="exit3">Trailing Stop</label></li>
+          </ul>
+        </details>
+        <details>
+          <summary>Time Filters</summary>
+          <ul>
+            <li><input type="checkbox" id="time1"><label for="time1">Intraday Session</label></li>
+            <li><input type="checkbox" id="time2"><label for="time2">Opening Range</label></li>
+          </ul>
+        </details>
+      </details>
+      <details>
+        <summary>Position Sizing</summary>
+        <ul>
+          <li><input type="checkbox" id="size1"><label for="size1">Risk per Trade</label></li>
+          <li><input type="checkbox" id="size2"><label for="size2">Capital Allocation</label></li>
+        </ul>
+      </details>
+    </section>
+  </article>
+
+  <!-- Step 2 -->
+  <article>
+    <section>
+      <h2>Step 2: Backtesting & Optimization</h2>
+      <details>
+        <summary>Backtesting Engine</summary>
+        <ul>
+          <li><input type="checkbox" id="bt1"><label for="bt1">Execution Model (Slippage, Spread)</label></li>
+          <li><input type="checkbox" id="bt2"><label for="bt2">Commission & Fees</label></li>
+        </ul>
+      </details>
+      <details>
+        <summary>Performance Metrics</summary>
+        <ul>
+          <li><input type="checkbox" id="pm1"><label for="pm1">P&L</label></li>
+          <li><input type="checkbox" id="pm2"><label for="pm2">Win Rate</label></li>
+          <li><input type="checkbox" id="pm3"><label for="pm3">Drawdown</label></li>
+          <li><input type="checkbox" id="pm4"><label for="pm4">Sharpe Ratio</label></li>
+        </ul>
+      </details>
+      <details>
+        <summary>Optimization Engine</summary>
+        <ul>
+          <li><input type="checkbox" id="opt1"><label for="opt1">Parameter Sweep/Grid Search</label></li>
+          <li><input type="checkbox" id="opt2"><label for="opt2">Validation Split/Out-of-Sample</label></li>
+        </ul>
+      </details>
+    </section>
+  </article>
+
+  <!-- Step 3 -->
+  <article>
+    <section>
+      <h2>Step 3: Execution & Monitoring</h2>
+      <details>
+        <summary>Execution Engine</summary>
+        <ul>
+          <li><input type="checkbox" id="ex1"><label for="ex1">Order Types (Market, Limit, Stop)</label></li>
+          <li><input type="checkbox" id="ex2"><label for="ex2">API Connection</label></li>
+        </ul>
+      </details>
+      <details>
+        <summary>Risk Management</summary>
+        <ul>
+          <li><input type="checkbox" id="rm1"><label for="rm1">Stop-loss</label></li>
+          <li><input type="checkbox" id="rm2"><label for="rm2">Take-profit</label></li>
+          <li><input type="checkbox" id="rm3"><label for="rm3">Max Drawdown</label></li>
+        </ul>
+      </details>
+      <details>
+        <summary>Monitoring Dashboard</summary>
+        <ul>
+          <li><input type="checkbox" id="md1"><label for="md1">Live P&L</label></li>
+          <li><input type="checkbox" id="md2"><label for="md2">Alerts</label></li>
+          <li><input type="checkbox" id="md3"><label for="md3">Logs</label></li>
+        </ul>
+      </details>
+      <details>
+        <summary>Override & Control</summary>
+        <ul>
+          <li><input type="checkbox" id="ov1"><label for="ov1">Manual Pause</label></li>
+          <li><input type="checkbox" id="ov2"><label for="ov2">Emergency Exit</label></li>
+        </ul>
+      </details>
+    </section>
+  </article>
+
+  <!-- Step 4 -->
+  <article>
+    <section>
+      <h2>Step 4: Adaptive / Continuous Learning</h2>
+      <details>
+        <summary>Performance Analysis</summary>
+        <ul>
+          <li><input type="checkbox" id="pa1"><label for="pa1">Expected vs Actual Trade Outcome</label></li>
+          <li><input type="checkbox" id="pa2"><label for="pa2">Strategy Adjustment Recommendations</label></li>
+        </ul>
+      </details>
+      <details>
+        <summary>Adaptive Parameters</summary>
+        <ul>
+          <li><input type="checkbox" id="ad1"><label for="ad1">Adjust Thresholds</label></li>
+          <li><input type="checkbox" id="ad2"><label for="ad2">Adjust Stop-loss/ATR Multiples</label></li>
+        </ul>
+      </details>
+      <details>
+        <summary>Feedback Loop</summary>
+        <ul>
+          <li><input type="checkbox" id="fb1"><label for="fb1">Trade Log → Analysis → Suggestion</label></li>
+          <li><input type="checkbox" id="fb2"><label for="fb2">Incorporate into Backtesting</label></li>
+        </ul>
+      </details>
+    </section>
+  </article>
+</main>
+<footer>
+  <p>&copy; 2025 Rule-Based Trading System</p>
+</footer>
+</body>
+</html>

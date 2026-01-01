@@ -1,0 +1,15 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-use-cases
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_use_cases = [
+  "Entity CRUD APIs that adapt to Node.js, Browser, and Apps Script environments.",
+  "UI workflows where actionEvent turns semantic navigation cues into engine descriptors.",
+  "Automated config refresh triggered by file loader updates and plugin hooks.",
+  "External API orchestration through httpService with circuit breaker resiliency.",
+  "Hybrid deployments that combine local IndexedDB reads with file-system writes.",
+  "Audit trails that log plugin hooks, action failures, and monitor metrics.",
+  "Financial dashboards (portfolio, watchlist, market data) merge with product lifecycle and integration workflows.",
+  "Project lifecycle flows reuse the config-driven hooks used in entity CRUD, preserving release continuity.",
+];

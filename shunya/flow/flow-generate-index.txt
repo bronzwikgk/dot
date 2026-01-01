@@ -1,0 +1,13 @@
+Step 1. Data Flow
+
+Step2.User adds service via UI (GitLab, GitHub, DigitalOcean, custom FS, etc.).
+
+Step 3. User saves credentials + service name.
+
+System fetches repositories/projects from that service.
+
+For each repo → fetch branches.
+
+For each branch → fetch folder + file tree.
+
+Build and store an index tree.

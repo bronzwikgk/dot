@@ -1,0 +1,13 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-audience
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_audience = [
+  "Developers maintaining ehh who need a single authoritative reference.",
+  "Architects designing multi-platform services with actionEntity components.",
+  "QA engineers verifying flows across runtime-specific drivers.",
+  "Plugin authors extending ehh with new hooks or validators.",
+  "Product writers translating technical behaviors into usage guides.",
+  "Operations teams monitoring health checks and HTTP metrics.",
+];

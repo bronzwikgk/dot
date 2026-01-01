@@ -1,0 +1,25 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-action
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_action = [
+  "initialize",
+  "create",
+  "read",
+  "update",
+  "delete",
+  "list",
+  "validate",
+  "cache",
+  "monitor",
+  "audit",
+  "search",
+  "filter",
+  "sort",
+  "paginate",
+  "authorize",
+  "authenticate",
+  "publish",
+  "subscribe",
+];

@@ -1,0 +1,7 @@
+- Parse Input to tree as per template-schema-tree.
+- Create Input ID.
+- Discover Story Type.
+- Add Metadata as per dataset-meta-{story-Type}-[lates version]-[live].txt.
+- Generate Minimum Viable Input via ollama,apply Global Rules, Apply Local Rules, Evaluate, Review, and Update Tree.
+- Update logs
+- 

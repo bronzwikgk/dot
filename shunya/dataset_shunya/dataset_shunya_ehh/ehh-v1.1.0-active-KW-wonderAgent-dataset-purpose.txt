@@ -1,0 +1,13 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-purpose
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_purpose = [
+  "Describe why ehh needs a dataset-driven memory of platform roles.",
+  "Explain how event, view, and engine layers collaborate under one roof.",
+  "Show that the framework aims to keep client, server, and spreadsheet contexts consistent.",
+  "Note that ehh's purpose includes extensibility through plugins and utilities.",
+  "Mention that unified documentation prevents reliance on external references.",
+  "Point out that ehh is built for humans iterating on actionApp flows.",
+];

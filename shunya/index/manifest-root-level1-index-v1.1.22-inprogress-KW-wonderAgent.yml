@@ -1,0 +1,15 @@
+version: v1.1.22
+status: inprogress
+agent: KW-wonderAgent
+description: "Indexes level 1 nodes under the root entry of the ERMS/EHh manifest, starting manifest at 0."
+
+root:
+  name: root
+  index: 0
+  level1_nodes:
+    - index: 0
+      name: manifest
+    - index: 1
+      name: project_manifest
+    - index: 2
+      name: technical_design

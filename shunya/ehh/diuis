@@ -1,0 +1,144 @@
+Data Index User Integrated Services (DIUIS) Manifest
+----------------------------------------------------
+
+Definition:
+A DIUIS manifest is a hierarchical representation of a user’s integrated services (Git, Cloud, File Systems, etc.) and their associated projects, repositories, branches, content trees, and artifacts. It is both human-readable and machine-parseable. It follows consistent naming and operator rules for clarity, automation, and interoperability.
+
+--------------------------------
+1. Operators and Their Usage
+--------------------------------
+- ":"  (colon) → always used to assign values (key: value).
+- "-"  (dash)  → used for lists (sequences). Each new element begins with a dash.
+- "#"  (hash)  → used for comments, descriptions, or inline definitions (not stored in data).
+- " "  (space) → indentation is the structural operator. Two spaces per hierarchy level.
+- no "_" (underscore) in keys → use dash "-" for multi-word keys (e.g., service-id, project-name).
+
+--------------------------------
+2. Naming Conventions
+--------------------------------
+- Identifiers: always lowercase, dash-separated (e.g., user-id, service-id, repo-id).
+- Timestamps: ISO 8601 UTC format (2025-08-20T12:30:00Z).
+- Hashes: sha1:xxxx or sha256:xxxx.
+- File sizes: stored in bytes as integers.
+- Status fields: open | closed | in-progress | success | failed | canceled.
+
+--------------------------------
+3. Storage Conventions
+--------------------------------
+/dataindex/
+  users/
+    user-123/
+      index.yml   # Canonical manifest
+      index.txt   # Human-readable condensed view
+      repos/      # Optional repo-level indexes
+      artifacts/  # Extended dumps (issues, pipelines, logs)
+
+--------------------------------
+4. Schema Example (YAML)
+--------------------------------
+dataindex:
+  version: "1.1"
+  generated-at: "2025-08-20T12:30:00Z"
+
+  user:
+    user-id: "user-123"
+    username: "alice-dev"
+    email: "alice@example.com"
+    profile:
+      role: "developer"
+      organization: "Ducis"
+      joined-at: "2023-01-05"
+      attributes:
+        location: "New Delhi"
+        timezone: "Asia/Kolkata"
+        avatar-url: "https://example.com/alice.png"
+
+    services:
+      - service-id: "service-gitlab-01"
+        service-name: "GitLab"
+        type: "git"
+        credentials-ref: "vault://user-123/gitlab"
+
+        projects:
+          - project-id: "project-001"
+            project-name: "AI Research"
+            description: "Exploration of ML models"
+            url: "https://gitlab.com/alice/ai-research"
+            live-site: "https://alice.dev/ai-research"
+
+            repos:
+              - repo-id: "repo-001"
+                repo-name: "backend"
+                url: "https://gitlab.com/alice/ai-research/backend"
+
+                branches:
+                  - branch-name: "main"
+                    commit: "c1d2e3f4"
+                    last-updated: "2025-08-18T15:30:00Z"
+                    tree:
+                      - type: "folder"
+                        name: "src"
+                        children:
+                          - type: "file"
+                            name: "app.js"
+                            size: 2456
+                            hash: "sha1:abcd1234"
+                            modified: "2025-08-10T10:20:00Z"
+
+                issues:
+                  - issue-id: "issue-101"
+                    title: "Fix login bug"
+                    status: "open"
+                    comments:
+                      - comment-id: "comment-9001"
+                        author: "bob"
+                        content: "Looks like auth middleware."
+                        created-at: "2025-08-02"
+
+                milestones:
+                  - milestone-id: "milestone-1"
+                    title: "MVP Release"
+                    due-date: "2025-09-01"
+                    status: "in-progress"
+
+                pipelines:
+                  - pipeline-id: "pipeline-001"
+                    status: "success"
+                    triggered-by: "push"
+                    branch: "main"
+                    started-at: "2025-08-15T10:00:00Z"
+                    finished-at: "2025-08-15T10:15:00Z"
+                    stages:
+                      - stage-name: "build"
+                        status: "success"
+                      - stage-name: "test"
+                        status: "success"
+                      - stage-name: "deploy"
+                        status: "success"
+
+                artifacts:
+                  wiki: "https://gitlab.com/alice/ai-research/backend/-/wikis"
+                  releases:
+                    - tag: "v1.0.0"
+                      released-at: "2025-08-12"
+                      notes: "Initial stable release"
+                  documentation:
+                    - name: "API Docs"
+                      path: "/docs/api"
+
+--------------------------------
+5. Condensed Text Representation
+--------------------------------
+user: alice-dev (user-123)
+  service: GitLab (service-gitlab-01)
+    project: AI Research (project-001)
+      repo: backend (repo-001)
+        branch: main [c1d2e3f4]
+          folder: src
+            file: app.js (2456 bytes, sha1:abcd1234, modified: 2025-08-10)
+        issue: Fix login bug (issue-101) [open]
+          comment: (comment-9001) bob -> "Looks like auth middleware."
+        milestone: MVP Release (milestone-1) [in-progress]
+        pipeline: pipeline-001 [success] branch=main
+        artifact: wiki=https://gitlab.com/alice/ai-research/backend/-/wikis
+        release: v1.0.0 (2025-08-12)

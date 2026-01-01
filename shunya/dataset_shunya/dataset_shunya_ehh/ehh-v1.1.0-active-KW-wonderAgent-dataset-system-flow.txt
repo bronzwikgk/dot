@@ -1,0 +1,14 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-system-flow
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_system_flow = [
+  "actionApp initializes runtime, merges configs, and boots logger/monitor/plugins.",
+  "actionLoader feeds ENTITY_CONFIGS while httpService registers API endpoints.",
+  "actionEvent listens for triggers and publishes descriptors to actionEngine.",
+  "actionEngine validates descriptors, calls actionEntity, and records metrics.",
+  "Storage adapters persist or retrieve data while CacheManager syncs caches.",
+  "actionView listens for responses to refresh UI templates and accessibility announcements.",
+  "Release roadmap phases (core, integration, financial, productivity, AI) map evolving flows and dataset coverage.",
+];

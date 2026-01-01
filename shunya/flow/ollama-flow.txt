@@ -1,0 +1,14 @@
+- Start Ollama, if not running.
+- Handshake, Request Available models.
+- New Request,
+- Continue Conversation,
+- Change model,
+- Check if Ollama is installed
+
+Check if Ollama service is running
+
+Fetch available models from Ollama
+
+Set default model or prompt user to select
+
+Load previous conversation history (if saved)

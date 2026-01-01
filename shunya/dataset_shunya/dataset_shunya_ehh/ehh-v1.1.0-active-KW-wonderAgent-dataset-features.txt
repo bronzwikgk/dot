@@ -1,0 +1,35 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-features
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_features = [
+  "actionApp orchestrates entities, events, views, plugins, and HTTP flows.",
+  "actionEngine sequences hooks, validators, and storage interactions per request.",
+  "actionEvent manages runtime-appropriate listeners for UI and system hooks.",
+  "actionView renders semantic navigation, pointer cues, and accessibility helpers.",
+"actionLoader loads directories and parses YAML, CSV, XML, HTML, JSONL, and JS.",
+"httpService adds circuit breakers, rate limiting, OAuth, and webhook signing.",
+  "Core features include triple runtime support, hot config reloading, multi-format parsing, and plugin lifecycle hooks.",
+  "External httpService layers deliver circuit breakers, rate limiting, retries, OAuth, and webhook-ready webhooks.",
+  "Triple runtime support (Node.js, Browser, Google Apps Script, Deno, Bun) with auto-detection and platform-specific feature flags.",
+  "Config system handles .js/.json/.yaml/.jsonl/.txt/.csv/.xml/.html with directory loading, validation, merging, environment overrides, and hot reload.",
+  "Plugin lifecycle covers loading/unloading, hook registration, dependencies, isolation, configuration, and error handling.",
+  "External httpService includes cross-runtime HTTP clients, API registration, circuit breakers, rate limits, retries, OAuth2, API keys, and webhook signing.",
+  "Entity management supports schema definitions, relationships, inheritance, validation rules, and hierarchical/tree/graph structures.",
+  "Record structures support flat, nested, linked, polymorphic, versioned, soft-deleted data with metadata and permissions.",
+  "Storage backends span memory, filesystem (JSON), MongoDB, PostgreSQL, MySQL, SQLite, Redis, IndexedDB, LocalStorage, SessionStorage, Google Sheets, Script Properties, Google Drive, and BigQuery with fallback, encryption, migration, and synchronization.",
+  "Financial modules add portfolio, watchlist, algorithmic trading, and market-data workflows tied into the entity system.",
+  "Product lifecycle utilities include project management, task planning, backlog/release tracking, sprint planning, and customer relationship data.",
+  "Security features cover authentication, RBAC authorization, CORS, input/output sanitization, encryption (rest/in-transit), and audit logging.",
+  "Integration services include broker integrations, Git/GitHub/GitLab/Bitbucket hooks, Google service automations, and planned payment gateways.",
+  "Data utilities parse and transform JSON, JSONL, CSV, XML, YAML, plain text, HTML, and Excel/Sheets formats for import/export.",
+  "Utility helpers offer HTTP, data, file, and template engines with caching, watching, and export-friendly presets.",
+  "Monitoring/logging system provides multiple levels/transports, structured logs, rotation/filtering, health checks, metrics, dashboards, alerts, and audit trails.",
+  "Development tooling covers unit/integration/performance/security testing, debugging logs/traces, profiling, and documentation generation.",
+  "Performance improvements rely on memory/file/browser caching, lazy loading, connection pooling, batching, parallelism, compression, and scalability strategies.",
+  "UI/UX stack includes admin interfaces, data visualization (charts/tables/reports), dashboards, export options, dynamic forms, and multi-step flows.",
+  "Special features emphasize offline support, service worker caching, internationalization, accessibility, and high-contrast/ARIA navigation.",
+  "Compliance and standards track JSON Schema, OpenAPI, REST, GraphQL, ISO dates, Unicode, OWASP, GDPR, HIPAA, PCI DSS, SOC 2, PageSpeed, Core Web Vitals, Lighthouse, and WCAG.",
+  "Future roadmap items highlight AI/ML integration, blockchain features, IoT, advanced analytics, voice/AR/VR, and predictive assistants.",
+];

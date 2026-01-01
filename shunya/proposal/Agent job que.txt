@@ -1,15 +1,36 @@
-
--[ status ] create ehh design doc: Release Version:[], Priority:[]
-    - dataset
-        - reqruirnment
-        - features
-        - techstack
-        - action
-        - entity
-        - plugin
-        - utility
-        - system flow
-        - conditions
+- All agents must update status, release version and priority and add link to final and latest file per line item
+- [status: completed] create ehh dataset: Release Version: v1.1.0, Priority: High, Latest: inprogress/log/ehh-v1.1.0-datasets-KW-wonderAgent.md, Final: shunya/ehh-unified-doc.md
+    - dataset_ehh: A dataset is a list /array of words or sentences, stored as a const array in a .txt file. Description: These datasets capture every facet of the ehh framework so the docs stay unified.
+        - Objective: Objective should contain Objective of this project.
+        - Pupose: Purpose of this project.
+        - Use cases: Catalog real scenarios the platform supports.
+        - Problem Addressed: Frame the gaps from the audience’s point of view—the problems the platform was built to fix for developers, QA, and ops.
+        - Audience: Identify who uses or extends ehh.
+        - Constrainsts: Note runtime limits ehh must respect.
+        - reqruirnment: List required capabilities.
+        - features: Highlight All system abilities.
+        - techstack: Describe technologies powering ehh.
+        - action: List of actions or command allowed, action is a single worded verb, and for each action theree is a registry of synonms
+        - entity: List of names of entity in the system, file, folder, project, task, record, dataset, datatable.
+        - plugin: Explain how plugins hook and extend.
+        - utility: Describe supporting utilities.
+        - system flow: Trace the runtime lifecycle.
+        - conditions: Capture gating checks.
+        - class: List central classes, with their names only and description and role in comments
+        - methods: Enumerate important methods.
+        - variables: Note critical global variables.
+        - Technical_Specifications:
+        - Design_Specifications:
+        - Navigation Specificaiton
+        - Instructions
+        - Rules
+        - Ui specs
+    - ehh_manifest_index
+    - ehh_ dataset
+    - ehh config
+    - ehh schema
+    - ehh code
+    - ehh test
 - create erms design and spec doc
 - create code
 - create test cases
@@ -18,3 +39,5 @@
 - test integration
 - test mstock integration
 - TMS ui
+- [status: completed] skill persona catalog for EHh documentation/coding/testing
+  Release Version: v1.1.12, Priority: High, Latest: inprogress/log/ehh-v1.1.12-skills-KW-wonderAgent.md, Final: inprogress/log/ehh-v1.1.12-skills-KW-wonderAgent.md

@@ -1,0 +1,220 @@
+# EHh FRAMEWORK v1.1.0 - PROJECT MANIFEST & TECHNICAL DOCUMENTATION INDEX
+# =============================================================================
+# Master index template for Everything Happens Here (EHh) documentation
+# Last Updated: 2026-01-03
+# Version: v1.1.0
+# Status: Active Development
+# Agent: KW-wonderAgent
+# =============================================================================
+
+manifest:
+  version: "v1.1.0"
+  status: "active"
+  project:
+    name: "Everything Happens Here"
+    acronym: "EHh"
+    tagline: "Action-first orchestration across runtimes"
+    description: "Dataset-driven multi-runtime platform orchestrating entities, events, views, and utilities through the ActionApp core."
+  contacts:
+    project_lead: "KW-wonderAgent"
+    architecture: "ActionApp + Plugin Ecosystem"
+    documentation: "Renderer output and dataset index"
+  repository:
+    type: "Single codebase"
+    structure: "Modular dataset + renderer pipeline"
+    languages: ["JavaScript (ES6 modules)"]
+    runtimes: ["Node.js", "Browser", "Google Apps Script", "Deno", "Bun"]
+    dataset_root: "shunya/dataset_shunya/dataset_shunya_ehh"
+  compliance:
+    constraints:
+      - "No arrow functions or forEach"
+      - "Classes with constructors/methods only"
+      - "Semantic navigation enforced via ActionView"
+      - "ES modules for all imports"
+  validation: "ActionValidator and dataset schema guardrails"
+
+# =============================================================================
+# 1. PROJECT MANIFEST INDEX
+# =============================================================================
+
+1. project_manifest:
+  sections:
+    1.1 overview:
+      file: "EHh-MANIFEST-OVERVIEW.md"
+      description: "Vision, objective, purpose, and audience derived from dataset entries."
+      sub_items:
+        - "Objective dataset"
+        - "Purpose dataset"
+        - "Audience dataset"
+        - "Problem addressed dataset (audience POV)"
+        - "Use cases and differentiators"
+    1.2 requirements:
+      file: "EHh-MANIFEST-REQUIREMENTS.md"
+      description: "Constraints, requirements, feature catalog, actions, entities, plugins, utilities."
+      sub_items:
+        - "Constraints dataset"
+        - "Requirements dataset"
+        - "Features dataset"
+        - "Action dataset (single verbs + synonyms)"
+        - "Entity dataset"
+        - "Plugin dataset"
+        - "Utility dataset (including DocumentRenderer)"
+    1.3 governance:
+      file: "EHh-MANIFEST-GOVERNANCE.md"
+      description: "Jobs queue, changelog, semantic versioning, renderer cadence."
+      sub_items:
+        - "Agent job queue practices"
+        - "Status/release tracking"
+        - "Renderer workflow (index → datasets → ehh-unified-doc.md)"
+
+# =============================================================================
+# 2. TECHNICAL DESIGN DOCUMENT INDEX
+# =============================================================================
+
+2. technical_design:
+  sections:
+    2.1 architecture:
+      file: "EHh-DESIGN-ARCHITECTURE.md"
+      description: "ActionApp core, Entry.js bootstrap, plugin mesh, utility services, storage layers."
+      sub_items:
+        - "ActionApp and ActionEngine flows"
+        - "Plugins (ActionEntity, ActionView, ActionEvent, ActionServer, ActionClient, ActionEngine Flow)"
+        - "Utilities (ActionLoader, ActionValidator, ActionFs, ActionTree, ActionIndexDb, httpService, Watchman, DocumentRenderer, etc.)"
+    2.2 entity_system:
+      file: "EHh-DESIGN-ENTITY.md"
+      description: "Entity models, CRUD workflows, storage backends, and system flow dataset references."
+      sub_items:
+        - "Entity/record structures (flat, tree, graph)"
+        - "Storage (ActionFs, LocalStorage, IndexedDB, ActionIndexDb)"
+        - "System flow dataset (runtime lifecycle)"
+    2.3 navigation:
+      file: "EHh-DESIGN-NAV.md"
+      description: "Semantic navigation, pointer cues, accessibility, and navigation specification dataset."
+      sub_items:
+        - "ActionView render requirements"
+        - "Pointer/hover cues & ARIA callouts"
+        - "Navigation specification dataset"
+
+# =============================================================================
+# 3. TECHNICAL SPECIFICATION INDEX
+# =============================================================================
+
+3. technical_specifications:
+  sections:
+    3.1 coding:
+      file: "EHh-SPEC-CODING.md"
+      description: "Coding standards, dataset naming, class rules, and Node.js requirements."
+      sub_items:
+        - "Class-based Node.js enforcement"
+        - "Dataset file patterns (dataset-<category>-<name>.txt)"
+    3.2 configuration:
+      file: "EHh-SPEC-CONFIG.md"
+      description: "Configuration responsibilities for entities, applications, tracks, views."
+      sub_items:
+        - "ActionLoader responsibilities"
+        - "Entity config references (entity_user_register/session JSON)"
+        - "Application config outline (app_config_v1.txt)"
+        - "Route config examples (routes_config.txt)"
+        - "View config hints (app_view_config.txt)"
+        - "Index ↔ datasets wiring guidance"
+    3.3 documentation:
+      file: "EHh-SPEC-DOCS.md"
+      description: "Renderer output, index updates, workflow, test evidence requirements."
+      sub_items:
+        - "Renderer process (ehh-renderDoc.mjs → ehh-unified-doc.md)"
+        - "Documentation workflow and quality checklist"
+
+# =============================================================================
+# 4. IMPLEMENTATION GUIDES
+# =============================================================================
+
+4. implementation_guides:
+  4.1 setup:
+    file: "EHh-GUIDE-SETUP.md"
+    description: "Prerequisites, dependencies, environment, verification."
+  4.2 development:
+    file: "EHh-GUIDE-DEVELOPMENT.md"
+    description: "Project structure, debugging, contributions."
+  4.3 api:
+    file: "EHh-GUIDE-API.md"
+    description: "Endpoint usage, plugin hooks, integration patterns."
+
+# =============================================================================
+# 5. REFERENCE DOCUMENTATION INDEX
+# =============================================================================
+
+5. reference_documentation:
+  5.1 api:
+    file: "EHh-REF-API.md"
+    description: "ActionEntity/Validator/Server specs."
+  5.2 configuration:
+    file: "EHh-REF-CONFIG.md"
+    description: "Schema references for EHh configuration files."
+  5.3 error:
+    file: "EHh-REF-ERROR.md"
+    description: "Error codes, HTTP statuses, validation failures."
+  5.4 cli:
+    file: "EHh-REF-CLI.md"
+    description: "CLIs for dataset management and EHh utilities."
+  5.5 data:
+    file: "EHh-REF-DATA.md"
+    description: "Data formats and parsing expectations."
+
+# =============================================================================
+# 6. DATASETS + WORKFLOW
+# =============================================================================
+
+6. datasets:
+  path: "shunya/dataset_shunya/dataset_shunya_ehh"
+  coverage: "Objective → Variables + additional spec datasets"
+  list:
+    - objective
+    - purpose
+    - usecases
+    - problem_addressed
+    - audience
+    - constraints
+    - requirements
+    - features
+    - technical_specifications
+    - design_specifications
+    - navigation_specification
+    - instructions
+    - rules
+    - ui_specs
+    - action
+    - entity
+    - plugin
+    - utility
+    - system_flow
+    - conditions
+    - class
+    - methods
+    - variables
+
+7. workflow:
+  creation:
+    - "Update datasets whenever features/requirements shift."
+    - "Refresh indexes (YAML/TXT/TREE) before renderer runs."
+    - "Run ehh-renderDoc.mjs to emit ehh-unified-doc.md."
+  review:
+    - "Weekly dataset validation."
+    - "Per-release documentation audit."
+
+8. directory_tree:
+  ehh/:
+    dataset_shunya/
+      dataset_shunya_ehh/
+    ehh-renderDoc.mjs
+    ehh-unified-doc.md
+    ehh-manifest-index.yml
+    indexes/
+      ehh_template-v1.1.0-active-KW-wonderAgent.yaml
+
+9. stats:
+  total_sections: 40
+  total_datasets: 24
+  renderer_output: "shunya/ehh-unified-doc.md"
+
+# =============================================================================
+# END OF TEMPLATE

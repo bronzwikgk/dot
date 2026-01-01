@@ -1,0 +1,9 @@
+# manifest-index-v1.1.23-inprogress-KW-wonderAgent.yml
+version: v1.1.23
+status: inprogress
+agent: KW-wonderAgent
+root_node: manifest
+root_node_index: 0
+metadata:
+  description: "Minimal manifest index that only exposes filename-level metadata; detailed sections live in referenced dataset/index files."
+  created_from: "regenerated from scratch per request"

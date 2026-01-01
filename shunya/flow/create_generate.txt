@@ -1,0 +1,5 @@
+- Every thing to be created will always be created in this flow.
+    - First dataset of differant types created, like for eg, for an class , dataset of features, methods, flows,conditions, usecase, edgecases.
+    - then relationship mapping betwenthem in a datamap. Like semantic Tag to role mapping, route mapping.
+    - then attributes and content add as data table.
+    - and a final data tree is created with all node of datatable and dataset.

@@ -1,0 +1,13 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-methods
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_methods = [
+  "actionLoader.loadConfig, readFile, writeFile, parseSimpleYAML, parseCSV, parseXML.",
+  "PluginManager.loadPlugin, unloadPlugin, registerHook, callHook, require.",
+  "ExternalAPIService.registerAPI, callAPI, callWithOAuth, sendWebhook, manageAPIKey.",
+  "ActionEntity.create, read, update, delete, list, initStorage, initHooks.",
+  "CacheManager.set, get, delete, invalidatePattern, initialize.",
+  "Validator.validate, actionError.log, actionView.render (conceptual), actionEvent.emit.",
+];

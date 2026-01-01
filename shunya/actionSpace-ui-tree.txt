@@ -1,0 +1,15 @@
+ActionSpaceUI:
+  metadata: { name: "ActionSpace", type: "code-editor", editor: "CodeMirror-based", author: "Your Name", version: "0.1.0", inspiredBy: "VS Code" }
+  activityBar: { id: "activityBar", role: "navigation", description: "Switch main views (Explorer, Search, SCM, Extensions, Outline)", source: "UI areas of VS Code" }
+  primarySidebar: { id: "primarySidebar", role: "view-container", description: "Main sidebar with Explorer, Search, SCM, Extensions", source: "Primary Side Bar in VS Code" }
+  secondarySidebar: { id: "secondarySidebar", role: "auxiliary-view-container", description: "Optional sidebar opposite primary for custom or extension views", source: "Secondary Side Bar in VS Code" }
+  editorArea: { id: "editorArea", role: "file-editing-container", description: "Main editor with support for vertical/horizontal splits and floating windows", source: "Editor splits and floating windows in VS Code" }
+  panel: { id: "panel", role: "tool-container", description: "Bottom panel for Terminal, Output, Debug Console, Problems; movable and flexible", source: "Panel area in VS Code" }
+  statusBar: { id: "statusBar", role: "information-display", description: "Displays file info: encoding, language mode, line/column, Git branch", source: "Status Bar in VS Code" }
+  minimap: { id: "minimap", role: "code-overview", description: "Visual overview of file for quick navigation", source: "Minimap in VS Code" }
+  breadcrumbs: { id: "breadcrumbs", role: "navigation-aid", description: "Shows file path and symbol location for quick navigation", source: "Breadcrumbs in VS Code" }
+  stickyScroll: { id: "stickyScroll", role: "scope-visibility", description: "Shows current nested code scope at the top of the editor", source: "Sticky Scroll in VS Code" }
+  layoutCustomization: { supportsDragAndDrop: true, supportsPanelMovement: ["left", "right", "bottom", "top"], snapAndCollapse: true, description: "Flexible UI layout with drag/drop, panel repositioning, snapping and collapsing", source: "Custom Layout UI in VS Code" }
+  sessionPersistence: { restoreLayout: true, restoreOpenFiles: true, description: "Reopens previous layout, workspaces, and files on launch", source: "VS Code preserves state across sessions" }
+  commandPalette: { id: "commandPalette", role: "command-execution", description: "Global command execution via keyboard (e.g., Ctrl+Shift+P)", source: "Command Palette in VS Code" }
+  extensionSupport: { viewContainers: ["activityBar", "sidebars", "panel", "editorArea"], statusBarItems: true, webviews: true, description: "Support for extensions adding UI via view containers, status bar, editor webviews", source: "Extension UI contribution points in VS Code" }

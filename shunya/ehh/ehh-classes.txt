@@ -1,0 +1,35 @@
+Config
+    appconfig
+    entityCollecition config
+    entityConfig
+    routeConfig
+    gobalRUle Config
+    listner config
+    view config
+    service config
+    plugin config
+    utility config
+Core
+    Entry.js
+    ActionApp.js
+Plugins
+    - ActionEntity
+    - ActionView
+    - ActionEvent
+    - ActionServer
+    - ActionClient
+    - ActionEngine Flow
+Utility
+- ActionValidator
+- actionInclude:
+- parser
+- include
+- actionTree:
+- actionFs:
+- actionIndexDb:
+- actionLocalStorage:
+- httpService:
+- actionAgent:
+- Mat:
+- ActionOllama:
+- Watchman

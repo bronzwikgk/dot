@@ -1,0 +1,23 @@
+- dataset_pages_erms.txt
+    - About
+        - Overview
+        - Purpose
+        - Audience
+        - Problem Addressed
+        - Use Cases
+        - Features
+        - Benefits
+        - User Stories
+        - User Flow
+    - Sign Up
+    - Onboarding
+        - Setup WorkSpace
+        - Setup Entity
+        - Setup Services
+    - Dashboard
+    - Editor
+    - Search/Explorer
+    - Chat
+    - Settings.
+    - Profile
+    - help

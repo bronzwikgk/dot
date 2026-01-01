@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EHh Algo Console v1.2</title>
+    <style>
+        :root {
+            --color-primary: #1d4eff;
+            --color-surface: #ffffff;
+            --color-surface-muted: #f4f6fb;
+            --color-border: #d6d9e3;
+            --color-text: #1d1f26;
+            --color-muted: #4f5666;
+            --color-tertiary: #ecf1ff;
+            --shadow-light: 0 0.25rem 0.75rem rgba(29, 79, 255, 0.08);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background-color: var(--color-surface-muted);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background: var(--color-surface-muted);
+        }
+
+        header,
+        main,
+        footer {
+            padding: 1rem 2rem;
+        }
+
+        header h1 {
+            font-size: 1.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        header p {
+            color: var(--color-muted);
+        }
+
+        nav {
+            display: grid;
+            grid-auto-flow: column;
+            grid-auto-columns: max-content;
+            gap: 0.5rem;
+            padding: 0 2rem;
+            border-bottom: 0.0625rem solid var(--color-border);
+            background: var(--color-surface);
+            overflow-x: auto;
+        }
+
+        nav button {
+            border: 0.0625rem solid var(--color-border);
+            border-radius: 999px;
+            padding: 0.6rem 1.2rem;
+            background: transparent;
+            font: inherit;
+            font-size: 0.95rem;
+            cursor: pointer;
+            color: var(--color-text);
+        }
+
+        nav button[aria-selected="true"] {
+            background: var(--color-primary);
+            color: var(--color-surface);
+            border-color: var(--color-primary);
+        }
+
+        main {
+            flex: 1;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) 15rem;
+            gap: 1.5rem;
+            padding: 2rem;
+            background: var(--color-surface-muted);
+        }
+
+        section {
+            display: none;
+            grid-column: 1;
+        }
+
+        section[aria-hidden="false"] {
+            display: block;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--color-primary);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+
+        article {
+            background: var(--color-surface);
+            border-radius: 0.75rem;
+            border: 0.0625rem solid var(--color-border);
+            padding: 1.25rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        label {
+            font-size: 0.85rem;
+            margin-bottom: 0.35rem;
+            color: var(--color-muted);
+            display: block;
+        }
+
+        input,
+        select,
+        textarea,
+        button {
+            width: 100%;
+            padding: 0.75rem 0.9rem;
+            border-radius: 0.5rem;
+            border: 0.0625rem solid var(--color-border);
+            background: transparent;
+            font: inherit;
+            color: var(--color-text);
+        }
+
+        button.primary {
+            background: var(--color-primary);
+            color: var(--color-surface);
+            border-color: var(--color-primary);
+            font-weight: 600;
+        }
+
+        button.secondary {
+            background: var(--color-tertiary);
+            border-color: var(--color-border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            background: var(--color-tertiary);
+        }
+
+        th,
+        td {
+            padding: 0.75rem;
+            border-bottom: 0.0625rem solid var(--color-border);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        pre {
+            background: var(--color-surface);
+            border: 0.0625rem solid var(--color-border);
+            border-radius: 0.75rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        aside {
+            background: var(--color-surface);
+            border-radius: 0.75rem;
+            border: 0.0625rem solid var(--color-border);
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        aside section {
+            border-bottom: 0.0625rem solid var(--color-tertiary);
+            padding-bottom: 0.75rem;
+        }
+
+        aside section:last-child {
+            border-bottom: none;
+        }
+
+        aside h3 {
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+        }
+
+        #token-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.35rem;
+            font-size: 0.7rem;
+            color: var(--color-muted);
+        }
+
+        #token-tags span {
+            padding: 0.35rem 0.7rem;
+            border-radius: 999px;
+            border: 0.0625rem solid var(--color-border);
+            background: var(--color-surface-alt);
+        }
+
+        [data-status] {
+            padding: 0.35rem 0.75rem;
+            border-radius: 999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        [data-status="connected"] {
+            background: #e7f5ff;
+            color: var(--color-primary);
+        }
+
+        [data-status="warning"] {
+            background: #fff4e5;
+            color: #b35400;
+        }
+
+        [data-status="neutral"] {
+            background: #f3f4f8;
+            color: var(--color-muted);
+        }
+
+        footer {
+            text-align: center;
+            border-top: 0.0625rem solid var(--color-border);
+            background: var(--color-surface);
+            padding: 1rem 2rem;
+            color: var(--color-muted);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 900px) {
+            main {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+
+            aside {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Everything Happens Here - Algo Console</h1>
+        <p>Tabbed experience for dashboards, portfolio tracking, screening, tradebook logs, live positions, and settings.</p>
+    </header>
+
+    <nav role="tablist">
+        <button role="tab" aria-controls="tab-dashboard" aria-selected="true">Dashboard</button>
+        <button role="tab" aria-controls="tab-portfolio" aria-selected="false">Portfolio</button>
+        <button role="tab" aria-controls="tab-screener" aria-selected="false">Screener</button>
+        <button role="tab" aria-controls="tab-tradebook" aria-selected="false">Tradebook</button>
+        <button role="tab" aria-controls="tab-live" aria-selected="false">Live Positions</button>
+        <button role="tab" aria-controls="tab-settings" aria-selected="false">Settings</button>
+    </nav>
+
+    <main>
+        <section id="tab-dashboard" role="tabpanel" aria-hidden="false">
+            <h2>Dashboard Overview</h2>
+            <article>
+                <h3>Strategy Snapshot</h3>
+                <p>Filters: Weekly VWAP + RSI 60-75 + MACD confirmation.</p>
+                <p><span data-status="connected">Live</span> · Last run: 2024-12-31 10:35 UTC</p>
+            </article>
+            <article>
+                <h3>Performance Highlights</h3>
+                <table>
+                    <tr><td>Win Rate</td><td>68.2%</td></tr>
+                    <tr><td>Profit Factor</td><td>2.1</td></tr>
+                    <tr><td>Sharpe</td><td>1.8</td></tr>
+                    <tr><td>Trades (YTD)</td><td>342</td></tr>
+                </table>
+            </article>
+        </section>
+
+        <section id="tab-portfolio" role="tabpanel" aria-hidden="true">
+            <h2>Portfolio Snapshot</h2>
+            <article>
+                <h3>Open Positions</h3>
+                <table>
+                    <thead>
+                        <tr><th>Symbol</th><th>Entry</th><th>Current</th><th>P&amp;L</th><th>Phase</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>RELIANCE</td><td>2850.50</td><td>2865.25</td><td style="color:#0b6b3a">+0.52%</td><td><span data-status="connected">IN_TRADE</span></td></tr>
+                        <tr><td>TCS</td><td>3850.00</td><td>3842.50</td><td style="color:#b02a2a">-0.19%</td><td><span data-status="connected">IN_TRADE</span></td></tr>
+                    </tbody>
+                </table>
+            </article>
+            <article>
+                <h3>System State</h3>
+                <pre>State Machine: SCANNING → SIGNAL → IN_TRADE → EXITED
+Current Phase: Screening
+Watchlist: 12 symbols
+Last Signal: 10:30 UTC</pre>
+            </article>
+        </section>
+
+        <section id="tab-screener" role="tabpanel" aria-hidden="true">
+            <h2>Screener</h2>
+            <div class="grid">
+                <article>
+                    <h3>Filters</h3>
+                    <label for="filter-sector">Sector</label>
+                    <input id="filter-sector" type="text" value="Leading" />
+                    <label for="filter-rsi">RSI Band</label>
+                    <input id="filter-rsi" type="text" value="65-78" />
+                </article>
+                <article>
+                    <h3>Momentum</h3>
+                    <label for="filter-market">Market</label>
+                    <select id="filter-market">
+                        <option>Nifty 50</option>
+                        <option>Bank Nifty</option>
+                        <option>All Stocks</option>
+                    </select>
+                    <label for="filter-vol">Volume Multiplier</label>
+                    <input id="filter-vol" type="number" value="1.4" />
+                </article>
+            </div>
+            <button class="primary">Run Screener</button>
+        </section>
+
+        <section id="tab-tradebook" role="tabpanel" aria-hidden="true">
+            <h2>Tradebook</h2>
+            <article>
+                <h3>Recent Events</h3>
+                <table>
+                    <thead>
+                        <tr><th>Time</th><th>Event</th><th>Entity</th><th>Details</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>10:30</td><td>Trigger Detected</td><td>RELIANCE</td><td>RSI 72 · Volume 2.1x</td></tr>
+                        <tr><td>10:25</td><td>Order Executed</td><td>TCS</td><td>Qty 15 · Price 3850 · FILLED</td></tr>
+                        <tr><td>10:00</td><td>Risk Gate</td><td>System</td><td>Gap +0.32% · Vol Normal</td></tr>
+                    </tbody>
+                </table>
+            </article>
+        </section>
+
+        <section id="tab-live" role="tabpanel" aria-hidden="true">
+            <h2>Live Positions</h2>
+            <article>
+                <h3>Deployment Checklist</h3>
+                <table>
+                    <tr><td>Backtest</td><td>Complete</td><td><span data-status="connected">PASS</span></td></tr>
+                    <tr><td>Walk-Forward</td><td>Validated</td><td><span data-status="connected">PASS</span></td></tr>
+                    <tr><td>Paper Trading</td><td>Stable</td><td><span data-status="connected">PASS</span></td></tr>
+                    <tr><td>Risk Limits</td><td>Testing</td><td><span data-status="warning">IN PROGRESS</span></td></tr>
+                    <tr><td>Live API</td><td>Pending</td><td><span data-status="neutral">PENDING</span></td></tr>
+                </table>
+            </article>
+        </section>
+
+        <section id="tab-settings" role="tabpanel" aria-hidden="true">
+            <h2>Settings</h2>
+            <article>
+                <h3>Safety Controls</h3>
+                <div class="grid">
+                    <div>
+                        <label for="max-trades">Max Trades / Day</label>
+                        <input id="max-trades" type="number" value="10" />
+                    </div>
+                    <div>
+                        <label for="max-loss">Max Loss %</label>
+                        <input id="max-loss" type="number" value="2.0" />
+                    </div>
+                    <div>
+                        <label>Kill Switch</label>
+                        <button class="secondary">Emergency Stop</button>
+                    </div>
+                </div>
+            </article>
+            <article>
+                <h3>API Settings</h3>
+                <label for="api-key">m.Stock API Key</label>
+                <input id="api-key" type="text" placeholder="Enter key" />
+                <label for="api-mode">Mode</label>
+                <select id="api-mode">
+                    <option>Paper</option>
+                    <option>Live</option>
+                </select>
+            </article>
+        </section>
+
+        <aside>
+            <section>
+                <h3>Recent Alerts</h3>
+                <p>Signal: RELIANCE RSI 72 · Volume 2.1x</p>
+                <p>Paper P&amp;L +1.45% · Latency 24ms</p>
+            </section>
+            <section>
+                <h3>Search</h3>
+                <label for="search-input">Search strategies</label>
+                <input id="search-input" type="search" placeholder="Search..." />
+            </section>
+            <section>
+                <h3>Explorer</h3>
+                <p>Data sources · backtest logs · live feeds.</p>
+                <p>Navigate datasets, API keys, and connectors.</p>
+            </section>
+            <section>
+                <h3>Global Token Tags</h3>
+                <div id="token-tags" role="list"></div>
+            </section>
+        </aside>
+    </main>
+
+    <footer>
+        <p>Every action happens here — m.Stock executes, EHh orchestrates.</p>
+        <p>Paper trading mode | Last updated 2024-12-31 10:35 UTC</p>
+    </footer>
+
+    <script type="module">
+        import { DATASET_GLOBAL_TOKENS_V1 } from "../dataset_shunya/pari/dataset__pari_global_tokens_v1.js";
+        const tags = document.querySelector("#token-tags");
+        if (tags) {
+            DATASET_GLOBAL_TOKENS_V1.forEach((token) => {
+                const span = document.createElement("span");
+                span.textContent = token;
+                span.setAttribute("role", "listitem");
+                tags.appendChild(span);
+            });
+        }
+
+        const tabs = document.querySelectorAll('nav button[role="tab"]');
+        const panels = document.querySelectorAll('main section[role="tabpanel"]');
+
+        function activate(id) {
+            tabs.forEach((tab) => {
+                const selected = tab.getAttribute("aria-controls") === id;
+                tab.setAttribute("aria-selected", String(selected));
+            });
+            panels.forEach((panel) => {
+                panel.setAttribute("aria-hidden", String(panel.id !== id));
+            });
+        }
+
+        tabs.forEach((tab) => {
+            tab.addEventListener("click", () => activate(tab.getAttribute("aria-controls")));
+        });
+
+        activate("tab-dashboard");
+    </script>
+</body>
+</html>

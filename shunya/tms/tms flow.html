@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trading Flow</title>
+<style>
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background: #fff;
+    color: #333;
+}
+
+ul {
+    padding-left: 20px;
+    list-style: none;
+    position: relative;
+}
+
+li {
+    margin: 3px 0;
+    position: relative;
+}
+
+ul:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10px;
+    bottom: 0;
+    width: 1px;
+    background: #ddd;
+}
+
+li:before {
+    content: '';
+    position: absolute;
+    top: 9px;
+    left: -10px;
+    width: 10px;
+    height: 1px;
+    background: #ddd;
+}
+
+div {
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    padding: 5px 8px;
+    background: #f9f9f9;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+div:hover {
+    background: #f0f0f0;
+}
+
+b {
+    font-weight: 600;
+}
+
+span {
+    color: #666;
+    font-size: 11px;
+    margin-left: 8px;
+}
+
+i {
+    float: right;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #007bff;
+    color: white;
+    text-align: center;
+    line-height: 14px;
+    font-size: 10px;
+    font-style: normal;
+    margin-left: 5px;
+}
+</style>
+</head>
+<body>
+
+<ul>
+<li>
+    <div onclick="t(this)"><b>Dashboard</b><span>Main entry</span><i>+</i></div>
+    <ul>
+        <li>
+            <div onclick="t(this)"><b>Query Module</b><span>Data queries</span><i>+</i></div>
+            <ul>
+                <li>
+                    <div onclick="t(this)"><b>1. Select Asset Class</b><span>Choose type</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Stocks</b><span>Equities</span></div></li>
+                        <li><div><b>Crypto</b><span>Cryptocurrencies</span></div></li>
+                        <li><div><b>Forex</b><span>Currency pairs</span></div></li>
+                        <li><div><b>Commodities</b><span>Gold, oil</span></div></li>
+                    </ul>
+                </li>
+                <li>
+                    <div onclick="t(this)"><b>2. Choose Time Frame</b><span>Select interval</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Intraday</b><span>1m, 5m, 15m</span></div></li>
+                        <li><div><b>Daily</b><span>EOD data</span></div></li>
+                        <li><div><b>Weekly</b><span>Weekly bars</span></div></li>
+                        <li><div><b>Monthly</b><span>Monthly bars</span></div></li>
+                    </ul>
+                </li>
+                <li>
+                    <div onclick="t(this)"><b>3. Specify Data Fields</b><span>Select columns</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>OHLC</b><span>Open, High, Low, Close</span></div></li>
+                        <li><div><b>Volume</b><span>Trade volume</span></div></li>
+                        <li><div><b>VWAP</b><span>Volume weighted</span></div></li>
+                        <li><div><b>Returns</b><span>Daily returns</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            <div onclick="t(this)"><b>Filter Module</b><span>Screen assets</span><i>+</i></div>
+            <ul>
+                <li>
+                    <div onclick="t(this)"><b>1. Select Filter Category</b><span>Type of filter</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Fundamental</b><span>P/E, EPS, Debt</span></div></li>
+                        <li><div><b>Technical</b><span>RSI, MA, Volume</span></div></li>
+                        <li><div><b>Sentiment</b><span>News, social</span></div></li>
+                        <li><div><b>Custom</b><span>User-defined</span></div></li>
+                    </ul>
+                </li>
+                <li>
+                    <div onclick="t(this)"><b>2. Set Parameters</b><span>Filter values</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Min/Max</b><span>Range limits</span></div></li>
+                        <li><div><b>Threshold</b><span>Value threshold</span></div></li>
+                        <li><div><b>Comparison</b><span>> < = operators</span></div></li>
+                        <li><div><b>Multiple</b><span>Multi-value</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            <div onclick="t(this)"><b>Trend Module</b><span>Detect trends</span><i>+</i></div>
+            <ul>
+                <li>
+                    <div onclick="t(this)"><b>1. Select Method</b><span>Detection algo</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>MA Crossover</b><span>Moving averages</span></div></li>
+                        <li><div><b>Trendlines</b><span>Support/resistance</span></div></li>
+                        <li><div><b>ADX</b><span>Directional index</span></div></li>
+                        <li><div><b>Breakouts</b><span>Price breaks</span></div></li>
+                    </ul>
+                </li>
+                <li>
+                    <div onclick="t(this)"><b>2. Configure</b><span>Settings</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Lookback</b><span>Period days</span></div></li>
+                        <li><div><b>Sensitivity</b><span>Threshold %</span></div></li>
+                        <li><div><b>Confidence</b><span>Min confidence</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            <div onclick="t(this)"><b>Signal Module</b><span>Generate signals</span><i>+</i></div>
+            <ul>
+                <li>
+                    <div onclick="t(this)"><b>1. Define Type</b><span>Signal category</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Entry Buy</b><span>Buy signal</span></div></li>
+                        <li><div><b>Entry Sell</b><span>Sell signal</span></div></li>
+                        <li><div><b>Exit TP</b><span>Take profit</span></div></li>
+                        <li><div><b>Exit SL</b><span>Stop loss</span></div></li>
+                    </ul>
+                </li>
+                <li>
+                    <div onclick="t(this)"><b>2. Conditions</b><span>Trigger rules</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Price Above</b><span>> level</span></div></li>
+                        <li><div><b>Price Below</b><span>< level</span></div></li>
+                        <li><div><b>Indicator X</b><span>RSI > 70</span></div></li>
+                        <li><div><b>Pattern</b><span>Chart pattern</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            <div onclick="t(this)"><b>Indicator Module</b><span>Technical tools</span><i>+</i></div>
+            <ul>
+                <li>
+                    <div onclick="t(this)"><b>1. Browse</b><span>Find indicators</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Trend</b><span>MA, MACD</span></div></li>
+                        <li><div><b>Momentum</b><span>RSI, Stoch</span></div></li>
+                        <li><div><b>Volatility</b><span>BB, ATR</span></div></li>
+                        <li><div><b>Volume</b><span>OBV, MFI</span></div></li>
+                    </ul>
+                </li>
+                <li>
+                    <div onclick="t(this)"><b>2. Configure</b><span>Set params</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Period</b><span>Lookback</span></div></li>
+                        <li><div><b>Levels</b><span>Overbought/sold</span></div></li>
+                        <li><div><b>Colors</b><span>Visual style</span></div></li>
+                        <li><div><b>Alerts</b><span>Notifications</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            <div onclick="t(this)"><b>Strategy Module</b><span>Build strategies</span><i>+</i></div>
+            <ul>
+                <li>
+                    <div onclick="t(this)"><b>1. Entry Rules</b><span>When to enter</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Signal Based</b><span>On signal</span></div></li>
+                        <li><div><b>Price Action</b><span>Pattern break</span></div></li>
+                        <li><div><b>Time Based</b><span>Schedule</span></div></li>
+                        <li><div><b>Multi-factor</b><span>Combined</span></div></li>
+                    </ul>
+                </li>
+                <li>
+                    <div onclick="t(this)"><b>2. Exit Rules</b><span>When to exit</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Fixed TP</b><span>Target %</span></div></li>
+                        <li><div><b>Fixed SL</b><span>Stop %</span></div></li>
+                        <li><div><b>Trailing SL</b><span>Dynamic stop</span></div></li>
+                        <li><div><b>Signal Exit</b><span>Exit signal</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            <div onclick="t(this)"><b>Backtest Module</b><span>Test strategies</span><i>+</i></div>
+            <ul>
+                <li>
+                    <div onclick="t(this)"><b>1. Configure</b><span>Test settings</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Date Range</b><span>Start/end</span></div></li>
+                        <li><div><b>Capital</b><span>Starting funds</span></div></li>
+                        <li><div><b>Commission</b><span>Fees per trade</span></div></li>
+                        <li><div><b>Slippage</b><span>Price impact</span></div></li>
+                    </ul>
+                </li>
+                <li>
+                    <div onclick="t(this)"><b>2. Run Test</b><span>Execute</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Historical Data</b><span>Load data</span></div></li>
+                        <li><div><b>Simulate Trades</b><span>Virtual trading</span></div></li>
+                        <li><div><b>Track P&L</b><span>Calculate profits</span></div></li>
+                        <li><div><b>Record Trades</b><span>Log all trades</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+        
+        <li>
+            <div onclick="t(this)"><b>TradeBot Module</b><span>Automate trading</span><i>+</i></div>
+            <ul>
+                <li>
+                    <div onclick="t(this)"><b>1. Configuration</b><span>Setup bot</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>API Keys</b><span>Exchange access</span></div></li>
+                        <li><div><b>Strategy Select</b><span>Choose strategy</span></div></li>
+                        <li><div><b>Risk Limits</b><span>Max exposure</span></div></li>
+                        <li><div><b>Schedule</b><span>Trading hours</span></div></li>
+                    </ul>
+                </li>
+                <li>
+                    <div onclick="t(this)"><b>2. Deployment</b><span>Go live</span><i>+</i></div>
+                    <ul>
+                        <li><div><b>Paper Trade</b><span>Test mode</span></div></li>
+                        <li><div><b>Live Trade</b><span>Real money</span></div></li>
+                        <li><div><b>Monitor</b><span>Watch performance</span></div></li>
+                        <li><div><b>Adjust</b><span>Change params</span></div></li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</li>
+</ul>
+
+<script>
+function t(e) {
+    let li = e.parentElement;
+    let i = e.querySelector('i');
+    let ul = li.querySelector('ul');
+    
+    if (ul) {
+        if (ul.style.display === 'none' || !ul.style.display) {
+            ul.style.display = 'block';
+            i.textContent = '−';
+        } else {
+            ul.style.display = 'none';
+            i.textContent = '+';
+        }
+    }
+}
+
+// Open first levels
+t(document.querySelector('div'));
+t(document.querySelectorAll('div')[1]);
+t(document.querySelectorAll('div')[2]);
+</script>
+
+</body>
+</html>

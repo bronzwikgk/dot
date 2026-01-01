@@ -1,0 +1,13 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-problem-addressed
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_problem_addressed = [
+  "Developers and writers lose time because the actionApp, actionEntity, and deepseek docs live in separate locations.",
+  "QA and integrators face inconsistent runtime handling between browser, Node.js, Apps Script, Deno, and Bun.",
+  "Product teams cannot trust UX updates since no event/view binding reliably communicates with the actionEngine.",
+  "Ops and platform engineers duplicate efforts because config, HTTP, and storage helpers are scattered and inconsistent.",
+  "Plugin authors find the hook sequences vague, making extensibility fragile or error-prone.",
+  "New contributors lack a single dataset to explore each concern, slowing onboarding and experimentation.",
+];

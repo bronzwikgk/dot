@@ -1,0 +1,72 @@
+Git-Operations-During-SDLC:
+  Initialization:
+    - git init                # Initialize a new repository
+    - git clone <url>          # Clone existing repository
+    - git remote add <name> <url>   # Link remote repository
+
+  Branch-Management:
+    - git branch               # List branches
+    - git branch <name>        # Create branch
+    - git checkout <branch>    # Switch branch
+    - git checkout -b <branch> # Create + switch to new branch
+    - git merge <branch>       # Merge branch
+    - git rebase <branch>      # Rebase current branch
+    - git branch -d <branch>   # Delete branch
+    - git switch <branch>      # Safer branch switching
+
+  File-Tracking:
+    - git add <file>           # Stage file
+    - git add .                # Stage all changes
+    - git status               # Check staged/unstaged changes
+    - git rm <file>            # Remove file from repo
+
+  Commit-Management:
+    - git commit -m "message"  # Commit staged changes
+    - git commit --amend       # Edit last commit
+    - git reset HEAD~1         # Undo last commit
+    - git reflog               # Show commit history with HEAD moves
+
+  Search & Discovery:
+    - git ls-tree -r <branch>  # Search files in branch
+    - git grep <pattern> <branch>  # Search file content
+    - git log -S <string>      # Search commit history for string
+    - git log --grep="pattern" # Search commit messages
+
+  Collaboration:
+    - git fetch                # Fetch updates
+    - git pull                 # Fetch + merge updates
+    - git push                 # Push to remote
+    - git push origin <branch> # Push branch to remote
+    - git pull --rebase        # Keep history linear
+
+  Tagging & Release:
+    - git tag                  # List tags
+    - git tag <name>           # Create tag
+    - git show <tag>           # Show tag info
+    - git push origin --tags   # Push all tags
+    - git checkout <tag>       # Checkout release state
+
+  CI-CD-Integration:
+    - git push --set-upstream origin <branch>  # Link local branch to remote
+    - git push origin <branch>:refs/heads/<branch> # Explicit branch push
+    - git fetch --all          # Sync all remotes
+    - git describe --tags      # Get release-friendly version
+
+  History & Audit:
+    - git log --oneline        # Compact commit history
+    - git log --graph --all    # Branch graph view
+    - git blame <file>         # Show author of each line
+    - git bisect start         # Debug by bisecting commits
+    - git shortlog -s -n       # Contributor summary
+
+  Maintenance:
+    - git gc                   # Cleanup unnecessary files
+    - git fsck                 # Verify integrity
+    - git prune                # Remove unreachable objects
+    - git clean -fd            # Remove untracked files
+
+  Security & Access:
+    - git config --global user.name "Name"
+    - git config --global user.email "Email"
+    - git remote -v            # View remotes
+    - git credential-cache     # Cache credentials

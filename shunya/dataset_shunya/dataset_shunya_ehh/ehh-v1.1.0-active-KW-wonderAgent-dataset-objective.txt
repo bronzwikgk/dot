@@ -1,0 +1,13 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-objective
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_objective = [
+  "Ensure ehh unifies runtime detection, config loading, and action orchestration.",
+  "Provide a single dataset per concern so every flow is traceable within ehh.",
+  "Document how actionEngine sequences entity CRUD operations across adapters.",
+  "Capture the expectation that everything happens here without splitting knowledge.",
+  "Highlight the monitoring, logging, and health checks that keep ehh observable.",
+  "Align datasets with semantic versioning requirements for future reference.",
+];

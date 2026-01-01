@@ -1,0 +1,16 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-constraints
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_constraints = [
+  "Browser storage must respect same-origin policies, quota limits, and never hold unencrypted-sensitive data.",
+  "Google Apps Script flows obey execution-time quotas, API rate limits, and required OAuth scopes.",
+  "Node.js deployments cannot rely on IndexedDB or DOM access and must guard filesystem concurrency (lock directories).",
+  "actionLoader only consumes .js configs (plus supported formats) and must protect against circular recursion and untrusted imports.",
+  "Plugins must avoid blocking loops, honor isolation boundaries, and expose hook cleanup so monitors stay responsive.",
+  "HTTP and external APIs enforce rate limits, circuit breakers, OAuth refresh, and webhook signature verification.",
+  "Storage drivers must support encryption-at-rest, backups, and fallback strategies when a backend becomes unavailable.",
+  "Event/view updates only run in runtimes with DOM access; fallback data-only flows must exist elsewhere.",
+  "Release phases (core, integration, financial, productivity, AI) gate a dataset’s readiness and determine which tools are allowed per stage.",
+];

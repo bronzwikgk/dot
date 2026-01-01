@@ -1,0 +1,138 @@
+{
+  // Collection Entity Configuration v1.0.0
+  // Created: 2025-10-10 - Claude
+  //
+  // Changelog:
+  // v1.0.0 - Initial collection entity config
+  // - Defines storage, schema, routes for Collection entity
+  // - IndexedDB as primary storage
+  // - RBAC permissions configured
+  // - Validation enabled
+
+  "entity": "collection",
+  "version": "1.0.0",
+  "description": "Collection entity manages schema definitions for datatables",
+
+  "storage": {
+    "location": "indexeddb",
+    "storeName": "collections",
+    "keyPath": "_id",
+    "indexes": [
+      { "name": "name", "keyPath": "name", "unique": false },
+      { "name": "status", "keyPath": "status", "unique": false },
+      { "name": "createdAt", "keyPath": "metadata.createdAt", "unique": false }
+    ],
+    "fallback": {
+      "location": "file",
+      "path": "../data/collections",
+      "format": "json"
+    }
+  },
+
+  "schema": {
+    "path": "../schemas/collection_schema.json",
+    "validate": true,
+    "strict": true
+  },
+
+  "routes": {
+    "basePath": "/collections",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/collections",
+        "action": "create",
+        "roles": ["admin", "user"],
+        "validate": true
+      },
+      {
+        "method": "GET",
+        "path": "/collections",
+        "action": "read",
+        "roles": ["admin", "user", "guest"],
+        "validate": false
+      },
+      {
+        "method": "GET",
+        "path": "/collections/:id",
+        "action": "read",
+        "roles": ["admin", "user", "guest"],
+        "validate": false
+      },
+      {
+        "method": "PUT",
+        "path": "/collections/:id",
+        "action": "update",
+        "roles": ["admin", "user"],
+        "validate": true
+      },
+      {
+        "method": "DELETE",
+        "path": "/collections/:id",
+        "action": "delete",
+        "roles": ["admin"],
+        "validate": false
+      }
+    ]
+  },
+
+  "validation": {
+    "onCreate": [
+      { "field": "_id", "required": true, "type": "string" },
+      { "field": "name", "required": true, "minLength": 1, "maxLength": 100 },
+      { "field": "schema", "required": true, "type": "object" },
+      { "field": "schema.fields", "required": true, "type": "array", "minItems": 1 }
+    ],
+    "onUpdate": [
+      { "field": "name", "minLength": 1, "maxLength": 100 },
+      { "field": "schema.fields", "type": "array", "minItems": 1 }
+    ]
+  },
+
+  "defaults": {
+    "status": "active",
+    "roles": ["admin", "user"],
+    "permissions": {
+      "create": ["admin", "user"],
+      "read": ["admin", "user", "guest"],
+      "update": ["admin", "user"],
+      "delete": ["admin"]
+    },
+    "storage": {
+      "location": "indexeddb",
+      "format": "json"
+    }
+  },
+
+  "hooks": {
+    "beforeCreate": ["validateSchema", "generateId", "setTimestamps"],
+    "afterCreate": ["cacheInLocalStorage", "queueSync"],
+    "beforeUpdate": ["validateSchema", "updateTimestamp"],
+    "afterUpdate": ["cacheInLocalStorage", "queueSync"],
+    "beforeDelete": ["checkDatatableReferences"],
+    "afterDelete": ["clearCache", "queueSync"]
+  },
+
+  "sync": {
+    "enabled": true,
+    "direction": "bidirectional",
+    "conflictResolution": "server-wins",
+    "batchSize": 50
+  },
+
+  "cache": {
+    "enabled": true,
+    "location": "localStorage",
+    "key": "collections_cache",
+    "ttl": 300000,
+    "maxSize": 100
+  },
+
+  "ui": {
+    "icon": "📁",
+    "color": "#3388ff",
+    "displayField": "name",
+    "sortField": "name",
+    "sortOrder": "asc"
+  }
+}

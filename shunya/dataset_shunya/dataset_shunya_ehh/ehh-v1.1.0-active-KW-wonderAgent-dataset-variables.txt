@@ -1,0 +1,13 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-variables
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_variables = [
+  "RUNTIME holds platform detection results including features and timestamps.",
+  "ENTITY_CONFIGS store schema, storage, and cache hints for each entity.",
+  "APP_CONFIG drives logging, cache, storage, routes, and hook definitions.",
+  "actionEntityInstances caches instantiated entities for reuse.",
+  "httpService.apiClients, circuits, rateLimiters track API metadata and health.",
+  "pluginManager.hooks, dependencies, and plugins describe registered extensions.",
+];

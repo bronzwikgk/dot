@@ -1,0 +1,14 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-conditions
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_conditions = [
+  "Platform detection must succeed before file loaders attempt IO.",
+  "HTTP endpoints validate tokens and roles before invoking actionEngine.",
+  "Plugins must declare dependencies to avoid runtime cycles.",
+  "DOM bindings run only in browsers to prevent server-side errors.",
+  "Cache invalidations need to align with entity configuration hints.",
+  "Error handlers sanitize ActionError details in production to protect secrets.",
+  "Runtime statuses (complete, planned, future) gate readiness for finance, lifecycle, and integration services.",
+];

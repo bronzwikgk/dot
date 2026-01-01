@@ -1,0 +1,15 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-techstack
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_techstack = [
+  "Node.js with ES modules and async/await for server runtimes.",
+  "Modern browsers leveraging fetch, IndexedDB, and DOM APIs.",
+  "Google Apps Script scripts calling UrlFetchApp, DriveApp, and PropertiesService.",
+  "Shared utility modules like actionLoader, PluginManager, and CacheManager.",
+  "HTTP components using Fetch API, node-fetch fallback, and Apps Script wrappers.",
+  "Storage drivers mixing ActionFs, IndexedDBStorage, LocalStorageAdapter, and spreadsheet connectors.",
+  "Deno and Bun runtimes run alongside Node.js and modern browsers to keep ehh universal.",
+  "Google Apps Script services (Drive, Sheets, PropertiesService) extend the stack for cloud spreadsheets and persistence.",
+];

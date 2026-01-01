@@ -1,0 +1,20 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-utility
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_utility = [
+  "ActionLoader",
+  "CacheManager",
+  "Validator",
+  "httpService",
+  "Watchman",
+  "ActionFs",
+  "ActionIndexDb",
+  "ActionLocalStorage",
+  "ActionAgent",
+  "ActionOllama",
+  "ActionValidator",
+  "ActionSpreadsheetAdapter",
+  "DocumentRenderer",
+];

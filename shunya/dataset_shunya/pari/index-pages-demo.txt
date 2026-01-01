@@ -1,0 +1,5 @@
+/root/
+    /about/,
+    /project/,
+    /docs/,
+    /try now/,

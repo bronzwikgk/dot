@@ -1,0 +1,303 @@
+PHASE 1: PLANNING & DESIGN (12 Steps)
+1.1 Define language purpose and scope
+
+1.2 Create example scripts you want to support
+
+1.3 Design grammar notation (BNF/EBNF)
+
+1.4 List all keyword synonyms (print/show/display)
+
+1.5 Decide on tense handling (present only initially)
+
+1.6 Design pronoun resolution strategy
+
+1.7 Plan article handling (ignore a/an/the)
+
+1.8 Design variable naming rules
+
+1.9 Define number/string literal formats
+
+1.10 Plan error message format
+
+1.11 Set up project structure
+
+1.12 Choose development approach (TDD recommended)
+
+PHASE 2: TOKENIZER IMPLEMENTATION (15 Steps)
+2.1 Create Token class with type and value
+
+2.2 Define token types enum/constants
+
+2.3 Implement basic string splitting
+
+2.4 Add string literal handling (quotes)
+
+2.5 Add number literal recognition
+
+2.6 Add keyword detection
+
+2.7 Add operator detection
+
+2.8 Add punctuation handling
+
+2.9 Implement line/column tracking
+
+2.10 Add comment skipping support
+
+2.11 Create synonym mapping system
+
+2.12 Add text normalization (case handling)
+
+2.13 Write tokenizer tests
+
+2.14 Handle edge cases (empty input, etc.)
+
+2.15 Create tokenizer error messages
+
+PHASE 3: AST NODE DEFINITIONS (10 Steps)
+3.1 Create base ASTNode class
+
+3.2 Implement ProgramNode
+
+3.3 Implement StatementNode types
+
+3.4 Implement ExpressionNode hierarchy
+
+3.5 Create AssignmentNode
+
+3.6 Create ConditionalNode
+
+3.7 Create LoopNode
+
+3.8 Create FunctionCallNode
+
+3.9 Create VariableNode
+
+3.10 Create LiteralNode (number/string)
+
+PHASE 4: PARSER IMPLEMENTATION (20 Steps)
+4.1 Create Parser class with token tracking
+
+4.2 Implement peek() and consume() methods
+
+4.3 Create parseProgram() entry point
+
+4.4 Implement parseStatement() dispatcher
+
+4.5 Create parseAssignment()
+
+4.6 Create parsePrintStatement()
+
+4.7 Implement parseExpression() with precedence
+
+4.8 Add arithmetic expression parsing
+
+4.9 Add comparison expression parsing
+
+4.10 Implement parseConditional()
+
+4.11 Create parseLoop()
+
+4.12 Implement parseFunctionCall()
+
+4.13 Add parseBlock() for code blocks
+
+4.14 Implement error recovery
+
+4.15 Add helpful parser error messages
+
+4.16 Create pronoun resolution in parser
+
+4.17 Add article (a/an/the) stripping
+
+4.18 Implement context tracking
+
+4.19 Write parser tests
+
+4.20 Validate AST generation
+
+PHASE 5: EXECUTION ENGINE (15 Steps)
+5.1 Create Environment class for variables
+
+5.2 Implement scope chain management
+
+5.3 Create Evaluator class
+
+5.4 Add evaluateProgram() method
+
+5.5 Implement evaluateAssignment()
+
+5.6 Create evaluateExpression()
+
+5.7 Add arithmetic operation execution
+
+5.8 Implement evaluateConditional()
+
+5.9 Create evaluateLoop()
+
+5.10 Add built-in function registration
+
+5.11 Implement function call execution
+
+5.12 Create runtime error handling
+
+5.13 Add step-by-step debugging capability
+
+5.14 Implement result value tracking
+
+5.15 Write execution tests
+
+PHASE 6: NATURAL LANGUAGE ENHANCEMENTS (8 Steps)
+6.1 Create synonym dictionary
+
+6.2 Implement text preprocessor
+
+6.3 Add pronoun resolution engine
+
+6.4 Create natural error message generator
+
+6.5 Implement context-aware suggestions
+
+6.6 Add command history tracking
+
+6.7 Create auto-completion suggestions
+
+6.8 Implement natural language help system
+
+PHASE 7: CLI & INTEGRATION (4 Steps)
+7.1 Create command-line interface
+
+7.2 Implement REPL (Read-Eval-Print Loop)
+
+7.3 Add file execution capability
+
+7.4 Create interactive debug mode
+
+PRIORITIZED MINIMUM VIABLE PRODUCT (MVP) - 25 Steps
+Core MVP Checklist
+Tokenizer with keywords, numbers, strings
+
+AST nodes for program, assignment, print
+
+Parse "x is 5" → AssignmentNode
+
+Parse "show x" → FunctionCallNode
+
+Environment with variable storage
+
+Evaluate AssignmentNode
+
+Evaluate FunctionCallNode for "show"
+
+Basic arithmetic expressions (+, -, *, /)
+
+If-then statements
+
+Comparison operators (>, <, =)
+
+Repeat loops with counter
+
+String concatenation
+
+Error handling for undefined variables
+
+Line number tracking in errors
+
+Basic REPL interface
+
+File execution from command line
+
+Comment support
+
+Boolean expressions (and, or)
+
+While loops
+
+Lists/arrays basic support
+
+Function definitions
+
+Return statements
+
+Scope management
+
+Built-in functions (sum, average)
+
+Documentation and examples
+
+DEVELOPMENT ORDER RECOMMENDATION
+Week 1: Foundation (Steps 1-10)
+Set up project with tests
+
+Implement tokenizer for basic cases
+
+Create AST node classes
+
+Parse simple assignments
+
+Execute assignments and prints
+
+Test: "x is 5" then "show x"
+
+Week 2: Expressions (Steps 11-20)
+Add arithmetic expressions
+
+Implement comparison operators
+
+Add if-then statements
+
+Create basic loops
+
+Test: "if x > 3 then show 'big'"
+
+Week 3: Language Features (Steps 21-35)
+Add functions and scope
+
+Implement lists
+
+Add more built-ins
+
+Create REPL interface
+
+Test: Complete small programs
+
+Week 4: Polish & Enhancements (Steps 36-50)
+Natural error messages
+
+Pronoun resolution
+
+Synonym support
+
+Performance improvements
+
+Test: Natural language variations
+
+ESSENTIAL TOOLS & SETUP
+Node.js installed
+
+Git repository initialized
+
+Package.json with test runner
+
+Jest/Mocha for testing
+
+ESLint for code quality
+
+Documentation template
+
+Example scripts folder
+
+Debug logging system
+
+SUCCESS METRICS
+Can parse and execute 10 example scripts
+
+Clear error messages for common mistakes
+
+REPL is responsive and helpful
+
+All MVP features implemented
+
+Code is testable and modular
+
+Documentation exists for language syntax

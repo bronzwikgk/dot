@@ -1,0 +1,10 @@
+- User Input.
+- Parse Input to tree as per template-schema-tree.
+- Create Input ID.
+- Discover Story Type. Answer should be 'Application'
+- Add Metadata as per dataset-meta-{story-Type}-[lates version]-[live].txt.
+- Generate mvi, Validate MVI, evaluate MVI, Retry if low score.
+- Find similar datasets,flows for similar output type.
+- generate dataset_master
+- generate dataset_ for each item in dataset_master
+- generate Datatable 

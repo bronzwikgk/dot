@@ -1,0 +1,139 @@
+version: v1.1.13
+status: inprogress
+agent: KW-wonderAgent
+last_updated: "2026-01-02"
+
+# EHh MANIFEST INDEX
+# =============================================================================
+manifest:
+  project:
+    name: "Everything Happens Here (EHh)"
+    acronym: "EHh"
+    tagline: "Every runtime, same orchestration."
+    description: "Dataset-driven orchestration framework built around ActionApp and its plugins/utilities, unifying entities, events, views, and flows across Node.js, Browser, and Apps Script."
+  contacts:
+    project_lead: "KW-wonderAgent"
+    architecture: "ActionApp Core + Plugin mesh"
+    documentation: "Renderer output + index files"
+  repository:
+    structure: "Single repo with dataset root and renderer"
+    dataset_root: "shunya/dataset_shunya/dataset_shunya_ehh"
+    runtime_support:
+      - "Node.js"
+      - "Browser"
+      - "Google Apps Script"
+    languages:
+      - "JavaScript (ES6 modules only)"
+  compliance:
+    constraints:
+      - "No arrow functions or forEach loops"
+      - "ES module imports (@import statements)"
+      - "Classes with constructors/methods only"
+      - "Semantic navigation and pointer cues enforced by ActionView"
+      - "Validation via ActionValidator"
+
+project_manifest:
+  sections:
+    overview:
+      file: "ehh-manifest-overview.yml"
+      map:
+        - "Vision & Objective dataset (objective)"
+        - "Purpose & Audience datasets"
+        - "Problem addressed framed from developer/QA/ops viewpoint"
+    requirements:
+      file: "ehh-manifest-requirements.yml"
+      map:
+        - "Constraints dataset"
+        - "Requirements dataset"
+        - "Action verb dataset with hyphen/underscore naming"
+        - "Entity dataset listing core models"
+    governance:
+      file: "ehh-manifest-governance.yml"
+      map:
+        - "Agent job queue status tracking"
+        - "Changelog and semantic versioning notes"
+        - "Renderer workflow (datasets → index → ehh-unified-doc.md)"
+
+technical_design:
+  sections:
+    architecture:
+      file: "ehh-design-architecture.yml"
+      map:
+        - "ActionApp core (Entry.js, ActionApp.js)"
+        - "Plugin mesh (ActionEntity, View, Event, Server, Client, Engine)"
+        - "Utility services (ActionValidator, ActionFs, ActionLoader, Spreadsheet Adapter, etc.)"
+    navigation:
+      file: "ehh-design-navigation.yml"
+      map:
+        - "ActionView nav cues"
+        - "Navigation specification dataset"
+        - "Accessibility considerations"
+
+technical_specifications:
+  sections:
+    coding:
+      file: "ehh-spec-coding.yml"
+      map:
+        - "Class-based Node.js rules"
+        - "Dataset naming conventions (dataset-<category>-<name>.txt)"
+    configuration:
+      file: "ehh-spec-config.yml"
+      map:
+        - "ActionLoader responsibilities"
+        - "Index ↔ dataset wiring"
+        - "Entity configuration references (entity_user_register_config.json, entity_user_session_config.json)"
+        - "Application configuration outline (app_config_v1.txt)"
+        - "Route configuration examples (routes_config.txt)"
+        - "View configuration hints (app_view_config.txt)"
+    documentation:
+      file: "ehh-spec-docs.yml"
+      map:
+        - "Renderer output location"
+        - "Index update workflow"
+        - "Documentation review cadence"
+
+datasets:
+  path: "shunya/dataset_shunya/dataset_shunya_ehh"
+  count: 24
+  list:
+    - objective: "ehh-v1.1.0-active-KW-wonderAgent-dataset-objective.txt"
+    - purpose: "ehh-v1.1.0-active-KW-wonderAgent-dataset-purpose.txt"
+    - usecases: "ehh-v1.1.0-active-KW-wonderAgent-dataset-usecases.txt"
+    - problem_addressed: "ehh-v1.1.0-active-KW-wonderAgent-dataset-problem-addressed.txt"
+    - audience: "ehh-v1.1.0-active-KW-wonderAgent-dataset-audience.txt"
+    - constraints: "ehh-v1.1.0-active-KW-wonderAgent-dataset-constraints.txt"
+    - requirements: "ehh-v1.1.0-active-KW-wonderAgent-dataset-requirements.txt"
+    - features: "ehh-v1.1.0-active-KW-wonderAgent-dataset-features.txt"
+    - technical_specifications: "ehh-v1.1.0-active-KW-wonderAgent-dataset-technical-specifications.txt"
+    - design_specifications: "ehh-v1.1.0-active-KW-wonderAgent-dataset-design-specifications.txt"
+    - navigation_specification: "ehh-v1.1.0-active-KW-wonderAgent-dataset-navigation.txt"
+    - instructions: "ehh-v1.1.0-active-KW-wonderAgent-dataset-instructions.txt"
+    - rules: "ehh-v1.1.0-active-KW-wonderAgent-dataset-rules.txt"
+    - ui_specs: "ehh-v1.1.0-active-KW-wonderAgent-dataset-ui-specs.txt"
+    - action: "ehh-v1.1.0-active-KW-wonderAgent-dataset-action.txt"
+    - entity: "ehh-v1.1.0-active-KW-wonderAgent-dataset-entity.txt"
+    - plugin: "ehh-v1.1.0-active-KW-wonderAgent-dataset-plugin.txt"
+    - utility: "ehh-v1.1.0-active-KW-wonderAgent-dataset-utility.txt"
+    - system_flow: "ehh-v1.1.0-active-KW-wonderAgent-dataset-system-flow.txt"
+    - conditions: "ehh-v1.1.0-active-KW-wonderAgent-dataset-conditions.txt"
+    - class: "ehh-v1.1.0-active-KW-wonderAgent-dataset-class.txt"
+    - methods: "ehh-v1.1.0-active-KW-wonderAgent-dataset-methods.txt"
+    - variables: "ehh-v1.1.0-active-KW-wonderAgent-dataset-variables.txt"
+
+workflow:
+  creation:
+    - "Update datasets when requirements/features change."
+    - "Sync index files (.yml/.txt/.tree) before rerunning renderer."
+    - "Run shunya/ehh-renderDoc.mjs → shunya/ehh-unified-doc.md."
+  review:
+    - "Weekly dataset accuracy check."
+    - "Document version bump per release."
+    - "Archive old renderer outputs if schema changes."
+
+directory_tree:
+  ehh:
+    ├── dataset_shunya/
+    │   └── dataset_shunya_ehh/
+    ├── ehh-renderDoc.mjs
+    ├── ehh-unified-doc.md
+    └── ehh-manifest-index.yml

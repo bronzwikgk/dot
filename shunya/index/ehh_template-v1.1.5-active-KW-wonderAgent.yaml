@@ -1,0 +1,570 @@
+# EHh FRAMEWORK v1.1.0 - PROJECT MANIFEST & TECHNICAL DOCUMENTATION INDEX
+# =============================================================================
+# Master manifest template for “Everything Happens Here” (EHh)
+# Last Updated: 2026-01-03
+# Version: v1.1.0
+# Status: Active Development
+# Agent: KW-wonderAgent
+# =============================================================================
+
+manifest:
+  version: "v1.1.0"
+  status: "active"
+  agent: "KW-wonderAgent"
+  project:
+    name: "Everything Happens Here"
+    acronym: "EHh"
+    tagline: "ActionApp-first multi-runtime orchestration"
+    description: "Dataset-powered runtime that unites entities, events, views, and utilities through ActionApp, ActionEngine, and the plugin mesh."
+  contacts:
+    project_lead: "KW-wonderAgent"
+    architecture: "ActionApp + Plugin Grid"
+    documentation: "Renderer output + dataset index"
+  repository:
+    type: "Single codebase"
+    structure: "Manifest + dataset + renderer pipeline"
+    languages: ["JavaScript (ES6 modules)"]
+    runtimes:
+      - "Node.js"
+      - "Browser"
+      - "Google Apps Script"
+      - "Deno"
+      - "Bun"
+    dataset_root: "shunya/dataset_shunya/dataset_shunya_ehh"
+  compliance:
+    constraints:
+      - "No arrow functions or forEach"
+      - "Classes with constructors/methods only"
+      - "Semantic navigation enforced by ActionView"
+      - "Strict dataset naming (dataset-<category>-<name>.txt)"
+    validation: "ActionValidator plus dataset schema guards"
+
+# =============================================================================
+# 1. PROJECT MANIFEST INDEX
+# =============================================================================
+
+project_manifest:
+  sections:
+    1.1_project_overview:
+      file: "EHh-MANIFEST-OVERVIEW.md"
+      sections:
+        - "1.1.1 Vision & Goals"
+        - "1.1.2 Objectives & Purpose (dataset: objective/purpose)"
+        - "1.1.3 Problem Statement (audience POV)"
+        - "1.1.4 Key Differentiators"
+        - "1.1.5 Success Metrics"
+    1.2_business_requirements:
+      file: "EHh-MANIFEST-REQUIREMENTS.md"
+      sections:
+        - "1.2.1 Constraints (dataset: constraints)"
+        - "1.2.2 Requirements (dataset: requirements)"
+        - "1.2.3 Use Cases (dataset: usecases)"
+        - "1.2.4 Action Registry (dataset: action)"
+        - "1.2.5 Entity Catalog (dataset: entity)"
+        - "1.2.6 Feature Backlog (dataset: features)"
+        - "1.2.7 Plugin/Utility Scope"
+    1.3_scope_management:
+      file: "EHh-MANIFEST-SCOPE.md"
+      sections:
+        - "1.3.1 In-Scope Modules"
+        - "1.3.2 Out-of-Scope Work"
+        - "1.3.3 Future Considerations (extend to ERMS additions)"
+        - "1.3.4 Scope Change Process"
+        - "1.3.5 Feature Prioritization Matrix"
+    1.4_timeline_milestones:
+      file: "EHh-MANIFEST-TIMELINE.md"
+      sections:
+        - "1.4.1 Release Roadmap"
+        - "1.4.2 Milestone Schedule"
+        - "1.4.3 Critical Path Analysis"
+        - "1.4.4 Dependencies & Constraints"
+        - "1.4.5 Resource Allocation"
+    1.5_risk_management:
+      file: "EHh-MANIFEST-RISK.md"
+      sections:
+        - "1.5.1 Risk Register"
+        - "1.5.2 Mitigation Strategies"
+        - "1.5.3 Contingency Plans"
+        - "1.5.4 Technical Debt Management"
+        - "1.5.5 Compliance Risks"
+    1.6_resource_management:
+      file: "EHh-MANIFEST-RESOURCES.md"
+      sections:
+        - "1.6.1 Team Structure"
+        - "1.6.2 Roles & Responsibilities"
+        - "1.6.3 Skill Requirements"
+        - "1.6.4 Tooling & Infrastructure"
+        - "1.6.5 Budget & Cost Management"
+    1.7_quality_assurance:
+      file: "EHh-MANIFEST-QUALITY.md"
+      sections:
+        - "1.7.1 Quality Standards"
+        - "1.7.2 Testing Strategy (unit/integration/e2e)"
+        - "1.7.3 Code Review Process"
+        - "1.7.4 Documentation Standards"
+        - "1.7.5 Performance Benchmarks"
+    1.8_communication_plan:
+      file: "EHh-MANIFEST-COMMS.md"
+      sections:
+        - "1.8.1 Stakeholder Communication"
+        - "1.8.2 Status Reporting"
+        - "1.8.3 Meeting Cadence"
+        - "1.8.4 Decision Log"
+        - "1.8.5 Escalation Procedures"
+
+# =============================================================================
+# 2. TECHNICAL DESIGN DOCUMENT INDEX
+# =============================================================================
+
+technical_design:
+  sections:
+    2.1_architecture_overview:
+      file: "EHh-DESIGN-ARCHITECTURE.md"
+      sections:
+        - "2.1.1 System Architecture"
+        - "2.1.2 Entry.js / ActionApp initialization"
+        - "2.1.3 Plugin mesh (View, Event, Entity, Server, Client, Engine Flow)"
+        - "2.1.4 Data Flow Diagrams"
+        - "2.1.5 Deployment Architecture"
+    2.2_core_framework_design:
+      file: "EHh-DESIGN-CORE.md"
+      sections:
+        - "2.2.1 Runtime Detection & Platform Flags"
+        - "2.2.2 ActionApp & ActionEngine sequencing"
+        - "2.2.3 Plugin lifecycle & hook system"
+        - "2.2.4 HTTP service layer"
+        - "2.2.5 Configuration loading (ActionLoader)"
+    2.3_entity_system_design:
+      file: "EHh-DESIGN-ENTITY.md"
+      sections:
+        - "2.3.1 Entity model design"
+        - "2.3.2 Record structures (flat/tree/linked)"
+        - "2.3.3 Storage abstraction (ActionFs, LocalStorage, IndexDb)"
+        - "2.3.4 Persistence patterns"
+        - "2.3.5 Cache layer and metadata"
+    2.4_security_design:
+      file: "EHh-DESIGN-SECURITY.md"
+      sections:
+        - "2.4.1 Authentication & session management"
+        - "2.4.2 Authorization/RBAC"
+        - "2.4.3 Input validation / CORS"
+        - "2.4.4 Data encryption strategies"
+        - "2.4.5 Audit/log architecture"
+    2.5_integration_design:
+      file: "EHh-DESIGN-INTEGRATION.md"
+      sections:
+        - "2.5.1 External API integration"
+        - "2.5.2 Broker integrations (financial modules)"
+        - "2.5.3 Git service workflows"
+        - "2.5.4 Google service hooks"
+        - "2.5.5 Payment gateway connectivity"
+    2.6_data_design:
+      file: "EHh-DESIGN-DATA.md"
+      sections:
+        - "2.6.1 Data model specifications"
+        - "2.6.2 Schema design patterns"
+        - "2.6.3 File format parsers (JSON, YAML, CSV, XML, JSONL)"
+        - "2.6.4 Data transformation engine"
+        - "2.6.5 Import/export design"
+    2.7_ui_ux_design:
+      file: "EHh-DESIGN-UIUX.md"
+      sections:
+        - "2.7.1 Interface architecture"
+        - "2.7.2 Component design system"
+        - "2.7.3 Accessibility implementation"
+        - "2.7.4 Internationalization"
+        - "2.7.5 Responsive patterns"
+    2.8_performance_design:
+      file: "EHh-DESIGN-PERFORMANCE.md"
+      sections:
+        - "2.8.1 Caching strategy"
+        - "2.8.2 Optimization techniques"
+        - "2.8.3 Scalability considerations"
+        - "2.8.4 Load testing strategy"
+        - "2.8.5 Performance monitoring"
+
+# =============================================================================
+# 3. TECHNICAL SPECIFICATION DOCUMENT INDEX
+# =============================================================================
+
+technical_specifications:
+  sections:
+    3.1_coding_specifications:
+      file: "EHh-SPEC-CODING.md"
+      sections:
+        - "3.1.1 Language specifications"
+        - "3.1.2 Code style guide"
+        - "3.1.3 Naming conventions"
+        - "3.1.4 File structure standards"
+        - "3.1.5 Documentation requirements"
+    3.2_api_specifications:
+      file: "EHh-SPEC-API.md"
+      sections:
+        - "3.2.1 REST API specifications"
+        - "3.2.2 Endpoint documentation"
+        - "3.2.3 Request/response formats"
+        - "3.2.4 Error handling standards"
+        - "3.2.5 Versioning strategy"
+    3.3_configuration_specifications:
+      file: "EHh-SPEC-CONFIG.md"
+      sections:
+        - "3.3.1 Configuration file formats"
+        - "3.3.2 Schema validation rules"
+        - "3.3.3 Environment configuration"
+        - "3.3.4 Secret management"
+        - "3.3.5 Configuration overrides"
+    3.4_database_specifications:
+      file: "EHh-SPEC-DATABASE.md"
+      sections:
+        - "3.4.1 Storage schema specifications"
+        - "3.4.2 Indexing strategy"
+        - "3.4.3 Migration specifications"
+        - "3.4.4 Backup & recovery"
+        - "3.4.5 Performance targets"
+    3.5_security_specifications:
+      file: "EHh-SPEC-SECURITY.md"
+      sections:
+        - "3.5.1 Authentication specifications"
+        - "3.5.2 Authorization specifications"
+        - "3.5.3 Data encryption standards"
+        - "3.5.4 Security headers"
+        - "3.5.5 Compliance posture"
+    3.6_testing_specifications:
+      file: "EHh-SPEC-TESTING.md"
+      sections:
+        - "3.6.1 Unit test specifications"
+        - "3.6.2 Integration test specifications"
+        - "3.6.3 Performance test specifications"
+        - "3.6.4 Security test specifications"
+        - "3.6.5 Test data management"
+    3.7_deployment_specifications:
+      file: "EHh-SPEC-DEPLOYMENT.md"
+      sections:
+        - "3.7.1 Build specifications"
+        - "3.7.2 Deployment procedures"
+        - "3.7.3 Environment specifications"
+        - "3.7.4 Monitoring specifications"
+        - "3.7.5 Rollback procedures"
+    3.8_monitoring_specifications:
+      file: "EHh-SPEC-MONITORING.md"
+      sections:
+        - "3.8.1 Logging specifications"
+        - "3.8.2 Metrics collection"
+        - "3.8.3 Alerting specifications"
+        - "3.8.4 Dashboard requirements"
+        - "3.8.5 Performance monitoring"
+
+# =============================================================================
+# 4. IMPLEMENTATION GUIDES INDEX
+# =============================================================================
+
+implementation_guides:
+  4.1_setup_guide:
+    file: "EHh-GUIDE-SETUP.md"
+    sections:
+      - "4.1.1 Prerequisites & dependencies"
+      - "4.1.2 Installation"
+      - "4.1.3 Configuration"
+      - "4.1.4 Environment"
+      - "4.1.5 Verification"
+  4.2_development_guide:
+    file: "EHh-GUIDE-DEVELOPMENT.md"
+    sections:
+      - "4.2.1 Development environment setup"
+      - "4.2.2 Project navigation"
+      - "4.2.3 Building & testing"
+      - "4.2.4 Debugging"
+      - "4.2.5 Contribution guidelines"
+  4.3_api_usage_guide:
+    file: "EHh-GUIDE-API.md"
+    sections:
+      - "4.3.1 API authentication"
+      - "4.3.2 Entity operations"
+      - "4.3.3 File operations"
+      - "4.3.4 Plugin development"
+      - "4.3.5 Integration examples"
+  4.4_configuration_guide:
+    file: "EHh-GUIDE-CONFIG.md"
+    sections:
+      - "4.4.1 Entity configuration"
+      - "4.4.2 Route configuration"
+      - "4.4.3 Plugin configuration"
+      - "4.4.4 Security configuration"
+      - "4.4.5 Performance tuning"
+  4.5_deployment_guide:
+    file: "EHh-GUIDE-DEPLOYMENT.md"
+    sections:
+      - "4.5.1 Node.js deployment"
+      - "4.5.2 Browser deployment"
+      - "4.5.3 Apps Script deployment"
+      - "4.5.4 Production deployment"
+      - "4.5.5 Scaling procedures"
+  4.6_troubleshooting_guide:
+    file: "EHh-GUIDE-TROUBLESHOOTING.md"
+    sections:
+      - "4.6.1 Common issues & solutions"
+      - "4.6.2 Debugging techniques"
+      - "4.6.3 Performance issues"
+      - "4.6.4 Security issues"
+      - "4.6.5 Recovery procedures"
+
+# =============================================================================
+# 5. REFERENCE DOCUMENTATION INDEX
+# =============================================================================
+
+reference_documentation:
+  5.1_api_reference:
+    file: "EHh-REF-API.md"
+    sections:
+      - "5.1.1 ActionEntity API"
+      - "5.1.2 ActionValidator API"
+      - "5.1.3 ActionFS API"
+      - "5.1.4 ActionServer API"
+      - "5.1.5 Plugin API"
+  5.2_configuration_reference:
+    file: "EHh-REF-CONFIG.md"
+    sections:
+      - "5.2.1 Entity configuration schema"
+      - "5.2.2 Route configuration schema"
+      - "5.2.3 Plugin configuration schema"
+      - "5.2.4 Security configuration schema"
+      - "5.2.5 Performance configuration schema"
+  5.3_error_reference:
+    file: "EHh-REF-ERROR.md"
+    sections:
+      - "5.3.1 Error codes"
+      - "5.3.2 HTTP status mapping"
+      - "5.3.3 Validation errors"
+      - "5.3.4 Security errors"
+      - "5.3.5 System failures"
+  5.4_cli_reference:
+    file: "EHh-REF-CLI.md"
+    sections:
+      - "5.4.1 Command reference"
+      - "5.4.2 Config commands"
+      - "5.4.3 Entity commands"
+      - "5.4.4 Plugin commands"
+      - "5.4.5 Utility commands"
+  5.5_data_format_reference:
+    file: "EHh-REF-DATA.md"
+    sections:
+      - "5.5.1 JSON format"
+      - "5.5.2 CSV format"
+      - "5.5.3 XML format"
+      - "5.5.4 YAML format"
+      - "5.5.5 Custom formats"
+
+# =============================================================================
+# 6. ADDITIONAL DOCUMENTATION
+# =============================================================================
+
+additional_docs:
+  6.1_changelog:
+    file: "CHANGELOG.md"
+    sections:
+      - "6.1.1 Version history"
+      - "6.1.2 Breaking changes"
+      - "6.1.3 Migration guidance"
+      - "6.1.4 Deprecation notes"
+      - "6.1.5 Future plans"
+  6.2_contributing_guide:
+    file: "CONTRIBUTING.md"
+    sections:
+      - "6.2.1 Contribution process"
+      - "6.2.2 Code style"
+      - "6.2.3 Testing requirements"
+      - "6.2.4 Documentation requirements"
+      - "6.2.5 Review process"
+  6.3_license_legal:
+    file: "LICENSE.md"
+    sections:
+      - "6.3.1 License terms"
+      - "6.3.2 Usage rights"
+      - "6.3.3 Attribution"
+      - "6.3.4 Warranty disclaimer"
+      - "6.3.5 Liability limitations"
+  6.4_glossary:
+    file: "GLOSSARY.md"
+    sections:
+      - "6.4.1 Technical terms"
+      - "6.4.2 Acronyms"
+      - "6.4.3 Entity terminology"
+      - "6.4.4 Configuration terms"
+      - "6.4.5 Security terms"
+  6.5_faq:
+    file: "FAQ.md"
+    sections:
+      - "6.5.1 General questions"
+      - "6.5.2 Technical questions"
+      - "6.5.3 Configuration questions"
+      - "6.5.4 Troubleshooting questions"
+      - "6.5.5 Best practices"
+
+# =============================================================================
+# 7. DOCUMENTATION STATISTICS
+# =============================================================================
+
+documentation_stats:
+  total_documents: 36
+  total_sections: 180
+  average_sections_per_doc: 5
+  document_types:
+    manifest_docs: 8
+    design_docs: 8
+    specification_docs: 8
+    guide_docs: 6
+    reference_docs: 5
+    additional_docs: 5
+  completion_status:
+    planned: 36
+    in_progress: 0
+    completed: 0
+    percentage_complete: "0%"
+  priority_levels:
+    p0_critical: 12
+    p1_high: 12
+    p2_medium: 8
+    p3_low: 4
+
+# =============================================================================
+# 8. DOCUMENTATION WORKFLOW
+# =============================================================================
+
+documentation_workflow:
+  creation_process:
+    - "Outline creation based on dataset specifications"
+    - "Write templates guided by EHh policies (class-based Node.js, dataset names, etc.)"
+    - "Review and format for consistency"
+    - "Publish via renderer and update documentation index"
+    - "Commit with semantic version tag"
+  update_process:
+    trigger: "Feature addition or update"
+    actions:
+      - "Update dataset definitions"
+      - "Rerun renderer"
+      - "Publish changelog entry"
+  review_cadence:
+    weekly: "Progress reviews"
+    monthly: "Comprehensive audits"
+    per_release: "Full documentation validation"
+    quarterly: "Architecture review"
+  quality_checks:
+    - "Technical accuracy verification"
+    - "Code example validation"
+    - "Link validation"
+    - "Format consistency"
+    - "Accessibility compliance"
+
+# =============================================================================
+# 9. DOCUMENTATION STRUCTURE
+# =============================================================================
+
+directory_structure:
+  docs/:
+    manifest/:
+      - "EHh-MANIFEST-OVERVIEW.md"
+      - "EHh-MANIFEST-REQUIREMENTS.md"
+      - "EHh-MANIFEST-SCOPE.md"
+      - "EHh-MANIFEST-TIMELINE.md"
+      - "EHh-MANIFEST-RISK.md"
+      - "EHh-MANIFEST-RESOURCES.md"
+      - "EHh-MANIFEST-QUALITY.md"
+      - "EHh-MANIFEST-COMMS.md"
+    design/:
+      - "EHh-DESIGN-ARCHITECTURE.md"
+      - "EHh-DESIGN-CORE.md"
+      - "EHh-DESIGN-ENTITY.md"
+      - "EHh-DESIGN-SECURITY.md"
+      - "EHh-DESIGN-INTEGRATION.md"
+      - "EHh-DESIGN-DATA.md"
+      - "EHh-DESIGN-UIUX.md"
+      - "EHh-DESIGN-PERFORMANCE.md"
+    specifications/:
+      - "EHh-SPEC-CODING.md"
+      - "EHh-SPEC-API.md"
+      - "EHh-SPEC-CONFIG.md"
+      - "EHh-SPEC-DATABASE.md"
+      - "EHh-SPEC-SECURITY.md"
+      - "EHh-SPEC-TESTING.md"
+      - "EHh-SPEC-DEPLOYMENT.md"
+      - "EHh-SPEC-MONITORING.md"
+    guides/:
+      - "EHh-GUIDE-SETUP.md"
+      - "EHh-GUIDE-DEVELOPMENT.md"
+      - "EHh-GUIDE-API.md"
+      - "EHh-GUIDE-CONFIG.md"
+      - "EHh-GUIDE-DEPLOYMENT.md"
+      - "EHh-GUIDE-TROUBLESHOOTING.md"
+    reference/:
+      - "EHh-REF-API.md"
+      - "EHh-REF-CONFIG.md"
+      - "EHh-REF-ERROR.md"
+      - "EHh-REF-CLI.md"
+      - "EHh-REF-DATA.md"
+    additional/:
+      - "CHANGELOG.md"
+      - "CONTRIBUTING.md"
+      - "LICENSE.md"
+      - "GLOSSARY.md"
+      - "FAQ.md"
+    assets/:
+      - diagrams/
+      - screenshots/
+      - examples/
+      - templates/
+
+# =============================================================================
+# 10. DOCUMENTATION TEMPLATES
+# =============================================================================
+
+templates:
+  document_template: |
+    # [Document Title]
+    # =============================================================================
+    # EHh Framework v1.1.0
+    # [Document Type]
+    # Last Updated: [Date]
+    # Version: [Version]
+    # =============================================================================
+    
+    ## 1. Overview
+    [Brief overview of contents]
+    
+    ## 2. Table of Contents
+    [Auto-generated TOC]
+    
+    ## 3. [Main Section 1]
+    [Content...]
+    
+    ## 4. [Main Section 2]
+    [Content...]
+    
+    ## 5. References
+    - [Related Documents]
+    - [External Resources]
+    
+    ## 6. Revision History
+    | Version | Date | Author | Changes |
+    |---------|------|--------|---------|
+    | 1.0.0   |      |        | Initial |
+  
+  section_template: |
+    ### [Section Number]. [Section Title]
+    
+    **Purpose**: [Brief purpose description]
+    
+    **Scope**: [What this section covers]
+    
+    **Related Sections**: [Links to related sections]
+    
+    [Content goes here...]
+    
+    **Examples**:
+    ```javascript
+    // Code example if applicable
+    ```
+    
+    **Notes**: [Additional notes, warnings, tips]
+
+# =============================================================================
+# END OF TEMPLATE

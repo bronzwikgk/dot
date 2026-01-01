@@ -1,0 +1,27 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-entity
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_entity = [
+  "project",
+  "task",
+  "user_register",
+  "datatable",
+  "alarm",
+  "user_session",
+  "table-based_entity",
+  "tree-based_entity",
+  "graph-based_entity",
+  "stock_portfolio",
+  "watchlist",
+  "algorithmic_trading",
+  "market_data",
+  "project_management",
+  "task_management",
+  "customer_database",
+  "support_ticket",
+  "feedback_record",
+  "payment_gateway",
+  "agent_flow",
+];

@@ -1,0 +1,17 @@
+﻿# ehh-v1.1.0-active-KW-wonderAgent-dataset-technical-specifications
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_technical_specifications = [
+  "Package size: ~50KB minified core, ~200KB full bundle for the lightweight reference implementation.",
+  "Performance: sub-millisecond CRUD for most operations supported by in-memory cache warm paths.",
+  "Test coverage: 85%+ unit tests across entity, validator, storage, and plugin layers.",
+  "Security: OWASP Top 10, GDPR, HIPAA, PCI DSS readiness, and consistent Input/Output sanitization.",
+  "Browser support: Chrome 80+, Firefox 75+, Safari 14+ with ES6 module loading.",
+  "Runtime support: Node.js 14+ with ES modules, Deno 1.0+, Bun 1.0+, and Google Apps Script compatibility.",
+  "Config formats: .js, .json, .jsonl, .csv, .xml, .html, .txt, .yml with config merging + hot reload.",
+  "Architecture: single codebase, config-driven, plugin-based, request-response transaction model.",
+  "Coding standards: ES6 imports only, traditional for loops (no forEach), function syntax (no arrows), and explicit properties.",
+  "Global definitions: const/var outside modules to represent runtime state, caches, and monitors.",
+];

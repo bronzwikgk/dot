@@ -1,0 +1,29 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-requirement
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_requirement = [
+  "Support multi-format configs (.js, .json, .yaml, .csv, .xml, .html, .jsonl).",
+  "Ensure actionEvent can route DOM triggers to actionEngine descriptors securely.",
+  "Provide pluggable storage adapters (ActionFs, IndexedDBStorage, LocalStorageAdapter, ActionSpreadsheetAdapter).",
+  "Expose httpService capabilities like OAuth, webhook signing, and retries.",
+  "Deliver monitoring/health data through logger and monitor components.",
+  "Offer a dataset in each file for every conceptual topic in the spec.",
+  "Follow the design spec constraints: ES6 imports only, traditional for loops, function syntax, explicit properties, and request-response transactions.",
+  "Keep configs in .js modules while also supporting YAML, JSON, CSV, XML, HTML, and JSONL formats mentioned in the requirements tree.",
+  "Triple runtime support (Node.js, Browser, Apps Script, Deno, Bun) with priority P0 core framework coverage.",
+  "Configuration system must only use ES6 imports, avoid forEach/arrow/shorthand, keep globals defined externally, and drive behavior through exported .js configs.",
+  "Plugin system requirements include lifecycle management, dependencies, hook execution, isolation, and error handling hooks.",
+  "External API service needs HTTP clients per runtime, API registration, circuit breakers, rate limiting, retries/backoffs, OAuth2, API keys, and webhook support.",
+  "Entity and record management enforce schema validation, relationships, inheritance, metadata tracking, and fallback storage drivers.",
+  "Storage backends must provide memory, file, SQL, NoSQL, browser, and Apps Script options with encryption, migration, sync, fallback, and monitoring.",
+  "Financial, product lifecycle, and integration services layers require dedicated support for portfolios, watchlists, brokers, project/task/customer data, and payment providers.",
+  "Action system demands CRUD plus search/filter/sort/pagination operations, coupled with ActionValidator, ActionFs, and ActionServer behavior.",
+  "Security and access control insist on authentication, RBAC, CORS, data security, encryption, and auditing safeguards.",
+  "Utility requirements cover HTTP, data, file, and template helpers along with multi-format parsing and caching.",
+  "Monitoring/logging requirements include health checks, metrics, error tracking, usage analytics, dashboards, alerts, and audit logging.",
+  "Development tooling must offer unit/integration/performance/security testing, mock services, debugging tools, and documentation assets.",
+  "Performance specs expect caching, optimization, and scalability strategies to keep operations responsive.",
+  "UI/UX expectations call for admin interfaces, data viz, dynamic forms, report exports, and accessibility support.",
+];

@@ -1,0 +1,27 @@
+# ehh-v1.1.0-active-KW-wonderAgent-dataset-class
+version: v1.1.0
+status: active
+agent: KW-wonderAgent
+
+const dataset_class = [
+  "Core.Entry.js // boots the universal runtime detection and configuration loading.",
+  "Core.ActionApp.js // orchestrates entities, events, views, plugins, caches, and HTTP flows.",
+  "Plugins.ActionEntity // handles entity schema validation, storage drivers, hooks, and caching.",
+  "Plugins.ActionView // drives DOM templates, semantic navigation, and accessibility updates.",
+  "Plugins.ActionEvent // provides the runtime event bus for UI and system triggers.",
+  "Plugins.ActionServer // exposes REST/WebSocket/SSE endpoints and routes to the engine.",
+  "Plugins.ActionClient // enables outbound SDK calls and workflow triggers.",
+  "Plugins.ActionEngine Flow // sequences descriptors, validations, hooks, and monitoring around CRUD.",
+  "Utility.ActionValidator // enforces schema/type/range rules and surfaces ActionErrors.",
+  "Utility.actionInclude // loads shared fragments or templates into views and configs.",
+  "Utility.parser // transforms multi-format config/text inputs into canonical objects.",
+  "Utility.include // provides reusable snippets for configs plus UI helpers.",
+  "Utility.actionTree // maps datasets, configs, and navigation into a unified structure.",
+  "Utility.actionFs // file-system helper for JSON/CSV/JSONL read/write and watching.",
+  "Utility.actionIndexDb // IndexedDB helper for browser stores and migrations.",
+  "Utility.actionLocalStorage // LocalStorage helper for key/value caching and persistence.",
+  "Utility.httpService // outbound/inbound HTTP client with circuit breakers, rate limits, OAuth.",
+  
+  "Utility.ActionOllama // LLM proxy integration for AI-enhanced prompts/actions.",
+  "Utility.Watchman // file/config watcher that triggers reloads and dataset refresh.",
+];

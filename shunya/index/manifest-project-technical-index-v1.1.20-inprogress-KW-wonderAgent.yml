@@ -1,0 +1,77 @@
+version: v1.1.20
+status: inprogress
+agent: KW-wonderAgent
+root_node: manifest-project-technical-index-v1.1.20-inprogress-KW-wonderAgent.yml
+
+sections:
+  - level: 1
+    name: manifest
+    description: "Top-level manifest overview summarizing project metadata, compliance, and repository guidelines."
+    index: 1
+    children:
+      - level: 2
+        name: project_metadata
+        description: "Project description, key contacts, runtime scope, and compliance constraints."
+        index: 1.1
+      - level: 2
+        name: compliance_overview
+        description: "Rules enforced (e.g., coding standards, dataset formats, semantic navigation)."
+        index: 1.2
+      - level: 2
+        name: repository_layout
+        description: "Repo structure, dataset roots, runtimes, and language expectations."
+        index: 1.3
+
+  - level: 1
+    name: project_manifest
+    description: "Detailed sections describing objectives, requirements, and governance tied to dataset entries."
+    index: 2
+    children:
+      - level: 2
+        name: overview
+        description: "Vision & objectives, purpose, audience, and problem statements (datasets: objective/purpose/problem/audience)."
+        index: 2.1
+      - level: 2
+        name: requirements
+        description: "Constraints, requirements, features, action/entity catalogs (datasets: constraints/requirements/features/action/entity)."
+        index: 2.2
+      - level: 2
+        name: governance
+        description: "Agent job queue practices, changelog, versioning, renderer workflow, and documentation signals."
+        index: 2.3
+
+  - level: 1
+    name: technical_design
+    description: "Design index covering architecture, plugins, entity systems, navigation, and utility catalogs."
+    index: 3
+    children:
+      - level: 2
+        name: architecture_overview
+        description: "ActionApp core, plugin mesh, utilities (ActionLoader, ActionValidator, Date)."
+        index: 3.1
+      - level: 2
+        name: plugin_framework
+        description: "Plugin catalog and lifecycle (ActionEntity, ActionView, ActionEvent, ActionServer, ActionClient, ActionEngine Flow)."
+        index: 3.2
+      - level: 2
+        name: entity_system
+        description: "Entity CRUD, storage services (ActionFs, LocalStorage, ActionIndexDb) and system flow dataset references."
+        index: 3.3
+      - level: 2
+        name: navigation_design
+        description: "ActionView navigation requirements, pointer/hover cues, accessibility helpers, and navigation specification dataset."
+        index: 3.4
+
+workflow:
+  dataset_update:
+    - "Update section datasets before altering any manifest index entries."
+    - "Maintain naming pattern: dataset-<category>-<name>.txt for each referenced dataset."
+  renderer:
+    - "Run `shunya/ehh-renderDoc.mjs` once indexes + datasets align to produce `shunya/ehh-unified-doc.md`."
+
+diagrams:
+  tree_depth: 7
+  level_labels:
+    - manifest
+    - project_manifest
+    - technical_design

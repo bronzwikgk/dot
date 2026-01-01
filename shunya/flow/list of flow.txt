@@ -1,0 +1,137 @@
+- system start.
+    - Message_Emitted. System Start
+- system close.
+    - Message_Emitted. System close
+- system refresh.
+    - Message_Emitted. System refresh
+- system reboot.
+    - Message_Emitted. System rebooted
+- user action.
+    - system reaction.
+-system action.
+    - recieve request
+    - generate response
+- Agents::
+    - Agent Created,
+    - Agent Observed,
+    - Agent Initiated,
+    - Agent Updated,
+    - Agent Deleted,
+    - Agent Ideal,
+    - Agent Atwork.
+    - Test Agent,
+    - Evaluate Agent,
+    - Deploy agent,
+    - Monitor Agent,
+    - Agent_events:
+        - - OnDeviceAI_Agent_Events
+  - System_Events
+    - Power_and_Battery
+      - Battery_Low
+      - Battery_Full
+      - Charging_Started
+      - Charging_Stopped
+    - Connectivity
+      - WiFi_Connected
+      - WiFi_Disconnected
+      - Network_Type_Changed
+      - Bluetooth_Event
+    - Device_State
+      - Screen_On
+      - Screen_Off
+      - Device_Locked
+      - Device_Unlocked
+      - OS_Theme_Change
+      - Locale_Language_Change
+    - Storage
+      - Low_Storage
+      - Storage_Device_Mounted_Unmounted
+    - OS_Updates
+      - App_Update_Available
+      - OS_Version_Upgrade
+    - Sensor_Error
+    - Hardware_Events
+      - CPU_Usage_Spike
+      - GPU_Usage_Spike
+      - Memory_Low
+      - Device_Overheating
+    - Security_Events
+      - Unauthorized_Access_Attempt
+      - Malware_Detected
+      - Device_Lockout
+  - Application_Events
+    - App_Opened
+    - App_Closed
+    - App_Minimized
+    - Notification_Received
+    - User_Interaction
+    - App_Data_Changed
+    - App_Crashed
+    - App_Updated
+    - App_Permission_Changed
+  - User_Interaction_Events
+    - Touch_Gestures
+      - Tap
+      - Swipe
+      - Long_Press
+      - Pinch
+      - Gesture_Combination
+    - Keyboard_Input
+    - Voice_Input
+    - Pointer_Input
+    - Shortcut_Key_Activated
+    - Drag_and_Drop
+  - Sensor_and_Contextual_Events
+    - Location
+      - GPS_Change
+      - Geofence_Entry_Exit
+      - WiFi_BSSID_Change
+    - Motion
+      - Shake
+      - Tilt
+      - Step_Counter
+    - Environment
+      - Ambient_Light_Change
+      - Proximity_Sensor_Triggered
+      - Microphone_Input
+      - Camera_Input
+      - Barometer_Altitude_Change
+      - Temperature_Sensor_Change
+      - Proximity_to_Device
+    - Health
+      - Heart_Rate_Change
+      - Sleep_Tracking_Event
+      - Activity_Detected
+  - Communication_Events
+    - Incoming_Call
+    - Incoming_SMS
+    - Email_Received
+    - Chat_Message_Received
+    - Message_Delivery_Status_Change
+    - VoIP_Call_Events
+    - Push_Notification_Opened
+    - Message_Replied
+  - Time_and_Scheduled_Events
+    - Timer_Alarm
+    - Reminder
+    - Calendar_Event_Start_End
+    - Recurring_Timer
+    - Sunrise_Sunset_Event
+  - File_and_Data_Events
+    - File_Created
+    - File_Modified
+    - File_Deleted
+    - Directory_Changed
+    - Clipboard_Changed
+    - File_Accessed
+    - File_Permission_Changed
+  - AI_Custom_Events
+    - Usage_Pattern_Detected
+    - Idle_For_X_Minutes
+    - User_Driving
+    - Environment_Noisy
+    - Prediction_Confidence_Crossed_Threshold
+    - User_Emotion_Detected
+    - Contextual_Recommendation_Triggered
+    - Model_Confidence_Drifted
+

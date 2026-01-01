@@ -1,0 +1,3 @@
+- create a list of user flows for website and webapp including CRUD, Chat, Search, Test, Algotest, Screen,
+- System flow,
+- 3rdParty Api flow
