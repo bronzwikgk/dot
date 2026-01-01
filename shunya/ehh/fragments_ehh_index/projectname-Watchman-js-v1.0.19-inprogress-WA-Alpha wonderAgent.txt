@@ -1,0 +1,6 @@
+Watchman.js (path: shunya/src/utilities/Watchman.js)
+- au_wch_4_3_13 /Watchman.js : [type="utility" priority="2" role="Watches files for changes." path="shunya/src/utilities/Watchman.js"]
+- au_wch_4_3_13_1 watchFile : [type="method" priority="1" role="Starts file monitoring." path="shunya/src/utilities/Watchman.js"]
+- au_wch_4_3_13_2 unwatch : [type="method" priority="1" role="Stops file monitoring." path="shunya/src/utilities/Watchman.js"]
+- au_wch_4_3_13_3 onChange : [type="method" priority="1" role="Handles change callbacks." path="shunya/src/utilities/Watchman.js"]
+- au_wch_4_3_13_4 report : [type="method" priority="1" role="Reports file events." path="shunya/src/utilities/Watchman.js"]

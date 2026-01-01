@@ -1,0 +1,241 @@
+# ehh Manifest v1.0.48
+Version: 1.0.48
+Status: inprogress
+Agent: WA-Alpha wonderAgent
+
+- Features
+    - Config-driven runtime selection (browser/node) with RBAC aware defaults
+    - Unified storage adapters (JSON/JSONL files, IndexedDB, localStorage) for entity CRUD
+    - Parser/renderer utilities that regenerate docs and support include-driven templates
+    - Action-focused flows: ActionApp bootstraps, ActionEntity handles CRUD/tree ops, ActionView/Event drive UI hooks
+    - Detailed testing guidance with naming/versioning, storage mocking, and regression traceability
+
+- Core Concept
+    - ActionApp orchestrates plugins, utilities, validators, and storage adapters based on AppConfig.
+    - ActionEntity exposes CRUD/tree operations plus browser/node adaptations fed by EntityConfig.
+    - ActionEvent/ActionView connote UI wiring while ActionValidator enforces schema/RBAC rules.
+    - Storage adapters (localStorage, IndexedDB, JSON/JSONL files, HTTP wrappers) abstract persistence access.
+    - Parser/renderer utilities keep documentation and datasets synchronized with the index.
+
+- Classes (ver 1)
+    - ActionApp (.js) [id=core_ActionApp] [role="Bootstraps the runtime, wiring config/validators/storage." ] [desc="Detects platform, loads utilities, and routes requests."]
+        - detectRuntime [id=method_ActionApp_detectRuntime] [role="Identifies the runtime (node or browser)."] [desc="Selects config overrides and environment toggles for the chosen platform."]
+        - initGlobal [id=method_ActionApp_initGlobal] [role="Populates global variables from AppConfig."] [desc="Iterates configured globals and stores them on the ActionApp instance."]
+        - loadutility [id=method_ActionApp_loadutility] [role="Loads helper utilities/external packages."] [desc="Resolves configured modules and attaches their API to the app context."]
+        - initplugins [id=method_ActionApp_initplugins] [role="Initializes plugin stack."] [desc="Walks plugin config, instantiates each class, and wires event hooks."]
+        - initflows [id=method_ActionApp_initflows] [role="Boots flow definitions."] [desc="Parses ActionEngineFlow definitions and registers their transitions."]
+        - resolvePath [id=method_ActionApp_resolvePath] [role="Normalizes runtime paths."] [desc="Resolves assets, storage files, and route handlers against the root workspace."]
+        - handleRequest [id=method_ActionApp_handleRequest] [role="Processes incoming requests."] [desc="Matches route config, enforces RBAC, and delegates to ActionEntity."]
+        - sendResponse [id=method_ActionApp_sendResponse] [role="Formats outbound responses."] [desc="Builds JSON responses with status, data, and error sections per schema."]
+    - ActionEntity (.js) [id=core_ActionEntity] [role="Manages CRUD and tree helpers for entities."] [desc="Executes operations through storage adapters using entity schemas."]
+        - create [id=method_ActionEntity_create] [role="Persists new records."] [desc="Validates payload, enforces RBAC, and writes to JSON/JSONL or IndexedDB."]
+        - read [id=method_ActionEntity_read] [role="Fetches records."] [desc="Loads stored data, applies filters, and returns formatted responses."]
+        - update [id=method_ActionEntity_update] [role="Updates existing records."] [desc="Validates deltas, merges changes, and re-saves data with RBAC guards."]
+        - delete [id=method_ActionEntity_delete] [role="Removes records."] [desc="Checks permissions and deletes data from storage adapters."]
+        - createBrowser [id=method_ActionEntity_createBrowser] [role="Runs browser-specific create path."] [desc="Feeds UI flows to localStorage/IndexedDB and triggers UI sync events."]
+        - createNode [id=method_ActionEntity_createNode] [role="Runs node-specific create path."] [desc="Writes to JSON/JSONL files, emits HTTP responses, and logs RBAC checks."]
+        - readFile [id=method_ActionEntity_readFile] [role="Reads storage files directly."] [desc="Exposes JSON/JSONL file contents for debugging or import/export flows."]
+        - writeFile [id=method_ActionEntity_writeFile] [role="Writes raw payloads to disk."] [desc="Supports persistence of exports or batch updates."]
+        - deleteFile [id=method_ActionEntity_deleteFile] [role="Removes storage files."] [desc="Deletes file-based datasets while updating metadata indexes."]
+        - health [id=method_ActionEntity_health] [role="Checks system health."] [desc="Reports status of storage adapters, caches, and plugins."]
+        - formatResponse [id=method_ActionEntity_formatResponse] [role="Shapes API outputs."] [desc="Includes status/data/errors aligned with AppConfig schema."]
+        - buildTree [id=method_ActionEntity_buildTree] [role="Constructs tree data."] [desc="Transforms entity lists into hierarchical structures for UI/viewers."]
+        - traverse [id=method_ActionEntity_traverse] [role="Walks tree nodes."] [desc="Visits each tree entry to run validators or compute summaries."]
+        - flatten [id=method_ActionEntity_flatten] [role="Produces flat lists from trees."] [desc="Supports search/query operations that need linear datasets."]
+    - ActionEvent (.js) [id=core_ActionEvent] [role="Registers DOM/runtime listeners."] [desc="Tracks listener metadata and binds events."]
+        - addListener [id=method_ActionEvent_addListener] [role="Queues listeners to register."] [desc="Stores target/event/handler tuples for later binding."]
+        - bind [id=method_ActionEvent_bind] [role="Attaches listeners to runtime targets."] [desc="Resolves window/document targets and calls addEventListener."]
+        - _resolveTarget [id=method_ActionEvent__resolveTarget] [role="Maps logical names to targets."] [desc="Returns window/document references when available."]
+        - _describeTarget [id=method_ActionEvent__describeTarget] [role="Summarizes listener targets."] [desc="Provides readable descriptions for logging the change log."]
+    - ActionView (.js) [id=core_ActionView] [role="Renders views for browser and node."] [desc="Applies context tokens and injects HTML into the root."]
+        - render [id=method_ActionView_render] [role="Hydrates browser DOM."] [desc="Fetches the root element and writes the resolved template."]
+        - renderToString [id=method_ActionView_renderToString] [role="Generates HTML strings."] [desc="Returns the template with substituted context without touching DOM."]
+        - _applyContext [id=method_ActionView__applyContext] [role="Interpolates tokens."] [desc="Replaces `${key}` placeholders with context values."]
+    - ActionServer (.js) [id=core_ActionServer] [role="Offers HTTP endpoints."] [desc="Configures Express-like routing for `/api/v1` flows."]
+        - route [id=method_ActionServer_route] [role="Registers route handlers."] [desc="Maps HTTP verbs/paths to middleware or ActionEntity calls."]
+        - use [id=method_ActionServer_use] [role="Adds middleware."] [desc="Stacks helpers that run before reaches handlers."]
+        - listen [id=method_ActionServer_listen] [role="Starts HTTP server."] [desc="Bind to configured port (4173) and emits start logs."]
+        - handleRequest [id=method_ActionServer_handleRequest] [role="Invokes request processing."] [desc="Passes Express-style req/res to ActionApp."]
+        - sendResponse [id=method_ActionServer_sendResponse] [role="Sends HTTP responses."] [desc="Formats JSON payloads from ActionEntity outputs."]
+    - ActionClient (.js) [id=core_ActionClient] [role="Consumes HTTP APIs."] [desc="Wraps fetch/WebSocket interactions for UI/test harnesses."]
+        - sendRequest [id=method_ActionClient_sendRequest] [role="Dispatches HTTP calls."] [desc="Performs fetch/axios and returns parsed JSON."]
+        - subscribe [id=method_ActionClient_subscribe] [role="Listens to server events."] [desc="Attaches to server-sent streams or WebSockets."]
+        - connect [id=method_ActionClient_connect] [role="Establishes channels."] [desc="Initiates WebSocket/Socket connections."]
+        - disconnect [id=method_ActionClient_disconnect] [role="Closes channels."] [desc="Tears down subscriptions and cleans resources."]
+    - ActionEngineFlow (.js) [id=core_ActionEngineFlow] [role="Defines runtime flows."] [desc="Encapsulates multi-step transitions across actions."]
+        - defineFlow [id=method_ActionEngineFlow_defineFlow] [role="Registers flow metadata."] [desc="Describes triggers, transitions, and guards."]
+        - execute [id=method_ActionEngineFlow_execute] [role="Runs flows."] [desc="Fires sequence of actions per flow definitions."]
+        - transition [id=method_ActionEngineFlow_transition] [role="Moves between states."] [desc="Changes the active step after completion."]
+        - abort [id=method_ActionEngineFlow_abort] [role="Cancels flows."] [desc="Stops running workflows and cleans flags."]
+    - ActionValidator (.js) [id=core_ActionValidator] [role="Enforces schema and RBAC rules."] [desc="Validates payloads, formats errors, and evaluates conditions."]
+        - validateAndThrow [id=method_ActionValidator_validateAndThrow] [role="Runs validation with exceptions."] [desc="Aggregates errors, formats messages, and throws a controlled Error."]
+        - validate [id=method_ActionValidator_validate] [role="Validates data against schema."] [desc="Delegates to property, patternProperties, and constraint checks."]
+        - validateProperties [id=method_ActionValidator_validateProperties] [role="Validates configured properties."] [desc="Loops over schema definitions to enforce required/type/enum."]
+        - validatePatternProperties [id=method_ActionValidator_validatePatternProperties] [role="Validates regex-named properties."] [desc="Applies subschemas to keys matching schema patterns."]
+        - validateConstraints [id=method_ActionValidator_validateConstraints] [role="Covers string/number/array constraints."] [desc="Checks min/max lengths, numeric bounds, patterns, enums, and formats."]
+        - validateFormat [id=method_ActionValidator_validateFormat] [role="Enforces format validators."] [desc="Supports email/url/date/date-time/uuid checks."]
+        - evaluateRule [id=method_ActionValidator_evaluateRule] [role="Executes nested rules."] [desc="Dispatches to and/or/not/condition evaluators."]
+        - evaluateCondition [id=method_ActionValidator_evaluateCondition] [role="Compares expressions."] [desc="Resolves literals/variables and applies operators."]
+        - resolveContextPath [id=method_ActionValidator_resolveContextPath] [role="Traverses context objects."] [desc="Looks up dot-separated keys inside the runtime context."]
+        - compareValues [id=method_ActionValidator_compareValues] [role="Compares left/right values."] [desc="Handles ==, !=, ===, !==, >, <, >=, <=, in, contains."]
+    - actionIndexDb (.js) [id=core_actionIndexDb] [role="Manages IndexedDB stores."] [desc="Wraps open/save/read/delete for browser storage."]
+        - openDatabase [id=method_actionIndexDb_openDatabase] [role="Opens IndexedDB."] [desc="Returns a promise for the configured database name."]
+        - saveRecord [id=method_actionIndexDb_saveRecord] [role="Writes records."] [desc="Adds transactions to object stores."]
+        - readAll [id=method_actionIndexDb_readAll] [role="Reads all entries."] [desc="Iterates cursors and returns arrays."]
+        - deleteRecord [id=method_actionIndexDb_deleteRecord] [role="Removes an entry."] [desc="Deletes by key and resolves after completion."]
+    - actionLocalStorage (.js) [id=core_actionLocalStorage] [role="Simplifies localStorage persistence."] [desc="Scopes keys with a namespace and provides CRUD helpers."]
+        - setItem [id=method_actionLocalStorage_setItem] [role="Stores values."] [desc="Stringifies payloads and saves to namespace keys."]
+        - getItem [id=method_actionLocalStorage_getItem] [role="Retrieves values."] [desc="Parses JSON if needed and returns data."]
+        - removeItem [id=method_actionLocalStorage_removeItem] [role="Clears entries."] [desc="Removes namespaced keys from localStorage."]
+        - clear [id=method_actionLocalStorage_clear] [role="Purges namespace."] [desc="Iterates keys and removes those with the namespace prefix."]
+        - listKeysWithPrefix [id=method_actionLocalStorage_listKeysWithPrefix] [role="Lists keys."] [desc="Filters namespace-level keys that start with a suffix."]
+        - _prefixed [id=method_actionLocalStorage__prefixed] [role="Builds namespaced keys."] [desc="Prepends the namespace string to user-supplied keys."]
+    - httpService (.js) [id=core_httpService] [role="Unifies HTTP calls for node/browser."] [desc="Wraps fetch/post/put/delete across runtimes."]
+        - fetch [id=method_httpService_fetch] [role="Performs GETs."] [desc="Uses fetch/axios to load API payloads."]
+        - post [id=method_httpService_post] [role="Sends POST bodies."] [desc="Posts JSON payloads with proper headers."]
+        - put [id=method_httpService_put] [role="Updates resources."] [desc="Issues PUT requests to update records."]
+        - delete [id=method_httpService_delete] [role="Removes resources."] [desc="Calls DELETE endpoints and handles status."]
+    - actionFS.js (custom util) [id=core_actionFS] [role="Provides filesystem helpers."] [desc="Wraps fs/promises for read/write/existence checks."]
+        - readFile [id=method_actionFS_readFile] [role="Reads files asynchronously."] [desc="Returns text with configurable encoding."]
+        - writeFile [id=method_actionFS_writeFile] [role="Writes files."] [desc="Persists strings to disk with error handling."]
+        - exists [id=method_actionFS_exists] [role="Checks existence."] [desc="Uses fs.access to confirm a path."]
+        - ensureDir [id=method_actionFS_ensureDir] [role="Creates directories."] [desc="Calls mkdir with recursive option."]
+        - remove [id=method_actionFS_remove] [role="Deletes files."] [desc="Uses fs.unlink and reports issues."]
+    - actionInclude_v1.0.js (custom util) [id=core_actionInclude] [role="Resolves include commands."] [desc="Parses keywords or JSON commands and fetches fragments."]
+        - includeFile [id=method_actionInclude_includeFile] [role="Includes files via fetch."] [desc="Loads HTML and injects into preview areas."]
+        - includeTemplate [id=method_actionInclude_includeTemplate] [role="Processes template commands."] [desc="Handles JSON-based include instructions."]
+        - resolveIncludes [id=method_actionInclude_resolveIncludes] [role="Main include parser."] [desc="Applies regex/JSON matching to return paths."]
+    - ehh-renderDoc.mjs (custom util) [id=core_ehhRenderDoc] [role="Generates unified docs."] [desc="Parses index entries and emits Markdown."]
+        - renderDocument [id=method_ehhRenderDoc_renderDocument] [role="Builds doc content."] [desc="Loads datasets and formats sections."]
+        - injectTokens [id=method_ehhRenderDoc_injectTokens] [role="Interpolates tokens."] [desc="Replaces placeholders with metadata."]
+        - exportHtml [id=method_ehhRenderDoc_exportHtml] [role="Writes output."] [desc="Saves the combined Markdown file."]
+    - index_tree_parser_v1.7.0_active_Codex.js (custom util) [id=core_indexTreeParser] [role="Parses index outlines."] [desc="Produces structured trees and multi-format exports."]
+        - parseIndex [id=method_indexTreeParser_parseIndex] [role="Parses text outlines."] [desc="Builds tree nodes from indent-based documents."]
+        - buildTree [id=method_indexTreeParser_buildTree] [role="Constructs node hierarchies."] [desc="Transforms filtered lines into nested entries."]
+        - validateNode [id=method_indexTreeParser_validateNode] [role="Validates nodes."] [desc="Applies schema rules before export."]
+    - parser_v1.js (custom util) [id=core_parserV1] [role="Creates ETL pipeline ASTs."] [desc="Conducts parsing, action detection, and exports."]
+        - parse [id=method_parserV1_parse] [role="Parses documents."] [desc="Detects format, feeds parser variants, and logs."]
+        - tokenize [id=method_parserV1_tokenize] [role="Tokenizes content."] [desc="Splits input into tokens for AST creation."]
+        - buildAST [id=method_parserV1_buildAST] [role="Builds AST."] [desc="Compiles nodes, events, and actions for exports."]
+
+- Formats
+    - JSON CRUD (Node + Browser)
+    - JSONL CRUD (Node + Browser)
+
+- Storage Modes
+    - IndexedDB (browser)
+    - LocalStorage (browser)
+    - File/JSONL (node)
+    - HTTP service wrappers (node/browser unified)
+
+ - Actions
+    - create
+    - read
+    - update
+    - delete
+    - upload
+    - health
+
+ - Entities
+    - user_register
+    - action_space
+    - Portfolio
+    - Project
+    - Session
+
+- Workflows
+    - Node runtime: load config, instantiate ActionApp, route to `/api/v1/users` and `/api/v1/health`, persist JSON/JSONL via storage adapters.
+    - Browser runtime: load config, instantiate ActionApp, run UI flows through configured routes, cache in IndexedDB/localStorage.
+
+ - User Flow (ver 1) [status=active]
+    - Browser Flow [status=ready]
+        - open demo [state=ready]
+        - load routes [state=ready]
+        - perform browse/create/read/update/delete operations [state=ongoing]
+        - sync to local storage and indexDB [state=ongoing]
+        - view search/query results [state=ongoing]
+    - Node Flow [status=ready]
+        - start server [state=ready]
+        - expose CRUD endpoints [state=ready]
+        - accept entity payloads [state=ongoing]
+        - persist via JSON/JSONL storage adapters [state=ongoing]
+        - return RBAC-protected responses [state=ongoing]
+
+ - Developer Flow (ver 1) [status=review]
+    - Clone repo [state=ready]
+    - Load `demoApp.config` [state=ready]
+    - Instantiate ActionApp [state=ready]
+    - Ensure ActionEntity, ActionView, ActionEvent wiring [state=ongoing]
+    - Run unit tests against JSON/JSONL routes [state=ongoing]
+    - Inspect logs [state=ongoing]
+    - Validate storage adapters (localStorage/IndexedDB/file system) [state=ongoing]
+    - Update manifest [state=planned]
+    - Rerender docs via `ehh-renderDoc` [state=planned]
+    - Regenerate tests [state=planned]
+
+- Instruction Nodes (ver 1)
+    - Setup
+        - Align configs.
+        - Register plugins.
+        - Build storage adapters.
+    - Execution
+        - Route requests to ActionApp.
+        - Trigger ActionEntity CRUD/workflows.
+        - Emit ActionEvent/browser updates.
+    - Monitoring
+        - Capture logs.
+        - Validate RBAC.
+        - Report status.
+    - Agent Guidelines
+        - Make up a name with keywords and wonderAgent plus prefix, then use it consistently.
+        - Start every message with "yo,!" and limit greetings accordingly.
+        - Understand scope before taking action and keep a jobs queue plus status reporting.
+        - Maintain changelog entries per task in `./inprogress/log`.
+        - Fix any spelling mistakes and inform the user.
+        - Create new files with `project name + ver + status + agent` naming when updating.
+        - When coding, stick to Node.js, class-based structure, import statements, and the prescribed comment structure at the top of blocks.
+        - Route tests through `../inprogress/test`, keep reports/evidence, prefer semantic tags/CSS tokens when styling.
+        - Apply semantic versioning, never edit approved-status files, and respect the UI/communication tone instructions.
+    - Testing Naming & Versioning Guidance
+        - Tests follow `ehh` prefix + `-vX.X` + descriptive suffix.
+        - Version metadata must appear in filenames and metadata blocks alike.
+        - Each test run records outcomes alongside config/state details as evidence.
+    - Contract & Schema Notes
+        - All interactions are request/response driven following AppConfig route definitions.
+        - Responses always include status, data, and errors sections as defined by schema templates.
+        - RBAC rules validate roles and attributes before each ActionEntity operation.
+        - Schema-based validators ensure required fields, types, enums, and constraints before persistence.
+
+- Config (ver 1)
+    - AppConfig
+        - runtime: node/browser.
+        - logging: detailed.
+        - storageAdapters: json, jsonl, indexeddb, localstorage.
+        - securityRules: rbac, abac.
+    - EntityConfig
+        - entity: user_register, action_space, Portfolio, Project, Session.
+        - schema: fields, validators.
+    - RouteConfig
+        - apiVersion: v1.
+        - basePath: `/api/v1`.
+        - handlers: ActionEntity CRUD, health.
+
+- Search / Query
+    - search
+    - query
+
+ - Tests (ver 1) [status=active]
+    - CRUD requests against JSON/JSONL routes obey RBAC and formatting config. [status=ongoing]
+    - Storage adapters respect the JSON/JSONL config settings. [status=ongoing]
+    - Browser flows keep local caches synchronized with node responses. [status=ongoing]
+    - Unit tests [status=ongoing]
+        - targeted to each class/method combination
+        - use mocking for storage adapters and HTTP layers
+    - E2E suites [status=planned]
+        - run CRUD scenarios across JSON/JSONL endpoints
+        - validate RBAC/field validation rules from configs
+        - exercise browser/localStorage/IndexedDB sync Expectations
+    - Regression matrix [status=planned]
+        - confirm config migration (JSON->JSONL) coverage
+        - ensure parser/renderer utilities reproduce docs from index
+        - cover ActionValidator schema rules for RBAC/enforcer flows

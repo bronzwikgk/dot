@@ -1,0 +1,8 @@
+ActionServer.js (path: shunya/src/action_framework.js)
+- p_srv_4_2_4 /ActionServer.js : [type="plugin" priority="2" role="Manages HTTP routes and response delivery." path="shunya/src/action_framework.js"]
+- p_srv_4_2_4_1 route : [type="method" priority="1" role="Registers route handlers." path="shunya/src/action_framework.js"]
+- p_srv_4_2_4_2 use : [type="method" priority="1" role="Adds middleware stacks." path="shunya/src/action_framework.js"]
+- p_srv_4_2_4_3 listen : [type="method" priority="1" role="Starts the HTTP listener." path="shunya/src/action_framework.js"]
+- p_srv_4_2_4_4 handleRequest : [type="method" priority="1" role="Processes each incoming request." path="shunya/src/action_framework.js"]
+- p_srv_4_2_4_5 sendResponse : [type="method" priority="1" role="Sends responses back to clients." path="shunya/src/action_framework.js"]
+- p_srv_4_2_4_6 start : [type="method" priority="1" role="Begins the server lifecycle." path="shunya/src/action_framework.js"]

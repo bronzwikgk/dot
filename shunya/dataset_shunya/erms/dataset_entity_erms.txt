@@ -4,6 +4,18 @@
     - dataset
     - Agent
     - room
-    - Chat
+    - Chat Session
+    - Chat Message
+    - Transaction
+    - alert
+    - folder
+    - file
+    - strategy
+    - scrneer query
+    - task
+    - product release
+    - bank account
+    - portfolio
+    - watchlist
     - Project
     

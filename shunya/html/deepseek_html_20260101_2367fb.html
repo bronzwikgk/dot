@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Query Builder</title>
+    <style>
+        /* CSS Custom Properties (Tokens) */
+        :root {
+            /* Colors */
+            --primary: #0066cc;
+            --primary-dark: #0052a3;
+            --secondary: #666;
+            --accent: #00a86b;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --gray-light: #e9ecef;
+            --gray-dark: #495057;
+            
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            
+            /* Typography */
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.25rem;
+            --font-size-xl: 1.5rem;
+            
+            /* Borders & Shadows */
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+            --shadow-md: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-lg: 0 4px 12px rgba(0,0,0,0.15);
+            
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+        }
+        
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            padding: var(--space-md);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Typography */
+        h1, h2, h3 {
+            font-weight: 600;
+            line-height: 1.2;
+        }
+        
+        h1 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-lg);
+        }
+        
+        h2 {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-md);
+        }
+        
+        h3 {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--space-sm);
+        }
+        
+        code {
+            font-family: var(--font-mono);
+            font-size: var(--font-size-sm);
+            background-color: var(--gray-light);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+        }
+        
+        pre {
+            font-family: var(--font-mono);
+            font-size: var(--font-size-sm);
+            background-color: var(--dark);
+            color: var(--light);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin: var(--space-md) 0;
+        }
+        
+        /* Layout */
+        header {
+            margin-bottom: var(--space-xl);
+        }
+        
+        main {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: var(--space-xl);
+        }
+        
+        /* Tabs */
+        nav[role="tablist"] {
+            display: flex;
+            border-bottom: 2px solid var(--gray-light);
+            background-color: white;
+        }
+        
+        button[role="tab"] {
+            padding: var(--space-md) var(--space-lg);
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        button[role="tab"]:hover {
+            color: var(--dark);
+            background-color: var(--gray-light);
+        }
+        
+        button[role="tab"][aria-selected="true"] {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            background-color: var(--light);
+        }
+        
+        [role="tabpanel"] {
+            padding: var(--space-xl);
+            min-height: 500px;
+        }
+        
+        [role="tabpanel"][hidden] {
+            display: none;
+        }
+        
+        /* Forms & Inputs */
+        input, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            transition: border-color var(--transition-fast);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+        }
+        
+        button {
+            padding: var(--space-sm) var(--space-md);
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        button[data-variant="outline"] {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        button[data-variant="outline"]:hover {
+            background-color: rgba(0, 102, 204, 0.1);
+        }
+        
+        button[data-variant="danger"] {
+            background-color: var(--danger);
+        }
+        
+        button[data-variant="danger"]:hover {
+            background-color: #c82333;
+        }
+        
+        /* Feature List */
+        #features ul {
+            list-style: none;
+            margin-bottom: var(--space-xl);
+        }
+        
+        #features li {
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--gray-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        #features li:last-child {
+            border-bottom: none;
+        }
+        
+        .feature-meta {
+            font-size: var(--font-size-sm);
+            color: var(--gray);
+            display: flex;
+            gap: var(--space-md);
+            margin-top: var(--space-xs);
+        }
+        
+        /* Filter Builder */
+        .filter-section {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr auto;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-md);
+        }
+        
+        .filter-row {
+            display: contents;
+        }
+        
+        .filter-actions {
+            display: flex;
+            gap: var(--space-sm);
+            justify-content: flex-end;
+        }
+        
+        /* Rules Builder */
+        .rules-builder {
+            background-color: var(--light);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-lg);
+        }
+        
+        .rule-group {
+            background-color: white;
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+            margin-bottom: var(--space-md);
+            position: relative;
+        }
+        
+        .rule-group::before {
+            content: "AND";
+            position: absolute;
+            top: -10px;
+            left: var(--space-md);
+            background-color: var(--primary);
+            color: white;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+        }
+        
+        .rule-group[data-logic="or"]::before {
+            content: "OR";
+            background-color: var(--accent);
+        }
+        
+        .rule {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: var(--space-sm);
+            background-color: var(--light);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .rule:last-child {
+            margin-bottom: 0;
+        }
+        
+        .rule-select {
+            min-width: 150px;
+        }
+        
+        .rule-operator {
+            min-width: 120px;
+        }
+        
+        .rule-value {
+            flex: 1;
+        }
+        
+        /* Saved Items */
+        .saved-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--space-md);
+            margin-top: var(--space-lg);
+        }
+        
+        .saved-item {
+            background-color: var(--light);
+            border: 1px solid var(--gray-light);
+            border-radius: var(--radius-md);
+            padding: var(--space-md);
+        }
+        
+        .saved-item header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-sm);
+        }
+        
+        .saved-item h3 {
+            margin: 0;
+        }
+        
+        /* Preview */
+        #queryPreview {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: var(--font-size-sm);
+            white-space: pre-wrap;
+            word-break: break-all;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin-top: var(--space-lg);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .filter-grid {
+                grid-template-columns: 1fr;
+                gap: var(--space-md);
+            }
+            
+            .filter-row {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: var(--space-sm);
+            }
+            
+            .filter-actions {
+                grid-column: 1 / -1;
+            }
+            
+            .saved-items {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Utility Classes */
+        .flex {
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .mt-sm { margin-top: var(--space-sm); }
+        .mt-md { margin-top: var(--space-md); }
+        .mt-lg { margin-top: var(--space-lg); }
+        .mt-xl { margin-top: var(--space-xl); }
+        
+        .mb-sm { margin-bottom: var(--space-sm); }
+        .mb-md { margin-bottom: var(--space-md); }
+        .mb-lg { margin-bottom: var(--space-lg); }
+        .mb-xl { margin-bottom: var(--space-xl); }
+        
+        .gap-sm { gap: var(--space-sm); }
+        .gap-md { gap: var(--space-md); }
+        .gap-lg { gap: var(--space-lg); }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔍 Semantic Query Builder</h1>
+    </header>
+    
+    <main>
+        <nav role="tablist">
+            <button role="tab" aria-selected="true" aria-controls="demo-panel" id="demo-tab">
+                Demo
+            </button>
+            <button role="tab" aria-selected="false" aria-controls="features-panel" id="features-tab">
+                Features & Docs
+            </button>
+        </nav>
+        
+        <!-- Demo Tab -->
+        <section role="tabpanel" id="demo-panel" aria-labelledby="demo-tab">
+            <div class="filter-section">
+                <h2>Create Filter</h2>
+                <form id="filterForm">
+                    <div class="filter-grid">
+                        <div class="filter-row">
+                            <input type="text" name="filterName" placeholder="Filter Name" required>
+                            <select name="field" required>
+                                <option value="">Select Field</option>
+                                <option value="date">Date</option>
+                                <option value="category">Category</option>
+                                <option value="status">Status</option>
+                                <option value="priority">Priority</option>
+                                <option value="sentiment">Sentiment</option>
+                                <option value="confidence">Confidence Score</option>
+                            </select>
+                            <select name="operator" required>
+                                <option value="equals">Equals</option>
+                                <option value="not_equals">Not Equals</option>
+                                <option value="contains">Contains</option>
+                                <option value="greater_than">Greater Than</option>
+                                <option value="less_than">Less Than</option>
+                                <option value="between">Between</option>
+                                <option value="in">In</option>
+                                <option value="not_in">Not In</option>
+                            </select>
+                            <div class="filter-actions">
+                                <button type="submit">Save Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-md">
+                        <input type="text" name="value" placeholder="Value (comma-separated for multiple)" style="width: 100%;" required>
+                    </div>
+                </form>
+            </div>
+            
+            <div class="filter-section">
+                <div class="flex justify-between">
+                    <h2>Build Rules</h2>
+                    <div class="flex gap-sm">
+                        <button data-variant="outline" onclick="addGroup('and')">
+                            Add AND Group
+                        </button>
+                        <button data-variant="outline" onclick="addGroup('or')">
+                            Add OR Group
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="rulesBuilder" class="rules-builder">
+                    <!-- Groups will be added here -->
+                </div>
+            </div>
+            
+            <div>
+                <h2>Query Preview</h2>
+                <pre id="queryPreview">{
+  "query": {
+    "type": "semantic",
+    "groups": []
+  }
+}</pre>
+                
+                <div class="flex gap-sm mt-md">
+                    <button onclick="buildQuery()">
+                        Build Query
+                    </button>
+                    <button data-variant="outline" onclick="saveQuery()">
+                        Save Query
+                    </button>
+                    <button data-variant="outline" onclick="exportQuery()">
+                        Export
+                    </button>
+                </div>
+            </div>
+            
+            <div class="mt-xl">
+                <h2>Saved Filters & Rules</h2>
+                <div id="savedFilters" class="saved-items">
+                    <!-- Saved filters will appear here -->
+                </div>
+            </div>
+        </section>
+        
+        <!-- Features Tab -->
+        <section role="tabpanel" id="features-panel" aria-labelledby="features-tab" hidden>
+            <h2>Enterprise Features</h2>
+            <ul id="features">
+                <li>
+                    <div>
+                        <h3>Semantic Search</h3>
+                        <p>Understands meaning and context, not just keywords</p>
+                        <div class="feature-meta">
+                            <span>Vector embeddings</span>
+                            <span>Neural matching</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h3>Hybrid Search</h3>
+                        <p>Combine semantic and traditional keyword search</p>
+                        <div class="feature-meta">
+                            <span>BM25 + vector</span>
+                            <span>Configurable weights</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h3>Nested Rules</h3>
+                        <p>Create complex boolean logic with AND/OR groups</p>
+                        <div class="feature-meta">
+                            <span>Unlimited nesting</span>
+                            <span>Visual builder</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h3>Filter Management</h3>
+                        <p>Save and reuse commonly used filters</p>
+                        <div class="feature-meta">
+                            <span>Tag-based organization</span>
+                            <span>Version history</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h3>Multi-language Support</h3>
+                        <p>Search across different languages simultaneously</p>
+                        <div class="feature-meta">
+                            <span>100+ languages</span>
+                            <span>Auto-detection</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        <h3>Enterprise Security</h3>
+                        <p>Role-based access control and audit logging</p>
+                        <div class="feature-meta">
+                            <span>SSO integration</span>
+                            <span>Compliance ready</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            
+            <h2 class="mt-xl">Documentation</h2>
+            <details>
+                <summary>Getting Started</summary>
+                <div class="mt-md">
+                    <h3>Basic Usage</h3>
+                    <p>1. Create filters using the form in the Demo tab</p>
+                    <p>2. Add filters to rule groups using AND/OR logic</p>
+                    <p>3. Build and preview your query</p>
+                    <p>4. Save or export the query for later use</p>
+                </div>
+            </details>
+            
+            <details class="mt-md">
+                <summary>API Examples</summary>
+                <div class="mt-md">
+                    <h3>JSON Structure</h3>
+                    <pre><code>{
+  "query": {
+    "type": "semantic",
+    "vector": ["embedding", "array"],
+    "groups": [
+      {
+        "logic": "and",
+        "rules": [
+          {
+            "field": "category",
+            "operator": "equals",
+            "value": "feedback"
+          }
+        ]
+      }
+    ]
+  }
+}</code></pre>
+                </div>
+            </details>
+            
+            <details class="mt-md">
+                <summary>Advanced Features</summary>
+                <div class="mt-md">
+                    <h3>Nested Groups</h3>
+                    <p>You can nest groups inside other groups to create complex logic:</p>
+                    <pre><code>(A AND B) OR (C AND D)</code></pre>
+                    
+                    <h3 class="mt-md">Saved Filters</h3>
+                    <p>Filters are stored locally in your browser and can be reused across different queries.</p>
+                </div>
+            </details>
+        </section>
+    </main>
+
+    <script>
+        // State management
+        const state = {
+            savedFilters: JSON.parse(localStorage.getItem('savedFilters')) || [],
+            savedQueries: JSON.parse(localStorage.getItem('savedQueries')) || [],
+            ruleGroups: [],
+            currentGroupId: 0
+        };
+
+        // Tab functionality
+        document.querySelectorAll('[role="tab"]').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update tab selection
+                document.querySelectorAll('[role="tab"]').forEach(t => {
+                    t.setAttribute('aria-selected', 'false');
+                });
+                tab.setAttribute('aria-selected', 'true');
+                
+                // Show corresponding panel
+                document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+                    panel.hidden = true;
+                });
+                const panelId = tab.getAttribute('aria-controls');
+                document.getElementById(panelId).hidden = false;
+            });
+        });
+
+        // Initialize
+        function init() {
+            renderSavedFilters();
+            addDefaultGroup();
+        }
+
+        // Filter form submission
+        document.getElementById('filterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+            
+            const filter = {
+                id: Date.now().toString(),
+                name: formData.get('filterName'),
+                field: formData.get('field'),
+                operator: formData.get('operator'),
+                value: formData.get('value').split(',').map(v => v.trim()),
+                createdAt: new Date().toISOString()
+            };
+            
+            // Save to state and localStorage
+            state.savedFilters.push(filter);
+            localStorage.setItem('savedFilters', JSON.stringify(state.savedFilters));
+            
+            // Render updated list
+            renderSavedFilters();
+            
+            // Reset form
+            this.reset();
+            
+            // Show confirmation
+            alert(`Filter "${filter.name}" saved!`);
+        });
+
+        // Render saved filters
+        function renderSavedFilters() {
+            const container = document.getElementById('savedFilters');
+            if (state.savedFilters.length === 0) {
+                container.innerHTML = '<p>No saved filters yet. Create one above!</p>';
+                return;
+            }
+            
+            container.innerHTML = state.savedFilters.map(filter => `
+                <div class="saved-item">
+                    <header>
+                        <h3>${filter.name}</h3>
+                        <button data-variant="outline" onclick="useFilter('${filter.id}')" style="padding: 4px 8px; font-size: 0.875rem;">
+                            Use
+                        </button>
+                    </header>
+                    <p><strong>${filter.field}</strong> ${filter.operator} <code>${filter.value.join(', ')}</code></p>
+                    <div class="flex justify-between mt-sm">
+                        <small>${new Date(filter.createdAt).toLocaleDateString()}</small>
+                        <button onclick="deleteFilter('${filter.id}')" style="padding: 2px 6px; font-size: 0.75rem;" data-variant="danger">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Use a saved filter
+        function useFilter(filterId) {
+            const filter = state.savedFilters.find(f => f.id === filterId);
+            if (!filter) return;
+            
+            // Add to the first group if exists, otherwise create one
+            if (state.ruleGroups.length === 0) {
+                addGroup('and');
+            }
+            
+            const currentGroup = state.ruleGroups[0];
+            currentGroup.rules.push({
+                filterId: filter.id,
+                ...filter
+            });
+            
+            renderRuleGroups();
+            updatePreview();
+        }
+
+        // Delete a filter
+        function deleteFilter(filterId) {
+            if (!confirm('Delete this filter?')) return;
+            
+            state.savedFilters = state.savedFilters.filter(f => f.id !== filterId);
+            localStorage.setItem('savedFilters', JSON.stringify(state.savedFilters));
+            
+            // Also remove from any rule groups
+            state.ruleGroups.forEach(group => {
+                group.rules = group.rules.filter(rule => rule.filterId !== filterId);
+            });
+            
+            renderSavedFilters();
+            renderRuleGroups();
+            updatePreview();
+        }
+
+        // Add a rule group
+        function addGroup(logic = 'and') {
+            const groupId = `group-${state.currentGroupId++}`;
+            const group = {
+                id: groupId,
+                logic: logic,
+                rules: []
+            };
+            
+            state.ruleGroups.push(group);
+            renderRuleGroups();
+            return groupId;
+        }
+
+        // Add default group
+        function addDefaultGroup() {
+            addGroup('and');
+        }
+
+        // Render rule groups
+        function renderRuleGroups() {
+            const container = document.getElementById('rulesBuilder');
+            
+            if (state.ruleGroups.length === 0) {
+                container.innerHTML = '<p>No rules yet. Add a group to get started!</p>';
+                return;
+            }
+            
+            container.innerHTML = state.ruleGroups.map(group => `
+                <div class="rule-group" data-logic="${group.logic}" data-group-id="${group.id}">
+                    <div class="flex justify-between mb-sm">
+                        <div>
+                            <select onchange="updateGroupLogic('${group.id}', this.value)">
+                                <option value="and" ${group.logic === 'and' ? 'selected' : ''}>AND</option>
+                                <option value="or" ${group.logic === 'or' ? 'selected' : ''}>OR</option>
+                            </select>
+                        </div>
+                        <div class="flex gap-sm">
+                            <button onclick="addRuleToGroup('${group.id}')" style="padding: 4px 8px; font-size: 0.875rem;">
+                                + Add Rule
+                            </button>
+                            <button onclick="removeGroup('${group.id}')" style="padding: 4px 8px; font-size: 0.875rem;" data-variant="danger">
+                                Remove Group
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div id="rules-${group.id}">
+                        ${group.rules.map((rule, index) => `
+                            <div class="rule">
+                                <select class="rule-select" onchange="updateRuleField('${group.id}', ${index}, this.value)">
+                                    <option value="">Select Filter</option>
+                                    ${state.savedFilters.map(f => 
+                                        `<option value="${f.id}" ${rule.filterId === f.id ? 'selected' : ''}>${f.name}</option>`
+                                    ).join('')}
+                                </select>
+                                <span>${rule.operator}</span>
+                                <input type="text" class="rule-value" value="${Array.isArray(rule.value) ? rule.value.join(', ') : rule.value}" 
+                                       onchange="updateRuleValue('${group.id}', ${index}, this.value)"
+                                       placeholder="Value">
+                                <button onclick="removeRule('${group.id}', ${index})" style="padding: 2px 6px;" data-variant="danger">
+                                    ×
+                                </button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    
+                    ${group.rules.length > 0 ? `
+                        <div class="mt-sm">
+                            <button onclick="nestGroup('${group.id}')" style="padding: 4px 8px; font-size: 0.875rem;" data-variant="outline">
+                                Nest Inside New Group
+                            </button>
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // Add rule to group
+        function addRuleToGroup(groupId) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (!group) return;
+            
+            if (state.savedFilters.length === 0) {
+                alert('Create a filter first!');
+                return;
+            }
+            
+            // Use the first saved filter as default
+            const firstFilter = state.savedFilters[0];
+            group.rules.push({
+                filterId: firstFilter.id,
+                ...firstFilter
+            });
+            
+            renderRuleGroups();
+            updatePreview();
+        }
+
+        // Update group logic
+        function updateGroupLogic(groupId, logic) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (group) {
+                group.logic = logic;
+                renderRuleGroups();
+                updatePreview();
+            }
+        }
+
+        // Update rule field
+        function updateRuleField(groupId, ruleIndex, filterId) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (!group || !group.rules[ruleIndex]) return;
+            
+            const filter = state.savedFilters.find(f => f.id === filterId);
+            if (filter) {
+                group.rules[ruleIndex] = {
+                    filterId: filter.id,
+                    ...filter
+                };
+                updatePreview();
+            }
+        }
+
+        // Update rule value
+        function updateRuleValue(groupId, ruleIndex, value) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (group && group.rules[ruleIndex]) {
+                group.rules[ruleIndex].value = value.split(',').map(v => v.trim());
+                updatePreview();
+            }
+        }
+
+        // Remove rule
+        function removeRule(groupId, ruleIndex) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (group) {
+                group.rules.splice(ruleIndex, 1);
+                renderRuleGroups();
+                updatePreview();
+            }
+        }
+
+        // Remove group
+        function removeGroup(groupId) {
+            if (!confirm('Remove this group and all its rules?')) return;
+            
+            state.ruleGroups = state.ruleGroups.filter(g => g.id !== groupId);
+            renderRuleGroups();
+            updatePreview();
+        }
+
+        // Nest group inside new group
+        function nestGroup(groupId) {
+            const groupIndex = state.ruleGroups.findIndex(g => g.id === groupId);
+            if (groupIndex === -1) return;
+            
+            const groupToNest = state.ruleGroups[groupIndex];
+            const newGroupId = `group-${state.currentGroupId++}`;
+            
+            // Create new group containing the nested group
+            const newGroup = {
+                id: newGroupId,
+                logic: 'and',
+                rules: [],
+                groups: [groupToNest]
+            };
+            
+            // Replace the old group with new nested structure
+            state.ruleGroups[groupIndex] = newGroup;
+            
+            renderRuleGroups();
+            updatePreview();
+        }
+
+        // Build query
+        function buildQuery() {
+            const query = {
+                type: 'semantic',
+                timestamp: new Date().toISOString(),
+                groups: state.ruleGroups.map(group => ({
+                    logic: group.logic,
+                    rules: group.rules.map(rule => ({
+                        field: rule.field,
+                        operator: rule.operator,
+                        value: rule.value
+                    }))
+                }))
+            };
+            
+            // Update preview
+            updatePreview(query);
+            return query;
+        }
+
+        // Update preview
+        function updatePreview(query = null) {
+            const previewElement = document.getElementById('queryPreview');
+            const displayQuery = query || buildQuery();
+            previewElement.textContent = JSON.stringify(displayQuery, null, 2);
+        }
+
+        // Save query
+        function saveQuery() {
+            const query = buildQuery();
+            const name = prompt('Enter a name for this query:');
+            if (!name) return;
+            
+            const savedQuery = {
+                id: Date.now().toString(),
+                name: name,
+                query: query,
+                createdAt: new Date().toISOString()
+            };
+            
+            state.savedQueries.push(savedQuery);
+            localStorage.setItem('savedQueries', JSON.stringify(state.savedQueries));
+            
+            alert(`Query "${name}" saved!`);
+        }
+
+        // Export query
+        function exportQuery() {
+            const query = buildQuery();
+            const format = prompt('Export format (json, curl, python, js):', 'json');
+            
+            let exportContent = '';
+            let fileExtension = 'json';
+            
+            switch(format.toLowerCase()) {
+                case 'curl':
+                    exportContent = `curl -X POST https://api.example.com/search \\
+  -H "Content-Type: application/json" \\
+  -d '${JSON.stringify(query, null, 2)}'`;
+                    fileExtension = 'sh';
+                    break;
+                case 'python':
+                    exportContent = `import requests
+import json
+
+query = ${JSON.stringify(query, null, 2)}
+
+response = requests.post(
+    "https://api.example.com/search",
+    json=query
+)
+print(response.json())`;
+                    fileExtension = 'py';
+                    break;
+                case 'js':
+                    exportContent = `const query = ${JSON.stringify(query, null, 2)};
+
+fetch('https://api.example.com/search', {
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(query)
+})
+.then(response => response.json())
+.then(data => console.log(data));`;
+                    fileExtension = 'js';
+                    break;
+                default:
+                    exportContent = JSON.stringify(query, null, 2);
+            }
+            
+            // Create download
+            const blob = new Blob([exportContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `query_${Date.now()}.${fileExtension}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

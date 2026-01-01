@@ -1,0 +1,6 @@
+ActionClient.js (path: shunya/src/action_framework.js)
+- p_clt_4_2_5 /ActionClient.js : [type="plugin" priority="2" role="Connects to APIs and manages subscriptions." path="shunya/src/action_framework.js"]
+- p_clt_4_2_5_1 sendRequest : [type="method" priority="1" role="Sends HTTP requests to external APIs." path="shunya/src/action_framework.js"]
+- p_clt_4_2_5_2 subscribe : [type="method" priority="1" role="Subscribes to event streams." path="shunya/src/action_framework.js"]
+- p_clt_4_2_5_3 connect : [type="method" priority="1" role="Opens transport connections." path="shunya/src/action_framework.js"]
+- p_clt_4_2_5_4 disconnect : [type="method" priority="1" role="Closes transport connections." path="shunya/src/action_framework.js"]

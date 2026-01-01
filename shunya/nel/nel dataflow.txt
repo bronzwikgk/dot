@@ -1,0 +1,5 @@
+1. NEL Text → Lexer → Tokens
+2. Tokens → Parser → Concrete Syntax Tree (CST)
+3. CST → AST Transformer → Abstract Syntax Tree (AST)
+4. AST → Validator → Validated AST
+5. Validated AST → Interpreter → Execution Result

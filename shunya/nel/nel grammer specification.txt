@@ -1,0 +1,69 @@
+Program          = MetadataSection? ImportSection* (Rule | FunctionDefinition)+
+MetadataSection  = "// Program:" String "\n" 
+                   "// Context:" ContextList "\n"
+                   "// Version:" Version "\n"
+ContextList      = Identifier ("," Identifier)*
+ImportSection    = "Import" StringLiteral ("as" Identifier)? "from" StringLiteral "\n"
+
+Rule             = "Rule:" RuleLabel "\n" 
+                   "When:" "\n" ConditionBlock
+                   "Then:" "\n" ActionBlock
+                   "Outcome:" "\n" OutcomeBlock
+RuleLabel        = Identifier
+
+ConditionBlock   = (ConditionLine | NestedCondition)+
+ConditionLine    = "-" ConditionExpression
+ConditionExpression = Expression ("and" | "or") Expression)*
+Expression       = Operand ComparisonOperator Operand
+                 | "not" Expression
+                 | "(" Expression ")"
+Operand          = PathExpression | Literal | FunctionCall
+PathExpression   = Identifier ("." Identifier)*
+ComparisonOperator = "equals" | "is" | "contains" | "matches" | 
+                    "greater than" | "less than" | "exists" | "does not exist"
+
+ActionBlock      = (ActionLine | NestedAction)+
+ActionLine       = "-" ActionExpression
+ActionExpression = AssignmentExpression 
+                 | FunctionCallExpression
+                 | ControlFlowExpression
+AssignmentExpression = "set" PathExpression "to" ValueExpression
+ValueExpression  = Literal | FunctionCall | TemplateLiteral
+TemplateLiteral  = "`" (Text | "${" PathExpression "}")* "`"
+
+FunctionCallExpression = FunctionName Arguments?
+Arguments        = "(" (Argument ("," Argument)*)? ")"
+Argument         = Literal | PathExpression | FunctionCall
+
+ControlFlowExpression = "if" ConditionExpression "then" ActionExpression
+                      | "if" ConditionExpression "then" ActionExpression 
+                        "else" ActionExpression
+
+OutcomeBlock     = OutcomeLine+
+OutcomeLine      = "-" OutcomeExpression
+OutcomeExpression = ("return" ValueExpression)? 
+                    ("and" ("stop" | "continue" | "wait"))?
+                  | "stop"
+                  | "continue"
+                  | "wait" "for" Duration "then" "continue"
+
+FunctionDefinition = "Define" "function:" FunctionName Parameters? "\n"
+                     "Inputs:" "\n" InputDeclaration*
+                     "Returns:" Type "\n"
+                     "Steps:" "\n" ActionBlock
+                     "End"
+Parameters       = "(" (Parameter ("," Parameter)*)? ")"
+Parameter        = Identifier ":" Type
+InputDeclaration = "-" Identifier ":" Type
+Type            = "String" | "Number" | "Boolean" | "Object" | 
+                  "Collection" | "Any" | Type "[]"
+
+Literal          = StringLiteral | NumberLiteral | BooleanLiteral | 
+                  NullLiteral | ArrayLiteral | ObjectLiteral
+StringLiteral    = '"' [^"]* '"' | "'" [^']* "'"
+NumberLiteral    = [0-9]+ ("." [0-9]+)?
+BooleanLiteral   = "true" | "false"
+NullLiteral      = "null"
+ArrayLiteral     = "[" (ValueExpression ("," ValueExpression)*)? "]"
+ObjectLiteral    = "{" (KeyValuePair ("," KeyValuePair)*)? "}"
+KeyValuePair     = StringLiteral ":" ValueExpression

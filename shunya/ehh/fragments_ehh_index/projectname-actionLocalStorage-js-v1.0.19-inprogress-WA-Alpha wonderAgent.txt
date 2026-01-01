@@ -1,0 +1,6 @@
+actionLocalStorage.js (path: shunya/src/utilities/actionLocalStorage.js)
+- au_loc_4_3_8 /actionLocalStorage.js : [type="utility" priority="2" role="Handles localStorage operations." path="shunya/src/utilities/actionLocalStorage.js"]
+- au_loc_4_3_8_1 setItem : [type="method" priority="1" role="Stores an item in localStorage." path="shunya/src/utilities/actionLocalStorage.js"]
+- au_loc_4_3_8_2 getItem : [type="method" priority="1" role="Retrieves an item." path="shunya/src/utilities/actionLocalStorage.js"]
+- au_loc_4_3_8_3 removeItem : [type="method" priority="1" role="Removes an item." path="shunya/src/utilities/actionLocalStorage.js"]
+- au_loc_4_3_8_4 clear : [type="method" priority="1" role="Clears state." path="shunya/src/utilities/actionLocalStorage.js"]

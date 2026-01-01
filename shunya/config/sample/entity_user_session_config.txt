@@ -1,0 +1,31 @@
+export const entityUserSessionConfig = {
+  "id": "user_session",
+  "name": "User Session",
+  "type": "entity",
+  "dbSchema": {
+    "properties": {
+      "username": { "type": "string" },
+      "password": { "type": "string" },
+      "sessionId": { "type": "string" },
+      "userId":    { "type": "string" },
+      "role":      { "type": "string" },
+      "appToken":  { "type": "string" },
+      "createdAt": { "type": "string" },
+      "expiresAt": { "type": "string" },
+      "status":    { "type": "string" }
+    }
+  },
+  "storage": {
+    "driver": "fs",
+    "path": "../data/${userId}/user_session",
+    "file": "user_session.jsonl",
+    "format": "jsonl"
+  },
+  "policy": {
+    "rbac": {
+      "guest": ["create"],
+      "user": ["create", "read", "delete"],
+      "admin": ["create", "read", "delete"]
+    }
+  }
+};

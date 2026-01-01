@@ -1,4 +1,4 @@
-{
+export const collectionConfig = {
   // Collection Entity Configuration v1.0.0
   // Created: 2025-10-10 - Claude
   //
@@ -135,4 +135,4 @@
     "sortField": "name",
     "sortOrder": "asc"
   }
-}
+};

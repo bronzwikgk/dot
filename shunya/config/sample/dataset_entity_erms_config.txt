@@ -1,0 +1,46 @@
+export const datasetEntityErmsConfig = {
+  "id": "dataset_entity_type_erms",
+  "name": "ERM Dataset Entities",
+  "entities": [
+    { "id": "entity", "name": "Entity" },
+    { "id": "index", "name": "Index" },
+    { "id": "dataset", "name": "Dataset" },
+    { "id": "agent", "name": "Agent" },
+    { "id": "room", "name": "Room" },
+    { "id": "chat_session", "name": "Chat Session" },
+    { "id": "chat_message", "name": "Chat Message" },
+    { "id": "transaction", "name": "Transaction" },
+    { "id": "alert", "name": "Alert" },
+    { "id": "folder", "name": "Folder" },
+    { "id": "file", "name": "File" },
+    { "id": "strategy", "name": "Strategy" },
+    { "id": "screen_query", "name": "Screen Query" },
+    { "id": "task", "name": "Task" },
+    { "id": "product_release", "name": "Product Release" },
+    { "id": "bank_account", "name": "Bank Account" },
+    { "id": "portfolio", "name": "Portfolio" },
+    { "id": "watchlist", "name": "Watchlist" },
+    { "id": "project", "name": "Project" }
+  ],
+  "validation": {
+    "source": "dataset_shunya/erms/dataset_entity_erms.txt",
+    "rule": "Each entry must include id + name and reuse the ERM schema defined in the dataset."
+  },
+  "defaultSchema": {
+    "dbSchema": {
+      "properties": {
+        "name": { "type": "string", "validate": { "required": true } },
+        "type": { "type": "string" },
+        "metadata": { "type": "string" }
+      }
+    },
+    "policy": {
+      "rbac": {
+        "guest": ["read"],
+        "user": ["create", "read"],
+        "manager": ["create", "read", "update"],
+        "admin": ["create", "read", "update", "delete"]
+      }
+    }
+  }
+};

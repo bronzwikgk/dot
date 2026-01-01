@@ -1,0 +1,6 @@
+httpService.js (path: shunya/src/utilities/httpService.js)
+- au_http_4_3_9 /httpService.js : [type="utility" priority="2" role="Makes HTTP calls." path="shunya/src/utilities/httpService.js"]
+- au_http_4_3_9_1 fetch : [type="method" priority="1" role="Fetches JSON via GET." path="shunya/src/utilities/httpService.js"]
+- au_http_4_3_9_2 post : [type="method" priority="1" role="Sends POST payloads." path="shunya/src/utilities/httpService.js"]
+- au_http_4_3_9_3 put : [type="method" priority="1" role="Sends PUT payloads." path="shunya/src/utilities/httpService.js"]
+- au_http_4_3_9_4 delete : [type="method" priority="1" role="Issues DELETE requests." path="shunya/src/utilities/httpService.js"]

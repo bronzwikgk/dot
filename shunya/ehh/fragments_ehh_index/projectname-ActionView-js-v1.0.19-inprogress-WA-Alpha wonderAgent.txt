@@ -1,0 +1,8 @@
+ActionView.js (path: shunya/src/action_framework.js)
+- p_view_4_2_2 /ActionView.js : [type="plugin" priority="2" role="Renders views and keeps DOM bindings synchronized." path="shunya/src/action_framework.js"]
+- p_view_4_2_2_1 render : [type="method" priority="1" role="Draws templates into the page." path="shunya/src/action_framework.js"]
+- p_view_4_2_2_2 renderToDOM : [type="method" priority="1" role="Mounts components directly into DOM nodes." path="shunya/src/action_framework.js"]
+- p_view_4_2_2_3 update : [type="method" priority="1" role="Refreshes existing DOM fragments with new state." path="shunya/src/action_framework.js"]
+- p_view_4_2_2_4 interpolate : [type="method" priority="1" role="Replaces placeholders with live data." path="shunya/src/action_framework.js"]
+- p_view_4_2_2_5 clear : [type="method" priority="1" role="Clears rendered content before re-rendering." path="shunya/src/action_framework.js"]
+- p_view_4_2_2_6 renderToString : [type="method" priority="1" role="Creates a string version of the markup." path="shunya/src/action_framework.js"]

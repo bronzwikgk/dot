@@ -1,0 +1,192 @@
+{
+  // ---------------------------------
+  // Home + Test
+  // ---------------------------------
+  "/": {
+    "method": "GET",
+    "action": "read",
+    "entity": "index",
+    "responseType": "html",
+    "authRequired": false,
+    "rolesAllowed": ["guest", "user", "admin"],
+    "version": "v1"
+  },
+  "/test": {
+    "method": "GET",
+    "action": "read",
+    "entity": "test",
+    "responseType": "json",
+    "authRequired": false,
+    "rolesAllowed": ["guest", "user", "admin"],
+    "version": "v1"
+  },
+
+  // ---------------------------------
+  // User Register Entity
+  // ---------------------------------
+  "/api/v1/api_test": {
+    "method": "GET",
+    "action": "api.test",
+    "entity": "api",
+    "responseType": "html",
+    "authRequired": false,
+    "rolesAllowed": ["guest", "user", "admin"],
+    "version": "v1"
+  },
+  "/api/v1/user_register/create": {
+    "method": "POST",
+    "action": "create",
+    "entity": "user_register",
+    "responseType": "json",
+    "authRequired": false,
+    "rolesAllowed": ["guest", "admin"],
+    "version": "v1"
+  },
+  "/api/v1/user_register/read": {
+    "method": "GET",
+    "action": "read",
+    "entity": "user_register",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["user", "manager", "admin"],
+    "version": "v1"
+  },
+  "/api/v1/user_register/update": {
+    "method": "PUT",
+    "action": "update",
+    "entity": "user_register",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["user", "admin"],
+    "version": "v1"
+  },
+  "/api/v1/user_register/delete": {
+    "method": "DELETE",
+    "action": "delete",
+    "entity": "user_register",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["admin"],
+    "version": "v1"
+  },
+
+  // ---------------------------------
+  // User Session Entity
+  // ---------------------------------
+  "/api/v1/user_session/create": {
+    "method": "POST",
+    "action": "create",
+    "entity": "user_session",
+    "responseType": "json",
+    "authRequired": false,
+    "rolesAllowed": ["guest", "user", "admin"],
+    "version": "v1"
+  },
+  "/api/v1/user_session/read": {
+    "method": "GET",
+    "action": "read",
+    "entity": "user_session",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["user", "admin"],
+    "version": "v1"
+  },
+  "/api/v1/user_session/update": {
+    "method": "PUT",
+    "action": "update",
+    "entity": "user_session",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["admin"],
+    "version": "v1"
+  },
+  "/api/v1/user_session/delete": {
+    "method": "DELETE",
+    "action": "delete",
+    "entity": "user_session",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["admin"],
+    "version": "v1"
+  },
+
+  // ---------------------------------
+  // Project Entity
+  // ---------------------------------
+  "/api/v1/project/create": {
+    "method": "POST",
+    "action": "create",
+    "entity": "project",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["user", "admin"],
+    "version": "v1"
+  },
+  "/api/v1/project/read": {
+    "method": "GET",
+    "action": "read",
+    "entity": "project",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["user", "manager", "admin"],
+    "version": "v1"
+  },
+  "/api/v1/project/update": {
+    "method": "PUT",
+    "action": "update",
+    "entity": "project",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["admin"],
+    "version": "v1"
+  },
+  "/api/v1/project/delete": {
+    "method": "DELETE",
+    "action": "delete",
+    "entity": "project",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["admin"],
+    "version": "v1"
+  },
+
+  // ---------------------------------
+  // Task Queue Entity
+  // ---------------------------------
+  "/api/v1/task_queue/create": {
+    "method": "POST",
+    "action": "create",
+    "entity": "task_queue",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["admin"],
+    "version": "v1"
+  },
+  "/api/v1/task_queue/read": {
+    "method": "GET",
+    "action": "read",
+    "entity": "task_queue",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["manager", "admin"],
+    "version": "v1"
+  },
+  "/api/v1/task_queue/update": {
+    "method": "PUT",
+    "action": "update",
+    "entity": "task_queue",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["admin"],
+    "version": "v1"
+  },
+  "/api/v1/task_queue/delete": {
+    "method": "DELETE",
+    "action": "delete",
+    "entity": "task_queue",
+    "responseType": "json",
+    "authRequired": true,
+    "rolesAllowed": ["admin"],
+    "version": "v1"
+  }
+}

@@ -1,0 +1,35 @@
+- New Query
+- New Filter
+    - Trend
+- New Signal
+- New Indicator
+- New Strategy
+- New Backtest
+- New TradeBot
+
+- AgentRooms
+    - Room Tools
+        - New Rooms
+        - List Rooms
+        - Open Room
+        - New Chat Session.
+        - List Chat Sessions
+        - Open Chat Session
+        - Save
+        - Export
+        Close Room, Chat
+    - Room Setting
+- AgentBot
+    - Agent Setting
+    - Input Request Message Section
+        - Input Tools
+            - Select Agent,
+            - Select Model,
+            - Select Prompt,
+            - Select Instruction Set,
+            - Select Flow,
+            - Context Toggle, [ On/ off ] to include recent files in context.
+    - Response Section
+
+        - Response Tools
+        - Output Panel

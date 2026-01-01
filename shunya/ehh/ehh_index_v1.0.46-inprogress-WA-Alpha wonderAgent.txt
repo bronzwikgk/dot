@@ -1,0 +1,239 @@
+# ehh Manifest v1.0.46
+Version: 1.0.46
+Status: inprogress
+Agent: WA-Alpha wonderAgent
+
+- Features
+    - Config-driven runtime selection (browser/node) with RBAC aware defaults
+    - Unified storage adapters (JSON/JSONL files, IndexedDB, localStorage) for entity CRUD
+    - Parser/renderer utilities that regenerate docs and support include-driven templates
+    - Action-focused flows: ActionApp bootstraps, ActionEntity handles CRUD/tree ops, ActionView/Event drive UI hooks
+    - Detailed testing guidance with naming/versioning, storage mocking, and regression traceability
+
+- Core Concept
+    - ActionApp orchestrates plugins, utilities, validators, and storage adapters based on AppConfig.
+    - ActionEntity exposes CRUD/tree operations plus browser/node adaptations fed by EntityConfig.
+    - ActionEvent/ActionView connote UI wiring while ActionValidator enforces schema/RBAC rules.
+    - Storage adapters (localStorage, IndexedDB, JSON/JSONL files, HTTP wrappers) abstract persistence access.
+    - Parser/renderer utilities keep documentation and datasets synchronized with the index.
+
+- Classes (ver 1)
+    - ActionApp
+        - detectRuntime
+        - initGlobal
+        - loadutility
+        - initplugins
+        - initflows
+        - resolvePath
+        - handleRequest
+        - sendResponse
+    - ActionEntity
+        - create
+        - read
+        - update
+        - delete
+        - createBrowser
+        - createNode
+        - readFile
+        - writeFile
+        - deleteFile
+        - health
+        - formatResponse
+        - buildTree
+        - traverse
+        - flatten
+    - ActionEvent
+        - addListener
+        - bind
+        - _resolveTarget
+        - _describeTarget
+    - ActionView
+        - render
+        - renderToString
+        - _applyContext
+    - ActionServer
+        - route
+        - use
+        - listen
+        - handleRequest
+        - sendResponse
+    - ActionClient
+        - sendRequest
+        - subscribe
+        - connect
+        - disconnect
+    - ActionEngineFlow
+        - defineFlow
+        - execute
+        - transition
+        - abort
+    - ActionValidator
+        - validateAndThrow
+        - validate
+        - validateProperties
+        - validatePatternProperties
+        - validateConstraints
+        - validateFormat
+        - evaluateRule
+        - evaluateCondition
+        - resolveContextPath
+        - compareValues
+    - actionIndexDb
+        - openDatabase
+        - saveRecord
+        - readAll
+        - deleteRecord
+    - actionLocalStorage
+        - setItem
+        - getItem
+        - removeItem
+        - clear
+        - listKeysWithPrefix
+        - _prefixed
+    - httpService
+        - fetch
+        - post
+        - put
+        - delete
+    - actionFS.js (custom util)
+        - readFile
+        - writeFile
+        - exists
+        - ensureDir
+        - remove
+    - actionInclude_v1.0.js (custom util)
+        - includeFile
+        - includeTemplate
+        - resolveIncludes
+    - ehh-renderDoc.mjs (custom util)
+        - renderDocument
+        - injectTokens
+        - exportHtml
+    - index_tree_parser_v1.7.0_active_Codex.js (custom util)
+        - parseIndex
+        - buildTree
+        - validateNode
+    - parser_v1.js (custom util)
+        - parse
+        - tokenize
+        - buildAST
+
+- Formats
+    - JSON CRUD (Node + Browser)
+    - JSONL CRUD (Node + Browser)
+
+- Storage Modes
+    - IndexedDB (browser)
+    - LocalStorage (browser)
+    - File/JSONL (node)
+    - HTTP service wrappers (node/browser unified)
+
+ - Actions
+    - create
+    - read
+    - update
+    - delete
+    - upload
+    - health
+
+ - Entities
+    - user_register
+    - action_space
+    - Portfolio
+    - Project
+    - Session
+
+- Workflows
+    - Node runtime: load config, instantiate ActionApp, route to `/api/v1/users` and `/api/v1/health`, persist JSON/JSONL via storage adapters.
+    - Browser runtime: load config, instantiate ActionApp, run UI flows through configured routes, cache in IndexedDB/localStorage.
+
+- User Flow (ver 1)
+    - Browser: open demo.
+    - Browser: load routes.
+    - Browser: perform browse/create/read/update/delete operations.
+    - Browser: sync to local storage and indexDB.
+    - Browser: view search/query results.
+    - Node: start server.
+    - Node: expose CRUD endpoints.
+    - Node: accept entity payloads.
+    - Node: persist via JSON/JSONL storage adapters.
+    - Node: return RBAC-protected responses.
+
+- Developer Flow (ver 1)
+    - Clone repo.
+    - Load `demoApp.config`.
+    - Instantiate ActionApp.
+    - Ensure ActionEntity, ActionView, ActionEvent wiring.
+    - Run unit tests against JSON/JSONL routes.
+    - Inspect logs.
+    - Validate storage adapters (localStorage/IndexedDB/file system).
+    - Update manifest.
+    - Rerender docs via `ehh-renderDoc`.
+    - Regenerate tests.
+
+- Instruction Nodes (ver 1)
+    - Setup
+        - Align configs.
+        - Register plugins.
+        - Build storage adapters.
+    - Execution
+        - Route requests to ActionApp.
+        - Trigger ActionEntity CRUD/workflows.
+        - Emit ActionEvent/browser updates.
+    - Monitoring
+        - Capture logs.
+        - Validate RBAC.
+        - Report status.
+    - Agent Guidelines
+        - Make up a name with keywords and wonderAgent plus prefix, then use it consistently.
+        - Start every message with "yo,!" and limit greetings accordingly.
+        - Understand scope before taking action and keep a jobs queue plus status reporting.
+        - Maintain changelog entries per task in `./inprogress/log`.
+        - Fix any spelling mistakes and inform the user.
+        - Create new files with `project name + ver + status + agent` naming when updating.
+        - When coding, stick to Node.js, class-based structure, import statements, and the prescribed comment structure at the top of blocks.
+        - Route tests through `../inprogress/test`, keep reports/evidence, prefer semantic tags/CSS tokens when styling.
+        - Apply semantic versioning, never edit approved-status files, and respect the UI/communication tone instructions.
+    - Testing Naming & Versioning Guidance
+        - Tests follow `ehh` prefix + `-vX.X` + descriptive suffix.
+        - Version metadata must appear in filenames and metadata blocks alike.
+        - Each test run records outcomes alongside config/state details as evidence.
+    - Contract & Schema Notes
+        - All interactions are request/response driven following AppConfig route definitions.
+        - Responses always include status, data, and errors sections as defined by schema templates.
+        - RBAC rules validate roles and attributes before each ActionEntity operation.
+        - Schema-based validators ensure required fields, types, enums, and constraints before persistence.
+
+- Config (ver 1)
+    - AppConfig
+        - runtime: node/browser.
+        - logging: detailed.
+        - storageAdapters: json, jsonl, indexeddb, localstorage.
+        - securityRules: rbac, abac.
+    - EntityConfig
+        - entity: user_register, action_space, Portfolio, Project, Session.
+        - schema: fields, validators.
+    - RouteConfig
+        - apiVersion: v1.
+        - basePath: `/api/v1`.
+        - handlers: ActionEntity CRUD, health.
+
+- Search / Query
+    - search
+    - query
+
+- Tests (ver 1)
+    - CRUD requests against JSON/JSONL routes obey RBAC and formatting config.
+    - Storage adapters respect the JSON/JSONL config settings.
+    - Browser flows keep local caches synchronized with node responses.
+    - Unit tests
+        - targeted to each class/method combination
+        - use mocking for storage adapters and HTTP layers
+    - E2E suites
+        - run CRUD scenarios across JSON/JSONL endpoints
+        - validate RBAC/field validation rules from configs
+        - exercise browser/localStorage/IndexedDB sync Expectations
+    - Regression matrix
+        - confirm config migration (JSON->JSONL) coverage
+        - ensure parser/renderer utilities reproduce docs from index
+        - cover ActionValidator schema rules for RBAC/enforcer flows

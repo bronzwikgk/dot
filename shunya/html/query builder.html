@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Query Builder</title>
+    <style>
+        /* CSS Custom Properties (Tokens) */
+        :root {
+            /* Colors */
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --accent: #10b981;
+            --accent-red: #ef4444;
+            --accent-yellow: #f59e0b;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --gray: #cbd5e1;
+            --gray-light: #e2e8f0;
+            --gray-dark: #475569;
+            
+            /* Spacing */
+            --space-xs: 0.25rem;
+            --space-sm: 0.5rem;
+            --space-md: 1rem;
+            --space-lg: 1.5rem;
+            --space-xl: 2rem;
+            --space-2xl: 3rem;
+            
+            /* Typography */
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            --font-mono: 'SF Mono', 'Monaco', 'Cascadia Code', monospace;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.25rem;
+            --font-size-xl: 1.5rem;
+            
+            /* Borders & Shadows */
+            --radius-sm: 4px;
+            --radius-md: 6px;
+            --radius-lg: 8px;
+            --radius-xl: 12px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.1);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.1);
+            
+            /* Transitions */
+            --transition-fast: 150ms ease;
+            --transition-base: 250ms ease;
+        }
+        
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            padding: var(--space-md);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-weight: 600;
+            line-height: 1.3;
+        }
+        
+        h1 {
+            font-size: var(--font-size-xl);
+            margin-bottom: var(--space-lg);
+        }
+        
+        h2 {
+            font-size: var(--font-size-lg);
+            margin-bottom: var(--space-md);
+        }
+        
+        h3 {
+            font-size: var(--font-size-base);
+            margin-bottom: var(--space-sm);
+        }
+        
+        code {
+            font-family: var(--font-mono);
+            font-size: var(--font-size-sm);
+            background-color: var(--gray-light);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            color: var(--dark);
+        }
+        
+        pre {
+            font-family: var(--font-mono);
+            font-size: var(--font-size-sm);
+            background-color: var(--dark);
+            color: var(--light);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            overflow-x: auto;
+            margin: var(--space-md) 0;
+        }
+        
+        /* Layout */
+        header {
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--gray);
+        }
+        
+        main {
+            background: white;
+            border-radius: var(--radius-xl);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            margin-bottom: var(--space-xl);
+        }
+        
+        /* Tabs */
+        nav[role="tablist"] {
+            display: flex;
+            border-bottom: 1px solid var(--gray);
+            background-color: white;
+            padding: 0 var(--space-xl);
+        }
+        
+        button[role="tab"] {
+            padding: var(--space-md) var(--space-lg);
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--secondary);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            position: relative;
+        }
+        
+        button[role="tab"]:hover {
+            color: var(--dark);
+            background-color: var(--gray-light);
+        }
+        
+        button[role="tab"][aria-selected="true"] {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        [role="tabpanel"] {
+            padding: var(--space-xl);
+            min-height: 600px;
+        }
+        
+        [role="tabpanel"][hidden] {
+            display: none;
+        }
+        
+        /* Natural Language Input */
+        .natural-input-section {
+            margin-bottom: var(--space-xl);
+        }
+        
+        .input-header {
+            margin-bottom: var(--space-md);
+        }
+        
+        .input-header h2 {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .input-header p {
+            color: var(--secondary);
+            font-size: var(--font-size-sm);
+        }
+        
+        .natural-input-wrapper {
+            position: relative;
+            margin-bottom: var(--space-md);
+        }
+        
+        .natural-input-wrapper textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: var(--space-lg);
+            font-size: var(--font-size-base);
+            line-height: 1.6;
+            border: 2px solid var(--gray);
+            border-radius: var(--radius-lg);
+            resize: vertical;
+            transition: all var(--transition-fast);
+            font-family: var(--font-sans);
+        }
+        
+        .natural-input-wrapper textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .input-actions {
+            display: flex;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+            flex-wrap: wrap;
+        }
+        
+        /* Query Builder Form (Below Input) */
+        .query-builder-form {
+            background: var(--light);
+            border: 1px solid var(--gray);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            margin-top: var(--space-xl);
+            display: none;
+        }
+        
+        .query-builder-form.active {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .builder-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .builder-header h3 {
+            margin: 0;
+        }
+        
+        /* Groups and Rules */
+        .groups-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+        
+        .group-card {
+            background: white;
+            border: 1px solid var(--gray);
+            border-radius: var(--radius-md);
+            padding: var(--space-lg);
+            position: relative;
+        }
+        
+        .group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-sm);
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .group-logic {
+            background: var(--primary);
+            color: white;
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            margin-right: var(--space-sm);
+        }
+        
+        .group-logic.or {
+            background: var(--accent);
+        }
+        
+        .rules-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-sm);
+        }
+        
+        .rule-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 2fr auto;
+            gap: var(--space-sm);
+            align-items: center;
+            padding: var(--space-sm);
+            background: var(--gray-light);
+            border-radius: var(--radius-sm);
+        }
+        
+        .rule-actions {
+            display: flex;
+            gap: var(--space-xs);
+        }
+        
+        .add-rule-btn {
+            margin-top: var(--space-sm);
+            width: 100%;
+        }
+        
+        /* Preview */
+        .preview-section {
+            margin-top: var(--space-xl);
+            padding-top: var(--space-lg);
+            border-top: 1px solid var(--gray);
+        }
+        
+        #queryPreview {
+            background-color: var(--dark);
+            color: var(--light);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            font-family: var(--font-mono);
+            font-size: var(--font-size-sm);
+            white-space: pre-wrap;
+            word-break: break-all;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            margin: var(--space-md) 0;
+        }
+        
+        /* Examples Grid */
+        #examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+        }
+        
+        .example-card {
+            border: 1px solid var(--gray);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            cursor: pointer;
+            transition: all var(--transition-base);
+            background: white;
+        }
+        
+        .example-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary);
+        }
+        
+        .example-card header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-sm);
+            padding: 0;
+            border: none;
+        }
+        
+        .example-icon {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius-md);
+            color: white;
+            font-weight: bold;
+        }
+        
+        .example-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-xs);
+            margin-top: var(--space-sm);
+        }
+        
+        .tag {
+            padding: var(--space-xs) var(--space-sm);
+            background-color: var(--gray-light);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            color: var(--gray-dark);
+        }
+        
+        /* Feature List */
+        #features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin: var(--space-xl) 0;
+        }
+        
+        .feature-card {
+            background: white;
+            border: 1px solid var(--gray);
+            border-radius: var(--radius-lg);
+            padding: var(--space-lg);
+            transition: all var(--transition-fast);
+        }
+        
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+        
+        .feature-card header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-sm);
+            padding: 0;
+            border: none;
+        }
+        
+        .feature-icon {
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        /* Forms & Inputs */
+        input, select, textarea {
+            font-family: inherit;
+            font-size: inherit;
+            padding: var(--space-sm) var(--space-md);
+            border: 1px solid var(--gray);
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+            width: 100%;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        button {
+            padding: var(--space-sm) var(--space-md);
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        button[data-variant="outline"] {
+            background-color: transparent;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+        }
+        
+        button[data-variant="outline"]:hover {
+            background-color: rgba(37, 99, 235, 0.1);
+        }
+        
+        button[data-variant="success"] {
+            background-color: var(--accent);
+        }
+        
+        button[data-variant="success"]:hover {
+            background-color: #0da271;
+        }
+        
+        button[data-variant="danger"] {
+            background-color: var(--accent-red);
+        }
+        
+        button[data-variant="danger"]:hover {
+            background-color: #dc2626;
+        }
+        
+        button.small {
+            padding: var(--space-xs) var(--space-sm);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Component Chips */
+        .component-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-sm);
+            margin: var(--space-md) 0;
+        }
+        
+        .component-chip {
+            background-color: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+            padding: var(--space-xs) var(--space-sm);
+            border-radius: var(--radius-sm);
+            font-size: var(--font-size-sm);
+            display: flex;
+            align-items: center;
+            gap: var(--space-xs);
+        }
+        
+        .component-chip button {
+            background: none;
+            border: none;
+            color: inherit;
+            padding: 0;
+            font-size: var(--font-size-sm);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav[role="tablist"] {
+                padding: 0;
+                flex-wrap: wrap;
+            }
+            
+            button[role="tab"] {
+                flex: 1;
+                min-width: 120px;
+                padding: var(--space-md);
+            }
+            
+            .rule-row {
+                grid-template-columns: 1fr;
+                gap: var(--space-sm);
+            }
+            
+            .rule-actions {
+                justify-content: flex-end;
+            }
+            
+            #examples, #features {
+                grid-template-columns: 1fr;
+            }
+            
+            [role="tabpanel"] {
+                padding: var(--space-md);
+            }
+        }
+        
+        /* Utility Classes */
+        .flex {
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+        
+        .justify-between {
+            justify-content: space-between;
+        }
+        
+        .gap-sm { gap: var(--space-sm); }
+        .gap-md { gap: var(--space-md); }
+        .gap-lg { gap: var(--space-lg); }
+        
+        .mt-sm { margin-top: var(--space-sm); }
+        .mt-md { margin-top: var(--space-md); }
+        .mt-lg { margin-top: var(--space-lg); }
+        .mt-xl { margin-top: var(--space-xl); }
+        
+        .mb-sm { margin-bottom: var(--space-sm); }
+        .mb-md { margin-bottom: var(--space-md); }
+        .mb-lg { margin-bottom: var(--space-lg); }
+        .mb-xl { margin-bottom: var(--space-xl); }
+        
+        .text-sm { font-size: var(--font-size-sm); }
+        .text-secondary { color: var(--secondary); }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔍 Semantic Query Builder</h1>
+        <p class="text-secondary">Build complex search queries with semantic understanding</p>
+    </header>
+    
+    <main>
+        <nav role="tablist">
+            <button role="tab" aria-selected="true" aria-controls="about-panel" id="about-tab">
+                About
+            </button>
+            <button role="tab" aria-selected="false" aria-controls="examples-panel" id="examples-tab">
+                Examples
+            </button>
+            <button role="tab" aria-selected="false" aria-controls="demo-panel" id="demo-tab">
+                Demo
+            </button>
+        </nav>
+        
+        <!-- About Tab -->
+        <section role="tabpanel" id="about-panel" aria-labelledby="about-tab">
+            <h2>Enterprise Semantic Query Builder</h2>
+            <p class="text-secondary mb-lg">Transform natural language into powerful search queries with semantic understanding</p>
+            
+            <div id="features">
+                <div class="feature-card">
+                    <header>
+                        <span class="feature-icon">🔍</span>
+                        <h3>Semantic Search</h3>
+                    </header>
+                    <p>Understands meaning and context beyond keywords. Finds relevant content based on intent.</p>
+                    <div class="example-tags mt-sm">
+                        <span class="tag">Vector Search</span>
+                        <span class="tag">Neural Matching</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <header>
+                        <span class="feature-icon">🔗</span>
+                        <h3>Natural Language Processing</h3>
+                    </header>
+                    <p>Convert plain English descriptions into structured queries. Supports complex expressions.</p>
+                    <div class="example-tags mt-sm">
+                        <span class="tag">NLP</span>
+                        <span class="tag">Intent Recognition</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <header>
+                        <span class="feature-icon">🧩</span>
+                        <h3>Nested Query Building</h3>
+                    </header>
+                    <p>Create complex boolean logic with AND/OR groups and unlimited nesting capabilities.</p>
+                    <div class="example-tags mt-sm">
+                        <span class="tag">Boolean Logic</span>
+                        <span class="tag">Group Rules</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <header>
+                        <span class="feature-icon">💾</span>
+                        <h3>Filter Management</h3>
+                    </header>
+                    <p>Save, reuse, and combine filters. Create libraries of commonly used search criteria.</p>
+                    <div class="example-tags mt-sm">
+                        <span class="tag">Saved Filters</span>
+                        <span class="tag">Reusable Components</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <header>
+                        <span class="feature-icon">🌐</span>
+                        <h3>Multi-source Integration</h3>
+                    </header>
+                    <p>Works with Google Drive, SharePoint, databases, APIs, and custom data sources.</p>
+                    <div class="example-tags mt-sm">
+                        <span class="tag">Google Drive</span>
+                        <span class="tag">APIs</span>
+                    </div>
+                </div>
+                
+                <div class="feature-card">
+                    <header>
+                        <span class="feature-icon">🔒</span>
+                        <h3>Enterprise Security</h3>
+                    </header>
+                    <p>Role-based access control, audit logging, and compliance-ready query management.</p>
+                    <div class="example-tags mt-sm">
+                        <span class="tag">RBAC</span>
+                        <span class="tag">Audit Trail</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-xl">
+                <h2>How It Works</h2>
+                <div class="flex gap-lg mt-md" style="align-items: flex-start;">
+                    <div style="flex: 1;">
+                        <h3>1. Natural Language Input</h3>
+                        <p>Describe what you're looking for in plain English. The system parses intent, entities, and conditions.</p>
+                    </div>
+                    <div style="flex: 1;">
+                        <h3>2. Query Building</h3>
+                        <p>Automatically generates structured query components that you can refine and adjust.</p>
+                    </div>
+                    <div style="flex: 1;">
+                        <h3>3. Execute & Export</h3>
+                        <p>Run queries, save configurations, or export in multiple formats for integration.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Examples Tab -->
+        <section role="tabpanel" id="examples-panel" aria-labelledby="examples-tab" hidden>
+            <h2>Query Examples</h2>
+            <p class="text-secondary mb-lg">Click any example to try it in the Demo tab</p>
+            
+            <div id="examples">
+                <div class="example-card" onclick="loadExample('drive_pdfs')">
+                    <header>
+                        <div class="example-icon" style="background: #EA4335;">📄</div>
+                        <h3>Google Drive: PDF Documents</h3>
+                    </header>
+                    <p>"Find all PDF files created in the last month containing 'budget report'"</p>
+                    <div class="example-tags">
+                        <span class="tag">fileType: PDF</span>
+                        <span class="tag">date: last month</span>
+                        <span class="tag">contains: budget</span>
+                    </div>
+                </div>
+                
+                <div class="example-card" onclick="loadExample('shared_docs')">
+                    <header>
+                        <div class="example-icon" style="background: #4285F4;">👥</div>
+                        <h3>Team Collaboration</h3>
+                    </header>
+                    <p>"Documents shared with marketing team that were modified this week"</p>
+                    <div class="example-tags">
+                        <span class="tag">shared: team</span>
+                        <span class="tag">modified: this week</span>
+                        <span class="tag">type: document</span>
+                    </div>
+                </div>
+                
+                <div class="example-card" onclick="loadExample('recent_edits')">
+                    <header>
+                        <div class="example-icon" style="background: #34A853;">✏️</div>
+                        <h3>Recent Work</h3>
+                    </header>
+                    <p>"Spreadsheets I edited yesterday with 'Q4' in the filename"</p>
+                    <div class="example-tags">
+                        <span class="tag">owner: me</span>
+                        <span class="tag">modified: yesterday</span>
+                        <span class="tag">contains: Q4</span>
+                        <span class="tag">type: spreadsheet</span>
+                    </div>
+                </div>
+                
+                <div class="example-card" onclick="loadExample('large_files')">
+                    <header>
+                        <div class="example-icon" style="background: #FBBC04;">💾</div>
+                        <h3>Storage Management</h3>
+                    </header>
+                    <p>"Files larger than 100MB that haven't been accessed in 6 months"</p>
+                    <div class="example-tags">
+                        <span class="tag">size: >100MB</span>
+                        <span class="tag">accessed: >6 months</span>
+                        <span class="tag">not: trashed</span>
+                    </div>
+                </div>
+                
+                <div class="example-card" onclick="loadExample('project_assets')">
+                    <header>
+                        <div class="example-icon" style="background: #8B5CF6;">📁</div>
+                        <h3>Project Assets</h3>
+                    </header>
+                    <p>"Images and videos from Project X folder, created after January 2024"</p>
+                    <div class="example-tags">
+                        <span class="tag">folder: Project X</span>
+                        <span class="tag">type: image,video</span>
+                        <span class="tag">created: >2024-01-01</span>
+                    </div>
+                </div>
+                
+                <div class="example-card" onclick="loadExample('presentation_deck')">
+                    <header>
+                        <div class="example-icon" style="background: #EC4899;">📊</div>
+                        <h3>Presentations</h3>
+                    </header>
+                    <p>"Presentation decks about 'Annual Planning' shared externally"</p>
+                    <div class="example-tags">
+                        <span class="tag">type: presentation</span>
+                        <span class="tag">contains: Annual Planning</span>
+                        <span class="tag">shared: external</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-xl">
+                <h2>Google Drive Specific Examples</h2>
+                <div class="component-chips mt-md">
+                    <div class="example-chip" onclick="loadExample('drive_starred')">
+                        ⭐ Starred files
+                    </div>
+                    <div class="example-chip" onclick="loadExample('drive_trashed')">
+                        🗑️ Files in trash
+                    </div>
+                    <div class="example-chip" onclick="loadExample('drive_owned_by_me')">
+                        👤 Owned by me
+                    </div>
+                    <div class="example-chip" onclick="loadExample('drive_shared_by_me')">
+                        ↗️ Shared by me
+                    </div>
+                    <div class="example-chip" onclick="loadExample('drive_viewed_recently')">
+                        👁️ Viewed recently
+                    </div>
+                    <div class="example-chip" onclick="loadExample('drive_specific_mime')">
+                        📄 Specific MIME types
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Demo Tab -->
+        <section role="tabpanel" id="demo-panel" aria-labelledby="demo-tab" hidden>
+            <div class="natural-input-section">
+                <div class="input-header">
+                    <h2>Describe What You're Looking For</h2>
+                    <p>Type in plain English. We'll parse your query and build a structured search.</p>
+                </div>
+                
+                <div class="natural-input-wrapper">
+                    <textarea id="naturalInput" placeholder="Example: 'Find PDF documents from last month that mention "budget" and are shared with marketing team...'"></textarea>
+                </div>
+                
+                <div class="input-actions">
+                    <button onclick="parseNaturalLanguage()" data-variant="success">
+                        🔍 Parse & Build Query
+                    </button>
+                    <button onclick="clearInput()" data-variant="outline">
+                        Clear
+                    </button>
+                    <div class="flex gap-sm" style="margin-left: auto;">
+                        <button onclick="showQuickExamples()" class="small" data-variant="outline">
+                            Quick Examples
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Parsed Components Display -->
+                <div id="parsedComponents" class="component-chips" style="display: none;">
+                    <h3 class="mb-sm">Parsed Components:</h3>
+                    <div id="componentList"></div>
+                </div>
+            </div>
+            
+            <!-- Query Builder Form -->
+            <div id="queryBuilderForm" class="query-builder-form">
+                <div class="builder-header">
+                    <h3>Query Builder</h3>
+                    <div class="flex gap-sm">
+                        <button onclick="addGroup('and')" class="small">
+                            + AND Group
+                        </button>
+                        <button onclick="addGroup('or')" class="small" data-variant="outline">
+                            + OR Group
+                        </button>
+                        <button onclick="clearAllGroups()" class="small" data-variant="danger">
+                            Clear All
+                        </button>
+                    </div>
+                </div>
+                
+                <div id="groupsContainer" class="groups-container">
+                    <!-- Groups will be added here -->
+                </div>
+                
+                <div class="input-actions mt-lg">
+                    <button onclick="buildQuery()">
+                        🔨 Build Final Query
+                    </button>
+                    <button onclick="testQuery()" data-variant="outline">
+                        ⚡ Test Query
+                    </button>
+                    <button onclick="saveQuery()" data-variant="outline">
+                        💾 Save Query
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Preview Section -->
+            <div class="preview-section">
+                <h2>Query Preview</h2>
+                <pre id="queryPreview">{
+  "query": {
+    "type": "semantic",
+    "natural_language": "",
+    "timestamp": "",
+    "groups": []
+  }
+}</pre>
+                
+                <div class="input-actions">
+                    <button onclick="copyQuery()" data-variant="outline">
+                        📋 Copy JSON
+                    </button>
+                    <button onclick="exportQuery()" data-variant="outline">
+                        📤 Export Query
+                    </button>
+                    <button onclick="showAPIExamples()" class="small" data-variant="outline" style="margin-left: auto;">
+                        API Examples
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // State management
+        const state = {
+            naturalQuery: '',
+            parsedComponents: [],
+            savedFilters: JSON.parse(localStorage.getItem('savedFilters')) || [],
+            savedQueries: JSON.parse(localStorage.getItem('savedQueries')) || [],
+            ruleGroups: [],
+            currentGroupId: 0
+        };
+
+        // Tab functionality
+        document.querySelectorAll('[role="tab"]').forEach(tab => {
+            tab.addEventListener('click', () => {
+                // Update tab selection
+                document.querySelectorAll('[role="tab"]').forEach(t => {
+                    t.setAttribute('aria-selected', 'false');
+                });
+                tab.setAttribute('aria-selected', 'true');
+                
+                // Show corresponding panel
+                document.querySelectorAll('[role="tabpanel"]').forEach(panel => {
+                    panel.hidden = true;
+                });
+                const panelId = tab.getAttribute('aria-controls');
+                document.getElementById(panelId).hidden = false;
+                
+                // If switching to demo tab, focus input
+                if (panelId === 'demo-panel') {
+                    setTimeout(() => {
+                        document.getElementById('naturalInput').focus();
+                    }, 100);
+                }
+            });
+        });
+
+        // Initialize
+        function init() {
+            // Auto-update natural query
+            document.getElementById('naturalInput').addEventListener('input', function(e) {
+                state.naturalQuery = e.target.value;
+            });
+            
+            // Enter key to parse
+            document.getElementById('naturalInput').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+                    parseNaturalLanguage();
+                }
+            });
+            
+            // Add initial group
+            addGroup('and');
+        }
+
+        // Parse natural language query
+        function parseNaturalLanguage() {
+            const input = document.getElementById('naturalInput').value.trim();
+            if (!input) {
+                alert('Please enter a query first');
+                return;
+            }
+            
+            state.naturalQuery = input;
+            
+            // Parse components
+            const components = parseQueryComponents(input);
+            state.parsedComponents = components;
+            
+            // Show parsed components
+            showParsedComponents(components);
+            
+            // Generate rules from components
+            generateRulesFromComponents(components);
+            
+            // Show query builder form
+            document.getElementById('queryBuilderForm').classList.add('active');
+            
+            // Update preview
+            updatePreview();
+        }
+
+        // Parse query into components
+        function parseQueryComponents(query) {
+            const components = [];
+            const lowerQuery = query.toLowerCase();
+            
+            // File type detection with MIME types
+            const fileTypePatterns = [
+                { pattern: /\bpdfs?\b/i, mime: 'application/pdf', type: 'PDF' },
+                { pattern: /\bdocuments?\b|\bdocs?\b/i, mime: 'application/vnd.google-apps.document', type: 'Document' },
+                { pattern: /\bspreadsheets?\b|\bsheets?\b/i, mime: 'application/vnd.google-apps.spreadsheet', type: 'Spreadsheet' },
+                { pattern: /\bpresentations?\b|\bslides?\b/i, mime: 'application/vnd.google-apps.presentation', type: 'Presentation' },
+                { pattern: /\bimages?\b|\bphotos?\b|\bpictures?\b/i, mime: 'image/', type: 'Image' },
+                { pattern: /\bvideos?\b/i, mime: 'video/', type: 'Video' },
+                { pattern: /\baudio\b|\bmp3\b/i, mime: 'audio/', type: 'Audio' },
+                { pattern: /\bzips?\b|\barchives?\b/i, mime: 'application/zip', type: 'Archive' },
+                { pattern: /\btext files?\b/i, mime: 'text/plain', type: 'Text' }
+            ];
+            
+            fileTypePatterns.forEach(pattern => {
+                if (pattern.pattern.test(query)) {
+                    components.push({
+                        type: 'fileType',
+                        value: pattern.mime,
+                        display: pattern.type,
+                        confidence: 0.9
+                    });
+                }
+            });
+            
+            // Date detection
+            const datePatterns = [
+                { pattern: /\byesterday\b/i, value: '1 day ago', display: 'Yesterday' },
+                { pattern: /\blast week\b/i, value: '7 days ago', display: 'Last Week' },
+                { pattern: /\blast month\b/i, value: '30 days ago', display: 'Last Month' },
+                { pattern: /\bthis week\b/i, value: 'this week', display: 'This Week' },
+                { pattern: /\bthis month\b/i, value: 'this month', display: 'This Month' },
+                { pattern: /\blast (\d+) days?\b/i, value: (match) => `${match[1]} days ago`, display: (match) => `Last ${match[1]} days` },
+                { pattern: /\b(\d+) days? ago\b/i, value: (match) => `${match[1]} days ago`, display: (match) => `${match[1]} days ago` }
+            ];
+            
+            datePatterns.forEach(pattern => {
+                const match = query.match(pattern.pattern);
+                if (match) {
+                    const value = typeof pattern.value === 'function' ? pattern.value(match) : pattern.value;
+                    const display = typeof pattern.display === 'function' ? pattern.display(match) : pattern.display;
+                    components.push({
+                        type: 'date',
+                        value: value,
+                        display: display,
+                        confidence: 0.8
+                    });
+                }
+            });
+            
+            // Keyword detection (quoted text)
+            const keywordMatches = query.match(/"([^"]+)"/g) || query.match(/'([^']+)'/g);
+            if (keywordMatches) {
+                keywordMatches.forEach(match => {
+                    const keyword = match.replace(/["']/g, '');
+                    components.push({
+                        type: 'keyword',
+                        value: keyword,
+                        display: `"${keyword}"`,
+                        confidence: 0.95
+                    });
+                });
+            }
+            
+            // Ownership detection
+            if (lowerQuery.includes('my ') || lowerQuery.includes('i ') || lowerQuery.includes('me ') || lowerQuery.includes('owned by me')) {
+                components.push({
+                    type: 'owner',
+                    value: 'me',
+                    display: 'Owned by me',
+                    confidence: 0.7
+                });
+            }
+            
+            // Sharing detection
+            if (lowerQuery.includes('shared with') || lowerQuery.includes('shared by')) {
+                const shareMatch = query.match(/shared (with|by) (\w+)/i);
+                if (shareMatch) {
+                    components.push({
+                        type: 'sharing',
+                        value: shareMatch[2],
+                        display: `Shared ${shareMatch[1]} ${shareMatch[2]}`,
+                        confidence: 0.8
+                    });
+                } else {
+                    components.push({
+                        type: 'sharing',
+                        value: 'shared',
+                        display: 'Shared documents',
+                        confidence: 0.6
+                    });
+                }
+            }
+            
+            // Size detection
+            const sizeMatch = query.match(/(larger than|bigger than|over|greater than) (\d+)\s*(mb|gb|kb)/i);
+            if (sizeMatch) {
+                components.push({
+                    type: 'size',
+                    value: `${sizeMatch[2]}${sizeMatch[3].toUpperCase()}`,
+                    display: `> ${sizeMatch[2]}${sizeMatch[3].toUpperCase()}`,
+                    confidence: 0.9
+                });
+            }
+            
+            // Folder/location detection
+            const folderMatch = query.match(/in (?:the )?(?:"([^"]+)"|'([^']+)'|(\w+) folder)/i);
+            if (folderMatch) {
+                const folderName = folderMatch[1] || folderMatch[2] || folderMatch[3];
+                components.push({
+                    type: 'folder',
+                    value: folderName,
+                    display: `Folder: ${folderName}`,
+                    confidence: 0.8
+                });
+            }
+            
+            return components;
+        }
+
+        // Show parsed components
+        function showParsedComponents(components) {
+            const container = document.getElementById('parsedComponents');
+            const list = document.getElementById('componentList');
+            
+            if (components.length === 0) {
+                container.style.display = 'none';
+                return;
+            }
+            
+            container.style.display = 'block';
+            list.innerHTML = components.map(comp => `
+                <div class="component-chip">
+                    ${comp.display}
+                    <button onclick="removeComponent('${comp.type}', '${comp.value}')" title="Remove">×</button>
+                </div>
+            `).join('');
+        }
+
+        // Remove a component
+        function removeComponent(type, value) {
+            state.parsedComponents = state.parsedComponents.filter(
+                comp => !(comp.type === type && comp.value === value)
+            );
+            showParsedComponents(state.parsedComponents);
+            generateRulesFromComponents(state.parsedComponents);
+        }
+
+        // Generate rules from components
+        function generateRulesFromComponents(components) {
+            // Clear existing groups
+            state.ruleGroups = [];
+            
+            // Create a single AND group
+            const groupId = addGroup('and');
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            
+            // Convert components to rules
+            components.forEach(component => {
+                let rule;
+                
+                switch(component.type) {
+                    case 'fileType':
+                        rule = {
+                            field: 'mimeType',
+                            operator: component.value.endsWith('/') ? 'contains' : 'equals',
+                            value: component.value,
+                            display: `${component.display} files`
+                        };
+                        break;
+                    case 'date':
+                        rule = {
+                            field: 'modifiedTime',
+                            operator: 'greater_than',
+                            value: component.value,
+                            display: `Modified: ${component.display}`
+                        };
+                        break;
+                    case 'keyword':
+                        rule = {
+                            field: 'name',
+                            operator: 'contains',
+                            value: component.value,
+                            display: `Contains: ${component.display}`
+                        };
+                        break;
+                    case 'owner':
+                        rule = {
+                            field: 'owners',
+                            operator: 'contains',
+                            value: component.value,
+                            display: component.display
+                        };
+                        break;
+                    case 'sharing':
+                        if (component.value === 'me') {
+                            rule = {
+                                field: 'sharedByMe',
+                                operator: 'equals',
+                                value: 'true',
+                                display: 'Shared by me'
+                            };
+                        } else {
+                            rule = {
+                                field: 'sharedWith',
+                                operator: 'contains',
+                                value: component.value,
+                                display: component.display
+                            };
+                        }
+                        break;
+                    case 'size':
+                        rule = {
+                            field: 'size',
+                            operator: 'greater_than',
+                            value: component.value,
+                            display: component.display
+                        };
+                        break;
+                    case 'folder':
+                        rule = {
+                            field: 'parents',
+                            operator: 'equals',
+                            value: component.value,
+                            display: component.display
+                        };
+                        break;
+                }
+                
+                if (rule && group) {
+                    group.rules.push({
+                        id: `rule-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                        ...rule
+                    });
+                }
+            });
+            
+            renderRuleGroups();
+        }
+
+        // Add a rule group
+        function addGroup(logic = 'and') {
+            const groupId = `group-${state.currentGroupId++}`;
+            const group = {
+                id: groupId,
+                logic: logic,
+                rules: []
+            };
+            
+            state.ruleGroups.push(group);
+            renderRuleGroups();
+            return groupId;
+        }
+
+        // Render rule groups
+        function renderRuleGroups() {
+            const container = document.getElementById('groupsContainer');
+            
+            if (state.ruleGroups.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--secondary);">No rules yet. Add a group to get started.</p>';
+                return;
+            }
+            
+            container.innerHTML = state.ruleGroups.map((group, groupIndex) => `
+                <div class="group-card" data-group-id="${group.id}">
+                    <div class="group-header">
+                        <div class="flex">
+                            <span class="group-logic ${group.logic}">${group.logic.toUpperCase()}</span>
+                            <h4>Group ${groupIndex + 1}</h4>
+                        </div>
+                        <div class="flex gap-sm">
+                            <button onclick="toggleGroupLogic('${group.id}')" class="small" data-variant="outline">
+                                Switch to ${group.logic === 'and' ? 'OR' : 'AND'}
+                            </button>
+                            ${state.ruleGroups.length > 1 ? `
+                                <button onclick="removeGroup('${group.id}')" class="small" data-variant="danger">
+                                    Remove
+                                </button>
+                            ` : ''}
+                        </div>
+                    </div>
+                    
+                    <div class="rules-list" id="rules-${group.id}">
+                        ${group.rules.length > 0 ? group.rules.map((rule, ruleIndex) => `
+                            <div class="rule-row">
+                                <select onchange="updateRuleField('${group.id}', ${ruleIndex}, this.value)">
+                                    <option value="">Select field</option>
+                                    <option value="mimeType" ${rule.field === 'mimeType' ? 'selected' : ''}>File Type</option>
+                                    <option value="name" ${rule.field === 'name' ? 'selected' : ''}>File Name</option>
+                                    <option value="modifiedTime" ${rule.field === 'modifiedTime' ? 'selected' : ''}>Modified Date</option>
+                                    <option value="createdTime" ${rule.field === 'createdTime' ? 'selected' : ''}>Created Date</option>
+                                    <option value="owners" ${rule.field === 'owners' ? 'selected' : ''}>Owner</option>
+                                    <option value="sharedWith" ${rule.field === 'sharedWith' ? 'selected' : ''}>Shared With</option>
+                                    <option value="sharedByMe" ${rule.field === 'sharedByMe' ? 'selected' : ''}>Shared By Me</option>
+                                    <option value="size" ${rule.field === 'size' ? 'selected' : ''}>File Size</option>
+                                    <option value="parents" ${rule.field === 'parents' ? 'selected' : ''}>Folder</option>
+                                    <option value="starred" ${rule.field === 'starred' ? 'selected' : ''}>Starred</option>
+                                    <option value="trashed" ${rule.field === 'trashed' ? 'selected' : ''}>In Trash</option>
+                                </select>
+                                
+                                <select onchange="updateRuleOperator('${group.id}', ${ruleIndex}, this.value)">
+                                    <option value="equals" ${rule.operator === 'equals' ? 'selected' : ''}>Equals</option>
+                                    <option value="contains" ${rule.operator === 'contains' ? 'selected' : ''}>Contains</option>
+                                    <option value="not_contains" ${rule.operator === 'not_contains' ? 'selected' : ''}>Does Not Contain</option>
+                                    <option value="greater_than" ${rule.operator === 'greater_than' ? 'selected' : ''}>Greater Than</option>
+                                    <option value="less_than" ${rule.operator === 'less_than' ? 'selected' : ''}>Less Than</option>
+                                    <option value="in" ${rule.operator === 'in' ? 'selected' : ''}>In List</option>
+                                </select>
+                                
+                                <input type="text" 
+                                       value="${rule.value}" 
+                                       onchange="updateRuleValue('${group.id}', ${ruleIndex}, this.value)"
+                                       placeholder="Value">
+                                
+                                <div class="rule-actions">
+                                    <button onclick="removeRule('${group.id}', ${ruleIndex})" class="small" data-variant="danger" title="Remove rule">
+                                        ×
+                                    </button>
+                                </div>
+                            </div>
+                        `).join('') : '<p style="text-align: center; color: var(--secondary);">No rules in this group</p>'}
+                    </div>
+                    
+                    <button onclick="addRuleToGroup('${group.id}')" class="add-rule-btn small" data-variant="outline">
+                        + Add Rule to This Group
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Toggle group logic
+        function toggleGroupLogic(groupId) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (group) {
+                group.logic = group.logic === 'and' ? 'or' : 'and';
+                renderRuleGroups();
+                updatePreview();
+            }
+        }
+
+        // Remove group
+        function removeGroup(groupId) {
+            if (!confirm('Remove this group and all its rules?')) return;
+            
+            state.ruleGroups = state.ruleGroups.filter(g => g.id !== groupId);
+            renderRuleGroups();
+            updatePreview();
+        }
+
+        // Add rule to group
+        function addRuleToGroup(groupId) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (!group) return;
+            
+            group.rules.push({
+                id: `rule-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
+                field: 'name',
+                operator: 'contains',
+                value: '',
+                display: 'New rule'
+            });
+            
+            renderRuleGroups();
+            updatePreview();
+        }
+
+        // Update rule field
+        function updateRuleField(groupId, ruleIndex, field) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (group && group.rules[ruleIndex]) {
+                group.rules[ruleIndex].field = field;
+                updatePreview();
+            }
+        }
+
+        // Update rule operator
+        function updateRuleOperator(groupId, ruleIndex, operator) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (group && group.rules[ruleIndex]) {
+                group.rules[ruleIndex].operator = operator;
+                updatePreview();
+            }
+        }
+
+        // Update rule value
+        function updateRuleValue(groupId, ruleIndex, value) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (group && group.rules[ruleIndex]) {
+                group.rules[ruleIndex].value = value;
+                updatePreview();
+            }
+        }
+
+        // Remove rule
+        function removeRule(groupId, ruleIndex) {
+            const group = state.ruleGroups.find(g => g.id === groupId);
+            if (group) {
+                group.rules.splice(ruleIndex, 1);
+                renderRuleGroups();
+                updatePreview();
+            }
+        }
+
+        // Load example
+        function loadExample(exampleId) {
+            const examples = {
+                'drive_pdfs': 'Find all PDF files created in the last month containing "budget report"',
+                'shared_docs': 'Documents shared with marketing team that were modified this week',
+                'recent_edits': 'Spreadsheets I edited yesterday with "Q4" in the filename',
+                'large_files': 'Files larger than 100MB that haven\'t been accessed in 6 months',
+                'project_assets': 'Images and videos from Project X folder, created after January 2024',
+                'presentation_deck': 'Presentation decks about "Annual Planning" shared externally',
+                'drive_starred': 'Show all my starred files',
+                'drive_trashed': 'Find files currently in trash',
+                'drive_owned_by_me': 'Files owned by me that are not shared',
+                'drive_shared_by_me': 'Files I have shared with others this month',
+                'drive_viewed_recently': 'Files I viewed in the last week',
+                'drive_specific_mime': 'Google Docs and Sheets created last quarter'
+            };
+            
+            document.getElementById('naturalInput').value = examples[exampleId] || exampleId;
+            document.getElementById('demo-tab').click();
+            setTimeout(() => {
+                parseNaturalLanguage();
+            }, 100);
+        }
+
+        // Clear input
+        function clearInput() {
+            document.getElementById('naturalInput').value = '';
+            state.naturalQuery = '';
+            state.parsedComponents = [];
+            document.getElementById('parsedComponents').style.display = 'none';
+            document.getElementById('queryBuilderForm').classList.remove('active');
+            updatePreview();
+        }
+
+        // Clear all groups
+        function clearAllGroups() {
+            if (!confirm('Clear all groups and rules?')) return;
+            
+            state.ruleGroups = [];
+            state.parsedComponents = [];
+            document.getElementById('parsedComponents').style.display = 'none';
+            renderRuleGroups();
+            updatePreview();
+        }
+
+        // Build query
+        function buildQuery() {
+            const query = {
+                type: 'semantic',
+                natural_language: state.naturalQuery,
+                timestamp: new Date().toISOString(),
+                source: 'google_drive',
+                groups: state.ruleGroups.map(group => ({
+                    logic: group.logic,
+                    rules: group.rules.map(rule => ({
+                        field: rule.field,
+                        operator: rule.operator,
+                        value: rule.value
+                    }))
+                }))
+            };
+            
+            updatePreview(query);
+            
+            // Show success message
+            alert('Query built successfully! You can now copy or export it.');
+            
+            return query;
+        }
+
+        // Test query
+        function testQuery() {
+            const query = buildQuery();
+            alert('Test mode: This would execute the query against your data source.\n\nQuery prepared with ' + 
+                  query.groups.reduce((acc, group) => acc + group.rules.length, 0) + ' rules across ' + 
+                  query.groups.length + ' groups.');
+        }
+
+        // Update preview
+        function updatePreview(query = null) {
+            const previewElement = document.getElementById('queryPreview');
+            
+            if (!query && (state.ruleGroups.length === 0 || state.ruleGroups.every(g => g.rules.length === 0))) {
+                previewElement.textContent = JSON.stringify({
+                    query: {
+                        type: 'semantic',
+                        natural_language: state.naturalQuery || '',
+                        timestamp: new Date().toISOString(),
+                        groups: []
+                    }
+                }, null, 2);
+                return;
+            }
+            
+            const displayQuery = query || {
+                type: 'semantic',
+                natural_language: state.naturalQuery,
+                timestamp: new Date().toISOString(),
+                source: 'google_drive',
+                groups: state.ruleGroups.map(group => ({
+                    logic: group.logic,
+                    rules: group.rules.map(rule => ({
+                        field: rule.field,
+                        operator: rule.operator,
+                        value: rule.value
+                    }))
+                }))
+            };
+            
+            previewElement.textContent = JSON.stringify(displayQuery, null, 2);
+        }
+
+        // Save query
+        function saveQuery() {
+            const query = buildQuery();
+            const name = prompt('Enter a name for this query:');
+            if (!name) return;
+            
+            const savedQuery = {
+                id: Date.now().toString(),
+                name: name,
+                query: query,
+                createdAt: new Date().toISOString()
+            };
+            
+            state.savedQueries.push(savedQuery);
+            localStorage.setItem('savedQueries', JSON.stringify(state.savedQueries));
+            
+            alert(`Query "${name}" saved!`);
+        }
+
+        // Copy query
+        function copyQuery() {
+            const query = buildQuery();
+            const text = JSON.stringify(query, null, 2);
+            
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Query copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy: ' + err);
+            });
+        }
+
+        // Export query
+        function exportQuery() {
+            const query = buildQuery();
+            const format = prompt('Export format (json, curl, python, javascript):', 'json');
+            
+            let exportContent = '';
+            let fileExtension = 'json';
+            
+            switch(format.toLowerCase()) {
+                case 'curl':
+                    exportContent = `curl -X POST https://api.example.com/v1/search \\
+  -H "Authorization: Bearer YOUR_TOKEN" \\
+  -H "Content-Type: application/json" \\
+  -d '${JSON.stringify(query, null, 2)}'`;
+                    fileExtension = 'sh';
+                    break;
+                case 'python':
+                    exportContent = `import requests
+import json
+
+query = ${JSON.stringify(query, null, 2)}
+
+headers = {
+    "Authorization": "Bearer YOUR_TOKEN",
+    "Content-Type": "application/json"
+}
+
+response = requests.post(
+    "https://api.example.com/v1/search",
+    json=query,
+    headers=headers
+)
+
+print(json.dumps(response.json(), indent=2))`;
+                    fileExtension = 'py';
+                    break;
+                case 'javascript':
+                    exportContent = `const query = ${JSON.stringify(query, null, 2)};
+
+const response = await fetch('https://api.example.com/v1/search', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Bearer YOUR_TOKEN',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(query)
+});
+
+const data = await response.json();
+console.log(data);`;
+                    fileExtension = 'js';
+                    break;
+                default:
+                    exportContent = JSON.stringify(query, null, 2);
+            }
+            
+            // Create download
+            const blob = new Blob([exportContent], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `query_${Date.now()}.${fileExtension}`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Show quick examples
+        function showQuickExamples() {
+            const examples = [
+                'PDFs from last week',
+                'Files shared with me',
+                'Spreadsheets with "sales"',
+                'Images created this month',
+                'Large files (>500MB)',
+                'Starred documents'
+            ];
+            
+            alert('Try these examples:\n\n' + examples.map(ex => `• "${ex}"`).join('\n'));
+        }
+
+        // Show API examples
+        function showAPIExamples() {
+            const examples = `Google Drive API Example:
+\`\`\`javascript
+// List files matching query
+const query = "mimeType='application/pdf' and modifiedTime > '2024-01-01T00:00:00'";
+const response = await gapi.client.drive.files.list({
+    q: query,
+    fields: 'files(id, name, mimeType, modifiedTime)'
+});
+\`\`\`
+
+Custom Search API:
+\`\`\`python
+# Execute semantic search
+search_client.search(
+    query=query_object,
+    filters=parsed_filters,
+    semantic_weight=0.7
+)
+\`\`\``;
+            
+            alert('API Integration Examples:\n\n' + examples);
+        }
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>

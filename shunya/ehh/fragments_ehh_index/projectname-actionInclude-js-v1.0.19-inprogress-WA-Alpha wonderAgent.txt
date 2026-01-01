@@ -1,0 +1,4 @@
+actionInclude.js (path: shunya/src/utilities/actionInclude.js)
+- au_inc_4_3_2 /actionInclude.js : [type="utility" priority="2" role="Loads shared fragments." path="shunya/src/utilities/actionInclude.js"]
+- au_inc_4_3_2_1 includeFile : [type="method" priority="1" role="Inserts other files into the current view." path="shunya/src/utilities/actionInclude.js"]
+- au_inc_4_3_2_2 includeTemplate : [type="method" priority="1" role="Includes template snippets." path="shunya/src/utilities/actionInclude.js"]

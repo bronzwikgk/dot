@@ -1,0 +1,370 @@
+[
+  {
+    "username": "test-1767261600966",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767261600966@example.com",
+    "_id": "user_register_1767261600967",
+    "metadata": {
+      "createdAt": "2026-01-01T10:00:00.967Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767261600987",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767261600987@example.com",
+    "sessionId": "sess-1767261600987",
+    "userId": "test-1767261600987",
+    "appToken": "token-1767261600987",
+    "expiresAt": "2026-01-01T10:10:00.987Z",
+    "createdAt": "2026-01-01T10:00:00.987Z",
+    "status": "active",
+    "_id": "user_session_1767261600988",
+    "metadata": {
+      "createdAt": "2026-01-01T10:00:00.988Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767261896488",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767261896488@example.com",
+    "_id": "user_register_1767261896490",
+    "metadata": {
+      "createdAt": "2026-01-01T10:04:56.490Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767261896504",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767261896504@example.com",
+    "sessionId": "sess-1767261896504",
+    "userId": "test-1767261896504",
+    "appToken": "token-1767261896504",
+    "expiresAt": "2026-01-01T10:14:56.504Z",
+    "createdAt": "2026-01-01T10:04:56.504Z",
+    "status": "active",
+    "_id": "user_session_1767261896504",
+    "metadata": {
+      "createdAt": "2026-01-01T10:04:56.504Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767261896523",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767261896523@example.com",
+    "_id": "user_register_1767261896591",
+    "metadata": {
+      "createdAt": "2026-01-01T10:04:56.591Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "username": "test-1767262810656",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767262810656@example.com",
+    "_id": "user_register_1767262810658",
+    "metadata": {
+      "createdAt": "2026-01-01T10:20:10.658Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767262810666",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767262810666@example.com",
+    "sessionId": "sess-1767262810666",
+    "userId": "test-1767262810666",
+    "appToken": "token-1767262810666",
+    "expiresAt": "2026-01-01T10:30:10.666Z",
+    "createdAt": "2026-01-01T10:20:10.666Z",
+    "status": "active",
+    "_id": "user_session_1767262810666",
+    "metadata": {
+      "createdAt": "2026-01-01T10:20:10.666Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767262825528",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767262825528@example.com",
+    "_id": "user_register_1767262825528",
+    "metadata": {
+      "createdAt": "2026-01-01T10:20:25.528Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767262825538",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767262825538@example.com",
+    "sessionId": "sess-1767262825538",
+    "userId": "test-1767262825538",
+    "appToken": "token-1767262825538",
+    "expiresAt": "2026-01-01T10:30:25.538Z",
+    "createdAt": "2026-01-01T10:20:25.538Z",
+    "status": "active",
+    "_id": "user_session_1767262825538",
+    "metadata": {
+      "createdAt": "2026-01-01T10:20:25.538Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767262825563",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767262825563@example.com",
+    "_id": "user_register_1767262825751",
+    "metadata": {
+      "createdAt": "2026-01-01T10:20:25.751Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "username": "test-1767263490040",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767263490040@example.com",
+    "_id": "user_register_1767263490041",
+    "metadata": {
+      "createdAt": "2026-01-01T10:31:30.041Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767263490054",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767263490054@example.com",
+    "sessionId": "sess-1767263490054",
+    "userId": "test-1767263490054",
+    "appToken": "token-1767263490054",
+    "expiresAt": "2026-01-01T10:41:30.054Z",
+    "createdAt": "2026-01-01T10:31:30.054Z",
+    "status": "active",
+    "_id": "user_session_1767263490055",
+    "metadata": {
+      "createdAt": "2026-01-01T10:31:30.054Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767263490076",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767263490076@example.com",
+    "_id": "user_register_1767263490147",
+    "metadata": {
+      "createdAt": "2026-01-01T10:31:30.147Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "username": "test-1767263849106",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767263849106@example.com",
+    "_id": "user_register_1767263849107",
+    "metadata": {
+      "createdAt": "2026-01-01T10:37:29.107Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767263849191",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767263849191@example.com",
+    "sessionId": "sess-1767263849191",
+    "userId": "test-1767263849191",
+    "appToken": "token-1767263849191",
+    "expiresAt": "2026-01-01T10:47:29.191Z",
+    "createdAt": "2026-01-01T10:37:29.191Z",
+    "status": "active",
+    "_id": "user_session_1767263849191",
+    "metadata": {
+      "createdAt": "2026-01-01T10:37:29.191Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767263849252",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767263849252@example.com",
+    "_id": "user_register_1767263849453",
+    "metadata": {
+      "createdAt": "2026-01-01T10:37:29.453Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "username": "test-1767264435693",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767264435693@example.com",
+    "_id": "user_register_1767264435694",
+    "metadata": {
+      "createdAt": "2026-01-01T10:47:15.694Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767264435707",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767264435707@example.com",
+    "sessionId": "sess-1767264435707",
+    "userId": "test-1767264435707",
+    "appToken": "token-1767264435707",
+    "expiresAt": "2026-01-01T10:57:15.707Z",
+    "createdAt": "2026-01-01T10:47:15.707Z",
+    "status": "active",
+    "_id": "user_session_1767264435707",
+    "metadata": {
+      "createdAt": "2026-01-01T10:47:15.707Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767264435726",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767264435726@example.com",
+    "_id": "user_register_1767264435788",
+    "metadata": {
+      "createdAt": "2026-01-01T10:47:15.788Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "username": "test-1767264486623",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767264486623@example.com",
+    "_id": "user_register_1767264486625",
+    "metadata": {
+      "createdAt": "2026-01-01T10:48:06.625Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767264486647",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767264486647@example.com",
+    "sessionId": "sess-1767264486647",
+    "userId": "test-1767264486647",
+    "appToken": "token-1767264486647",
+    "expiresAt": "2026-01-01T10:58:06.647Z",
+    "createdAt": "2026-01-01T10:48:06.647Z",
+    "status": "active",
+    "_id": "user_session_1767264486649",
+    "metadata": {
+      "createdAt": "2026-01-01T10:48:06.649Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767264486683",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767264486683@example.com",
+    "_id": "user_register_1767264486776",
+    "metadata": {
+      "createdAt": "2026-01-01T10:48:06.776Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "username": "test-1767265127350",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767265127350@example.com",
+    "_id": "user_register_1767265127350",
+    "metadata": {
+      "createdAt": "2026-01-01T10:58:47.350Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767265127366",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767265127366@example.com",
+    "sessionId": "sess-1767265127366",
+    "userId": "test-1767265127366",
+    "appToken": "token-1767265127366",
+    "expiresAt": "2026-01-01T11:08:47.366Z",
+    "createdAt": "2026-01-01T10:58:47.366Z",
+    "status": "active",
+    "_id": "user_session_1767265127366",
+    "metadata": {
+      "createdAt": "2026-01-01T10:58:47.366Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767265127395",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767265127395@example.com",
+    "_id": "user_register_1767265127465",
+    "metadata": {
+      "createdAt": "2026-01-01T10:58:47.465Z",
+      "createdBy": "guest"
+    }
+  },
+  {
+    "username": "test-1767266062675",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767266062675@example.com",
+    "_id": "user_register_1767266062676",
+    "metadata": {
+      "createdAt": "2026-01-01T11:14:22.676Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767266062691",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767266062691@example.com",
+    "sessionId": "sess-1767266062691",
+    "userId": "test-1767266062691",
+    "appToken": "token-1767266062691",
+    "expiresAt": "2026-01-01T11:24:22.691Z",
+    "createdAt": "2026-01-01T11:14:22.691Z",
+    "status": "active",
+    "_id": "user_session_1767266062691",
+    "metadata": {
+      "createdAt": "2026-01-01T11:14:22.691Z",
+      "createdBy": "system"
+    }
+  },
+  {
+    "username": "test-1767266062724",
+    "password": "Passw0rd!",
+    "role": "admin",
+    "email": "test-1767266062724@example.com",
+    "_id": "user_register_1767266062782",
+    "metadata": {
+      "createdAt": "2026-01-01T11:14:22.782Z",
+      "createdBy": "guest"
+    }
+  }
+]

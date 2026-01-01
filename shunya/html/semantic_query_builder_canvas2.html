@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Query Builder with Visual Interface</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #64748b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --background: #ffffff;
+            --surface: #f8fafc;
+            --border: #e2e8f0;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --sql-keyword: #d946ef;
+            --sql-string: #84cc16;
+            --sql-number: #f59e0b;
+            --sql-table: #3b82f6;
+            --group-bg: #f0f9ff;
+            --group-border: #bae6fd;
+        }
+        
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background: #0f172a;
+                --surface: #1e293b;
+                --border: #334155;
+                --text: #f1f5f9;
+                --text-light: #94a3b8;
+                --group-bg: #1a365d;
+                --group-border: #2d3748;
+            }
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 14px;
+            line-height: 1.5;
+            color: var(--text);
+            background: var(--background);
+            padding: 16px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        header {
+            margin-bottom: 24px;
+        }
+        
+        h1 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        nav li {
+            flex: 1;
+        }
+        
+        nav a {
+            display: block;
+            text-align: center;
+            padding: 12px 16px;
+            text-decoration: none;
+            color: var(--text-light);
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a[aria-current="page"] {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+        
+        section {
+            display: none;
+            padding: 24px 0;
+        }
+        
+        section:target {
+            display: block;
+        }
+        
+        article {
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        fieldset {
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        legend {
+            font-weight: 600;
+            padding: 0 8px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        textarea, select, input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            background: var(--background);
+            color: var(--text);
+            margin-bottom: 12px;
+            font-size: 14px;
+        }
+        
+        textarea {
+            min-height: 80px;
+            font-family: monospace;
+            resize: vertical;
+        }
+        
+        button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        button.primary {
+            background: var(--primary);
+            color: white;
+        }
+        
+        button.primary:hover {
+            background: var(--primary-dark);
+        }
+        
+        button.outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        button.secondary {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        button.danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        div[role="group"] {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 16px;
+        }
+        
+        /* Query Builder Visual Interface */
+        .query-builder {
+            background: var(--surface);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid var(--border);
+        }
+        
+        .logic-group {
+            background: var(--group-bg);
+            border: 2px solid var(--group-border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+            position: relative;
+        }
+        
+        .logic-group-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .logic-operator {
+            background: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+        }
+        
+        .rule-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 12px;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        
+        .rule-row .field,
+        .rule-row .operator,
+        .rule-row .value {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .rule-row .field label,
+        .rule-row .operator label,
+        .rule-row .value label {
+            font-size: 12px;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+        
+        .nested-group {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 12px;
+            margin: 12px 0 12px 24px;
+            position: relative;
+        }
+        
+        .nested-group::before {
+            content: '';
+            position: absolute;
+            left: -24px;
+            top: 50%;
+            width: 24px;
+            height: 1px;
+            background: var(--border);
+        }
+        
+        .actions-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            padding: 4px;
+            font-size: 18px;
+        }
+        
+        .date-inputs {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        
+        .date-inputs input {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        /* SQL Preview */
+        .sql-preview {
+            background: var(--surface);
+            border-radius: 6px;
+            padding: 16px;
+            overflow: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            margin-bottom: 16px;
+            max-height: 300px;
+            border: 1px solid var(--border);
+        }
+        
+        .sql-keyword { color: var(--sql-keyword); font-weight: bold; }
+        .sql-string { color: var(--sql-string); }
+        .sql-number { color: var(--sql-number); }
+        .sql-table { color: var(--sql-table); }
+        
+        /* Results Table */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        th {
+            text-align: left;
+            padding: 12px 16px;
+            background: var(--surface);
+            border-bottom: 2px solid var(--border);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+        
+        td {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        tbody tr:hover {
+            background: rgba(37, 99, 235, 0.05);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            .rule-row {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            
+            .logic-group-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Advanced Query Builder</h1>
+        <p>Visual query builder with AND/OR logic groups</p>
+    </header>
+    
+    <nav>
+        <ul>
+            <li><a href="#builder" aria-current="page">Query Builder</a></li>
+            <li><a href="#examples">Examples</a></li>
+        </ul>
+    </nav>
+    
+    <section id="builder">
+        <article>
+            <fieldset>
+                <legend>Natural Language Input</legend>
+                <textarea id="query-input" placeholder="Example: First name begins with Stev AND (Last name in Val, Vaughan OR Is musician = true)">First name begins with Stev AND (Last name in Val, Vaughan OR Is musician = true)</textarea>
+                <div role="group">
+                    <button class="primary" onclick="parseNaturalLanguage()">Parse Query</button>
+                    <button class="outline" onclick="resetBuilder()">Reset Builder</button>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Visual Query Builder</legend>
+                <div class="query-builder" id="visual-builder">
+                    <!-- Main AND Group -->
+                    <div class="logic-group">
+                        <div class="logic-group-header">
+                            <span class="logic-operator">AND</span>
+                            <span>All conditions must be met</span>
+                        </div>
+                        
+                        <!-- First Name Rule -->
+                        <div class="rule-row">
+                            <div class="field">
+                                <label>Field</label>
+                                <select class="field-select">
+                                    <option value="first_name" selected>First Name</option>
+                                    <option value="last_name">Last Name</option>
+                                    <option value="age">Age</option>
+                                    <option value="birth_date">Birth Date</option>
+                                    <option value="is_musician">Is a musician</option>
+                                    <option value="instrument">Primary instrument</option>
+                                </select>
+                            </div>
+                            <div class="operator">
+                                <label>Operator</label>
+                                <select class="operator-select">
+                                    <option value="begins_with" selected>begins with</option>
+                                    <option value="equals">=</option>
+                                    <option value="contains">contains</option>
+                                    <option value="ends_with">ends with</option>
+                                    <option value="in">in</option>
+                                    <option value=">">></option>
+                                    <option value="<"><</option>
+                                    <option value=">=">>=</option>
+                                    <option value="<="><=</option>
+                                    <option value="between">between</option>
+                                </select>
+                            </div>
+                            <div class="value">
+                                <label>Value</label>
+                                <input type="text" class="value-input" value="Stev">
+                            </div>
+                            <button class="remove-btn" onclick="removeRule(this)">×</button>
+                        </div>
+                        
+                        <!-- Last Name Rule -->
+                        <div class="rule-row">
+                            <div class="field">
+                                <label>Field</label>
+                                <select class="field-select">
+                                    <option value="first_name">First Name</option>
+                                    <option value="last_name" selected>Last Name</option>
+                                    <option value="age">Age</option>
+                                    <option value="birth_date">Birth Date</option>
+                                    <option value="is_musician">Is a musician</option>
+                                    <option value="instrument">Primary instrument</option>
+                                </select>
+                            </div>
+                            <div class="operator">
+                                <label>Operator</label>
+                                <select class="operator-select">
+                                    <option value="begins_with">begins with</option>
+                                    <option value="equals">=</option>
+                                    <option value="contains">contains</option>
+                                    <option value="ends_with">ends with</option>
+                                    <option value="in" selected>in</option>
+                                    <option value=">">></option>
+                                    <option value="<"><</option>
+                                </select>
+                            </div>
+                            <div class="value">
+                                <label>Value</label>
+                                <input type="text" class="value-input" value="Val, Vaughan">
+                            </div>
+                            <button class="remove-btn" onclick="removeRule(this)">×</button>
+                        </div>
+                        
+                        <!-- Age Rule -->
+                        <div class="rule-row">
+                            <div class="field">
+                                <label>Field</label>
+                                <select class="field-select">
+                                    <option value="first_name">First Name</option>
+                                    <option value="last_name">Last Name</option>
+                                    <option value="age" selected>Age</option>
+                                    <option value="birth_date">Birth Date</option>
+                                    <option value="is_musician">Is a musician</option>
+                                    <option value="instrument">Primary instrument</option>
+                                </select>
+                            </div>
+                            <div class="operator">
+                                <label>Operator</label>
+                                <select class="operator-select">
+                                    <option value="begins_with">begins with</option>
+                                    <option value="equals">=</option>
+                                    <option value="contains">contains</option>
+                                    <option value="ends_with">ends with</option>
+                                    <option value="in">in</option>
+                                    <option value=">" selected>></option>
+                                    <option value="<"><</option>
+                                    <option value=">=">>=</option>
+                                    <option value="<="><=</option>
+                                </select>
+                            </div>
+                            <div class="value">
+                                <label>Value</label>
+                                <input type="text" class="value-input" value="28">
+                            </div>
+                            <button class="remove-btn" onclick="removeRule(this)">×</button>
+                        </div>
+                        
+                        <!-- Nested OR Group -->
+                        <div class="nested-group">
+                            <div class="logic-group-header">
+                                <span class="logic-operator">OR</span>
+                                <span>Any condition can be met</span>
+                            </div>
+                            
+                            <!-- Is Musician Rule -->
+                            <div class="rule-row">
+                                <div class="field">
+                                    <label>Field</label>
+                                    <select class="field-select">
+                                        <option value="first_name">First Name</option>
+                                        <option value="last_name">Last Name</option>
+                                        <option value="age">Age</option>
+                                        <option value="birth_date">Birth Date</option>
+                                        <option value="is_musician" selected>Is a musician</option>
+                                        <option value="instrument">Primary instrument</option>
+                                    </select>
+                                </div>
+                                <div class="operator">
+                                    <label>Operator</label>
+                                    <select class="operator-select">
+                                        <option value="begins_with">begins with</option>
+                                        <option value="equals" selected>=</option>
+                                        <option value="contains">contains</option>
+                                        <option value="ends_with">ends with</option>
+                                        <option value="in">in</option>
+                                        <option value=">">></option>
+                                        <option value="<"><</option>
+                                    </select>
+                                </div>
+                                <div class="value">
+                                    <label>Value</label>
+                                    <input type="text" class="value-input" value="true">
+                                </div>
+                                <button class="remove-btn" onclick="removeRule(this)">×</button>
+                            </div>
+                            
+                            <!-- Primary Instrument Rule -->
+                            <div class="rule-row">
+                                <div class="field">
+                                    <label>Field</label>
+                                    <select class="field-select">
+                                        <option value="first_name">First Name</option>
+                                        <option value="last_name">Last Name</option>
+                                        <option value="age">Age</option>
+                                        <option value="birth_date">Birth Date</option>
+                                        <option value="is_musician">Is a musician</option>
+                                        <option value="instrument" selected>Primary instrument</option>
+                                    </select>
+                                </div>
+                                <div class="operator">
+                                    <label>Operator</label>
+                                    <select class="operator-select">
+                                        <option value="begins_with">begins with</option>
+                                        <option value="equals" selected>=</option>
+                                        <option value="contains">contains</option>
+                                        <option value="ends_with">ends with</option>
+                                        <option value="in">in</option>
+                                        <option value=">">></option>
+                                        <option value="<"><</option>
+                                    </select>
+                                </div>
+                                <div class="value">
+                                    <label>Value</label>
+                                    <input type="text" class="value-input" value="Guitar">
+                                </div>
+                                <button class="remove-btn" onclick="removeRule(this)">×</button>
+                            </div>
+                            
+                            <!-- Birth Date Between Rule -->
+                            <div class="rule-row">
+                                <div class="field">
+                                    <label>Field</label>
+                                    <select class="field-select">
+                                        <option value="first_name">First Name</option>
+                                        <option value="last_name">Last Name</option>
+                                        <option value="age">Age</option>
+                                        <option value="birth_date" selected>Birth Date</option>
+                                        <option value="is_musician">Is a musician</option>
+                                        <option value="instrument">Primary instrument</option>
+                                    </select>
+                                </div>
+                                <div class="operator">
+                                    <label>Operator</label>
+                                    <select class="operator-select">
+                                        <option value="begins_with">begins with</option>
+                                        <option value="equals">=</option>
+                                        <option value="contains">contains</option>
+                                        <option value="ends_with">ends with</option>
+                                        <option value="in">in</option>
+                                        <option value=">">></option>
+                                        <option value="<"><</option>
+                                        <option value="between" selected>between</option>
+                                    </select>
+                                </div>
+                                <div class="value">
+                                    <label>Value</label>
+                                    <div class="date-inputs">
+                                        <input type="text" class="value-input" value="03-10-1954" placeholder="Start date">
+                                        <span>and</span>
+                                        <input type="text" class="value-input" value="06-06-1960" placeholder="End date">
+                                    </div>
+                                </div>
+                                <button class="remove-btn" onclick="removeRule(this)">×</button>
+                            </div>
+                            
+                            <div class="actions-row">
+                                <button class="outline" onclick="addRuleToGroup(this)">+ Rule</button>
+                                <button class="outline" onclick="addGroupToGroup(this)">+ Group</button>
+                            </div>
+                        </div>
+                        
+                        <div class="actions-row">
+                            <button class="outline" onclick="addRule()">+ Rule</button>
+                            <button class="outline" onclick="addGroup()">+ Group</button>
+                            <button class="primary" onclick="generateSQL()">Generate SQL</button>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Generated SQL</legend>
+                <pre class="sql-preview" id="sql-output">SELECT * FROM people 
+WHERE first_name LIKE 'Stev%' 
+  AND last_name IN ('Val', 'Vaughan') 
+  AND age > 28 
+  AND (is_musician = true 
+       OR primary_instrument = 'Guitar' 
+       OR birth_date BETWEEN '1954-10-03' AND '1960-06-06')</pre>
+                <div role="group">
+                    <button class="outline" onclick="copySQL()">Copy SQL</button>
+                    <button class="outline" onclick="testQuery()">Test Query</button>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <legend>Query Results</legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Age</th>
+                            <th>Birth Date</th>
+                            <th>Is Musician</th>
+                            <th>Instrument</th>
+                        </tr>
+                    </thead>
+                    <tbody id="results-body">
+                        <tr>
+                            <td>Steve</td>
+                            <td>Vai</td>
+                            <td>63</td>
+                            <td>1960-06-06</td>
+                            <td>Yes</td>
+                            <td>Guitar</td>
+                        </tr>
+                        <tr>
+                            <td>Steven</td>
+                            <td>Val</td>
+                            <td>35</td>
+                            <td>1988-05-15</td>
+                            <td>No</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Stevie</td>
+                            <td>Vaughan</td>
+                            <td>35</td>
+                            <td>1954-10-03</td>
+                            <td>Yes</td>
+                            <td>Guitar</td>
+                        </tr>
+                        <tr>
+                            <td>Steven</td>
+                            <td>Tyler</td>
+                            <td>75</td>
+                            <td>1948-03-26</td>
+                            <td>Yes</td>
+                            <td>Vocals</td>
+                        </tr>
+                        <tr>
+                            <td>Steve</td>
+                            <td>Vaughan</td>
+                            <td>42</td>
+                            <td>1981-08-20</td>
+                            <td>Yes</td>
+                            <td>Bass</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+        </article>
+    </section>
+    
+    <section id="examples">
+        <article>
+            <h2>Example Queries</h2>
+            <div role="group">
+                <button class="outline" onclick="loadExample('musicians')">Musicians Example</button>
+                <button class="outline" onclick="loadExample('employees')">Employees Example</button>
+                <button class="outline" onclick="loadExample('products')">Products Example</button>
+            </div>
+        </article>
+    </section>
+
+    <script>
+        function parseNaturalLanguage() {
+            const input = document.getElementById('query-input').value;
+            alert('Parsing natural language query... (Simulated)');
+            // In a real implementation, this would parse the natural language
+            // and populate the visual builder accordingly
+        }
+        
+        function addRule() {
+            const builder = document.querySelector('.logic-group');
+            const ruleRow = document.createElement('div');
+            ruleRow.className = 'rule-row';
+            ruleRow.innerHTML = `
+                <div class="field">
+                    <label>Field</label>
+                    <select class="field-select">
+                        <option value="first_name">First Name</option>
+                        <option value="last_name">Last Name</option>
+                        <option value="age">Age</option>
+                        <option value="birth_date">Birth Date</option>
+                        <option value="is_musician">Is a musician</option>
+                        <option value="instrument">Primary instrument</option>
+                    </select>
+                </div>
+                <div class="operator">
+                    <label>Operator</label>
+                    <select class="operator-select">
+                        <option value="begins_with">begins with</option>
+                        <option value="equals" selected>=</option>
+                        <option value="contains">contains</option>
+                        <option value="ends_with">ends with</option>
+                        <option value="in">in</option>
+                        <option value=">">></option>
+                        <option value="<"><</option>
+                    </select>
+                </div>
+                <div class="value">
+                    <label>Value</label>
+                    <input type="text" class="value-input" placeholder="Enter value">
+                </div>
+                <button class="remove-btn" onclick="removeRule(this)">×</button>
+            `;
+            
+            const actionsRow = builder.querySelector('.actions-row');
+            builder.insertBefore(ruleRow, actionsRow);
+        }
+        
+        function addRuleToGroup(button) {
+            const group = button.closest('.nested-group') || button.closest('.logic-group');
+            const ruleRow = document.createElement('div');
+            ruleRow.className = 'rule-row';
+            ruleRow.innerHTML = `
+                <div class="field">
+                    <label>Field</label>
+                    <select class="field-select">
+                        <option value="first_name">First Name</option>
+                        <option value="last_name">Last Name</option>
+                        <option value="age">Age</option>
+                        <option value="birth_date">Birth Date</option>
+                        <option value="is_musician">Is a musician</option>
+                        <option value="instrument">Primary instrument</option>
+                    </select>
+                </div>
+                <div class="operator">
+                    <label>Operator</label>
+                    <select class="operator-select">
+                        <option value="begins_with">begins with</option>
+                        <option value="equals" selected>=</option>
+                        <option value="contains">contains</option>
+                        <option value="ends_with">ends with</option>
+                        <option value="in">in</option>
+                        <option value=">">></option>
+                        <option value="<"><</option>
+                    </select>
+                </div>
+                <div class="value">
+                    <label>Value</label>
+                    <input type="text" class="value-input" placeholder="Enter value">
+                </div>
+                <button class="remove-btn" onclick="removeRule(this)">×</button>
+            `;
+            
+            const actionsRow = group.querySelector('.actions-row');
+            group.insertBefore(ruleRow, actionsRow);
+        }
+        
+        function addGroup() {
+            const builder = document.querySelector('.logic-group');
+            const nestedGroup = document.createElement('div');
+            nestedGroup.className = 'nested-group';
+            nestedGroup.innerHTML = `
+                <div class="logic-group-header">
+                    <span class="logic-operator">OR</span>
+                    <span>Any condition can be met</span>
+                </div>
+                <div class="actions-row">
+                    <button class="outline" onclick="addRuleToGroup(this)">+ Rule</button>
+                    <button class="outline" onclick="addGroupToGroup(this)">+ Group</button>
+                </div>
+            `;
+            
+            const actionsRow = builder.querySelector('.actions-row');
+            builder.insertBefore(nestedGroup, actionsRow);
+        }
+        
+        function addGroupToGroup(button) {
+            const parentGroup = button.closest('.nested-group') || button.closest('.logic-group');
+            const nestedGroup = document.createElement('div');
+            nestedGroup.className = 'nested-group';
+            nestedGroup.innerHTML = `
+                <div class="logic-group-header">
+                    <span class="logic-operator">AND</span>
+                    <span>All conditions must be met</span>
+                </div>
+                <div class="actions-row">
+                    <button class="outline" onclick="addRuleToGroup(this)">+ Rule</button>
+                    <button class="outline" onclick="addGroupToGroup(this)">+ Group</button>
+                </div>
+            `;
+            
+            const actionsRow = parentGroup.querySelector('.actions-row');
+            parentGroup.insertBefore(nestedGroup, actionsRow);
+        }
+        
+        function removeRule(button) {
+            const ruleRow = button.closest('.rule-row');
+            if (ruleRow) {
+                ruleRow.remove();
+            }
+        }
+        
+        function generateSQL() {
+            const rules = [];
+            const groups = [];
+            
+            // Collect all rules from the main group
+            document.querySelectorAll('.logic-group .rule-row').forEach(row => {
+                const field = row.querySelector('.field-select').value;
+                const operator = row.querySelector('.operator-select').value;
+                const value = row.querySelector('.value-input').value;
+                
+                if (field && operator && value) {
+                    rules.push({ field, operator, value });
+                }
+            });
+            
+            // Collect rules from nested groups
+            document.querySelectorAll('.nested-group').forEach(group => {
+                const groupRules = [];
+                const groupOperator = group.querySelector('.logic-operator').textContent;
+                
+                group.querySelectorAll('.rule-row').forEach(row => {
+                    const field = row.querySelector('.field-select').value;
+                    const operator = row.querySelector('.operator-select').value;
+                    const value = row.querySelector('.value-input').value;
+                    
+                    if (field && operator && value) {
+                        groupRules.push({ field, operator, value });
+                    }
+                });
+                
+                if (groupRules.length > 0) {
+                    groups.push({ operator: groupOperator, rules: groupRules });
+                }
+            });
+            
+            // Build SQL query
+            let sql = "SELECT * FROM people \nWHERE ";
+            const conditions = [];
+            
+            // Add main AND conditions
+            rules.forEach(rule => {
+                conditions.push(formatCondition(rule));
+            });
+            
+            // Add grouped conditions
+            groups.forEach(group => {
+                const groupConditions = group.rules.map(formatCondition);
+                conditions.push(`(${groupConditions.join(` ${group.operator} `)})`);
+            });
+            
+            sql += conditions.join('\n  AND ');
+            
+            // Apply syntax highlighting
+            const highlighted = sql
+                .replace(/\b(SELECT|FROM|WHERE|AND|OR|LIKE|IN|BETWEEN)\b/gi, 
+                    '<span class="sql-keyword">$1</span>')
+                .replace(/'[^']*'/g, '<span class="sql-string">$&</span>')
+                .replace(/\b\d+\b/g, '<span class="sql-number">$&</span>')
+                .replace(/\b(people)\b/g, '<span class="sql-table">$1</span>');
+            
+            document.getElementById('sql-output').innerHTML = highlighted;
+            
+            // Test the query against sample data
+            testQuery();
+        }
+        
+        function formatCondition(rule) {
+            const fieldMap = {
+                'first_name': 'first_name',
+                'last_name': 'last_name',
+                'age': 'age',
+                'birth_date': 'birth_date',
+                'is_musician': 'is_musician',
+                'instrument': 'primary_instrument'
+            };
+            
+            const sqlField = fieldMap[rule.field] || rule.field;
+            const operatorMap = {
+                'begins_with': 'LIKE',
+                'equals': '=',
+                'contains': 'LIKE',
+                'ends_with': 'LIKE',
+                'in': 'IN',
+                '>': '>',
+                '<': '<',
+                '>=': '>=',
+                '<=': '<=',
+                'between': 'BETWEEN'
+            };
+            
+            const sqlOperator = operatorMap[rule.operator] || rule.operator;
+            
+            if (rule.operator === 'begins_with') {
+                return `${sqlField} LIKE '${rule.value}%'`;
+            } else if (rule.operator === 'contains') {
+                return `${sqlField} LIKE '%${rule.value}%'`;
+            } else if (rule.operator === 'ends_with') {
+                return `${sqlField} LIKE '%${rule.value}'`;
+            } else if (rule.operator === 'in') {
+                const values = rule.value.split(',').map(v => `'${v.trim()}'`).join(', ');
+                return `${sqlField} IN (${values})`;
+            } else if (rule.operator === 'between') {
+                const dates = rule.value.split('and');
+                if (dates.length === 2) {
+                    return `${sqlField} BETWEEN '${formatDate(dates[0].trim())}' AND '${formatDate(dates[1].trim())}'`;
+                }
+                return `${sqlField} BETWEEN '${formatDate(rule.value)}'`;
+            } else {
+                return `${sqlField} ${sqlOperator} '${rule.value}'`;
+            }
+        }
+        
+        function formatDate(dateStr) {
+            // Simple date formatting
+            const parts = dateStr.split('-');
+            if (parts.length === 3) {
+                return `${parts[2]}-${parts[0].padStart(2, '0')}-${parts[1].padStart(2, '0')}`;
+            }
+            return dateStr;
+        }
+        
+        function testQuery() {
+            const rows = document.querySelectorAll('#results-body tr');
+            let visibleCount = 0;
+            
+            // Get current query conditions
+            const rules = [];
+            document.querySelectorAll('.rule-row').forEach(row => {
+                const field = row.querySelector('.field-select').value;
+                const operator = row.querySelector('.operator-select').value;
+                const value = row.querySelector('.value-input').value;
+                
+                if (field && operator && value) {
+                    rules.push({ field, operator, value });
+                }
+            });
+            
+            rows.forEach(row => {
+                let matches = true;
+                const cells = row.cells;
+                
+                // Check each rule against row data
+                rules.forEach(rule => {
+                    const cellIndex = getCellIndex(rule.field);
+                    if (cellIndex >= 0) {
+                        const cellValue = cells[cellIndex].textContent.toLowerCase();
+                        const ruleValue = rule.value.toLowerCase();
+                        
+                        switch(rule.operator) {
+                            case 'begins_with':
+                                matches = matches && cellValue.startsWith(ruleValue);
+                                break;
+                            case 'equals':
+                                matches = matches && cellValue === ruleValue;
+                                break;
+                            case 'contains':
+                                matches = matches && cellValue.includes(ruleValue);
+                                break;
+                            case 'in':
+                                const values = ruleValue.split(',').map(v => v.trim());
+                                matches = matches && values.some(v => cellValue.includes(v));
+                                break;
+                            case '>':
+                                matches = matches && parseInt(cellValue) > parseInt(ruleValue);
+                                break;
+                        }
+                    }
+                });
+                
+                row.style.display = matches ? '' : 'none';
+                if (matches) visibleCount++;
+            });
+            
+            alert(`Query executed: ${visibleCount} results found`);
+        }
+        
+        function getCellIndex(field) {
+            const fieldMap = {
+                'first_name': 0,
+                'last_name': 1,
+                'age': 2,
+                'birth_date': 3,
+                'is_musician': 4,
+                'instrument': 5
+            };
+            return fieldMap[field] || -1;
+        }
+        
+        function copySQL() {
+            const sql = document.getElementById('sql-output').textContent;
+            navigator.clipboard.writeText(sql).then(() => {
+                alert('SQL copied to clipboard');
+            });
+        }
+        
+        function resetBuilder() {
+            if (confirm('Reset the query builder to default?')) {
+                document.getElementById('query-input').value = '';
+                // Reset visual builder to default state
+                const builder = document.querySelector('.query-builder');
+                builder.innerHTML = `
+                    <div class="logic-group">
+                        <div class="logic-group-header">
+                            <span class="logic-operator">AND</span>
+                            <span>All conditions must be met</span>
+                        </div>
+                        <div class="actions-row">
+                            <button class="outline" onclick="addRule()">+ Rule</button>
+                            <button class="outline" onclick="addGroup()">+ Group</button>
+                            <button class="primary" onclick="generateSQL()">Generate SQL</button>
+                        </div>
+                    </div>
+                `;
+                document.getElementById('sql-output').textContent = 'SELECT * FROM people\nWHERE 1=1';
+            }
+        }
+        
+        function loadExample(type) {
+            const examples = {
+                'musicians': "Find musicians named Steve who play guitar or are over 40",
+                'employees': "Employees in Sales department with salary > 50000",
+                'products': "Products in Electronics category priced between 100 and 500"
+            };
+            
+            if (examples[type]) {
+                document.getElementById('query-input').value = examples[type];
+                document.querySelector('nav a[href="#builder"]').click();
+                alert(`Loaded ${type} example`);
+            }
+        }
+        
+        // Initialize with default SQL
+        generateSQL();
+    </script>
+</body>
+</html>

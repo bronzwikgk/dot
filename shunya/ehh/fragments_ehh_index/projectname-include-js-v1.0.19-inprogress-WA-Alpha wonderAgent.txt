@@ -1,0 +1,4 @@
+include.js (path: shunya/src/utilities/include.js)
+- au_inc2_4_3_4 /include.js : [type="utility" priority="2" role="Resolves include chains." path="shunya/src/utilities/include.js"]
+- au_inc2_4_3_4_1 resolveIncludes : [type="method" priority="1" role="Resolves nested includes." path="shunya/src/utilities/include.js"]
+- au_inc2_4_3_4_2 fetchInclude : [type="method" priority="1" role="Loads include assets." path="shunya/src/utilities/include.js"]

@@ -1,0 +1,8 @@
+2026-01-01T04:46:04.743Z - Entity ops demo starting
+2026-01-01T04:46:04.779Z - Register JSON written 1 entries
+2026-01-01T04:46:04.780Z - Cache hit for user_register_latest
+2026-01-01T04:46:04.786Z - Session JSONL contains 1 records
+2026-01-01T04:46:04.799Z - CSV written and read back 3 rows
+2026-01-01T04:46:04.827Z - Folder CRUD created and renamed file
+2026-01-01T04:46:04.843Z - Folder CRUD removed demo folder
+2026-01-01T04:46:04.843Z - Entity ops demo complete

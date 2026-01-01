@@ -1,0 +1,6 @@
+actionIndexDb.js (path: shunya/src/utilities/actionIndexDb.js)
+- au_idx_4_3_7 /actionIndexDb.js : [type="utility" priority="2" role="Manages indexedDB storage." path="shunya/src/utilities/actionIndexDb.js"]
+- au_idx_4_3_7_1 openDatabase : [type="method" priority="1" role="Opens the IndexedDB instance." path="shunya/src/utilities/actionIndexDb.js"]
+- au_idx_4_3_7_2 saveRecord : [type="method" priority="1" role="Persists records to the database." path="shunya/src/utilities/actionIndexDb.js"]
+- au_idx_4_3_7_3 readAll : [type="method" priority="1" role="Reads all records." path="shunya/src/utilities/actionIndexDb.js"]
+- au_idx_4_3_7_4 deleteRecord : [type="method" priority="1" role="Removes a record." path="shunya/src/utilities/actionIndexDb.js"]

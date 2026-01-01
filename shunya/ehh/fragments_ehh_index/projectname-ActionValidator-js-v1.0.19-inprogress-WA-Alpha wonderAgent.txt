@@ -1,0 +1,6 @@
+ActionValidator.js (path: shunya/src/utilities/ActionValidator.js)
+- au_val_4_3_1 /ActionValidator.js : [type="utility" priority="2" role="Validates inputs and permissions." path="shunya/src/utilities/ActionValidator.js"]
+- au_val_4_3_1_1 validate : [type="method" priority="1" role="Applies validation rules." path="shunya/src/utilities/ActionValidator.js"]
+- au_val_4_3_1_2 addRule : [type="method" priority="1" role="Adds a validation rule to the set." path="shunya/src/utilities/ActionValidator.js"]
+- au_val_4_3_1_3 checkPermission : [type="method" priority="1" role="Confirms RBAC permissions." path="shunya/src/utilities/ActionValidator.js"]
+- au_val_4_3_1_4 checkCORS : [type="method" priority="1" role="Ensures cross-origin requests are allowed." path="shunya/src/utilities/ActionValidator.js"]

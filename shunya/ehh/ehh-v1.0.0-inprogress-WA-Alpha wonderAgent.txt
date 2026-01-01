@@ -1,0 +1,66 @@
+# ehh Manifest Own Version
+Version: 1.0.0
+Status: inprogress
+Agent: WA-Alpha wonderAgent
+
+## Purpose
+Summarize the project assets, configuration, core modules, documentation, plugins, utilities, and coverage expectations so new contributors can orient themselves immediately.
+
+## Assets
+- `logos`: iconography and brand assets referenced by documentation or UI scaffolds.
+
+## Configuration
+### Global Configurations
+- `appConfig`: application-wide flags, build profiles, and feature toggles.
+- `entityCollectionConfig`: metadata describing each entity collection, field relationships, and indexing strategy.
+- `entityConfig`: per-entity schema descriptors, validation rules, and lifecycle hooks.
+- `routeConfig`: route definitions, guards, and handler mapping for server/client layers.
+- `globalRuleConfig`: business rules applied across the stack including access, retention, and scheduling.
+- `listenerConfig`: list of event listeners and their trigger contexts.
+- `viewConfig`: layout presets, view parameters, and feature gating.
+- `serviceConfig`: backend service bindings, retries, and circuit-breaker behavior.
+- `pluginConfig`: declarations for plugin lifecycle, dependencies, and initialization order.
+- `utilityConfig`: reusable helpers, defaults, and shared constants that drive other configs.
+
+## Core
+- `Entry.js`: bootstraps the application with configuration, wires central services, and exposes primary lifecycle hooks.
+- `ActionApp.js`: orchestrates actions, handles context switching, and integrates plugin payloads.
+
+## Documentation
+- `User docs`: end-user guidance and workflows.
+- `Developer docs`: integration guides, coding patterns, and contribution notes.
+- `About`: overview of the platform mission, team, and governance.
+- `API`: surface area of available APIs including contracts, authentication, and error handling.
+
+## Plugins
+- `ActionEntity`: entity lifecycle helpers.
+- `ActionView`: rendering adapters and view utilities.
+- `ActionEvent`: domain event processing.
+- `ActionServer`: server-side middleware and routing helpers.
+- `ActionClient`: client synchronization, websockets, and polling strategies.
+- `ActionEngine Flow`: workflow definitions and state machine transitions.
+
+## Utility
+- `ActionValidator`: centralized validation rules and schema enforcement helpers.
+- `ActionInclude`: shared includes leveraged by other actions.
+- `Parser`: document or payload parsing utilities.
+- `Include`: generic include helpers for templates or code generation.
+- `ActionTree`: tree walkers used by batch operations or reports.
+- `ActionFs`: filesystem helpers for asset management or caching layers.
+- `ActionIndexDb`: indexedDB helpers for client persistence.
+- `ActionLocalStorage`: localStorage bindings and cache eviction strategies.
+- `HttpService`: HTTP client wrappers with retry and timeout handling.
+- `ActionAgent`: worker/agent orchestration utilities.
+- `Mat`: matrix or math helpers for analytics flows.
+- `ActionOllama`: Ollama integrations and model connectors.
+- `Watchman`: file or process monitoring helpers.
+
+## Test Cases
+- Outline scenarios that validate critical flows, configuration permutations, and plugin integrations.
+
+## Use Cases
+- `erms`: enterprise resource management flows and reconciliation.
+- `TMS`: transportation management sequences and scheduling.
+- `ActionSpace`: workspace orchestration, layout, and collaboration.
+- `ActionAgent`: runtime agent coordination.
+- `Mat`: analytical use cases and simulation tooling.

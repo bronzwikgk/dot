@@ -1,0 +1,153 @@
+{
+  // Application identity
+  "name": "ActionApp",
+  "version": "1.0.0",
+
+  // Current environment: can be "dev", "stage", "prod"
+  "env": "dev",
+
+  // Runtime variables used internally
+  "variables": {
+    "userId": "guest",       // Default user ID (replaced dynamically at login)
+    "org": "default",        // Default organization context
+    "runtime": "auto"        // Options: "auto" | "node" | "browser"
+  },
+
+  // Runtime definitions for Node.js and Browser
+  "runtime": {
+    "node": {
+      "enabled": true,
+      "port": 3000,
+      "dependencies": {
+        "packages": ["http", "fs", "path"],   // Core Node packages
+        "plugins": [
+          "ActionLogger", 
+          "ActionEntity", 
+          "ActionValidator", 
+          "ActionServer"
+        ],
+        "utilities": [
+          "HttpService",
+          "ActionFs",
+          "PathUtility",
+          "ActionResponse",
+          "ActionPayload",
+          "ActionEvent"
+        ]
+      }
+    },
+    "browser": {
+      "enabled": true,
+      "dependencies": {
+        "configs": [
+          { "name": "routes", "path": "./routes_config.txt" },
+          { "name": "view_config", "path": "./app_view_config.txt" }
+        ],
+        "plugins": [
+          {
+            "name": "ActionClient",
+            "path": "../function/plugins/ActionClient_v1_4.js",
+            "options": {
+              "routesConfigName": "routes",
+              "defaultRoute": "/",
+              "autoStart": true,
+              "autoNavigate": true
+            }
+          },
+          {
+            "name": "ActionView",
+            "path": "../function/plugins/ActionView_v4.js",
+            "options": {
+              "viewConfigName": "view_config"
+            }
+          },
+          "ActionLogger",
+          "ActionEntity",
+          "ActionValidator"
+        ],
+        "utilities": [
+          "HttpService",
+          "TemplateEngine",
+          "ActionEvent"
+        ]
+      }
+    }
+  },
+
+  // Server configuration (Node.js only)
+  "server": {
+    "port": 3000,
+    "cors": {
+      "enabled": true,
+      "allowedOrigins": ["*"],                   // Enum: ["*", "<specific domains>"]
+      "allowedMethods": ["GET", "POST", "PUT", "DELETE"],  // Enum: standard HTTP verbs
+      "allowedHeaders": ["Content-Type", "Authorization"], // Enum: standard headers
+      "credentials": true
+    }
+  },
+
+  // Logger configuration
+  "logger": {
+    "level": "info",     // Enum: "debug" | "info" | "warn" | "error" | "audit"
+    "format": "json",    // Enum: "json" | "text" | "csv"
+    "output": "console"  // Enum: "console" | "file"
+  },
+
+  // Routes definition
+  "routes": [
+    {
+      "path": "/",                     // Default homepage
+      "method": "GET",
+      "action": "home.read",
+      "responseType": "html"           // Enum: "json" | "html" | "csv" | "jsonl"
+    },
+    {
+      "path": "/api/v1/user/create",
+      "method": "POST",
+      "action": "user.create",
+      "responseType": "json"
+    },
+    {
+      "path": "/api/v1/user/read",
+      "method": "POST",
+      "action": "user.read",
+      "responseType": "json"
+    },
+    {
+      "path": "/api/v1/user/update",
+      "method": "PUT",
+      "action": "user.update",
+      "responseType": "json"
+    },
+    {
+      "path": "/api/v1/user/delete",
+      "method": "DELETE",
+      "action": "user.delete",
+      "responseType": "json"
+    }
+  ],
+
+  // Entities with schemas and storage backends
+  "entities": {
+    "user": {
+      "schema": "./config/entity_user_config.json",
+      "storage": ["fs", "localstorage", "indexdb"],   // Enum: "fs" | "localstorage" | "indexdb" | "mysql" | "postgresql" | "mongodb"
+      "cache": true
+    },
+    "session": {
+      "schema": "./config/entity_session_config.json",
+      "storage": ["fs", "localstorage", "indexdb"],
+      "cache": true
+    }
+  },
+
+  // Testing configuration
+  "testing": {
+    "enabled": true,
+    "formats": ["json", "csv", "html"],   // Enum: "json" | "csv" | "html" | "jsonl"
+    "report": {
+      "summary": true,   // Show test summary in console
+      "detail": false    // Show detailed per-test logs
+    }
+  }
+}

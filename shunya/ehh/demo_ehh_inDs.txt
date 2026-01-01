@@ -1,0 +1,8 @@
+@ds:ehh
+- load demoApp.config into this.
+- create a new instance of actionApp with this.
+@ds_end
+@ds:actionApp
+- detect runtime and store in this.runtime.
+- load this.config.[this.runtime].globals by iterating each item in global and initating it as variable.
+- 

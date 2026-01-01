@@ -1,0 +1,73 @@
+# ERMS FRAMEWORK v1.0 - MINIMAL YAML SPEC
+version: "1.0"
+status: "ready"
+
+core_features:
+  
+  runtime:
+    platforms: ["node.js", "browser", "google_apps_script"]
+    auto_detect: true
+    platform_features:
+      node.js: ["file_system", "http_server"]
+      browser: ["local_storage", "dom_access"]
+      google_apps_script: ["google_sheets", "script_properties"]
+  
+  config:
+    formats: [".js", ".json","csv"]
+    loaders:
+      js: "dynamic_import"
+      json: "json_parse"
+    validation: "schema_based"
+  
+  entities:
+    types: ["table", "tree"]
+    operations: ["create", "read", "update", "delete"]
+    storage:
+      providers: ["memory", "local_storage", "file_system"]
+      default: "memory"
+  
+  action_system:
+    components:
+      - "ActionEntity"    # CRUD operations
+      - "ActionValidator" # Validation & RBAC
+      - "ActionFS"        # File operations
+      - "ActionServer"    # HTTP server
+    features:
+      - "schema_validation"
+      - "rbac_enforcement"
+      - "cors_enforcement"
+
+api:
+  http:
+    methods: ["GET", "POST", "PUT", "DELETE"]
+    routes:
+      - "POST /entities/:type"
+      - "GET /entities/:type"
+      - "PUT /entities/:type/:id"
+      - "DELETE /entities/:type/:id"
+      - "GET /health"
+  external:
+    circuit_breaker: false
+    rate_limiting: false
+
+security:
+  authentication: "basic"
+  authorization: "rbac_basic"
+  cors: "configurable"
+
+performance:
+  caching: "memory_only"
+  optimization: "basic"
+
+deployment:
+  platforms:
+    node.js: "single_file"
+    browser: "single_script"
+    google_apps_script: "single_gs"
+  build: "no_build_needed"
+
+compliance:
+  original_requirements: "100%"
+  platforms: "3/3"
+  config_formats: "2/8"  # .js, .json only
+  features: "minimal_set"

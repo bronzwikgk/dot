@@ -1,0 +1,5 @@
+ActionOllama.js (path: shunya/src/utilities/ActionOllama.js)
+- au_oll_4_3_12 /ActionOllama.js : [type="utility" priority="2" role="Connects to Ollama models." path="shunya/src/utilities/ActionOllama.js"]
+- au_oll_4_3_12_1 loadModel : [type="method" priority="1" role="Loads the AI model." path="shunya/src/utilities/ActionOllama.js"]
+- au_oll_4_3_12_2 runInference : [type="method" priority="1" role="Executes inference requests." path="shunya/src/utilities/ActionOllama.js"]
+- au_oll_4_3_12_3 streamResponse : [type="method" priority="1" role="Streams partial responses." path="shunya/src/utilities/ActionOllama.js"]

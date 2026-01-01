@@ -1,0 +1,6 @@
+Mat.js (path: shunya/src/utilities/Mat.js)
+- au_mat_4_3_11 /Mat.js : [type="utility" priority="2" role="Performs matrix math." path="shunya/src/utilities/Mat.js"]
+- au_mat_4_3_11_1 buildMatrix : [type="method" priority="1" role="Builds a matrix structure." path="shunya/src/utilities/Mat.js"]
+- au_mat_4_3_11_2 multiply : [type="method" priority="1" role="Multiplies matrices." path="shunya/src/utilities/Mat.js"]
+- au_mat_4_3_11_3 invert : [type="method" priority="1" role="Inverts matrices." path="shunya/src/utilities/Mat.js"]
+- au_mat_4_3_11_4 normalize : [type="method" priority="1" role="Normalizes matrix rows." path="shunya/src/utilities/Mat.js"]

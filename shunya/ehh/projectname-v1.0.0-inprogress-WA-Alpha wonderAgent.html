@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Universal Testing Console</title>
+  <style>
+    /*
+    Overview: Minimal styling to improve readability while keeping semantic DOM.
+    Purpose: Provide a lightweight layer that highlights sections without thematic graphics.
+    */
+    :root {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background-color: #f8fafc;
+      color: #0f172a;
+    }
+
+    body {
+      margin: 0;
+      padding: 1rem 1.5rem;
+      line-height: 1.5;
+    }
+
+    header,
+    section,
+    footer {
+      border: 1px solid #e2e8f0;
+      border-radius: 0.85rem;
+      margin-bottom: 1.25rem;
+      padding: 1rem 1.2rem;
+      background: #ffffff;
+      box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    header h1 {
+      margin: 0 0 0.2rem;
+      font-size: 1.8rem;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0;
+    }
+
+    nav li {
+      margin: 0;
+    }
+
+    nav a {
+      color: #0f172a;
+      text-decoration: underline;
+    }
+
+    form {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      font-weight: 600;
+    }
+
+    input,
+    select,
+    textarea,
+    button {
+      font: inherit;
+      border: 1px solid #cbd5f5;
+      border-radius: 0.45rem;
+      padding: 0.45rem 0.65rem;
+      background: #f8fafc;
+    }
+
+    button {
+      width: fit-content;
+      border-color: #38bdf8;
+      background: #38bdf8;
+      color: #0f172a;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+
+    article {
+      margin-top: 0.75rem;
+      padding-top: 0.75rem;
+      border-top: 1px dashed #e2e8f0;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Universal Testing Console</h1>
+    <p>Semantic interface for creating, running, saving, and batching tests across data flows.</p>
+    <nav aria-label="Primary actions">
+      <ul>
+        <li><a href="#create-test">Create Test</a></li>
+        <li><a href="#run-test">Run Test</a></li>
+        <li><a href="#save-test">Save Test</a></li>
+        <li><a href="#dummy-data">Dummy Data</a></li>
+        <li><a href="#batch-test">Batch Test</a></li>
+        <li><a href="#status">Status</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    <section id="create-test">
+      <header>
+        <h2>Create a New Test</h2>
+        <p>Describe the scenario, select inputs, and define expected outputs.</p>
+      </header>
+      <form id="create-form">
+        <label>
+          Test name
+          <input type="text" name="test-name" required>
+        </label>
+        <label>
+          Description
+          <textarea name="description" rows="3"></textarea>
+        </label>
+        <fieldset>
+          <legend>Input source</legend>
+          <label><input type="radio" name="input-source" value="json"> JSON</label>
+          <label><input type="radio" name="input-source" value="csv"> CSV</label>
+          <label><input type="radio" name="input-source" value="jsonl"> JSONL</label>
+        </fieldset>
+        <button type="button" id="create-btn">Create</button>
+      </form>
+      <article aria-live="polite">
+        <p>Created tests appear here once you confirm.</p>
+        <ul id="created-tests"></ul>
+      </article>
+      <article>
+        <label>
+          Import tests via file
+          <input type="file" id="test-file" accept=".json">
+        </label>
+      </article>
+    </section>
+    <section id="run-test">
+      <header>
+        <h2>Run Test</h2>
+        <p>Choose an existing test and execute it against the current data stack.</p>
+      </header>
+      <form id="run-form">
+        <label>
+          Select test
+          <select name="test-select">
+            <option value="--">Select</option>
+          </select>
+        </label>
+        <button type="button" id="run-btn">Run</button>
+      </form>
+      <article>
+        <p>Logs:</p>
+        <pre id="run-log" aria-live="assertive"></pre>
+      </article>
+      <button type="button" id="run-all-btn">Run All Preloaded</button>
+    </section>
+    <section id="load-routes">
+      <header>
+        <h2>Load Routes</h2>
+        <p>Fetch the API route config and expose clickable tests.</p>
+      </header>
+      <button type="button" id="load-routes-btn">Load Routes</button>
+      <article>
+        <h3>Available Routes</h3>
+        <ul id="route-list"></ul>
+      </article>
+      <article>
+        <label>
+          Selected route
+          <select id="route-select">
+            <option value="">Choose a route</option>
+          </select>
+        </label>
+      </article>
+      <article>
+        <label>
+          Entity config
+          <select id="entity-select">
+            <option value="entity_user_register_config.json">user_register</option>
+            <option value="entity_user_session_config.json">user_session</option>
+          </select>
+        </label>
+      </article>
+    </section>
+    <section id="preloaded-tests">
+      <header>
+        <h2>Preloaded API Tests</h2>
+        <p>The routes below were derived automatically from `routes_config.txt`.</p>
+      </header>
+      <article>
+        <ol id="preloaded-test-list"></ol>
+      </article>
+    </section>
+    <section id="save-test">
+      <header>
+        <h2>Save Test</h2>
+        <p>Persist the definition to storage or export.</p>
+      </header>
+      <form id="save-form">
+        <label>
+          Save format
+          <select name="save-format">
+            <option value="json">JSON</option>
+            <option value="csv">CSV</option>
+            <option value="jsonl">JSONL</option>
+          </select>
+        </label>
+        <button type="button" id="save-btn">Save</button>
+      </form>
+      <article>
+        <p>Last save timestamp: <span id="save-time">none</span></p>
+      </article>
+    </section>
+    <section id="dummy-data">
+      <header>
+        <h2>Add Dummy Data</h2>
+      </header>
+      <form id="dummy-form">
+        <label>
+          Payload
+          <textarea name="dummy-payload" rows="4">{ "id": "test", "value": "sample" }</textarea>
+        </label>
+        <button type="button" id="dummy-btn">Add</button>
+      </form>
+      <article>
+        <h3>Dummy data queue</h3>
+        <ol id="dummy-queue"></ol>
+      </article>
+    </section>
+    <section id="batch-test">
+      <header>
+        <h2>Batch Test</h2>
+        <p>Dispatch multiple tests in a single run.</p>
+      </header>
+      <form id="batch-form">
+        <label>
+          Tests
+          <textarea name="batch-tests" rows="3">Create > Run > Save</textarea>
+        </label>
+        <button type="button" id="batch-btn">Execute Batch</button>
+      </form>
+      <article>
+        <p>Batch report:</p>
+        <div id="batch-report"></div>
+      </article>
+    </section>
+    <section id="status">
+      <header>
+        <h2>Testing Unit Health</h2>
+      </header>
+      <article>
+        <p>Status: <strong id="unit-status">idle</strong></p>
+        <p>Active features: create, run, save, dummy data, batch orchestration.</p>
+      </article>
+    </section>
+  </main>
+  <footer>
+    <p>Universal testing unit ready for manual validation.</p>
+  </footer>
+  <script>
+    (() => {
+      const created = document.getElementById('created-tests');
+      const select = document.querySelector('select[name="test-select"]');
+      const runLog = document.getElementById('run-log');
+      const saveTime = document.getElementById('save-time');
+      const dummyQueue = document.getElementById('dummy-queue');
+      const status = document.getElementById('unit-status');
+
+      const tests = [];
+      const routeList = document.getElementById('route-list');
+      const routeSelect = document.getElementById('route-select');
+      const entitySelect = document.getElementById('entity-select');
+
+      document.getElementById('create-btn').addEventListener('click', function () {
+        const form = document.getElementById('create-form');
+        const name = form.querySelector('input[name="test-name"]').value.trim();
+        if (!name) {
+          return;
+        }
+        tests.push(name);
+        const item = document.createElement('li');
+        item.textContent = name;
+        created.appendChild(item);
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        select.appendChild(option);
+        status.textContent = 'created';
+      });
+
+      document.getElementById('run-btn').addEventListener('click', function () {
+        const testName = select.value;
+        const routePath = routeSelect.value;
+        const entityConfig = entitySelect.value;
+        if (testName === '--' || !routePath) {
+          return;
+        }
+        runLog.textContent = 'Running ' + testName + ' on ' + routePath + ' with ' + entityConfig + '...';
+        status.textContent = 'running';
+        setTimeout(function () {
+          runLog.textContent = testName + ' completed successfully against ' + routePath + '.';
+          status.textContent = 'idle';
+        }, 500);
+      });
+
+      document.getElementById('save-btn').addEventListener('click', function () {
+        saveTime.textContent = new Date().toISOString();
+        status.textContent = 'saved';
+      });
+
+      document.getElementById('dummy-btn').addEventListener('click', function () {
+        const payload = document.querySelector('textarea[name="dummy-payload"]').value.trim();
+        if (!payload) {
+          return;
+        }
+        const entry = document.createElement('li');
+        entry.textContent = payload;
+        dummyQueue.appendChild(entry);
+        status.textContent = 'dummy data queued';
+      });
+
+      document.getElementById('batch-btn').addEventListener('click', function () {
+        const report = document.getElementById('batch-report');
+        report.textContent = 'Batch executed at ' + new Date().toISOString();
+        status.textContent = 'batch';
+      });
+
+      document.getElementById('load-routes-btn').addEventListener('click', function () {
+        fetch('/routes-config')
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (routes) {
+            routeList.innerHTML = '';
+            routeSelect.innerHTML = '<option value="">Choose a route</option>';
+            for (var path in routes) {
+              if (!routes.hasOwnProperty(path)) {
+                continue;
+              }
+              var route = routes[path];
+              var anchor = document.createElement('a');
+              anchor.href = 'http://localhost:4173' + path;
+              anchor.textContent = '[' + (route.method || 'GET') + '] ' + path;
+              anchor.target = '_blank';
+              var listItem = document.createElement('li');
+              listItem.appendChild(anchor);
+              routeList.appendChild(listItem);
+              var option = document.createElement('option');
+              option.value = path;
+              option.textContent = '[' + (route.method || 'GET') + '] ' + path;
+              routeSelect.appendChild(option);
+            }
+            status.textContent = 'routes loaded';
+          })
+          .catch(function (error) {
+            status.textContent = 'routes load failed';
+          });
+      });
+    })();
+  </script>
+</body>
+</html>

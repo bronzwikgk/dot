@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtable UI Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* CSS Variables for consistent theming */
+        :root {
+            --primary-color: #4c6ef5;
+            --primary-dark: #3b5bdb;
+            --secondary-color: #f8f9fa;
+            --border-color: #e9ecef;
+            --text-color: #343a40;
+            --text-light: #868e96;
+            --white: #ffffff;
+            --shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --radius: 6px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+        }
+        
+        body {
+            color: var(--text-color);
+            background-color: var(--secondary-color);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        /* Header */
+        header {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .logo-icon {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+        
+        nav a {
+            text-decoration: none;
+            color: var(--text-color);
+            font-weight: 500;
+            padding: 0.5rem 0;
+            transition: color 0.2s;
+        }
+        
+        nav a:hover {
+            color: var(--primary-color);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+        
+        /* Main Content */
+        main {
+            flex: 1;
+            padding: 1.5rem;
+        }
+        
+        /* Workspace Section */
+        .workspace-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+        }
+        
+        .workspace-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        button:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        button.secondary {
+            background-color: var(--white);
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+        }
+        
+        button.secondary:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Table Container */
+        .table-container {
+            background-color: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Table Header */
+        .table-header {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .table-info h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .table-info p {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+        
+        .table-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        
+        /* Table Content */
+        .table-content {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+        
+        thead {
+            background-color: var(--secondary-color);
+        }
+        
+        th {
+            text-align: left;
+            padding: 1rem;
+            font-weight: 600;
+            border-bottom: 2px solid var(--border-color);
+            position: relative;
+            min-width: 150px;
+        }
+        
+        th .column-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        th .column-actions {
+            opacity: 0;
+            transition: opacity 0.2s;
+            display: flex;
+            gap: 0.25rem;
+        }
+        
+        th:hover .column-actions {
+            opacity: 1;
+        }
+        
+        .column-actions button {
+            padding: 0.25rem;
+            background: transparent;
+            color: var(--text-light);
+        }
+        
+        .column-actions button:hover {
+            background: transparent;
+            color: var(--text-color);
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover {
+            background-color: rgba(76, 110, 245, 0.03);
+        }
+        
+        /* Cell Types */
+        .text-cell {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-size: 0.95rem;
+            color: var(--text-color);
+        }
+        
+        .text-cell:focus {
+            outline: 2px solid var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        .select-cell {
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            background-color: var(--white);
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .select-cell:focus {
+            outline: 2px solid var(--primary-color);
+        }
+        
+        .date-cell {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .checkbox-cell {
+            text-align: center;
+        }
+        
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+        
+        .person-cell {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .person-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        /* Record Actions */
+        .record-actions {
+            opacity: 0;
+            transition: opacity 0.2s;
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        tr:hover .record-actions {
+            opacity: 1;
+        }
+        
+        .record-actions button {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.75rem;
+            background: transparent;
+            color: var(--text-light);
+        }
+        
+        .record-actions button:hover {
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-color);
+        }
+        
+        /* Add Row Section */
+        .add-row {
+            padding: 1rem 1.25rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .add-row button {
+            background-color: transparent;
+            color: var(--text-light);
+        }
+        
+        .add-row button:hover {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+        
+        /* Sidebar */
+        aside {
+            background-color: var(--white);
+            box-shadow: var(--shadow);
+            width: 300px;
+            padding: 1.5rem;
+            position: fixed;
+            top: 0;
+            right: -300px;
+            height: 100vh;
+            transition: right 0.3s ease;
+            z-index: 200;
+            overflow-y: auto;
+        }
+        
+        aside.active {
+            right: 0;
+        }
+        
+        .sidebar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .sidebar-header h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .close-sidebar {
+            background: transparent;
+            color: var(--text-color);
+            padding: 0.5rem;
+        }
+        
+        .close-sidebar:hover {
+            background: var(--secondary-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input[type="text"],
+        select,
+        input[type="date"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            font-size: 0.95rem;
+        }
+        
+        input[type="text"]:focus,
+        select:focus,
+        input[type="date"]:focus {
+            outline: 2px solid var(--primary-color);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--white);
+            border-top: 1px solid var(--border-color);
+            padding: 1.5rem;
+            text-align: center;
+            color: var(--text-light);
+        }
+        
+        /* Overlay */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 150;
+            display: none;
+        }
+        
+        .overlay.active {
+            display: block;
+        }
+        
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 0.75rem 1rem;
+            }
+            
+            h1 {
+                font-size: 1.25rem;
+            }
+            
+            nav ul {
+                gap: 1rem;
+            }
+            
+            main {
+                padding: 1rem;
+            }
+            
+            .workspace-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .workspace-actions {
+                width: 100%;
+                justify-content: space-between;
+            }
+            
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            aside {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <i class="fas fa-table logo-icon"></i>
+            <h1>Airtable Clone</h1>
+        </div>
+        
+        <nav>
+            <ul>
+                <li><a href="#"><i class="fas fa-home"></i> Workspace</a></li>
+                <li><a href="#"><i class="fas fa-star"></i> Templates</a></li>
+                <li><a href="#"><i class="fas fa-question-circle"></i> Help</a></li>
+            </ul>
+        </nav>
+        
+        <div class="user-menu">
+            <button class="secondary"><i class="fas fa-plus"></i> Add</button>
+            <div class="user-avatar">JD</div>
+        </div>
+    </header>
+    
+    <main>
+        <section class="workspace-header">
+            <h2>Project Management</h2>
+            <div class="workspace-actions">
+                <button class="secondary"><i class="fas fa-share-alt"></i> Share</button>
+                <button id="add-record-btn"><i class="fas fa-plus"></i> Add Record</button>
+            </div>
+        </section>
+        
+        <section class="table-container">
+            <div class="table-header">
+                <div class="table-info">
+                    <h3>Task Tracker</h3>
+                    <p>Last updated 2 hours ago • 8 records</p>
+                </div>
+                <div class="table-actions">
+                    <button class="secondary"><i class="fas fa-filter"></i> Filter</button>
+                    <button class="secondary"><i class="fas fa-sort"></i> Sort</button>
+                    <button class="secondary"><i class="fas fa-eye"></i> View</button>
+                </div>
+            </div>
+            
+            <div class="table-content">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                <div class="column-header">
+                                    <span>Task Name</span>
+                                    <div class="column-actions">
+                                        <button><i class="fas fa-sort"></i></button>
+                                        <button><i class="fas fa-filter"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="column-header">
+                                    <span>Status</span>
+                                    <div class="column-actions">
+                                        <button><i class="fas fa-sort"></i></button>
+                                        <button><i class="fas fa-filter"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="column-header">
+                                    <span>Assignee</span>
+                                    <div class="column-actions">
+                                        <button><i class="fas fa-sort"></i></button>
+                                        <button><i class="fas fa-filter"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="column-header">
+                                    <span>Due Date</span>
+                                    <div class="column-actions">
+                                        <button><i class="fas fa-sort"></i></button>
+                                        <button><i class="fas fa-filter"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>
+                                <div class="column-header">
+                                    <span>Completed</span>
+                                    <div class="column-actions">
+                                        <button><i class="fas fa-sort"></i></button>
+                                        <button><i class="fas fa-filter"></i></button>
+                                    </div>
+                                </div>
+                            </th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="text" class="text-cell" value="Design homepage mockup"></td>
+                            <td>
+                                <select class="select-cell">
+                                    <option>In Progress</option>
+                                    <option>Not Started</option>
+                                    <option>Completed</option>
+                                    <option>On Hold</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="person-cell">
+                                    <div class="person-avatar">JD</div>
+                                    <span>John Doe</span>
+                                </div>
+                            </td>
+                            <td><span class="date-cell">2023-10-15</span></td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td>
+                                <div class="record-actions">
+                                    <button><i class="fas fa-copy"></i></button>
+                                    <button class="delete-record"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="text-cell" value="Write API documentation"></td>
+                            <td>
+                                <select class="select-cell">
+                                    <option>In Progress</option>
+                                    <option selected>Not Started</option>
+                                    <option>Completed</option>
+                                    <option>On Hold</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="person-cell">
+                                    <div class="person-avatar" style="background-color: #20c997;">AS</div>
+                                    <span>Alex Smith</span>
+                                </div>
+                            </td>
+                            <td><span class="date-cell">2023-10-20</span></td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td>
+                                <div class="record-actions">
+                                    <button><i class="fas fa-copy"></i></button>
+                                    <button class="delete-record"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="text-cell" value="Fix mobile responsive issues"></td>
+                            <td>
+                                <select class="select-cell">
+                                    <option>In Progress</option>
+                                    <option>Not Started</option>
+                                    <option selected>Completed</option>
+                                    <option>On Hold</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="person-cell">
+                                    <div class="person-avatar" style="background-color: #fd7e14;">MJ</div>
+                                    <span>Maria Johnson</span>
+                                </div>
+                            </td>
+                            <td><span class="date-cell">2023-10-10</span></td>
+                            <td class="checkbox-cell"><input type="checkbox" checked></td>
+                            <td>
+                                <div class="record-actions">
+                                    <button><i class="fas fa-copy"></i></button>
+                                    <button class="delete-record"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" class="text-cell" value="Prepare quarterly report"></td>
+                            <td>
+                                <select class="select-cell">
+                                    <option selected>In Progress</option>
+                                    <option>Not Started</option>
+                                    <option>Completed</option>
+                                    <option>On Hold</option>
+                                </select>
+                            </td>
+                            <td>
+                                <div class="person-cell">
+                                    <div class="person-avatar" style="background-color: #be4bdb;">TW</div>
+                                    <span>Taylor Wong</span>
+                                </div>
+                            </td>
+                            <td><span class="date-cell">2023-10-25</span></td>
+                            <td class="checkbox-cell"><input type="checkbox"></td>
+                            <td>
+                                <div class="record-actions">
+                                    <button><i class="fas fa-copy"></i></button>
+                                    <button class="delete-record"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="add-row">
+                <button id="add-row-btn"><i class="fas fa-plus"></i> Add Row</button>
+            </div>
+        </section>
+    </main>
+    
+    <aside id="record-sidebar">
+        <div class="sidebar-header">
+            <h3>Add New Record</h3>
+            <button class="close-sidebar" id="close-sidebar"><i class="fas fa-times"></i></button>
+        </div>
+        
+        <form id="record-form">
+            <div class="form-group">
+                <label for="task-name">Task Name</label>
+                <input type="text" id="task-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="status">Status</label>
+                <select id="status">
+                    <option>Not Started</option>
+                    <option>In Progress</option>
+                    <option>Completed</option>
+                    <option>On Hold</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="assignee">Assignee</label>
+                <select id="assignee">
+                    <option>John Doe</option>
+                    <option>Alex Smith</option>
+                    <option>Maria Johnson</option>
+                    <option>Taylor Wong</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="due-date">Due Date</label>
+                <input type="date" id="due-date" required>
+            </div>
+            
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="completed">
+                    <label for="completed">Completed</label>
+                </div>
+            </div>
+            
+            <button type="submit" style="width: 100%; margin-top: 1rem;">
+                <i class="fas fa-plus"></i> Add Record
+            </button>
+        </form>
+    </aside>
+    
+    <div class="overlay" id="overlay"></div>
+    
+    <footer>
+        <p>Airtable UI Clone • Built with Semantic HTML & CSS • All interactions are functional</p>
+    </footer>
+
+    <script>
+        // DOM Elements
+        const addRecordBtn = document.getElementById('add-record-btn');
+        const addRowBtn = document.getElementById('add-row-btn');
+        const closeSidebarBtn = document.getElementById('close-sidebar');
+        const recordSidebar = document.getElementById('record-sidebar');
+        const overlay = document.getElementById('overlay');
+        const recordForm = document.getElementById('record-form');
+        const tableBody = document.querySelector('tbody');
+        const deleteRecordButtons = document.querySelectorAll('.delete-record');
+        
+        // Open sidebar when "Add Record" button is clicked
+        addRecordBtn.addEventListener('click', () => {
+            recordSidebar.classList.add('active');
+            overlay.classList.add('active');
+        });
+        
+        // Open sidebar when "Add Row" button is clicked
+        addRowBtn.addEventListener('click', () => {
+            recordSidebar.classList.add('active');
+            overlay.classList.add('active');
+        });
+        
+        // Close sidebar when close button or overlay is clicked
+        closeSidebarBtn.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+        
+        function closeSidebar() {
+            recordSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+        
+        // Handle form submission to add a new record
+        recordForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const taskName = document.getElementById('task-name').value;
+            const status = document.getElementById('status').value;
+            const assignee = document.getElementById('assignee').value;
+            const dueDate = document.getElementById('due-date').value;
+            const completed = document.getElementById('completed').checked;
+            
+            // Create assignee initials
+            const assigneeInitials = assignee.split(' ').map(name => name[0]).join('');
+            
+            // Create a new table row
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" class="text-cell" value="${taskName}"></td>
+                <td>
+                    <select class="select-cell">
+                        <option ${status === 'Not Started' ? 'selected' : ''}>Not Started</option>
+                        <option ${status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+                        <option ${status === 'Completed' ? 'selected' : ''}>Completed</option>
+                        <option ${status === 'On Hold' ? 'selected' : ''}>On Hold</option>
+                    </select>
+                </td>
+                <td>
+                    <div class="person-cell">
+                        <div class="person-avatar" style="background-color: #4c6ef5;">${assigneeInitials}</div>
+                        <span>${assignee}</span>
+                    </div>
+                </td>
+                <td><span class="date-cell">${dueDate}</span></td>
+                <td class="checkbox-cell"><input type="checkbox" ${completed ? 'checked' : ''}></td>
+                <td>
+                    <div class="record-actions">
+                        <button><i class="fas fa-copy"></i></button>
+                        <button class="delete-record"><i class="fas fa-trash"></i></button>
+                    </div>
+                </td>
+            `;
+            
+            // Add the new row to the table
+            tableBody.appendChild(newRow);
+            
+            // Add event listener to the new delete button
+            newRow.querySelector('.delete-record').addEventListener('click', deleteRecord);
+            
+            // Close sidebar and reset form
+            closeSidebar();
+            recordForm.reset();
+            
+            // Update record count in the UI
+            updateRecordCount();
+        });
+        
+        // Delete record functionality
+        function deleteRecord(e) {
+            const row = e.target.closest('tr');
+            row.remove();
+            updateRecordCount();
+        }
+        
+        // Add event listeners to existing delete buttons
+        deleteRecordButtons.forEach(button => {
+            button.addEventListener('click', deleteRecord);
+        });
+        
+        // Function to update the record count in the UI
+        function updateRecordCount() {
+            const recordCount = document.querySelectorAll('tbody tr').length;
+            const tableInfo = document.querySelector('.table-info p');
+            
+            // Update the text
+            tableInfo.textContent = `Last updated just now • ${recordCount} records`;
+        }
+        
+        // Make table cells editable when clicked
+        document.addEventListener('click', (e) => {
+            // If a text cell is clicked, select all text
+            if (e.target.classList.contains('text-cell')) {
+                e.target.select();
+            }
+        });
+        
+        // Add a keyboard shortcut (Ctrl+Enter) to submit the form
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
+                if (recordSidebar.classList.contains('active')) {
+                    recordForm.dispatchEvent(new Event('submit'));
+                }
+            }
+            
+            // Close sidebar with Escape key
+            if (e.key === 'Escape' && recordSidebar.classList.contains('active')) {
+                closeSidebar();
+            }
+        });
+        
+        // Set today's date as default for the due date field
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('due-date').value = today;
+        
+        // Initialize record count
+        updateRecordCount();
+    </script>
+</body>
+</html>

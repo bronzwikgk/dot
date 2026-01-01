@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code Template Editor</title>
+    <style>
+        :root {
+            --bg-primary: #1e1e1e;
+            --bg-secondary: #252526;
+            --bg-tertiary: #2d2d2d;
+            --border: #3c3c3c;
+            --text-primary: #cccccc;
+            --text-secondary: #858585;
+            --accent: #007acc;
+            --accent-hover: #005a9e;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .app-header {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+            gap: 24px;
+            user-select: none;
+        }
+        
+        .logo {
+            font-weight: 500;
+            font-size: 14px;
+            color: white;
+        }
+        
+        /* Navigation */
+        .main-nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2px;
+        }
+        
+        .main-nav li {
+            position: relative;
+        }
+        
+        .main-nav a {
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 4px;
+            transition: background 0.2s;
+        }
+        
+        .main-nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Submenus */
+        .submenu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            min-width: 200px;
+            display: none;
+            flex-direction: column;
+            padding: 4px 0;
+            z-index: 1000;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        
+        .main-nav li:hover .submenu {
+            display: flex;
+        }
+        
+        .submenu li {
+            width: 100%;
+        }
+        
+        .submenu a {
+            padding: 8px 16px;
+            border-radius: 0;
+            justify-content: space-between;
+        }
+        
+        .submenu a:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        /* Search */
+        .search-container {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .search-input {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid transparent;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            width: 240px;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .theme-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            padding: 6px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.2s;
+        }
+        
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Main Layout */
+        .app-container {
+            display: flex;
+            height: calc(100vh - 48px);
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: var(--bg-secondary);
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+        
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-tertiary);
+        }
+        
+        .sidebar-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            padding: 10px 0;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .sidebar-tab.active {
+            background: var(--bg-secondary);
+            color: white;
+        }
+        
+        .sidebar-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px 0;
+        }
+        
+        /* Sidebar Sections */
+        .sidebar-section {
+            margin-bottom: 24px;
+        }
+        
+        .section-title {
+            padding: 0 16px 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .file-list {
+            list-style: none;
+        }
+        
+        .file-item {
+            padding: 6px 16px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            user-select: none;
+        }
+        
+        .file-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .file-item.active {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .file-icon {
+            font-size: 14px;
+        }
+        
+        /* Main Editor Area */
+        .editor-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-primary);
+            overflow: hidden;
+        }
+        
+        /* Editor Tabs */
+        .editor-tabs {
+            display: flex;
+            background: var(--bg-tertiary);
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            flex-shrink: 0;
+        }
+        
+        .editor-tab {
+            padding: 10px 20px;
+            font-size: 13px;
+            background: transparent;
+            border: none;
+            border-right: 1px solid var(--border);
+            color: var(--text-primary);
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s;
+            min-width: 120px;
+            position: relative;
+        }
+        
+        .editor-tab:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .editor-tab.active {
+            background: var(--bg-primary);
+            color: white;
+        }
+        
+        .tab-close {
+            margin-left: auto;
+            opacity: 0;
+            font-size: 14px;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 2px;
+            transition: all 0.2s;
+        }
+        
+        .editor-tab:hover .tab-close {
+            opacity: 0.7;
+        }
+        
+        .tab-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+            opacity: 1;
+        }
+        
+        /* Editor Content */
+        .editor-content {
+            flex: 1;
+            overflow: auto;
+            padding: 20px;
+        }
+        
+        .code-editor {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            padding: 20px;
+            margin: 0;
+            color: #d4d4d4;
+        }
+        
+        .markdown-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .markdown-content h1 {
+            color: #4ec9b0;
+            margin: 0 0 20px 0;
+            font-size: 24px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .markdown-content h2 {
+            color: #569cd6;
+            margin: 30px 0 15px 0;
+            font-size: 20px;
+        }
+        
+        .markdown-content h3 {
+            color: #dcdcaa;
+            margin: 25px 0 12px 0;
+            font-size: 16px;
+        }
+        
+        .markdown-content p {
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+        
+        .markdown-content code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+        }
+        
+        .markdown-content pre {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 16px;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 16px 0;
+            border: 1px solid var(--border);
+        }
+        
+        .markdown-content pre code {
+            background: transparent;
+            padding: 0;
+        }
+        
+        .markdown-content ul, .markdown-content ol {
+            margin: 12px 0;
+            padding-left: 24px;
+        }
+        
+        .markdown-content li {
+            margin: 6px 0;
+            line-height: 1.5;
+        }
+        
+        /* Status Bar */
+        .status-bar {
+            background: var(--accent);
+            height: 22px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .status-item {
+            margin-right: 20px;
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* Light Theme */
+        .light-theme {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f3f3;
+            --bg-tertiary: #e4e4e4;
+            --border: #cccccc;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --accent: #0078d4;
+            --accent-hover: #005a9e;
+        }
+    </style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+// ============================================
+// APPLICATION DATA
+// ============================================
+const APP_DATA = {
+    appName: "Template Editor",
+    theme: "dark",
+    activeFile: "readme",
+    activeSidebarTab: "explorer",
+    openFiles: ["readme", "changelog", "app-template"],
+    
+    files: {
+        readme: {
+            id: "readme",
+            name: "README.md",
+            icon: "📖",
+            type: "markdown",
+            content: `# Template System Documentation
+
+## Overview
+A generic template slot system built with vanilla JavaScript that separates HTML structure from data content.
+
+## Core Principles
+1. **Separation of Concerns**: Templates define structure, data provides content
+2. **No Dependencies**: Pure vanilla JavaScript, no frameworks
+3. **Semantic HTML**: No class-based CSS, only semantic tags
+4. **Template Slots**: Dynamic content insertion points
+5. **Data Binding**: Automatic value injection
+
+## Basic Usage
+
+### 1. Define Templates
+\`\`\`javascript
+const TEMPLATES = {
+    header: \`
+        <header>
+            <h1 data-slot="title"></h1>
+            <nav data-slot="menu"></nav>
+        </header>
+    \`,
+    menuItem: \`
+        <li>
+            <a data-href="link">
+                <span data-slot="label"></span>
+            </a>
+        </li>
+    \`
+};
+\`\`\`
+
+### 2. Prepare Data
+\`\`\`javascript
+const data = {
+    title: "My App",
+    menu: {
+        items: [
+            { label: "Home", link: "#home" },
+            { label: "About", link: "#about" }
+        ]
+    }
+};
+\`\`\`
+
+### 3. Render
+\`\`\`javascript
+const app = renderTemplate('header', data, '#app');
+\`\`\`
+
+## Features
+- ✅ Template slot system
+- ✅ Recursive rendering
+- ✅ Conditional rendering
+- ✅ Event binding
+- ✅ State management
+- ✅ Theme switching`
+        },
+        
+        changelog: {
+            id: "changelog",
+            name: "CHANGELOG.md",
+            icon: "📝",
+            type: "markdown",
+            content: `# Changelog
+
+## Version 1.0.0 (Current)
+**Release Date**: 2024
+
+### Added
+- Complete template system
+- VS Code interface clone
+- Tab management system
+- Multiple document support
+- Theme switching (dark/light)
+- File explorer sidebar
+- Search functionality
+- Status bar with file info
+
+### Technical Features
+- Template slot rendering engine
+- Data binding system
+- Event handling system
+- State management
+- Smooth animations
+- Responsive design
+
+## Version 0.9.0
+**Release Date**: 2024
+
+### Added
+- Initial template engine
+- Basic UI components
+- Simple data binding
+- Navigation system
+
+### Fixed
+- Template parsing issues
+- Event bubbling problems
+- CSS styling conflicts
+
+## Future Roadmap
+
+### Version 1.1.0 (Planned)
+- Two-way data binding
+- Template inheritance
+- Component lifecycle hooks
+- Plugin system
+- Performance optimizations
+
+### Version 2.0.0 (Future)
+- Web Components integration
+- Real-time collaboration
+- Offline support
+- Mobile responsive
+- Internationalization
+
+## Known Issues
+1. Large templates may have performance impact
+2. Nested templates depth limited to browser stack
+3. File size monitoring not implemented`
+        },
+        
+        "app-template": {
+            id: "app-template",
+            name: "app.html",
+            icon: "📄",
+            type: "code",
+            language: "html",
+            content: `<!-- Main Application Template -->
+<template id="application">
+    <header class="app-header">
+        <div class="logo" data-slot="appName"></div>
+        
+        <nav class="main-nav" data-slot="navigation"></nav>
+        
+        <div class="search-container">
+            <input 
+                class="search-input" 
+                type="text" 
+                placeholder="Search templates..."
+                data-action="search"
+            >
+            <button class="theme-toggle" data-action="toggleTheme">
+                🌓
+            </button>
+        </div>
+    </header>
+    
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-tabs" data-slot="sidebarTabs"></div>
+            <div class="sidebar-content" data-slot="sidebarContent"></div>
+        </aside>
+        
+        <main class="editor-area">
+            <div class="editor-tabs" data-slot="editorTabs"></div>
+            <div class="editor-content" data-slot="editorContent"></div>
+        </main>
+    </div>
+    
+    <footer class="status-bar" data-slot="statusBar"></footer>
+</template>
+
+<!-- Tab Template -->
+<template id="tab">
+    <button class="editor-tab" data-action="selectTab" data-tab-id="{id}">
+        <span class="tab-icon">{icon}</span>
+        <span class="tab-title">{name}</span>
+        <span class="tab-close" data-action="closeTab" data-tab-id="{id}">
+            ×
+        </span>
+    </button>
+</template>
+
+<!-- File Item Template -->
+<template id="fileItem">
+    <li class="file-item" data-action="openFile" data-file-id="{id}">
+        <span class="file-icon">{icon}</span>
+        <span class="file-name">{name}</span>
+    </li>
+</template>`
+        },
+        
+        "template-engine": {
+            id: "template-engine",
+            name: "engine.js",
+            icon: "⚙️",
+            type: "code",
+            language: "javascript",
+            content: `// Template Engine Core
+const TemplateEngine = {
+    templates: {},
+    state: {},
+    
+    // Register a template
+    register: function(name, template) {
+        this.templates[name] = template;
+    },
+    
+    // Render template with data
+    render: function(name, data) {
+        const template = this.templates[name];
+        if (!template) return null;
+        
+        let result = template;
+        
+        // Replace simple placeholders
+        for (const key in data) {
+            if (data.hasOwnProperty(key)) {
+                const placeholder = \`{\${key}}\`;
+                const value = data[key];
+                if (typeof value === 'string') {
+                    result = result.split(placeholder).join(value);
+                }
+            }
+        }
+        
+        // Process data-slot attributes
+        const temp = document.createElement('div');
+        temp.innerHTML = result;
+        this.processSlots(temp, data);
+        
+        return temp.firstElementChild;
+    },
+    
+    // Process data-slot attributes
+    processSlots: function(element, data) {
+        const slots = element.querySelectorAll('[data-slot]');
+        
+        slots.forEach(slot => {
+            const slotName = slot.getAttribute('data-slot');
+            const value = this.getValue(data, slotName);
+            
+            if (value !== undefined) {
+                if (slot.tagName === 'TEMPLATE') {
+                    // Handle template slots
+                    const content = slot.content.cloneNode(true);
+                    this.processSlots(content, value);
+                    slot.parentNode.replaceChild(content, slot);
+                } else if (Array.isArray(value)) {
+                    // Handle array slots
+                    slot.innerHTML = '';
+                    value.forEach(item => {
+                        const child = this.render(item.template || 'default', item);
+                        if (child) slot.appendChild(child);
+                    });
+                } else {
+                    // Handle text slots
+                    slot.textContent = value;
+                }
+            }
+            
+            slot.removeAttribute('data-slot');
+        });
+        
+        // Process children
+        Array.from(element.children).forEach(child => {
+            this.processSlots(child, data);
+        });
+    },
+    
+    // Get value from nested object using dot notation
+    getValue: function(obj, path) {
+        return path.split('.').reduce((current, key) => {
+            return current ? current[key] : undefined;
+        }, obj);
+    },
+    
+    // Bind events
+    bindEvents: function(element, actions) {
+        const actionElements = element.querySelectorAll('[data-action]');
+        
+        actionElements.forEach(el => {
+            const actionString = el.getAttribute('data-action');
+            const [eventType, actionName] = actionString.split(':');
+            
+            if (eventType && actions[actionName]) {
+                el.addEventListener(eventType, function(e) {
+                    e.preventDefault();
+                    const targetAction = this.getAttribute('data-action').split(':')[1];
+                    actions[targetAction](this, e);
+                });
+            }
+        });
+    }
+};`
+        },
+        
+        "data-structure": {
+            id: "data-structure",
+            name: "data.js",
+            icon: "📊",
+            type: "code",
+            language: "javascript",
+            content: `// Application Data Structure
+const APP_DATA = {
+    // Application Configuration
+    config: {
+        name: "Template Editor",
+        version: "1.0.0",
+        author: "Template System Team",
+        theme: "dark"
+    },
+    
+    // Navigation Structure
+    navigation: {
+        items: [
+            {
+                id: "file",
+                label: "File",
+                items: [
+                    { id: "new", label: "New Template", shortcut: "Ctrl+N" },
+                    { id: "open", label: "Open Template", shortcut: "Ctrl+O" },
+                    { id: "save", label: "Save", shortcut: "Ctrl+S" },
+                    { id: "saveAs", label: "Save As...", shortcut: "Ctrl+Shift+S" }
+                ]
+            },
+            {
+                id: "edit",
+                label: "Edit",
+                items: [
+                    { id: "undo", label: "Undo", shortcut: "Ctrl+Z" },
+                    { id: "redo", label: "Redo", shortcut: "Ctrl+Y" },
+                    { id: "cut", label: "Cut", shortcut: "Ctrl+X" },
+                    { id: "copy", label: "Copy", shortcut: "Ctrl+C" },
+                    { id: "paste", label: "Paste", shortcut: "Ctrl+V" }
+                ]
+            },
+            {
+                id: "view",
+                label: "View",
+                items: [
+                    { id: "explorer", label: "Explorer", shortcut: "Ctrl+Shift+E" },
+                    { id: "search", label: "Search", shortcut: "Ctrl+Shift+F" },
+                    { id: "git", label: "Git", shortcut: "Ctrl+Shift+G" },
+                    { id: "extensions", label: "Extensions", shortcut: "Ctrl+Shift+X" }
+                ]
+            },
+            {
+                id: "help",
+                label: "Help",
+                items: [
+                    { id: "docs", label: "Documentation" },
+                    { id: "about", label: "About" }
+                ]
+            }
+        ]
+    },
+    
+    // File System
+    files: {
+        templates: [
+            { id: "app", name: "app.html", type: "template" },
+            { id: "tab", name: "tab.html", type: "template" },
+            { id: "fileItem", name: "fileItem.html", type: "template" }
+        ],
+        documents: [
+            { id: "readme", name: "README.md", type: "markdown" },
+            { id: "changelog", name: "CHANGELOG.md", type: "markdown" }
+        ],
+        scripts: [
+            { id: "engine", name: "engine.js", type: "javascript" },
+            { id: "data", name: "data.js", type: "javascript" }
+        ]
+    },
+    
+    // Current State
+    state: {
+        activeTab: "readme",
+        sidebarTab: "explorer",
+        openTabs: ["readme", "changelog", "app"],
+        searchQuery: "",
+        unsavedChanges: false
+    }
+};
+
+// Export for module systems
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = APP_DATA;
+}`
+        }
+    }
+};
+
+// ============================================
+// TEMPLATE ENGINE (SIMPLIFIED)
+// ============================================
+function createElement(template, data = {}) {
+    const div = document.createElement('div');
+    div.innerHTML = template;
+    
+    // Replace placeholders {key} with data
+    let html = div.innerHTML;
+    for (const key in data) {
+        const placeholder = `{${key}}`;
+        const value = data[key];
+        if (typeof value === 'string') {
+            html = html.split(placeholder).join(value);
+        }
+    }
+    
+    div.innerHTML = html;
+    return div.firstElementChild;
+}
+
+// ============================================
+// UI RENDER FUNCTIONS
+// ============================================
+function renderApp() {
+    const app = document.getElementById('app');
+    app.innerHTML = '';
+    
+    // Create header
+    const header = document.createElement('header');
+    header.className = 'app-header';
+    
+    // Logo
+    const logo = document.createElement('div');
+    logo.className = 'logo';
+    logo.textContent = APP_DATA.appName;
+    header.appendChild(logo);
+    
+    // Navigation
+    const nav = document.createElement('nav');
+    nav.className = 'main-nav';
+    nav.innerHTML = `
+        <ul>
+            <li>
+                <a href="#">File</a>
+                <ul class="submenu">
+                    <li><a href="#">New File <small>Ctrl+N</small></a></li>
+                    <li><a href="#">Open File <small>Ctrl+O</small></a></li>
+                    <li><a href="#">Save <small>Ctrl+S</small></a></li>
+                    <li><a href="#">Save As... <small>Ctrl+Shift+S</small></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Edit</a>
+                <ul class="submenu">
+                    <li><a href="#">Undo <small>Ctrl+Z</small></a></li>
+                    <li><a href="#">Redo <small>Ctrl+Y</small></a></li>
+                    <li><a href="#">Cut <small>Ctrl+X</small></a></li>
+                    <li><a href="#">Copy <small>Ctrl+C</small></a></li>
+                    <li><a href="#">Paste <small>Ctrl+V</small></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">View</a>
+                <ul class="submenu">
+                    <li><a href="#">Explorer <small>Ctrl+Shift+E</small></a></li>
+                    <li><a href="#">Search <small>Ctrl+Shift+F</small></a></li>
+                    <li><a href="#">Git <small>Ctrl+Shift+G</small></a></li>
+                    <li><a href="#">Extensions <small>Ctrl+Shift+X</small></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Run</a>
+                <ul class="submenu">
+                    <li><a href="#">Start Debugging <small>F5</small></a></li>
+                    <li><a href="#">Run Without Debugging <small>Ctrl+F5</small></a></li>
+                    <li><a href="#">Stop Debugging <small>Shift+F5</small></a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="#">Help</a>
+                <ul class="submenu">
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </li>
+        </ul>
+    `;
+    header.appendChild(nav);
+    
+    // Search
+    const searchContainer = document.createElement('div');
+    searchContainer.className = 'search-container';
+    
+    const searchInput = document.createElement('input');
+    searchInput.className = 'search-input';
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search templates...';
+    searchInput.addEventListener('input', handleSearch);
+    searchContainer.appendChild(searchInput);
+    
+    const themeToggle = document.createElement('button');
+    themeToggle.className = 'theme-toggle';
+    themeToggle.textContent = '🌓';
+    themeToggle.addEventListener('click', toggleTheme);
+    searchContainer.appendChild(themeToggle);
+    
+    header.appendChild(searchContainer);
+    app.appendChild(header);
+    
+    // Main container
+    const container = document.createElement('div');
+    container.className = 'app-container';
+    
+    // Sidebar
+    const sidebar = document.createElement('aside');
+    sidebar.className = 'sidebar';
+    
+    const sidebarTabs = document.createElement('div');
+    sidebarTabs.className = 'sidebar-tabs';
+    sidebarTabs.innerHTML = `
+        <button class="sidebar-tab active" data-tab="explorer">Explorer</button>
+        <button class="sidebar-tab" data-tab="templates">Templates</button>
+        <button class="sidebar-tab" data-tab="data">Data</button>
+    `;
+    sidebar.appendChild(sidebarTabs);
+    
+    const sidebarContent = document.createElement('div');
+    sidebarContent.className = 'sidebar-content';
+    sidebar.appendChild(sidebarContent);
+    
+    container.appendChild(sidebar);
+    
+    // Editor area
+    const editorArea = document.createElement('main');
+    editorArea.className = 'editor-area';
+    
+    const editorTabs = document.createElement('div');
+    editorTabs.className = 'editor-tabs';
+    editorArea.appendChild(editorTabs);
+    
+    const editorContent = document.createElement('div');
+    editorContent.className = 'editor-content';
+    editorArea.appendChild(editorContent);
+    
+    container.appendChild(editorArea);
+    app.appendChild(container);
+    
+    // Status bar
+    const statusBar = document.createElement('footer');
+    statusBar.className = 'status-bar';
+    statusBar.innerHTML = `
+        <span class="status-item">main</span>
+        <span class="status-item">UTF-8</span>
+        <span class="status-item">Ln 1, Col 1</span>
+        <span class="status-item" style="margin-left: auto">Ready</span>
+    `;
+    app.appendChild(statusBar);
+    
+    // Setup event listeners
+    setupEventListeners();
+    
+    // Render initial content
+    renderSidebar('explorer');
+    renderTabs();
+    renderActiveFile();
+}
+
+function setupEventListeners() {
+    // Sidebar tab switching
+    const sidebarTabs = document.querySelectorAll('.sidebar-tab');
+    sidebarTabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+            sidebarTabs.forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            const tabName = this.getAttribute('data-tab');
+            renderSidebar(tabName);
+        });
+    });
+    
+    // File explorer clicks
+    document.addEventListener('click', function(e) {
+        if (e.target.closest('.file-item')) {
+            const fileItem = e.target.closest('.file-item');
+            const fileId = fileItem.getAttribute('data-file-id');
+            if (fileId) {
+                openFile(fileId);
+            }
+        }
+    });
+}
+
+function renderSidebar(tabName) {
+    const sidebarContent = document.querySelector('.sidebar-content');
+    sidebarContent.innerHTML = '';
+    
+    if (tabName === 'explorer') {
+        // Open files section
+        const openSection = document.createElement('div');
+        openSection.className = 'sidebar-section';
+        openSection.innerHTML = '<div class="section-title">OPEN EDITORS</div>';
+        
+        const openList = document.createElement('ul');
+        openList.className = 'file-list';
+        
+        APP_DATA.openFiles.forEach(fileId => {
+            const file = APP_DATA.files[fileId];
+            if (file) {
+                const li = document.createElement('li');
+                li.className = `file-item ${fileId === APP_DATA.activeFile ? 'active' : ''}`;
+                li.setAttribute('data-file-id', fileId);
+                li.innerHTML = `
+                    <span class="file-icon">${file.icon}</span>
+                    <span class="file-name">${file.name}</span>
+                `;
+                openList.appendChild(li);
+            }
+        });
+        
+        openSection.appendChild(openList);
+        sidebarContent.appendChild(openSection);
+        
+        // All files section
+        const filesSection = document.createElement('div');
+        filesSection.className = 'sidebar-section';
+        filesSection.innerHTML = '<div class="section-title">TEMPLATE FILES</div>';
+        
+        const filesList = document.createElement('ul');
+        filesList.className = 'file-list';
+        
+        Object.values(APP_DATA.files).forEach(file => {
+            const li = document.createElement('li');
+            li.className = `file-item ${file.id === APP_DATA.activeFile ? 'active' : ''}`;
+            li.setAttribute('data-file-id', file.id);
+            li.innerHTML = `
+                <span class="file-icon">${file.icon}</span>
+                <span class="file-name">${file.name}</span>
+            `;
+            filesList.appendChild(li);
+        });
+        
+        filesSection.appendChild(filesList);
+        sidebarContent.appendChild(filesSection);
+    }
+}
+
+function renderTabs() {
+    const editorTabs = document.querySelector('.editor-tabs');
+    editorTabs.innerHTML = '';
+    
+    APP_DATA.openFiles.forEach(fileId => {
+        const file = APP_DATA.files[fileId];
+        if (file) {
+            const tab = document.createElement('button');
+            tab.className = `editor-tab ${fileId === APP_DATA.activeFile ? 'active' : ''}`;
+            tab.setAttribute('data-file-id', fileId);
+            tab.innerHTML = `
+                <span class="tab-icon">${file.icon}</span>
+                <span class="tab-title">${file.name}</span>
+                <span class="tab-close">×</span>
+            `;
+            
+            tab.addEventListener('click', function(e) {
+                if (!e.target.classList.contains('tab-close')) {
+                    switchTab(fileId);
+                }
+            });
+            
+            const closeBtn = tab.querySelector('.tab-close');
+            closeBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                closeTab(fileId);
+            });
+            
+            editorTabs.appendChild(tab);
+        }
+    });
+}
+
+function renderActiveFile() {
+    const editorContent = document.querySelector('.editor-content');
+    const file = APP_DATA.files[APP_DATA.activeFile];
+    
+    if (!file) return;
+    
+    if (file.type === 'markdown') {
+        editorContent.innerHTML = `
+            <div class="markdown-content">
+                <div id="markdown-content"></div>
+            </div>
+        `;
+        
+        // Simple markdown rendering
+        const contentDiv = document.getElementById('markdown-content');
+        if (contentDiv) {
+            contentDiv.innerHTML = file.content
+                .replace(/^# (.*$)/gm, '<h1>$1</h1>')
+                .replace(/^## (.*$)/gm, '<h2>$1</h2>')
+                .replace(/^### (.*$)/gm, '<h3>$1</h3>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>')
+                .replace(/\n\n/g, '</p><p>')
+                .replace(/\n/g, '<br>');
+            
+            // Wrap in paragraph if needed
+            if (!contentDiv.innerHTML.startsWith('<')) {
+                contentDiv.innerHTML = `<p>${contentDiv.innerHTML}</p>`;
+            }
+        }
+    } else if (file.type === 'code') {
+        editorContent.innerHTML = `
+            <pre class="code-editor">${escapeHtml(file.content)}</pre>
+        `;
+    }
+    
+    // Update status bar
+    const statusBar = document.querySelector('.status-bar');
+    if (statusBar) {
+        statusBar.innerHTML = `
+            <span class="status-item">${file.name}</span>
+            <span class="status-item">${file.type === 'code' ? file.language || 'Text' : 'Markdown'}</span>
+            <span class="status-item">Ln 1, Col 1</span>
+            <span class="status-item" style="margin-left: auto">Ready</span>
+        `;
+    }
+}
+
+// ============================================
+// EVENT HANDLERS
+// ============================================
+function switchTab(fileId) {
+    APP_DATA.activeFile = fileId;
+    
+    // Update UI
+    const tabs = document.querySelectorAll('.editor-tab');
+    tabs.forEach(tab => {
+        const tabFileId = tab.getAttribute('data-file-id');
+        tab.classList.toggle('active', tabFileId === fileId);
+    });
+    
+    const fileItems = document.querySelectorAll('.file-item');
+    fileItems.forEach(item => {
+        const itemFileId = item.getAttribute('data-file-id');
+        item.classList.toggle('active', itemFileId === fileId);
+    });
+    
+    renderActiveFile();
+}
+
+function openFile(fileId) {
+    if (!APP_DATA.openFiles.includes(fileId)) {
+        APP_DATA.openFiles.push(fileId);
+        renderTabs();
+    }
+    switchTab(fileId);
+}
+
+function closeTab(fileId) {
+    const index = APP_DATA.openFiles.indexOf(fileId);
+    if (index > -1) {
+        APP_DATA.openFiles.splice(index, 1);
+        
+        if (APP_DATA.activeFile === fileId && APP_DATA.openFiles.length > 0) {
+            APP_DATA.activeFile = APP_DATA.openFiles[0];
+        } else if (APP_DATA.openFiles.length === 0) {
+            APP_DATA.activeFile = null;
+        }
+        
+        renderTabs();
+        renderSidebar('explorer');
+        if (APP_DATA.activeFile) {
+            renderActiveFile();
+        } else {
+            document.querySelector('.editor-content').innerHTML = '';
+        }
+    }
+}
+
+function handleSearch(e) {
+    const query = e.target.value.toLowerCase();
+    console.log('Searching for:', query);
+    // Implement search functionality here
+}
+
+function toggleTheme() {
+    const body = document.body;
+    if (body.classList.contains('light-theme')) {
+        body.classList.remove('light-theme');
+        APP_DATA.theme = 'dark';
+    } else {
+        body.classList.add('light-theme');
+        APP_DATA.theme = 'light';
+    }
+}
+
+// ============================================
+// HELPER FUNCTIONS
+// ============================================
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// ============================================
+// INITIALIZATION
+// ============================================
+renderApp();
+</script>
+
+</body>
+</html>

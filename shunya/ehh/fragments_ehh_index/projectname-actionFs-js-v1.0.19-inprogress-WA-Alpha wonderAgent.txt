@@ -1,0 +1,7 @@
+actionFs.js (path: shunya/src/utilities/actionFs.js)
+- au_fs_4_3_6 /actionFs.js : [type="utility" priority="2" role="Handles filesystem tasks." path="shunya/src/utilities/actionFs.js"]
+- au_fs_4_3_6_1 readFile : [type="method" priority="1" role="Reads files from disk." path="shunya/src/utilities/actionFs.js"]
+- au_fs_4_3_6_2 writeFile : [type="method" priority="1" role="Writes files to disk." path="shunya/src/utilities/actionFs.js"]
+- au_fs_4_3_6_3 exists : [type="method" priority="1" role="Checks for file existence." path="shunya/src/utilities/actionFs.js"]
+- au_fs_4_3_6_4 ensureFolder : [type="method" priority="1" role="Creates folders if missing." path="shunya/src/utilities/actionFs.js"]
+- au_fs_4_3_6_5 remove : [type="method" priority="1" role="Deletes files or folders." path="shunya/src/utilities/actionFs.js"]

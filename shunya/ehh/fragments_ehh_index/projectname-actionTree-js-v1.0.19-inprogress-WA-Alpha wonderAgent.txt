@@ -1,0 +1,5 @@
+actionTree.js (path: shunya/src/utilities/actionTree.js)
+- au_tree_4_3_5 /actionTree.js : [type="utility" priority="2" role="Builds and traverses dataset trees." path="shunya/src/utilities/actionTree.js"]
+- au_tree_4_3_5_1 buildTree : [type="method" priority="1" role="Creates the hierarchical tree." path="shunya/src/utilities/actionTree.js"]
+- au_tree_4_3_5_2 traverse : [type="method" priority="1" role="Walks the tree nodes." path="shunya/src/utilities/actionTree.js"]
+- au_tree_4_3_5_3 flatten : [type="method" priority="1" role="Flattens the tree structure." path="shunya/src/utilities/actionTree.js"]

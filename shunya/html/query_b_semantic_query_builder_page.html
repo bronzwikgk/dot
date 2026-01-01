@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>queryB – Enterprise Query Builder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --gap: 0.75rem;
+      --border: 1px solid #ddd;
+      --radius: 6px;
+      --bg-muted: #f7f7f7;
+      --bg-panel: #ffffff;
+      --text-muted: #666;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: #fafafa;
+    }
+
+    header {
+      padding: 1rem;
+      border-bottom: var(--border);
+      background: var(--bg-panel);
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 1.1rem;
+    }
+
+    main {
+      display: block;
+      padding: var(--gap);
+    }
+
+    aside {
+      border: var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-panel);
+      padding: var(--gap);
+    }
+
+    section {
+      border: var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-panel);
+      padding: var(--gap);
+      margin-bottom: var(--gap);
+    }
+
+    section header {
+      padding: 0;
+      border: none;
+      margin-bottom: 0.5rem;
+    }
+
+    section header h2 {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    form {
+      display: grid;
+      gap: 0.5rem;
+    }
+
+    label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    input, select, textarea, button {
+      padding: 0.4rem;
+      font: inherit;
+      border: var(--border);
+      border-radius: var(--radius);
+      background: #fff;
+      width: 100%;
+    }
+
+    textarea { resize: vertical; }
+
+    button {
+      background: var(--bg-muted);
+      cursor: pointer;
+    }
+
+    nav {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    article {
+      border: var(--border);
+      border-radius: var(--radius);
+      padding: var(--gap);
+      background: var(--bg-muted);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    th, td {
+      border: var(--border);
+      padding: 0.4rem;
+      text-align: left;
+    }
+
+    footer {
+      padding: 0.5rem 1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <strong>queryB</strong>
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Demo</a>
+    <a href="#">Explorer</a>
+  </nav>
+</header>
+
+<main>
+
+  <aside>
+    <section>
+      <details open>
+        <summary><strong>Recent</strong></summary>
+        <ul>
+          <li>Stock Momentum Scan</li>
+          <li>High Value Orders</li>
+        </ul>
+      </details>
+    </section>
+
+    <section>
+      <details open>
+        <summary><strong>Search</strong></summary>
+        <input placeholder="Search saved queries">
+      </details>
+    </section>
+
+    <section>
+      <details open>
+        <summary><strong>Activity</strong></summary>
+        <p>Last run: Stock Momentum</p>
+        <p>Status: Success</p>
+      </details>
+    </section>
+  </aside>
+
+
+  <section>
+    <details open>
+      <summary><strong>Input Sources</strong></summary>
+      <form>
+        <label>Source Type</label>
+        <select>
+          <option>File</option>
+          <option>Folder</option>
+          <option>Database</option>
+          <option>API</option>
+        </select>
+
+        <label>Source Location</label>
+        <input placeholder="path / connection / endpoint">
+
+        <button>Add Source</button>
+      </form>
+    </details>
+  </section>
+
+  <section>
+    <details open>
+      <summary><strong>Query Input</strong></summary>
+      <form>
+        <label>Query Template</label>
+        <select id="templateSelect">
+          <option value="">Select a template</option>
+          <option value="stock">Stock Trading – Momentum & Risk Filter</option>
+          <option value="filter">Filter records by condition</option>
+          <option value="aggregate">Aggregate and group results</option>
+          <option value="date">Search with date range</option>
+          <option value="topn">Top N results</option>
+        </select>
+
+        <label>Query Description</label>
+        <textarea id="queryDescription" rows="4" placeholder="Describe your query or intent"></textarea>
+      </form>
+    </details>
+  </section>
+
+  <section>
+    <details open>
+      <summary><strong>Query Builder</strong></summary>
+
+      <article>
+        <header>
+          <strong>AND</strong>
+          <nav>
+            <button>+ Rule</button>
+            <button>+ Group</button>
+          </nav>
+        </header>
+
+        <form>
+          <label>First Name</label>
+          <select>
+            <option>begins with</option>
+            <option>equals</option>
+          </select>
+          <input value="Stev">
+          <button aria-label="remove">⨯</button>
+        </form>
+
+        <form>
+          <label>Last Name</label>
+          <select>
+            <option>in</option>
+            <option>equals</option>
+          </select>
+          <input value="Vai, Vaughan">
+          <button aria-label="remove">⨯</button>
+        </form>
+
+        <form>
+          <label>Age</label>
+          <select>
+            <option>&gt;</option>
+            <option>&lt;</option>
+          </select>
+          <input value="28">
+          <button aria-label="remove">⨯</button>
+        </form>
+
+        <article>
+          <header>
+            <strong>OR</strong>
+            <nav>
+              <button>+ Rule</button>
+              <button>+ Group</button>
+            </nav>
+          </header>
+
+          <form>
+            <label>Is a musician</label>
+            <select>
+              <option>=</option>
+            </select>
+            <input value="TRUE">
+            <button aria-label="remove">⨯</button>
+          </form>
+
+          <form>
+            <label>Primary instrument</label>
+            <select>
+              <option>=</option>
+            </select>
+            <input value="Guitar">
+            <button aria-label="remove">⨯</button>
+          </form>
+        </article>
+
+        <form>
+          <label>Birth Date</label>
+          <select>
+            <option>between</option>
+          </select>
+          <input value="1954-10-03">
+          <input value="1960-06-06">
+          <button aria-label="remove">⨯</button>
+        </form>
+
+      </article>
+
+    </details>
+  </section>
+
+  <section>
+    <details open>
+      <summary><strong>Actions</strong></summary>
+      <nav>
+        <button>Run</button>
+        <button>Save</button>
+        <button>Preview SQL</button>
+      </nav>
+    </details>
+  </section>
+
+  <section>
+    <details open>
+      <summary><strong>Results</strong></summary>
+      <table>
+        <thead>
+          <tr>
+            <th>Column A</th>
+            <th>Column B</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Value 1</td>
+            <td>Value 2</td>
+          </tr>
+        </tbody>
+      </table>
+    </details>
+  </section>
+
+</main>
+
+<footer>
+  queryB • Logical Query Builder • Semantic UI
+</footer>
+
+<script>
+  const templates = {
+    stock: {
+      description: "Find stocks where price is above 50-day moving average AND RSI is below 30, grouped by sector, only include stocks with volume greater than 1,000,000.",
+      tree: {
+        operator: 'AND',
+        conditions: [
+          { field: 'price_vs_ma50', op: '>', value: '0' },
+          { field: 'rsi', op: '<', value: '30' },
+          { field: 'volume', op: '>', value: '1000000' }
+        ]
+      }
+    },
+    orders: {
+      description: "Retrieve all paid orders from the last 30 days where order value exceeds 10,000, grouped by customer region.",
+      tree: {
+        operator: 'AND',
+        conditions: [
+          { field: 'status', op: '=', value: 'PAID' },
+          { field: 'order_date', op: '>=', value: 'NOW-30D' },
+          { field: 'amount', op: '>', value: '10000' }
+        ]
+      }
+    },
+    users: {
+      description: "List active users who logged in more than 5 times in the past week and are not flagged for compliance review.",
+      tree: {
+        operator: 'AND',
+        conditions: [
+          { field: 'login_count_7d', op: '>', value: '5' },
+          { field: 'status', op: '=', value: 'ACTIVE' },
+          { field: 'compliance_flag', op: '=', value: 'FALSE' }
+        ]
+      }
+    }
+  };
+
+  const select = document.getElementById('templateSelect');
+  const textarea = document.getElementById('queryDescription');
+  const builder = document.getElementById('queryBuilder');
+
+  select.addEventListener('change', () => {
+    const t = templates[select.value];
+    if (!t) return;
+
+    textarea.value = t.description;
+
+    builder.innerHTML = '<p><strong>Group</strong> (AND)</p>';
+    t.tree.conditions.forEach(c => {
+      const form = document.createElement('form');
+      form.innerHTML = `
+        <label>Field</label>
+        <input value="${c.field}" readonly>
+        <label>Operator</label>
+        <input value="${c.op}" readonly>
+        <label>Value</label>
+        <input value="${c.value}" readonly>
+      `;
+      builder.appendChild(form);
+    });
+  });
+</script>
+</body>
+</html>

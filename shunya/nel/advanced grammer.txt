@@ -1,0 +1,24 @@
+// Async/Await support
+AsyncExpression  = "await" FunctionCall
+                 | "async" ActionBlock "end async"
+
+// Parallel execution
+ParallelBlock    = "in parallel:" "\n" 
+                   (ParallelItem "\n")+
+                   "end parallel"
+ParallelItem     = "-" (ActionExpression | AsyncExpression)
+
+// Loops
+LoopExpression   = "for each" Identifier "in" PathExpression "\n"
+                   ActionBlock
+                   "end for"
+                 | "repeat" NumberLiteral "times" "\n"
+                   ActionBlock
+                   "end repeat"
+
+// Error handling
+TryCatchExpression = "try" "\n"
+                     ActionBlock
+                     "catch" Identifier "\n"
+                     ActionBlock
+                     "end try"

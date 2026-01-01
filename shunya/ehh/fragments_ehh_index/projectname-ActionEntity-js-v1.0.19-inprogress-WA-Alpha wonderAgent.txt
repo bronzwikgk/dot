@@ -1,0 +1,13 @@
+ActionEntity.js (path: shunya/src/action_framework.js)
+- p_ent_4_2_1 /ActionEntity.js : [type="plugin" priority="2" role="Handles entity CRUD and file persistence chores using utility.Has Inmemory cache" path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_1 create : [type="method" priority="1" role="Creates a new entity and saves it to entity_config.storage." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_2 read : [type="method" priority="1" role="Reads stored entities for display or API responses." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_3 update : [type="method" priority="1" role="Applies updates to an existing entity record." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_4 delete : [type="method" priority="1" role="Removes entity data from the underlying store." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_5 createBrowser : [type="method" priority="1" role="Bootstraps a browser-side entity context." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_6 createNode : [type="method" priority="1" role="Bootstraps a Node.js entity worker context." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_7 readFile : [type="method" priority="1" role="Loads a file-backed resource for entities." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_8 writeFile : [type="method" priority="1" role="Writes entity changes into file storage." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_9 deleteFile : [type="method" priority="1" role="Deletes files tied to entity attachments." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_10 health : [type="method" priority="1" role="Checks the entity pluginâ€™s health status." path="shunya/src/action_framework.js"]
+- p_ent_4_2_1_11 formatResponse : [type="method" priority="1" role="Shapes API responses for entity calls." path="shunya/src/action_framework.js"]

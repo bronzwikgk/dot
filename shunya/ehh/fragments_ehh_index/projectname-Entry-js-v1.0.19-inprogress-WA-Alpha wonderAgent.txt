@@ -1,0 +1,2 @@
+Entry.js (path: shunya/src/Entry.js)
+- core_4_1_1 /Entry.js : [type="core" priority="1" role="Starts the entire application entry flow, by creating a new instance of actionApp and passing it appConfig." path="shunya/src/Entry.js"]

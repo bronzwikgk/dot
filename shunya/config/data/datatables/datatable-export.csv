@@ -1,0 +1,4 @@
+_id,name,collectionId,status,metadata
+dt-0,datatable-0,cluster,active,row-0
+dt-1,datatable-1,cluster,active,row-1
+dt-2,datatable-2,cluster,active,row-2

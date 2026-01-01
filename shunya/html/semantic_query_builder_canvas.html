@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="version" content="1.0.1">
+  <title>Semantic Query Builder</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #e9f7ef; padding: 20px; }
+    section { background: #bfeccf; border-radius: 6px; padding: 12px; max-width: 900px; }
+    fieldset { border: none; margin-left: 18px; padding: 10px; background: #7fd19a; border-radius: 6px; }
+    fieldset fieldset { background: #6cc48a; }
+    legend { font-weight: bold; }
+    label { display: inline-block; margin-right: 6px; }
+    select, input { padding: 2px 4px; }
+    .row { display: flex; align-items: center; margin: 6px 0; gap: 6px; }
+    button { background: #5dade2; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; }
+    .remove { color: red; font-weight: bold; cursor: pointer; }
+    .actions { margin-left: auto; display: flex; gap: 6px; }
+  </style>
+</head>
+<body>
+
+<section>
+  <fieldset>
+    <legend>
+      <select><option>AND</option></select>
+    </legend>
+
+    <div class="row">
+      <span class="remove">×</span>
+      <select><option>First Name</option></select>
+      <select><option>begins with</option></select>
+      <input type="text" value="Stev">
+    </div>
+
+    <div class="row">
+      <span class="remove">×</span>
+      <select><option>Last Name</option></select>
+      <select><option>in</option></select>
+      <input type="text" value="Vai, Vaughan">
+    </div>
+
+    <div class="row">
+      <span class="remove">×</span>
+      <select><option>Age</option></select>
+      <select><option>&gt;</option></select>
+      <input type="number" value="28">
+    </div>
+
+    <fieldset>
+      <legend>
+        <select><option>OR</option></select>
+      </legend>
+
+      <div class="row">
+        <span class="remove">×</span>
+        <select><option>Is a musician</option></select>
+        <select><option>=</option></select>
+        <input type="checkbox" checked>
+      </div>
+
+      <div class="row">
+        <span class="remove">×</span>
+        <select><option>Primary instrument</option></select>
+        <select><option>=</option></select>
+        <select><option>Guitar</option></select>
+      </div>
+
+      <div class="actions">
+        <button>+ Rule</button>
+        <button>+ Group</button>
+      </div>
+    </fieldset>
+
+    <div class="row">
+      <span class="remove">×</span>
+      <select><option>Grouped Field 1</option></select>
+      <select><option>=</option></select>
+      <select><option>field</option></select>
+      <select><option>Grouped Field 4</option></select>
+    </div>
+
+    <div class="row">
+      <span class="remove">×</span>
+      <select><option>Birth Date</option></select>
+      <select><option>between</option></select>
+      <input type="date" value="1954-10-03">
+      <input type="date" value="1960-06-06">
+    </div>
+
+    <div class="actions">
+      <button>+ Rule</button>
+      <button>+ Group</button>
+    </div>
+
+  </fieldset>
+</section>
+
+</body>
+</html>

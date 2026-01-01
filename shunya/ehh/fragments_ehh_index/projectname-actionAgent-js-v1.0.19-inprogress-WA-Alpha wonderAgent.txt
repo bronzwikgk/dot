@@ -1,0 +1,6 @@
+actionAgent.js (path: shunya/src/utilities/actionAgent.js)
+- au_agent_4_3_10 /actionAgent.js : [type="utility" priority="2" role="Manages agent lifecycles." path="shunya/src/utilities/actionAgent.js"]
+- au_agent_4_3_10_1 start : [type="method" priority="1" role="Starts the agent engine." path="shunya/src/utilities/actionAgent.js"]
+- au_agent_4_3_10_2 stop : [type="method" priority="1" role="Stops the agent engine." path="shunya/src/utilities/actionAgent.js"]
+- au_agent_4_3_10_3 dispatch : [type="method" priority="1" role="Dispatches jobs." path="shunya/src/utilities/actionAgent.js"]
+- au_agent_4_3_10_4 syncState : [type="method" priority="1" role="Syncs agent state." path="shunya/src/utilities/actionAgent.js"]

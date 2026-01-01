@@ -1,0 +1,234 @@
+{
+  // DataTable Entity Configuration v1.0.0
+  // Created: 2025-10-10 - Claude
+  //
+  // Changelog:
+  // v1.0.0 - Initial datatable entity config
+  // - Defines storage, schema, routes for DataTable entity
+  // - IndexedDB as primary storage with file fallback
+  // - jSpreadsheet integration settings
+  // - RBAC permissions configured
+
+  "entity": "datatable",
+  "version": "1.0.0",
+  "description": "DataTable entity stores actual data records based on collection schemas",
+
+  "storage": {
+    "location": "indexeddb",
+    "storeName": "datatables",
+    "keyPath": "_id",
+    "indexes": [
+      { "name": "name", "keyPath": "name", "unique": false },
+      { "name": "collectionId", "keyPath": "collectionId", "unique": false },
+      { "name": "status", "keyPath": "status", "unique": false },
+      { "name": "createdAt", "keyPath": "metadata.createdAt", "unique": false }
+    ],
+    "fallback": {
+      "location": "file",
+      "path": "../data/datatables",
+      "format": "json"
+    }
+  },
+
+  "schema": {
+    "path": "../schemas/datatable_schema.json",
+    "validate": true,
+    "strict": true
+  },
+
+  "routes": {
+    "basePath": "/datatables",
+    "endpoints": [
+      {
+        "method": "POST",
+        "path": "/datatables",
+        "action": "create",
+        "roles": ["admin", "user"],
+        "validate": true
+      },
+      {
+        "method": "GET",
+        "path": "/datatables",
+        "action": "read",
+        "roles": ["admin", "user", "guest"],
+        "validate": false
+      },
+      {
+        "method": "GET",
+        "path": "/datatables/:id",
+        "action": "read",
+        "roles": ["admin", "user", "guest"],
+        "validate": false
+      },
+      {
+        "method": "PUT",
+        "path": "/datatables/:id",
+        "action": "update",
+        "roles": ["admin", "user"],
+        "validate": true
+      },
+      {
+        "method": "DELETE",
+        "path": "/datatables/:id",
+        "action": "delete",
+        "roles": ["admin"],
+        "validate": false
+      },
+      {
+        "method": "POST",
+        "path": "/datatables/:id/rows",
+        "action": "addRow",
+        "roles": ["admin", "user"],
+        "validate": true
+      },
+      {
+        "method": "PUT",
+        "path": "/datatables/:id/rows/:rowId",
+        "action": "updateRow",
+        "roles": ["admin", "user"],
+        "validate": true
+      },
+      {
+        "method": "DELETE",
+        "path": "/datatables/:id/rows/:rowId",
+        "action": "deleteRow",
+        "roles": ["admin", "user"],
+        "validate": false
+      },
+      {
+        "method": "POST",
+        "path": "/datatables/:id/import/csv",
+        "action": "importCSV",
+        "roles": ["admin", "user"],
+        "validate": true
+      },
+      {
+        "method": "POST",
+        "path": "/datatables/:id/import/json",
+        "action": "importJSON",
+        "roles": ["admin", "user"],
+        "validate": true
+      },
+      {
+        "method": "GET",
+        "path": "/datatables/:id/export/csv",
+        "action": "exportCSV",
+        "roles": ["admin", "user"],
+        "validate": false
+      },
+      {
+        "method": "GET",
+        "path": "/datatables/:id/export/json",
+        "action": "exportJSON",
+        "roles": ["admin", "user"],
+        "validate": false
+      }
+    ]
+  },
+
+  "validation": {
+    "onCreate": [
+      { "field": "_id", "required": true, "type": "string" },
+      { "field": "name", "required": true, "minLength": 1, "maxLength": 100 },
+      { "field": "collectionId", "required": true, "type": "string" },
+      { "field": "columns", "required": true, "type": "array", "minItems": 1 }
+    ],
+    "onUpdate": [
+      { "field": "name", "minLength": 1, "maxLength": 100 },
+      { "field": "data", "type": "array" }
+    ],
+    "onAddRow": [
+      { "field": "data", "required": true, "type": "array" }
+    ]
+  },
+
+  "defaults": {
+    "status": "active",
+    "roles": ["admin", "user"],
+    "permissions": {
+      "create": ["admin", "user"],
+      "read": ["admin", "user", "guest"],
+      "update": ["admin", "user"],
+      "delete": ["admin"]
+    },
+    "settings": {
+      "allowInsertRow": true,
+      "allowDeleteRow": true,
+      "allowInsertColumn": false,
+      "allowDeleteColumn": false,
+      "columnSorting": true,
+      "columnFiltering": true,
+      "pagination": {
+        "enabled": false,
+        "pageSize": 50
+      }
+    },
+    "validation": {
+      "enabled": true,
+      "rules": []
+    }
+  },
+
+  "hooks": {
+    "beforeCreate": ["validateCollectionExists", "generateId", "setTimestamps", "initializeData"],
+    "afterCreate": ["cacheInLocalStorage", "queueSync"],
+    "beforeUpdate": ["validateData", "updateTimestamp", "updateRowCount"],
+    "afterUpdate": ["cacheInLocalStorage", "queueSync"],
+    "beforeDelete": ["confirmDelete"],
+    "afterDelete": ["clearCache", "queueSync"],
+    "beforeAddRow": ["validateRowData"],
+    "afterAddRow": ["updateRowCount", "queueSync"],
+    "beforeUpdateRow": ["validateRowData"],
+    "afterUpdateRow": ["queueSync"],
+    "beforeDeleteRow": ["confirmRowDelete"],
+    "afterDeleteRow": ["updateRowCount", "queueSync"]
+  },
+
+  "sync": {
+    "enabled": true,
+    "direction": "bidirectional",
+    "conflictResolution": "server-wins",
+    "batchSize": 20,
+    "chunkSize": 1000
+  },
+
+  "cache": {
+    "enabled": true,
+    "location": "localStorage",
+    "key": "datatables_cache",
+    "ttl": 300000,
+    "maxSize": 50
+  },
+
+  "ui": {
+    "icon": "📊",
+    "color": "#10b981",
+    "displayField": "name",
+    "sortField": "metadata.updatedAt",
+    "sortOrder": "desc",
+    "grid": {
+      "library": "jspreadsheet",
+      "version": "4.x",
+      "minDimensions": [10, 20],
+      "defaultColumnWidth": 120,
+      "contextMenu": true,
+      "search": true,
+      "toolbar": true
+    }
+  },
+
+  "import": {
+    "formats": ["csv", "json"],
+    "maxFileSize": 10485760,
+    "csvDelimiter": ",",
+    "csvEncoding": "utf-8",
+    "validateOnImport": true
+  },
+
+  "export": {
+    "formats": ["csv", "json"],
+    "csvDelimiter": ",",
+    "csvEncoding": "utf-8",
+    "includeHeaders": true
+  }
+}

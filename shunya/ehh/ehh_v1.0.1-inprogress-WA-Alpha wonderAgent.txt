@@ -1,0 +1,139 @@
+# ehh Manifest v1.0.1
+Version: 1.0.1
+Status: inprogress
+Agent: WA-Alpha wonderAgent
+
+- Assets
+    - logos
+- Config
+    appconfig
+    entityCollecition config
+    entityConfig
+    routeConfig
+    gobalRUle Config
+    listner config
+    view config
+    service config
+    plugin config
+    utility config
+
+docs
+    - User docs
+    - Developer docs
+    - About
+    - All Api
+src
+    Core
+        Entry.js
+        ActionApp.js
+            - Features:
+                - detect runtime,
+                - loads and Parses global config, resolve directives, like include.
+                - stores global config in this.config as per config,
+                - initGlobal variables,
+                - load utility and packages
+                - init plugins,
+                - init flows,
+                - resolvePath
+            - Dependency
+                -actionInclude
+                - actionParser 
+            - Construtor
+            - method
+                - detectRuntime
+                - initGlobal,
+                - loadutility
+                - initplugins,
+                - initflows,
+                - resolvePath
+                - handleRequest
+                -sendResponse
+            - input
+                - AppConfig
+    plugins
+        - ActionEntity.js
+            - methods: create, read, update, delete, createBrowser, createNode, readFile, writeFile, deleteFile, health, formatResponse
+        - ActionView.js
+            - methods: render, renderToDOM, update, interpolate, clear, renderToString
+        - ActionEvent.js
+            - methods: setupBrowserEvents, setupNodeEvents, extractDataFromEvent, on, off, emit, processQueue, handleHttpRequest, once
+        - ActionServer.js
+            - methods: route, use, listen, handleRequest, sendResponse, start
+        - ActionClient.js
+            - methods: sendRequest, subscribe, connect, disconnect
+        - ActionEngineFlow.js
+            - methods: defineFlow, execute, transition, abort
+    utilities
+        - ActionValidator.js
+            - methods: validate, addRule, checkPermission, checkCORS
+        - actionInclude.js
+            - methods: includeFile, includeTemplate
+        - parser.js
+            - methods: parse, tokenize, buildAST, extractCommands
+        - include.js
+            - methods: resolveIncludes, fetchInclude
+        - actionTree.js
+            - methods: buildTree, traverse, flatten
+        - actionFs.js
+            - methods: readFile, writeFile, exists, ensureFolder, remove
+        - actionIndexDb.js
+            - methods: openDatabase, saveRecord, readAll, deleteRecord
+        - actionLocalStorage.js
+            - methods: setItem, getItem, removeItem, clear
+        - httpService.js
+            - methods: fetch, post, put, delete
+        - actionAgent.js
+            - methods: start, stop, dispatch, syncState
+        - Mat.js
+            - methods: buildMatrix, multiply, invert, normalize
+        - ActionOllama.js
+            - methods: loadModel, runInference, streamResponse
+        - Watchman.js
+            - methods: watchFile, unwatch, onChange, report
+        - ActionGit.js
+
+- Tests
+    - unitestCases per class and method
+    - e2e test cases, per action, per entity, per role.
+- reports
+- flows
+    - system flow
+    - user flow
+    - developer flows
+- logs
+- instructions
+- credentials
+- demo
+    - Dynamic blog / knowledge site
+    - Multipage SPA
+    - Node js api backend, with Auth
+    - AppScript + Spreadsheet demo for datatable crud
+- usecase
+    - erms
+    - TMS
+    - ActionSpace
+    - actionAgent
+    - Mat
+- classes
+    - ActionApp
+    - ActionFramework
+    - ActionEvent
+    - ActionEntity
+    - ActionView
+    - ActionServer
+    - ActionClient
+    - ActionEngineFlow
+    - ActionValidator
+    - actionInclude
+    - parser
+    - include
+    - actionTree
+    - actionFs
+    - actionIndexDb
+    - actionLocalStorage
+    - httpService
+    - actionAgent
+    - Mat
+    - ActionOllama
+    - Watchman
+    - ActionGit

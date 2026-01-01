@@ -1,4 +1,4 @@
-{
+export const routesConfig = {
   // ---------------------------------
   // Home + Test
   // ---------------------------------
@@ -180,4 +180,4 @@
     "rolesAllowed": ["admin"],
     "version": "v1"
   }
-}
+};

@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VS Code Style Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #1e1e1e;
+            color: #cccccc;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Monochrome Header */
+        header {
+            background: #2d2d2d;
+            border-bottom: 1px solid #3c3c3c;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            gap: 24px;
+        }
+        
+        .logo {
+            font-weight: 500;
+            font-size: 14px;
+            color: #ffffff;
+        }
+        
+        /* Navigation with submenus */
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 4px;
+        }
+        
+        nav li {
+            position: relative;
+        }
+        
+        nav a {
+            color: #cccccc;
+            text-decoration: none;
+            padding: 8px 12px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            border-radius: 3px;
+        }
+        
+        nav a:hover {
+            background: #3c3c3c;
+        }
+        
+        /* Submenu styling */
+        nav ul ul {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #252526;
+            border: 1px solid #3c3c3c;
+            min-width: 180px;
+            display: none;
+            flex-direction: column;
+            padding: 4px 0;
+            z-index: 100;
+        }
+        
+        nav li:hover > ul {
+            display: flex;
+        }
+        
+        nav ul ul ul {
+            left: 100%;
+            top: 0;
+        }
+        
+        /* Search and actions */
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+        
+        .search-box {
+            background: #3c3c3c;
+            border: 1px solid #3c3c3c;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 13px;
+            width: 200px;
+            color: #cccccc;
+        }
+        
+        .search-box:focus {
+            outline: 1px solid #007acc;
+            border-color: #007acc;
+        }
+        
+        .theme-toggle, .profile-btn {
+            background: none;
+            border: none;
+            color: #cccccc;
+            padding: 6px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        
+        .theme-toggle:hover, .profile-btn:hover {
+            background: #3c3c3c;
+        }
+        
+        /* Main layout */
+        .container {
+            display: flex;
+            height: calc(100vh - 48px);
+        }
+        
+        /* Sidebar */
+        aside {
+            width: 240px;
+            background: #252526;
+            border-right: 1px solid #3c3c3c;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .sidebar-tabs {
+            display: flex;
+            border-bottom: 1px solid #3c3c3c;
+        }
+        
+        .tab-button {
+            flex: 1;
+            background: #2d2d2d;
+            border: none;
+            color: #cccccc;
+            padding: 10px 0;
+            font-size: 12px;
+            cursor: pointer;
+            border-right: 1px solid #3c3c3c;
+        }
+        
+        .tab-button.active {
+            background: #1e1e1e;
+            border-bottom: 1px solid #1e1e1e;
+        }
+        
+        .tab-button:last-child {
+            border-right: none;
+        }
+        
+        .tab-content {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        /* Tab content sections */
+        .section {
+            padding: 12px 0;
+            border-bottom: 1px solid #3c3c3c;
+        }
+        
+        .section:last-child {
+            border-bottom: none;
+        }
+        
+        .section-header {
+            padding: 0 16px 8px 16px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #858585;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .section-items {
+            list-style: none;
+        }
+        
+        .section-item {
+            padding: 6px 16px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .section-item:hover {
+            background: #2a2d2e;
+        }
+        
+        .section-item.active {
+            background: #094771;
+            color: #ffffff;
+        }
+        
+        /* Main content area */
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: #1e1e1e;
+        }
+        
+        /* Editor tabs */
+        .editor-tabs {
+            display: flex;
+            background: #2d2d2d;
+            border-bottom: 1px solid #3c3c3c;
+            overflow-x: auto;
+        }
+        
+        .editor-tab {
+            padding: 10px 16px;
+            font-size: 13px;
+            background: #2d2d2d;
+            border: none;
+            border-right: 1px solid #3c3c3c;
+            color: #cccccc;
+            cursor: pointer;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .editor-tab.active {
+            background: #1e1e1e;
+            color: #ffffff;
+        }
+        
+        .editor-tab:hover {
+            background: #3c3c3c;
+        }
+        
+        .editor-tab .close {
+            opacity: 0;
+            font-size: 12px;
+        }
+        
+        .editor-tab:hover .close {
+            opacity: 0.6;
+        }
+        
+        .editor-tab:hover .close:hover {
+            opacity: 1;
+        }
+        
+        /* Editor content */
+        .editor-content {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+        }
+        
+        .editor-pane {
+            background: #252526;
+            border: 1px solid #3c3c3c;
+            border-radius: 4px;
+            padding: 16px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 13px;
+            line-height: 1.5;
+            white-space: pre-wrap;
+        }
+        
+        /* Status bar */
+        footer {
+            background: #007acc;
+            height: 22px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            color: white;
+        }
+        
+        .status-item {
+            margin-right: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header with Navigation -->
+<header>
+    <div class="logo">CODE-EDITOR</div>
+    
+    <nav>
+        <ul>
+            <li>
+                <a href="#">
+                    <span>File</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span>New File</span>
+                            <small>Ctrl+N</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Open File</span>
+                            <small>Ctrl+O</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Save</span>
+                            <small>Ctrl+S</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Save As...</span>
+                            <small>Ctrl+Shift+S</small>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="#">
+                    <span>Edit</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span>Undo</span>
+                            <small>Ctrl+Z</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Redo</span>
+                            <small>Ctrl+Y</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Find</span>
+                            <small>Ctrl+F</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Replace</span>
+                            <small>Ctrl+H</small>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="#">
+                    <span>View</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span>Explorer</span>
+                            <small>Ctrl+Shift+E</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Search</span>
+                            <small>Ctrl+Shift+F</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Git</span>
+                            <small>Ctrl+Shift+G</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Extensions</span>
+                            <small>Ctrl+Shift+X</small>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="#">
+                    <span>Run</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span>Start Debugging</span>
+                            <small>F5</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Run Without Debugging</span>
+                            <small>Ctrl+F5</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Stop Debugging</span>
+                            <small>Shift+F5</small>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="#">
+                    <span>Terminal</span>
+                </a>
+                <ul>
+                    <li>
+                        <a href="#">
+                            <span>New Terminal</span>
+                            <small>Ctrl+`</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span>Split Terminal</span>
+                            <small>Ctrl+\</small>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <a href="#">
+                    <span>Help</span>
+                </a>
+                <ul>
+                    <li><a href="#"><span>Documentation</span></a></li>
+                    <li><a href="#"><span>Release Notes</span></a></li>
+                    <li><a href="#"><span>About</span></a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    
+    <div class="actions">
+        <input type="text" class="search-box" placeholder="Search files...">
+        <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+        <button class="profile-btn" onclick="toggleProfile()">👤</button>
+    </div>
+</header>
+
+<!-- Main Container -->
+<div class="container">
+    <!-- Sidebar with tabs -->
+    <aside>
+        <div class="sidebar-tabs">
+            <button class="tab-button active" onclick="switchTab('explorer')">Explorer</button>
+            <button class="tab-button" onclick="switchTab('search')">Search</button>
+            <button class="tab-button" onclick="switchTab('git')">Git</button>
+            <button class="tab-button" onclick="switchTab('extensions')">Extensions</button>
+        </div>
+        
+        <div class="tab-content">
+            <!-- Explorer Tab -->
+            <div id="explorer" class="tab-pane active">
+                <div class="section">
+                    <div class="section-header">Open Editors</div>
+                    <ul class="section-items">
+                        <li class="section-item active">
+                            <span>index.html</span>
+                            <small style="margin-left: auto">×</small>
+                        </li>
+                        <li class="section-item">
+                            <span>styles.css</span>
+                            <small style="margin-left: auto">×</small>
+                        </li>
+                        <li class="section-item">
+                            <span>script.js</span>
+                            <small style="margin-left: auto">×</small>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">Project</div>
+                    <ul class="section-items">
+                        <li class="section-item">
+                            <span>📁 src</span>
+                        </li>
+                        <li class="section-item">
+                            <span>📁 components</span>
+                        </li>
+                        <li class="section-item">
+                            <span>📁 utils</span>
+                        </li>
+                        <li class="section-item">
+                            <span>📄 package.json</span>
+                        </li>
+                        <li class="section-item">
+                            <span>📄 README.md</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="section">
+                    <div class="section-header">Outline</div>
+                    <ul class="section-items">
+                        <li class="section-item">
+                            <small>▶</small>
+                            <span>&lt;header&gt;</span>
+                        </li>
+                        <li class="section-item">
+                            <small style="margin-left: 16px">▶</small>
+                            <span>&lt;nav&gt;</span>
+                        </li>
+                        <li class="section-item">
+                            <small style="margin-left: 32px">•</small>
+                            <span>&lt;ul&gt;</span>
+                        </li>
+                        <li class="section-item">
+                            <small>▶</small>
+                            <span>&lt;main&gt;</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Search Tab -->
+            <div id="search" class="tab-pane" style="display: none;">
+                <div class="section">
+                    <div class="section-header">Search</div>
+                    <ul class="section-items">
+                        <li class="section-item">
+                            <span>Search for files</span>
+                        </li>
+                        <li class="section-item">
+                            <span>Replace in files</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Git Tab -->
+            <div id="git" class="tab-pane" style="display: none;">
+                <div class="section">
+                    <div class="section-header">Changes</div>
+                    <ul class="section-items">
+                        <li class="section-item">
+                            <span>📄 index.html</span>
+                        </li>
+                        <li class="section-item">
+                            <span>📄 styles.css</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Extensions Tab -->
+            <div id="extensions" class="tab-pane" style="display: none;">
+                <div class="section">
+                    <div class="section-header">Installed</div>
+                    <ul class="section-items">
+                        <li class="section-item">
+                            <span>Prettier</span>
+                        </li>
+                        <li class="section-item">
+                            <span>ESLint</span>
+                        </li>
+                        <li class="section-item">
+                            <span>GitLens</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="editor-tabs">
+            <button class="editor-tab active">
+                <span>index.html</span>
+                <span class="close">×</span>
+            </button>
+            <button class="editor-tab">
+                <span>styles.css</span>
+                <span class="close">×</span>
+            </button>
+            <button class="editor-tab">
+                <span>script.js</span>
+                <span class="close">×</span>
+            </button>
+        </div>
+        
+        <div class="editor-content">
+            <div class="editor-pane">
+&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;VS Code Interface&lt;/title&gt;
+    &lt;style&gt;
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background: #1e1e1e;
+            color: #cccccc;
+        }
+        
+        header {
+            background: #2d2d2d;
+            padding: 1rem;
+            border-bottom: 1px solid #3c3c3c;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;!-- Your content here --&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- Status Bar -->
+<footer>
+    <span class="status-item">main</span>
+    <span class="status-item">UTF-8</span>
+    <span class="status-item">HTML</span>
+    <span class="status-item">Ln 20, Col 10</span>
+    <span class="status-item" style="margin-left: auto">💾 Auto-save: On</span>
+</footer>
+
+<script>
+function switchTab(tabName) {
+    // Update tab buttons
+    var buttons = document.querySelectorAll('.tab-button');
+    for (var i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('active');
+    }
+    event.target.classList.add('active');
+    
+    // Show selected tab content
+    var panes = document.querySelectorAll('.tab-pane');
+    for (var j = 0; j < panes.length; j++) {
+        panes[j].style.display = 'none';
+    }
+    document.getElementById(tabName).style.display = 'block';
+}
+
+function toggleTheme() {
+    var body = document.body;
+    var isDark = body.style.backgroundColor !== 'white';
+    
+    if (isDark) {
+        // Switch to light theme
+        body.style.backgroundColor = 'white';
+        body.style.color = '#333333';
+        document.querySelector('header').style.backgroundColor = '#f3f3f3';
+        document.querySelector('header').style.borderColor = '#dddddd';
+        document.querySelector('aside').style.backgroundColor = '#f5f5f5';
+        document.querySelector('aside').style.borderColor = '#dddddd';
+        document.querySelector('main').style.backgroundColor = 'white';
+        
+        var links = document.querySelectorAll('nav a');
+        for (var i = 0; i < links.length; i++) {
+            links[i].style.color = '#333333';
+        }
+    } else {
+        // Switch to dark theme
+        body.style.backgroundColor = '';
+        body.style.color = '';
+        document.querySelector('header').style.backgroundColor = '';
+        document.querySelector('header').style.borderColor = '';
+        document.querySelector('aside').style.backgroundColor = '';
+        document.querySelector('aside').style.borderColor = '';
+        document.querySelector('main').style.backgroundColor = '';
+        
+        var links = document.querySelectorAll('nav a');
+        for (var i = 0; i < links.length; i++) {
+            links[i].style.color = '';
+        }
+    }
+}
+
+function toggleProfile() {
+    alert('Profile menu would open here');
+}
+
+// Handle editor tab clicks
+var editorTabs = document.querySelectorAll('.editor-tab');
+for (var i = 0; i < editorTabs.length; i++) {
+    editorTabs[i].addEventListener('click', function(e) {
+        if (e.target.classList.contains('close')) {
+            e.stopPropagation();
+            this.parentNode.removeChild(this);
+            return;
+        }
+        
+        for (var j = 0; j < editorTabs.length; j++) {
+            editorTabs[j].classList.remove('active');
+        }
+        this.classList.add('active');
+    });
+}
+
+// Handle sidebar item clicks
+var sectionItems = document.querySelectorAll('.section-item');
+for (var k = 0; k < sectionItems.length; k++) {
+    sectionItems[k].addEventListener('click', function(e) {
+        if (e.target.tagName === 'SMALL') return;
+        
+        for (var l = 0; l < sectionItems.length; l++) {
+            sectionItems[l].classList.remove('active');
+        }
+        this.classList.add('active');
+    });
+}
+</script>
+
+</body>
+</html>

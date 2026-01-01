@@ -1,0 +1,6 @@
+parser.js (path: shunya/src/utilities/parser.js)
+- au_par_4_3_3 /parser.js : [type="utility" priority="2" role="Parses scripts and tokens." path="shunya/src/utilities/parser.js"]
+- au_par_4_3_3_1 parse : [type="method" priority="1" role="Parses commands into structures." path="shunya/src/utilities/parser.js"]
+- au_par_4_3_3_2 tokenize : [type="method" priority="1" role="Splits text into tokens." path="shunya/src/utilities/parser.js"]
+- au_par_4_3_3_3 buildAST : [type="method" priority="1" role="Builds an abstract syntax tree." path="shunya/src/utilities/parser.js"]
+- au_par_4_3_3_4 extractCommands : [type="method" priority="1" role="Pulls actionable commands out of parsed content." path="shunya/src/utilities/parser.js"]

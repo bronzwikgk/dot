@@ -1,0 +1,8 @@
+{
+  "containerId": "app",
+  "components": {
+    "tasksTable": "../templates/tasks_table.json",
+    "taskForm": "../templates/task_form.json"
+  }
+}
+

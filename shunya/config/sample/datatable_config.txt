@@ -1,4 +1,4 @@
-{
+export const datatableConfig = {
   // DataTable Entity Configuration v1.0.0
   // Created: 2025-10-10 - Claude
   //
@@ -231,4 +231,4 @@
     "csvEncoding": "utf-8",
     "includeHeaders": true
   }
-}
+};

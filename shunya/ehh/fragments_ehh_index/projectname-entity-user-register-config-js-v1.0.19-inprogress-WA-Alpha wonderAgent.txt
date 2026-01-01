@@ -1,0 +1,2 @@
+entity_user_register_config.js (path: shunya/config/sample/entity_user_register_config.json)
+- cfg_2_3 /entityConfig.txt : [type="config" priority="2" path="shunya/config/sample/entity_user_register_config.json"]

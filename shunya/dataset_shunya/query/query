@@ -1,0 +1,893 @@
+1. Output & Interaction Rules
+
+Always start every output with:
+
+Title
+
+Semantic version
+
+File name with full path
+
+Always include at the end:
+
+Total number of items in the output
+
+Total number of tokens (input + output)
+
+Total number of words (input + output)
+
+Temperature must default to 0.1 unless explicitly changed.
+
+Follow Free Flow unless the user explicitly selects a Multi-Step command.
+
+In Multi-Step mode, recommend maximum 3 steps only from the allowed list.
+
+Do not proceed automatically — user must explicitly say:
+
+Evaluate
+
+Continue
+
+Expand
+
+Compare
+
+Refine Output
+
+etc.
+
+2. Formatting & Medium Requirements
+
+Output must be exactly in the format requested:
+
+txt block → plain text only
+
+yaml → valid YAML
+
+html/css → semantic HTML only
+
+canvas → only when explicitly asked
+
+No code generation unless keyword “ek” is present.
+
+No ES6 syntax, no forEach, no class constructors with logic (when code is allowed).
+
+Dataset is always:
+
+A collection of related keywords or queries
+
+Stored as plain text or YAML
+
+File-based (MAT compatible)
+
+3. Query Dataset Requirements
+
+Queries must be natural language, business-friendly, and realistic.
+
+One query per line (unless nesting is explicitly requested).
+
+No {action} or {entity} placeholders in final datasets.
+
+Queries must include real context:
+
+time
+
+ownership
+
+risk
+
+compliance
+
+cost
+
+behavior
+
+Each logical query must have:
+
+a simple/base version
+
+a second, clearly more complex version
+
+Complex versions must add new logic, not just verbosity:
+
+additional filters
+
+joins / dependencies
+
+grouping or ranking
+
+exclusions
+
+cross-entity relationships
+
+Queries must be suitable for:
+
+entity screening
+
+filtering
+
+intent detection
+
+query rewriting
+
+SQL generation
+
+automation rule discovery
+
+4. Domain Coverage Requirements
+
+File management:
+
+files, folders, versions, ownership
+
+archive, retention, purge
+
+duplicates, size, access patterns
+
+Data management:
+
+tables, schemas, indexes
+
+orphaned records
+
+data freshness
+
+lineage and integrity
+
+Automation & workflows:
+
+scheduled jobs
+
+triggers
+
+failures
+
+retries
+
+rollback logic
+
+SQL & analytics:
+
+grouping
+
+aggregation
+
+joins
+
+performance issues
+
+schema evolution
+
+Google-style search:
+
+investigative phrasing
+
+exploratory queries
+
+“why / what changed / where missing”
+
+Governance & compliance:
+
+audit trails
+
+policy violations
+
+access anomalies
+
+evidence gaps
+
+Security & risk:
+
+permissions
+
+external access
+
+sensitive data exposure
+
+anomalous behavior
+
+5. Structural & Scaling Requirements
+
+Dataset must scale to 200+ queries minimum.
+
+Queries must be groupable by domain:
+
+file
+
+data
+
+automation
+
+search
+
+SQL
+
+compliance
+
+Must be ingestible by:
+
+MAT rooms
+
+agent datasets
+
+FAQ-style agents
+
+rule engines
+
+Line-based design preferred for:
+
+diffing
+
+versioning
+
+incremental expansion
+
+Semantic nesting should be logical (simple → complex), not syntactic noise.
+
+6. UI / Presentation Requirements (when applicable)
+
+Use semantic HTML only (no classes unless explicitly allowed).
+
+Minimal CSS.
+
+Keyword labeling via:
+
+background colors
+
+shared color per category (action, entity, filter, metric, time)
+
+Must be readable without JavaScript.
+
+7. MAT / System Alignment
+
+Fully compatible with MAT file-based architecture.
+
+No hidden state, no dynamic runtime assumptions.
+
+Designed for agent reasoning, not hardcoded parsing.
+
+Output must be deterministic and auditable.
+
+8. Quality Expectations
+
+Specific > generic.
+
+Real business phrasing over synthetic language.
+
+Designed for long-term reuse, not demo-only output.
+
+Evaluation and refinement are first-class steps, not optional.
+
+End State You Are Driving Toward
+
+A large, clean, file-based, natural-query corpus that can power:
+
+entity screening
+
+filters
+
+SQL generation
+
+automation reasoning
+
+governance analysis
+
+agent FAQ behavior
+
+without placeholders, without code coupling, and fully aligned with MAT principles.
+
+1. Find files not accessed in the last 90 days
+   └─ Find files not accessed in the last 90 days, larger than 500MB, owned by inactive users, excluding archived folders
+
+2. List folders created this year
+   └─ List folders created this year, grouped by owner, sorted by total storage consumed, excluding system directories
+
+3. Show documents missing metadata
+   └─ Show documents missing metadata, where file type is PDF or DOCX, created by external contributors in the last 6 months
+
+4. Identify duplicate files
+   └─ Identify duplicate files based on checksum, stored across different departments, keeping only the most recently modified copy
+
+5. List archived folders
+   └─ List archived folders older than 2 years that have not been accessed since archival and exceed retention policy limits
+
+6. Find failed automation jobs
+   └─ Find failed automation jobs triggered in the last 7 days, grouped by error type and ordered by frequency
+
+7. Show scheduled tasks
+   └─ Show scheduled tasks that run daily, modify database records, and have no success log in the past 30 executions
+
+8. List automation rules
+   └─ List automation rules that trigger on file upload and send notifications but lack rollback actions on failure
+
+9. Identify stalled workflows
+   └─ Identify stalled workflows waiting on manual approval for more than 48 hours during business days
+
+10. Find unused scripts
+    └─ Find unused scripts not referenced by any workflow, not executed in the last year, and lacking documentation
+
+11. Show database tables with high row count
+    └─ Show database tables with high row count, growing faster than 10% month-over-month, excluding audit tables
+
+12. List queries running longer than 5 seconds
+    └─ List queries running longer than 5 seconds during peak hours, grouped by application and average execution time
+
+13. Identify missing indexes
+    └─ Identify missing indexes on columns frequently used in WHERE and JOIN clauses for production databases
+
+14. Show tables without primary keys
+    └─ Show tables without primary keys that are referenced by foreign keys in other schemas
+
+15. List recent schema changes
+    └─ List recent schema changes deployed in the last 14 days that caused query performance degradation
+
+16. Find orphaned records
+    └─ Find orphaned records where foreign key references no longer exist, grouped by table and impact size
+
+17. Show users created recently
+    └─ Show users created in the last 30 days who have elevated permissions but no recorded login activity
+
+18. List inactive users
+    └─ List inactive users with no login for 180 days who still own files or active automation rules
+
+19. Identify permission conflicts
+    └─ Identify permission conflicts where users have both read-only and admin access across different systems
+
+20. Show external users
+    └─ Show external users with access to sensitive folders and downloads exceeding normal usage patterns
+
+21. Find large data exports
+    └─ Find large data exports generated this month exceeding 1GB and sent outside the organization
+
+22. List API calls with errors
+    └─ List API calls with error rates above 5%, grouped by endpoint and client application
+
+23. Identify unused APIs
+    └─ Identify unused APIs not called in the last 6 months but still exposed publicly
+
+24. Show rate-limited clients
+    └─ Show rate-limited clients repeatedly hitting thresholds during peak usage windows
+
+25. Find failed integrations
+    └─ Find failed integrations where retries exceeded limits and manual intervention was required
+
+26. Search for contracts expiring soon
+    └─ Search for contracts expiring within 90 days, missing renewal owners, and linked to critical vendors
+
+27. List vendors without compliance documents
+    └─ List vendors without compliance documents who processed payments in the last quarter
+
+28. Identify high-risk vendors
+    └─ Identify high-risk vendors based on audit score, transaction volume, and unresolved incidents
+
+29. Show recent payments
+    └─ Show recent payments above approval threshold that bypassed standard approval workflows
+
+30. Find delayed invoices
+    └─ Find delayed invoices overdue by more than 60 days, grouped by vendor and total outstanding amount
+
+31. Search logs for errors
+    └─ Search logs for recurring errors occurring after recent deployments and correlate with release versions
+
+32. Identify unusual login activity
+    └─ Identify unusual login activity from new locations followed by large data access events
+
+33. Show storage usage by team
+    └─ Show storage usage by team, trending month-over-month, highlighting abnormal growth patterns
+
+34. Find deleted files
+    └─ Find deleted files removed in the last 30 days that were linked to active projects or legal holds
+
+35. List backup failures
+    └─ List backup failures across regions, correlating with infrastructure incidents and retry attempts
+
+36. Identify missing backups
+    └─ Identify missing backups for critical databases where recovery point objectives are violated
+
+37. Show search queries with no results
+    └─ Show search queries with no results, grouped by user role, to identify content gaps
+
+38. Find frequently searched terms
+    └─ Find frequently searched terms that lead to outdated or deprecated documents
+
+39. Identify broken links
+    └─ Identify broken links inside documentation that are referenced by automation or onboarding flows
+
+40. Show content with low engagement
+    └─ Show content with low engagement despite high search impressions over the last quarter
+
+41. List audit events
+    └─ List audit events involving permission changes outside approved change windows
+
+42. Find policy violations
+    └─ Find policy violations related to data retention, mapped to responsible owners and systems
+
+43. Identify unresolved alerts
+    └─ Identify unresolved alerts older than SLA thresholds and escalate based on severity
+
+44. Show compliance gaps
+    └─ Show compliance gaps across departments where evidence is missing or outdated
+
+45. List incidents by impact
+    └─ List incidents by impact score, recovery time, and recurrence frequency
+
+46. Find root cause patterns
+    └─ Find root cause patterns across incidents sharing similar triggers and affected components
+
+47. Show cost anomalies
+    └─ Show cost anomalies in storage and compute usage compared to historical baselines
+
+48. Identify underutilized resources
+    └─ Identify underutilized resources with low usage but high cost commitments
+
+49. List scheduled deletions
+    └─ List scheduled deletions affecting shared folders with active dependencies
+
+50. Find manual overrides
+    └─ Find manual overrides applied to automation rules and evaluate their downstream effects
+
+51. Show recent configuration changes
+    └─ Show recent configuration changes lacking peer review or rollback plans
+
+52. Identify stale configurations
+    └─ Identify stale configurations not referenced by any active service
+
+53. List environment differences
+    └─ List environment differences between staging and production affecting automation behavior
+
+54. Find test data in production
+    └─ Find test data in production databases created by non-service accounts
+
+55. Show onboarding progress
+    └─ Show onboarding progress where required documents or tasks remain incomplete beyond deadlines
+
+56. Identify knowledge gaps
+    └─ Identify knowledge gaps where users repeatedly search but do not access final content
+
+57. List frequently modified files
+    └─ List frequently modified files with multiple contributors and conflicting versions
+
+58. Find version conflicts
+    └─ Find version conflicts where older files are referenced by newer workflows
+
+59. Show dependency chains
+    └─ Show dependency chains between files, workflows, and database tables
+
+60. Identify single points of failure
+    └─ Identify single points of failure across automation, storage, and data pipelines
+
+61. Search for deprecated assets
+    └─ Search for deprecated assets still referenced by active processes
+
+62. List migration candidates
+    └─ List migration candidates based on age, access frequency, and cost efficiency
+
+63. Find incomplete migrations
+    └─ Find incomplete migrations leaving data split across systems
+
+64. Show data freshness issues
+    └─ Show data freshness issues where update intervals exceed agreed SLAs
+
+65. Identify sync failures
+    └─ Identify sync failures between systems and quantify data divergence
+
+66. List retry storms
+    └─ List retry storms caused by automation loops without backoff strategies
+
+67. Find excessive notifications
+    └─ Find excessive notifications generated by low-severity events
+
+68. Show alert fatigue indicators
+    └─ Show alert fatigue indicators where alerts are consistently ignored or delayed
+
+69. Identify ownership gaps
+    └─ Identify ownership gaps for files, tables, and workflows without assigned owners
+
+70. List high-churn files
+    └─ List high-churn files frequently created and deleted within short periods
+
+71. Find compliance evidence
+    └─ Find compliance evidence nearing expiration or missing signatures
+
+72. Show audit preparation status
+    └─ Show audit preparation status across systems and required artifacts
+
+73. Identify access anomalies
+    └─ Identify access anomalies involving privileged actions during off-hours
+
+74. List scheduled reports
+    └─ List scheduled reports with outdated queries or broken data sources
+
+75. Find inaccurate reports
+    └─ Find inaccurate reports based on reconciliation failures with source systems
+
+76. Show data lineage gaps
+    └─ Show data lineage gaps where source-to-report traceability is missing
+
+77. Identify sensitive data exposure
+    └─ Identify sensitive data exposure through shared links or exports
+
+78. List encryption exceptions
+    └─ List encryption exceptions applied to files or databases without justification
+
+79. Find manual data fixes
+    └─ Find manual data fixes applied directly in production tables
+
+80. Show rollback events
+    └─ Show rollback events triggered due to failed deployments or migrations
+
+81. Identify testing gaps
+    └─ Identify testing gaps where automation changes lack coverage
+
+82. List flaky jobs
+    └─ List flaky jobs with intermittent failures and unstable runtimes
+
+83. Find long-running jobs
+    └─ Find long-running jobs exceeding expected execution windows
+
+84. Show capacity risks
+    └─ Show capacity risks projected within the next quarter
+
+85. Identify scaling bottlenecks
+    └─ Identify scaling bottlenecks based on load trends and error rates
+
+86. List dependency upgrades
+    └─ List dependency upgrades pending security or stability fixes
+
+87. Find unsupported versions
+    └─ Find unsupported versions still in use across environments
+
+88. Show end-of-life assets
+    └─ Show end-of-life assets still supporting critical workflows
+
+89. Identify documentation drift
+    └─ Identify documentation drift between actual behavior and written procedures
+
+90. List user-reported issues
+    └─ List user-reported issues correlated with recent system changes
+
+91. Find repeated failures
+    └─ Find repeated failures that were previously marked as resolved
+
+92. Show SLA breaches
+    └─ Show SLA breaches by service, root cause, and remediation status
+
+93. Identify backlog growth
+    └─ Identify backlog growth trends indicating process bottlenecks
+
+94. List unresolved dependencies
+    └─ List unresolved dependencies blocking automation completion
+
+95. Find shadow processes
+    └─ Find shadow processes operating outside approved automation frameworks
+
+96. Show governance exceptions
+    └─ Show governance exceptions granted without expiration dates
+
+97. Identify audit trail gaps
+    └─ Identify audit trail gaps where actions lack attribution
+
+98. List data ownership transfers
+    └─ List data ownership transfers without confirmation from new owners
+
+99. Find compliance risks
+    └─ Find compliance risks combining access, retention, and audit gaps
+
+100. Show system readiness
+     └─ Show system readiness for audits, migrations, and peak load events
+# FILE MANAGEMENT
+
+List all files created today
+  List all files created today including subdirectories, sorted by creation time and grouped by owner
+
+Show files larger than 1 GB
+  Show files larger than 1 GB excluding system files and highlighting duplicates
+
+Find files not modified in the last year
+  Find files not modified in the last year and never accessed by any user
+
+List files with missing extensions
+  List files with missing extensions and infer file type from content
+
+Show recently accessed files
+  Show recently accessed files with user access frequency
+
+Find duplicate files by name
+  Find duplicate files by name and checksum across directories
+
+List temporary files
+  List temporary files eligible for deletion based on retention policy
+
+Show files without backup
+  Show files without backup and classify by recovery risk
+
+Find files owned by inactive users
+  Find files owned by inactive users and still shared externally
+
+Show files marked confidential
+  Show files marked confidential and accessed in the last 30 days
+
+List files uploaded via API
+  List files uploaded via API with source application details
+
+Find files with broken links
+  Find files with broken links and referencing locations
+
+Show files exceeding retention period
+  Show files exceeding retention period with archival recommendation
+
+List files pending approval
+  List files pending approval with reviewer status
+
+Find files with version conflicts
+  Find files with version conflicts and last editor details
+
+Show files with access errors
+  Show files with access errors and error frequency
+
+List files without tags
+  List files without tags and suggest tagging taxonomy
+
+Find files scanned for malware
+  Find files scanned for malware with scan results
+
+Show files excluded from sync
+  Show files excluded from sync with exclusion rules
+
+List files uploaded last week
+  List files uploaded last week grouped by source
+
+
+# FOLDER MANAGEMENT
+
+List empty folders
+  List empty folders not modified in the last 90 days
+
+Show folders larger than 50 GB
+  Show folders larger than 50 GB with size breakdown by file type
+
+Find folders without permissions
+  Find folders without permissions and inherited access paths
+
+List shared folders
+  List shared folders with external users and access levels
+
+Show folders owned by inactive users
+  Show folders owned by inactive users with contained file count
+
+Find deeply nested folders
+  Find deeply nested folders exceeding allowed depth
+
+List folders with broken inheritance
+  List folders with broken inheritance and impacted users
+
+Show folders created last month
+  Show folders created last month with creator details
+
+Find folders excluded from backup
+  Find folders excluded from backup and risk assessment
+
+List folders with naming violations
+  List folders with naming violations and suggested fixes
+
+Show folders with mixed permission models
+  Show folders with mixed permission models and conflicts
+
+Find folders with high file churn
+  Find folders with high file churn over the last 30 days
+
+List archived folders
+  List archived folders accessed recently
+
+Show folders pending deletion
+  Show folders pending deletion with dependency check
+
+Find folders with orphaned files
+  Find folders with orphaned files and source references
+
+List folders without metadata
+  List folders without metadata and auto-fill suggestions
+
+Show folders synced today
+  Show folders synced today with sync duration
+
+Find folders causing sync errors
+  Find folders causing sync errors with error logs
+
+List folders exceeding quota
+  List folders exceeding quota with cleanup recommendations
+
+Show folders accessed by multiple teams
+  Show folders accessed by multiple teams with access overlap
+
+
+# DATA MANAGEMENT
+
+Find records missing mandatory fields
+  Find records missing mandatory fields with validation error summary
+
+List records created in the last 7 days
+  List records created in the last 7 days and updated multiple times
+
+Identify duplicate records
+  Identify duplicate records with conflicting attribute values
+
+Find records failing validation rules
+  Find records failing validation rules grouped by error category
+
+Show inactive records
+  Show inactive records referenced by active workflows
+
+List datasets larger than 1 million rows
+  List datasets larger than 1 million rows with performance impact
+
+Show records updated by automation
+  Show records updated by automation with manual override history
+
+Find records missing audit logs
+  Find records missing audit logs and last editor information
+
+Identify records violating retention policy
+  Identify records violating retention policy with archival actions
+
+Show records imported from external systems
+  Show records imported from external systems with data quality score
+
+Find records with null values
+  Find records with null values and default value suggestions
+
+List records modified by a specific user
+  List records modified by a specific user over time
+
+Show records with inconsistent formats
+  Show records with inconsistent formats and normalization hints
+
+Find records exceeding size limits
+  Find records exceeding size limits and storage impact
+
+List records pending approval
+  List records pending approval with reviewer status
+
+Show records locked for editing
+  Show records locked for editing and lock owner
+
+Find records missing foreign key references
+  Find records missing foreign key references and dependency graph
+
+List records updated outside business hours
+  List records updated outside business hours with anomaly flags
+
+Show records with conflicting timestamps
+  Show records with conflicting timestamps and correction hints
+
+Find stale reference data
+  Find stale reference data not refreshed recently
+
+
+# AUTOMATION & WORKFLOWS
+
+List automation jobs that failed
+  List automation jobs that failed with root cause classification
+
+Show workflows running longer than expected
+  Show workflows running longer than expected blocking downstream steps
+
+Find scheduled tasks due today
+  Find scheduled tasks due today with dependency status
+
+Identify triggers firing excessively
+  Identify triggers firing excessively with anomaly detection
+
+List automations without error handling
+  List automations without error handling and recommended fixes
+
+Find automations using deprecated actions
+  Find automations using deprecated actions with migration guidance
+
+Show recently modified workflows
+  Show recently modified workflows with editor and change summary
+
+List automations paused manually
+  List automations paused manually with approval status
+
+Show automation logs generated today
+  Show automation logs generated today with error aggregation
+
+Identify undocumented workflows
+  Identify undocumented workflows and auto-generate summaries
+
+Find workflows with circular dependencies
+  Find workflows with circular dependencies and resolution hints
+
+List automations triggered by external events
+  List automations triggered by external events with source systems
+
+Show workflows with high failure rate
+  Show workflows with high failure rate over time
+
+Find workflows missing retry logic
+  Find workflows missing retry logic and resilience score
+
+List automations consuming high resources
+  List automations consuming high resources with optimization tips
+
+Show workflows inactive for months
+  Show workflows inactive for months and decommission suggestions
+
+Find workflows violating SLAs
+  Find workflows violating SLAs with delay reasons
+
+List automations with manual overrides
+  List automations with manual overrides frequency
+
+Show workflows pending deployment
+  Show workflows pending deployment with environment readiness
+
+Find automations lacking monitoring
+  Find automations lacking monitoring and alerting setup
+
+
+# GOOGLE SEARCH STYLE QUERIES
+
+Find latest official documentation for a technology
+  Find latest official documentation for a technology from authoritative sources
+
+Search troubleshooting guides for common errors
+  Search troubleshooting guides for common errors with step-by-step fixes
+
+Find best practices for automation platforms
+  Find best practices for automation platforms with real-world examples
+
+Compare leading automation tools
+  Compare leading automation tools including pricing and limitations
+
+Find recent news about a software product
+  Find recent news about a software product from the last 30 days
+
+Search tutorials for beginners
+  Search tutorials for beginners with hands-on examples
+
+Find migration guides between tools
+  Find migration guides between tools with compatibility notes
+
+Search performance optimization tips
+  Search performance optimization tips with benchmarks
+
+Find security advisories for a product
+  Find security advisories for a product with severity ratings
+
+Search community discussions about an issue
+  Search community discussions about an issue with accepted solutions
+
+
+# SQL / QUERY INTENT
+
+Select all rows matching a condition
+  Select all rows matching a condition and aggregate by a column
+
+Count records grouped by a field
+  Count records grouped by a field with filters applied
+
+Fetch latest records from a table
+  Fetch latest records from a table joined with related tables
+
+Find records containing null values
+  Find records containing null values with default suggestions
+
+Identify top records by a metric
+  Identify top records by a metric over a defined period
+
+Select records within a date range
+  Select records within a date range with indexing hints
+
+Join tables on foreign keys
+  Join tables on foreign keys and validate referential integrity
+
+Find records violating constraints
+  Find records violating constraints with error classification
+
+Aggregate data by time buckets
+  Aggregate data by time buckets with trend analysis
+
+Detect outliers in numeric columns
+  Detect outliers in numeric columns with statistical thresholds

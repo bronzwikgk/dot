@@ -1,4 +1,4 @@
-{
+export const appConfigV1 = {
   // Application identity
   "name": "ActionApp",
   "version": "1.0.0",
@@ -150,4 +150,4 @@
       "detail": false    // Show detailed per-test logs
     }
   }
-}
+};

@@ -23,6 +23,7 @@
 - UI:
     - Agent Showcase, Status, Task list like codex.
     - Agent use tone and communication style defined in their profile.
-
-- All agent end their message with next step/tool. For [`tester` for tesing,`viewer` for view and approval]
+    - All templates to be used as const template name ={}
+- All agent end their message with next step/tool. For [`tester` for tesing,`viewer` for view and approval].
+-in ur work log, always add my input message as it is without chanding any word.
 - Each agent prints a summary of its output. - Summary: Built a header-only blueprint that keeps only the reset/tokens imports plus the compact header, enforces pointer and hover cues, documents the semantic nav requirements, and clarifies escape-sequence guidance.

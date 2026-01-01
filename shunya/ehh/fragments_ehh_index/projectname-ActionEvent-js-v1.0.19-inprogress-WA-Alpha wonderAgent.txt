@@ -1,0 +1,11 @@
+ActionEvent.js (path: shunya/src/action_framework.js)
+- p_evt_4_2_3 /ActionEvent.js : [type="plugin" priority="2" role="Orchestrates events and wires them into HTTP hooks." path="shunya/src/action_framework.js"]
+- p_evt_4_2_3_1 setupBrowserEvents : [type="method" priority="1" role="Attaches browser event listeners." path="shunya/src/action_framework.js"]
+- p_evt_4_2_3_2 setupNodeEvents : [type="method" priority="1" role="Attaches Node.js event listeners." path="shunya/src/action_framework.js"]
+- p_evt_4_2_3_3 extractDataFromEvent : [type="method" priority="1" role="Pulls payloads out of DOM or HTTP events." path="shunya/src/action_framework.js"]
+- p_evt_4_2_3_4 on : [type="method" priority="1" role="Registers executable handlers." path="shunya/src/action_framework.js"]
+- p_evt_4_2_3_5 off : [type="method" priority="1" role="Removes registered handlers." path="shunya/src/action_framework.js"]
+- p_evt_4_2_3_6 emit : [type="method" priority="1" role="Dispatches queued events." path="shunya/src/action_framework.js"]
+- p_evt_4_2_3_7 processQueue : [type="method" priority="1" role="Drains the event queue sequentially." path="shunya/src/action_framework.js"]
+- p_evt_4_2_3_8 handleHttpRequest : [type="method" priority="1" role="Routes incoming HTTP traffic to listeners." path="shunya/src/action_framework.js"]
+- p_evt_4_2_3_9 once : [type="method" priority="1" role="Runs a handler a single time." path="shunya/src/action_framework.js"]
