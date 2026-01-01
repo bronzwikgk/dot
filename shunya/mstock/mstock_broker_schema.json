@@ -1,0 +1,189 @@
+{
+	"$schema": "http://json-schema.org/draft-07/schema#",
+	"title": "mStock Broker Account",
+	"description": "mStock (Mirae Asset Securities) broker account configuration and credentials for trading",
+	"type": "object",
+	"version": "1.0.0",
+	"id": "mstock_broker_account",
+
+	"properties": {
+		"brokerId": {
+			"type": "string",
+			"description": "Unique broker account identifier",
+			"pattern": "^[A-Z0-9_]+$",
+			"minLength": 5,
+			"maxLength": 50
+		},
+		"brokerName": {
+			"type": "string",
+			"const": "mStock",
+			"description": "Broker name - always mStock"
+		},
+		"userId": {
+			"type": "string",
+			"description": "mStock user/client ID",
+			"minLength": 3
+		},
+		"clientCode": {
+			"type": "string",
+			"description": "Client code assigned by mStock",
+			"minLength": 5
+		},
+		"apiKey": {
+			"type": "string",
+			"description": "API key from mStock (encrypted in storage)",
+			"minLength": 32
+		},
+		"apiSecret": {
+			"type": "string",
+			"description": "API secret from mStock (encrypted)",
+			"minLength": 32
+		},
+		"password": {
+			"type": "string",
+			"description": "Trading account password (encrypted)",
+			"minLength": 8
+		},
+		"status": {
+			"type": "string",
+			"enum": ["active", "inactive", "suspended", "disconnected"],
+			"default": "inactive",
+			"description": "Account connection status"
+		},
+		"currentAccessToken": {
+			"type": "string",
+			"description": "Current OAuth access token (encrypted)"
+		},
+		"tokenExpiry": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Token expiry timestamp (refreshes daily at midnight)"
+		},
+		"lastTokenRefresh": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last token refresh time"
+		},
+
+		"rateLimits": {
+			"type": "object",
+			"description": "Rate limit configuration for mStock APIs",
+			"properties": {
+				"orderPerSecond": { "type": "integer", "default": 30 },
+				"orderPerMinute": { "type": "integer", "default": 250 },
+				"dataPerSecond": { "type": "integer", "default": 1 },
+				"dataPerMinute": { "type": "integer", "default": 1000 },
+				"quotePerSecond": { "type": "integer", "default": 20 }
+			}
+		},
+
+		"endpoints": {
+			"type": "object",
+			"description": "API endpoint configuration",
+			"properties": {
+				"apiBase": {
+					"type": "string",
+					"default": "https://api.mstock.trade",
+					"description": "mStock API base URL"
+				},
+				"websocket": {
+					"type": "string",
+					"default": "wss://ws.mstock.trade",
+					"description": "WebSocket endpoint for real-time data"
+				}
+			}
+		},
+
+		"settings": {
+			"type": "object",
+			"description": "Trading preferences and settings",
+			"properties": {
+				"productType": {
+					"type": "string",
+					"enum": ["MIS", "NRML", "CNC"],
+					"default": "MIS",
+					"description": "Default product type (MIS=Intraday, NRML=Normal, CNC=Delivery)"
+				},
+				"orderValidation": {
+					"type": "boolean",
+					"default": true,
+					"description": "Enable client-side order validation"
+				},
+				"basketOrdersAllowed": {
+					"type": "boolean",
+					"default": true,
+					"description": "Allow basket orders"
+				},
+				"coveredOrdersAllowed": {
+					"type": "boolean",
+					"default": true,
+					"description": "Allow covered orders"
+				}
+			}
+		},
+
+		"portfolioDefaults": {
+			"type": "object",
+			"description": "Default portfolio for this broker",
+			"properties": {
+				"portfolioId": { "type": "string" },
+				"name": { "type": "string" }
+			}
+		},
+
+		"connectionStatus": {
+			"type": "object",
+			"description": "Real-time connection status",
+			"properties": {
+				"isConnected": { "type": "boolean" },
+				"lastConnected": { "type": "string", "format": "date-time" },
+				"disconnectReason": { "type": "string" },
+				"apiHealthy": { "type": "boolean" },
+				"websocketHealthy": { "type": "boolean" }
+			}
+		},
+
+		"totalOrders": {
+			"type": "integer",
+			"description": "Total orders placed today",
+			"default": 0
+		},
+		"totalTrades": {
+			"type": "integer",
+			"description": "Total trades executed today",
+			"default": 0
+		},
+
+		"createdAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Account creation timestamp"
+		},
+		"updatedAt": {
+			"type": "string",
+			"format": "date-time",
+			"description": "Last update timestamp"
+		},
+		"createdBy": {
+			"type": "string",
+			"description": "User who created this account"
+		},
+		"updatedBy": {
+			"type": "string",
+			"description": "User who last updated this account"
+		}
+	},
+
+	"required": [
+		"brokerId",
+		"brokerName",
+		"userId",
+		"clientCode",
+		"apiKey",
+		"apiSecret",
+		"password",
+		"status"
+	],
+
+	"additionalProperties": false
+}

@@ -1,0 +1,171 @@
+mStock_Trading_API:
+  root_endpoint:
+    url: https://api.mstock.trade
+    description: |
+      Base URL for all API requests.
+  websocket_endpoint:
+    url: wss://ws.mstock.trade
+    description: |
+      WebSocket endpoint for streaming market data.
+  rate_limits:
+    order_apis:
+      per_second: 30
+      per_minute: 250
+      per_hour: 1000
+    data_apis:
+      per_second: 1
+      per_minute: 1000
+      per_hour: 5000
+    quote_apis:
+      per_second: 20
+      per_minute: 1000
+      per_hour: 5000
+    non_trading_apis:
+      per_second: "Unlimited"
+      per_minute: "Unlimited"
+      per_hour: "Unlimited"
+  api_key_validity:
+    duration: 1 year, 1 month, 1 day
+    description: |
+      Used for initial authentication. Store securely.
+  access_token_validity:
+    duration: Till midnight (same day)
+    description: |
+      Required for all API requests. Renew daily.
+  request_headers:
+    - X-Mirae-Version: 1
+    - Authorization: token api_key:jwtToken
+    - Content-Type: application/json
+    - X-PrivateKey: api_key
+  endpoints:
+    user:
+      login:
+        method: POST
+        path: /openapi/typea/connect/login
+        description: |
+          Initiates the login process by generating an OTP.
+      verify_otp:
+        method: POST
+        path: /openapi/typea/session/verifyotp
+        description: |
+          Verifies the OTP and generates an access token.
+      fund_summary:
+        method: GET
+        path: /openapi/typea/user/fundsummary
+        description: |
+          Retrieves the user's fund summary.
+    orders:
+      place_order:
+        method: POST
+        path: /openapi/typeb/orders
+        description: |
+          Places a new trading order.
+      modify_order:
+        method: PUT
+        path: /openapi/typeb/orders/{order_id}
+        description: |
+          Modifies an existing order.
+      cancel_order:
+        method: DELETE
+        path: /openapi/typeb/orders/{order_id}
+        description: |
+          Cancels an existing order.
+      order_book:
+        method: GET
+        path: /openapi/typea/orders
+        description: |
+          Retrieves the user's order book.
+    portfolio:
+      holdings:
+        method: GET
+        path: /openapi/typeb/portfolio/holdings
+        description: |
+          Retrieves the list of long-term equity delivery stocks in the user's portfolio.
+    position:
+      net_position:
+        method: GET
+        path: /openapi/typeb/portfolio/positions
+        description: |
+          Retrieves the list of trading positions.
+      convert_position:
+        method: POST
+        path: /openapi/typeb/portfolio/convertposition
+        description: |
+          Converts a position from one type to another.
+    calculate_order_margin:
+      method: POST
+      path: /openapi/typeb/orders/ordermargin
+      description: |
+        Calculates the margin required for a new order.
+    basket:
+      create:
+        method: POST
+        path: /openapi/typea/basket
+        description: |
+          Creates a new basket of orders.
+      modify:
+        method: PUT
+        path: /openapi/typea/basket/{basket_id}
+        description: |
+          Modifies an existing basket of orders.
+      cancel:
+        method: DELETE
+        path: /openapi/typea/basket/{basket_id}
+        description: |
+          Cancels an existing basket of orders.
+    market_quotes_and_instruments:
+      instrument_script_master:
+        method: GET
+        path: /openapi/typea/instruments/scriptmaster
+        description: |
+          Provides a consolidated, CSV-formatted list of instruments available for trading.
+    historical_data:
+      method: GET
+      path: /openapi/typeb/historicalcandle
+      description: |
+        Retrieves historical market data.
+    intraday_chart_data:
+      method: GET
+      path: /openapi/typea/instruments/intraday/{exchange}/{scriptName}/{interval}
+      description: |
+        Retrieves intraday chart data for a specific instrument.
+    option_chain:
+      master:
+        method: GET
+        path: /openapi/typeb/getoptionchainmaster/{exch}
+        description: |
+          Fetches option chain master data for a specific exchange.
+      data:
+        method: GET
+        path: /openapi/typeb/GetOptionChain/{exch}/{expiry}/{token}
+        description: |
+          Fetches option chain data for a specific stock.
+    top_gainers_losers:
+      method: POST
+      path: /openapi/typea/losergainer
+      description: |
+        Retrieves the list of top gainers and losers.
+    exceptions_and_error_types:
+      common_errors:
+        - code: 400
+          message: Bad Request
+        - code: 401
+          message: Unauthorized
+        - code: 403
+          message: Forbidden
+        - code: 404
+          message: Not Found
+        - code: 500
+          message: Internal Server Error
+      rate_limit_exceeded:
+        code: 429
+        message: Too Many Requests
+      invalid_token:
+        code: 401
+        message: Invalid or Expired Token
+    data_apis:
+      market_data:
+        method: GET
+        path: /openapi/typea/instruments/quote/ltp
+        description: |
+          Retrieves Last Traded Price (LTP) market data.

@@ -1,0 +1,20 @@
+
+-[ status ] create ehh design doc: Release Version:[], Priority:[]
+    - dataset
+        - reqruirnment
+        - features
+        - techstack
+        - action
+        - entity
+        - plugin
+        - utility
+        - system flow
+        - conditions
+- create erms design and spec doc
+- create code
+- create test cases
+- perform unit test
+- perform e2e test
+- test integration
+- test mstock integration
+- TMS ui

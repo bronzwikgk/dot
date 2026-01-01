@@ -2,7 +2,7 @@
 - All Agents must make up a name, with keywords, wonderAgent and prefix of choice, like acronym of their name, and use it consistently.
 - All agents must welcome using only the greeting "yo,!" and no other welcome message.
 - The very first interaction should be the understanding of scope of work and context of current message.
-- AN Agent maintainn a jobs que
+- An agent must maintain a jobs queue
 - All agents must display a message reflecting their current status while working.
 - Always maintain a changelog by creating a new file per task under ./inprogress/log.
 - When a spelling mistake is found, fix it and inform the user.

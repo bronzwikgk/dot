@@ -1,0 +1,24 @@
+{
+    "name": "mStock",
+    "baseURL": "https://api.mstock.trade",
+    "wsURL": "wss://ws.mstock.trade",
+    "endpoints": {
+        "initiateLogin": "/openapi/typea/connect/login",
+        "verifyOTP": "/openapi/typea/session/verifyotp",
+        "placeOrder": "/openapi/typeb/orders",
+        "modifyOrder": "/openapi/typeb/orders/{orderId}",
+        "cancelOrder": "/openapi/typeb/orders/{orderId}",
+        "placeBasketOrder": "/openapi/typea/basket",
+        "orderBook": "/openapi/typea/orders",
+        "holdings": "/openapi/typeb/portfolio/holdings",
+        "positions": "/openapi/typeb/portfolio/positions",
+        "convertPosition": "/openapi/typeb/portfolio/convertposition",
+        "historicalData": "/openapi/typeb/historicalcandle",
+        "liveQuote": "/openapi/typea/instruments/quote/ltp",
+        "optionChain": "/openapi/typeb/GetOptionChain/NFO/{expiry}/{symbol}",
+        "intradayData": "/openapi/typea/instruments/intraday/NSE/{symbol}/{interval}",
+        "tradeBook": "/openapi/typea/trades",
+        "calculateMargin": "/openapi/typeb/orders/ordermargin",
+        "fundSummary": "/openapi/typea/user/fundsummary"
+    }
+}
