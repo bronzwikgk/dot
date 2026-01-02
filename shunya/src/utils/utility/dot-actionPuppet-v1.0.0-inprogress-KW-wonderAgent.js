@@ -25,7 +25,7 @@ Schema:
 */
 
 import { IndexedDBUtility } from './dot-indexedDBUtility-v1.0.1-inprogress-KW-wonderAgent.js';
-import { LocalStorageUtility } from './dot-localStorageUtility-v1.0.1-inprogress-KW-wonderAgent.js';
+import { LocalStorageUtility } from './dot-localStorageUtility-v1.0.2-inprogress-KW-wonderAgent.js';
 
 const ACTIONPUPPET_METHODS = [
   '1registerScenario',

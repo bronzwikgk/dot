@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Action LocalStorage Native Tester</title>
+    <meta name="description" content="Standalone page that exercises LocalStorage step-by-step." />
+    <style>
+      body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        background: #fff;
+        color: #202020;
+        margin: 0;
+        padding: 24px;
+      }
+      main {
+        max-width: 960px;
+        margin: 0 auto;
+      }
+      button {
+        padding: 0.65rem 1rem;
+        border-radius: 4px;
+        border: 1px solid #444;
+        background: #f4f4f4;
+        cursor: pointer;
+      }
+      button:active {
+        background: #e0e0e0;
+      }
+      #log-entries {
+        margin-top: 1rem;
+        list-style: none;
+        padding-left: 0;
+      }
+      #log-entries li {
+        padding: 0.35rem 0.5rem;
+        border-bottom: 1px solid #ddd;
+      }
+      .log-success {
+        color: #166534;
+      }
+      .log-error {
+        color: #7c0d0d;
+      }
+      .io-row {
+        font-size: 0.85rem;
+        color: #444;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <article>
+        <header>
+          <h1>Action LocalStorage Native Tester</h1>
+          <p>
+            Click the button to run multiple LocalStorage operations; every step renders in the log
+            below along with console output so you can trace input/output side effects.
+          </p>
+        </header>
+        <section>
+          <button id="run-localstorage-native">Test LocalStorage + IndexedDB</button>
+          <p style="font-size:0.9rem; color:#555; margin-top:0.5rem;">
+            Instructions: this tester does not clear existing LocalStorage and preserves IndexedDB entries so you can observe real browser data accumulation.
+          </p>
+        </section>
+        <section>
+          <h2>Operation Log</h2>
+          <ul id="log-entries" aria-live="polite"></ul>
+        </section>
+      </article>
+    </main>
+
+    <script>
+      /*
+Overview: Manual LocalStorage tester focused on exercising abundant operations and exposing input/output pairs.
+Purpose: Ensure the native storage faceplate performs 20 writes plus >30 operations of mixed data types without trimming existing data.
+Audience: QA engineers who need to validate LocalStorage directly in the browser.
+Problem Addressed: Previous helpers hid storage activity inside a map; this page now runs real browser operations and leaves keys intact.
+Use Cases: Sequential writes, reads, updates, removes, key lookups, and status logging.
+Features: Single button, live DOM log, console output, and detailed I/O per interaction.
+Benefits: Provides traceability for every LocalStorage call without clearing or resetting the user’s data.
+User Stories: As a tester I can click once, see each operation in the log, and later inspect Application/Local Storage to confirm values linger.
+User Flow: The page loads, button is pressed, operations run, logs render, and the console echoes each step.
+System Components: Native `window.localStorage` plus DOM logging functions.
+Edge Cases: Handles existing keys gracefully and avoids clearing storage entirely.
+Test Cases: 20 record writes, 20 reads, 5 updates, 5 removals, 5 key inspections, and aggregated operation count >30.
+Configuration:
+- version: v1.0.0
+- status: inprogress
+- agent: KW-wonderAgent
+Schema:
+- type: object
+- properties:
+  - operations: array
+  - log: array
+*/
+
+      var logList = document.getElementById('log-entries');
+
+      function appendLog(message, level, ioDetails) {
+        console.log(message, ioDetails || '');
+        var entry = document.createElement('li');
+        entry.textContent = message;
+        if (level === 'error') {
+          entry.className = 'log-error';
+        } else {
+          entry.className = 'log-success';
+        }
+        if (ioDetails) {
+          var ioRow = document.createElement('div');
+          ioRow.className = 'io-row';
+          ioRow.textContent = ioDetails;
+          entry.appendChild(ioRow);
+        }
+        logList.appendChild(entry);
+      }
+
+      function clearLogs() {
+        logList.innerHTML = '';
+      }
+
+      async function runNativeLocalStorageTest() {
+        appendLog('LocalStorage: starting native utility test (storage preserved)', 'success');
+        var payloads = [];
+        for (var idx = 1; idx <= 20; idx += 1) {
+          var value;
+          if (idx % 5 === 0) {
+            value = { index: idx, tags: ['native', 'utility'], flag: idx % 2 === 0 };
+          } else if (idx % 4 === 0) {
+            value = ['array', idx, idx * 2];
+          } else if (idx % 3 === 0) {
+            value = idx * 10;
+          } else if (idx % 2 === 0) {
+            value = 'token-' + idx;
+          } else {
+            value = idx % 2 === 0 ? 'even' : 'odd';
+          }
+          payloads.push({ key: 'native-item-' + idx, value: value });
+        }
+
+        var operations = 0;
+        payloads.forEach(function (item) {
+          var serialized = typeof item.value === 'string' ? item.value : JSON.stringify(item.value);
+          window.localStorage.setItem(item.key, serialized);
+          operations += 1;
+          appendLog('setItem', 'success', 'input: ' + item.key + ' => ' + serialized);
+        });
+
+        payloads.forEach(function (item) {
+          var read = window.localStorage.getItem(item.key);
+          operations += 1;
+          appendLog('getItem', 'success', 'input: ' + item.key + ' output: ' + read);
+        });
+
+        var updates = [
+          { key: 'native-item-2', value: 'beta-updated' },
+          { key: 'native-item-5', value: { updated: true, time: Date.now() } },
+          { key: 'native-item-11', value: ['updated', 'array'] },
+          { key: 'native-item-16', value: 9999 },
+          { key: 'native-item-19', value: false }
+        ];
+        updates.forEach(function (item) {
+          var serialized = typeof item.value === 'string' ? item.value : JSON.stringify(item.value);
+          window.localStorage.setItem(item.key, serialized);
+          operations += 1;
+          appendLog('setItem (update)', 'success', 'input: ' + item.key + ' => ' + serialized);
+        });
+
+        [3, 7, 12, 14, 18].forEach(function (index) {
+          var key = 'native-item-' + index;
+          window.localStorage.removeItem(key);
+          operations += 1;
+          appendLog('removeItem', 'success', 'input: ' + key);
+        });
+
+        for (var i = 0; i < window.localStorage.length; i += 1) {
+          var currentKey = window.localStorage.key(i);
+          operations += 1;
+          appendLog('key', 'success', 'index: ' + i + ' -> ' + currentKey);
+        }
+
+        appendLog('LocalStorage: total operations recorded ' + operations, 'success');
+        return operations;
+      }
+
+      function openIndexedDB() {
+        return new Promise(function (resolve, reject) {
+          var request = window.indexedDB.open('native-storage-db', 1);
+          request.onupgradeneeded = function () {
+            var db = request.result;
+            if (!db.objectStoreNames.contains('native-store')) {
+              db.createObjectStore('native-store', { keyPath: 'key' });
+            }
+            appendLog('IndexedDB: store ensured during upgrade', 'success');
+          };
+          request.onsuccess = function () {
+            resolve(request.result);
+          };
+          request.onerror = function () {
+            reject(request.error);
+          };
+        });
+      }
+
+      function performIndexedDBOperations(db) {
+        return new Promise(function (resolve, reject) {
+          var operations = 0;
+          var entries = [];
+          for (var i = 1; i <= 10; i += 1) {
+            entries.push({ key: 'db-item-' + i, payload: { value: i, flag: i % 2 === 0 } });
+          }
+          var transaction = db.transaction('native-store', 'readwrite');
+          var store = transaction.objectStore('native-store');
+          transaction.oncomplete = function () {
+            resolve(operations);
+          };
+          transaction.onerror = function () {
+            reject(transaction.error);
+          };
+          entries.forEach(function (entry) {
+            var request = store.put(entry);
+            request.onsuccess = function () {
+              operations += 1;
+              appendLog('IndexedDB setItem', 'success', 'input: ' + entry.key + ' => ' + JSON.stringify(entry.payload));
+            };
+            request.onerror = function () {
+              operations += 1;
+              appendLog('IndexedDB setItem failed', 'error', 'key: ' + entry.key);
+            };
+          });
+        });
+      }
+
+      function readIndexedDBEntries(db) {
+        return new Promise(function (resolve, reject) {
+          var results = [];
+          var transaction = db.transaction('native-store', 'readonly');
+          var store = transaction.objectStore('native-store');
+          var request = store.openCursor();
+          var operations = 0;
+          request.onsuccess = function (event) {
+            var cursor = event.target.result;
+            if (!cursor) {
+              appendLog('IndexedDB: read entries count ' + results.length, 'success');
+              resolve({ results: results, operations: operations });
+              return;
+            }
+            results.push(cursor.value);
+            operations += 1;
+            appendLog('IndexedDB getItem', 'success', 'key: ' + cursor.key + ' => ' + JSON.stringify(cursor.value));
+            cursor.continue();
+          };
+          request.onerror = function () {
+            reject(request.error);
+          };
+        });
+      }
+
+      function updateIndexedDBEntries(db) {
+        return new Promise(function (resolve, reject) {
+          var keysToUpdate = ['db-item-2', 'db-item-5', 'db-item-7'];
+          var transaction = db.transaction('native-store', 'readwrite');
+          var store = transaction.objectStore('native-store');
+          transaction.oncomplete = function () {
+            resolve(keysToUpdate.length);
+          };
+          transaction.onerror = function () {
+            reject(transaction.error);
+          };
+          var operations = 0;
+          keysToUpdate.forEach(function (key) {
+            var request = store.get(key);
+            request.onsuccess = function () {
+              var existing = request.result || { key: key };
+              existing.payload = { updated: true, timestamp: Date.now() };
+              var updateRequest = store.put(existing);
+              updateRequest.onsuccess = function () {
+                operations += 1;
+                appendLog('IndexedDB update', 'success', 'key: ' + key);
+              };
+              updateRequest.onerror = function () {
+                appendLog('IndexedDB update failed', 'error', 'key: ' + key);
+              };
+            };
+            request.onerror = function () {
+              appendLog('IndexedDB get for update failed', 'error', 'key: ' + key);
+            };
+          });
+        });
+      }
+
+      function deleteIndexedDBEntries(db) {
+        return new Promise(function (resolve, reject) {
+          var keysToRemove = ['db-item-3', 'db-item-6'];
+          var transaction = db.transaction('native-store', 'readwrite');
+          var store = transaction.objectStore('native-store');
+          transaction.oncomplete = function () {
+            resolve(keysToRemove.length);
+          };
+          transaction.onerror = function () {
+            reject(transaction.error);
+          };
+          keysToRemove.forEach(function (key) {
+            var request = store.delete(key);
+            request.onsuccess = function () {
+              appendLog('IndexedDB delete', 'success', 'key: ' + key);
+            };
+            request.onerror = function () {
+              appendLog('IndexedDB delete failed', 'error', 'key: ' + key);
+            };
+          });
+        });
+      }
+
+      async function runNativeIndexedDBTest() {
+        appendLog('IndexedDB: starting native test (storage preserved)', 'success');
+        var operations = 0;
+        var db = await openIndexedDB();
+        operations += await performIndexedDBOperations(db);
+        var readResult = await readIndexedDBEntries(db);
+        operations += readResult.operations;
+        operations += await updateIndexedDBEntries(db);
+        operations += await deleteIndexedDBEntries(db);
+        db.close();
+        appendLog('IndexedDB: total operations recorded ' + operations, 'success');
+        return operations;
+      }
+
+      async function runCombinedTest() {
+        clearLogs();
+        try {
+          var localOps = await runNativeLocalStorageTest();
+          var idbOps = await runNativeIndexedDBTest();
+          appendLog('Combined test completed: localOps=' + localOps + ', idbOps=' + idbOps, 'success');
+        } catch (error) {
+          appendLog('Combined test failed: ' + error.message, 'error');
+        }
+      }
+
+      document.getElementById('run-localstorage-native').addEventListener('click', function () {
+        runCombinedTest();
+      });
+    </script>
+  </body>
+</html>

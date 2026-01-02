@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Action Utility Test Bench</title>
+    <meta name="description" content="Browser page that exercises the LocalStorage and IndexedDB utilities." />
+    <style>
+      body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0;
+        padding: 2rem;
+        background: #fdfdfd;
+        color: #101010;
+      }
+      main {
+        max-width: 900px;
+        margin: 0 auto;
+      }
+      button {
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding: 0.75rem 1.25rem;
+        border-radius: 4px;
+        border: 1px solid #333;
+        background: #fff;
+        cursor: pointer;
+      }
+      button:active {
+        background: #f0f0f0;
+      }
+      ul {
+        list-style: decimal;
+        margin-left: 1rem;
+      }
+      #activity-log li {
+        margin-bottom: 0.4rem;
+        font-size: 0.9rem;
+      }
+      .activity-success {
+        color: #0d4;
+      }
+      .activity-error {
+        color: #a00;
+      }
+      .method-list-container {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+      }
+      .method-list {
+        flex: 1;
+      }
+      .method-list h3 {
+        margin-bottom: 0.25rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <article>
+        <header>
+          <h1>Action Utility Test Bench</h1>
+          <p>
+            This page imports the approved LocalStorage and IndexedDB utilities and lets you trigger each helper group.
+            Each button logs operations to the DevTools console and the activity list below, showing inputs and outputs.
+          </p>
+        </header>
+        <section>
+          <button id="test-localstorage">Test LocalStorage Utility</button>
+          <button id="test-indexeddb">Test IndexedDB Utility</button>
+          <button id="test-all">Test Both Utilities</button>
+        </section>
+        <section>
+          <h2>Activity Log</h2>
+          <ul id="activity-log" aria-live="polite"></ul>
+        </section>
+        <section>
+          <div class="method-list-container">
+            <div class="method-list">
+              <h3>LocalStorage Methods</h3>
+              <ol id="local-methods"></ol>
+            </div>
+            <div class="method-list">
+              <h3>IndexedDB Methods</h3>
+              <ol id="indexed-methods"></ol>
+            </div>
+          </div>
+        </section>
+      </article>
+    </main>
+
+    <script type="module">
+      import {
+        LocalStorageUtility,
+        DATASET_LOCALSTORAGE_METHODS_IMPLEMENTED
+      } from './dot-localStorageUtility-v1.0.2-inprogress-KW-wonderAgent.js';
+      import {
+        IndexedDBUtility,
+        DATASET_INDEXEDDB_METHODS_IMPLEMENTED
+      } from './dot-indexedDBUtility-v1.0.1-inprogress-KW-wonderAgent.js';
+
+      class UtilityTestBench {
+        constructor() {
+          this.localStorage = new LocalStorageUtility();
+          this.indexedDB = new IndexedDBUtility();
+          this.activityLog = document.getElementById('activity-log');
+        }
+
+        log(message, status, details) {
+          console.log(message, details || '');
+          var entry = document.createElement('li');
+          entry.textContent = message + (details ? ' (' + details + ')' : '');
+          if (status === 'error') {
+            entry.classList.add('activity-error');
+          } else {
+            entry.classList.add('activity-success');
+          }
+          this.activityLog.appendChild(entry);
+        }
+
+        clearLog() {
+          this.activityLog.innerHTML = '';
+        }
+
+        populateMethodLists() {
+          var localList = document.getElementById('local-methods');
+          var indexedList = document.getElementById('indexed-methods');
+          DATASET_LOCALSTORAGE_METHODS_IMPLEMENTED.forEach(function (method) {
+            var item = document.createElement('li');
+            item.textContent = method;
+            localList.appendChild(item);
+          });
+          DATASET_INDEXEDDB_METHODS_IMPLEMENTED.forEach(function (method) {
+            var item = document.createElement('li');
+            item.textContent = method;
+            indexedList.appendChild(item);
+          });
+        }
+
+        async testLocalStorage() {
+          this.clearLog();
+          this.log('LocalStorage: starting utility test', 'success');
+          try {
+            await this.localStorage.setItem('utility-key-1', 'alpha');
+            this.log('setItem: utility-key-1 => alpha', 'success');
+            await this.localStorage.setItem('utility-key-2', 'beta');
+            this.log('setItem: utility-key-2 => beta', 'success');
+            var read = await this.localStorage.getItem('utility-key-1');
+            this.log('getItem: utility-key-1 => ' + read, 'success');
+            var lengthBefore = this.localStorage.length;
+            this.log('length: ' + lengthBefore, 'success');
+            await this.localStorage.removeItem('utility-key-2');
+            this.log('removeItem: utility-key-2', 'success');
+            var key0 = await this.localStorage.key(0);
+            this.log('key: 0 => ' + key0, 'success');
+            var lengthAfter = this.localStorage.length;
+            this.log('length: ' + lengthAfter, 'success');
+            this.log('LocalStorage utility test completed', 'success');
+          } catch (error) {
+            this.log('LocalStorage utility test failed: ' + error.message, 'error');
+          }
+        }
+
+        async testIndexedDB() {
+          this.clearLog();
+          this.log('IndexedDB: starting utility test', 'success');
+          try {
+            await this.indexedDB.openDB('utility-browser-db');
+            this.log('openDB: utility-browser-db', 'success');
+            await this.indexedDB.createStore('utility-store');
+            this.log('createStore: utility-store', 'success');
+            await this.indexedDB.put('utility-store', 'key-a', { content: 'A' });
+            this.log('put: key-a => {content: "A"}', 'success');
+            await this.indexedDB.put('utility-store', 'key-b', { content: 'B' });
+            this.log('put: key-b => {content: "B"}', 'success');
+            var fetchedA = await this.indexedDB.get('utility-store', 'key-a');
+            this.log('get: key-a => ' + JSON.stringify(fetchedA), 'success');
+            await this.indexedDB.delete('utility-store', 'key-b');
+            this.log('delete: key-b', 'success');
+            await this.indexedDB.clear('utility-store');
+            this.log('clear: utility-store', 'success');
+            await this.indexedDB.close();
+            this.log('close: utility-browser-db', 'success');
+          } catch (error) {
+            this.log('IndexedDB utility test failed: ' + error.message, 'error');
+          }
+        }
+
+        async testAll() {
+          await this.testLocalStorage();
+          await this.testIndexedDB();
+        }
+      }
+
+      var bench = new UtilityTestBench();
+      bench.populateMethodLists();
+
+      document.getElementById('test-localstorage').addEventListener('click', function () {
+        bench.testLocalStorage();
+      });
+      document.getElementById('test-indexeddb').addEventListener('click', function () {
+        bench.testIndexedDB();
+      });
+      document.getElementById('test-all').addEventListener('click', function () {
+        bench.testAll();
+      });
+    </script>
+  </body>
+</html>
