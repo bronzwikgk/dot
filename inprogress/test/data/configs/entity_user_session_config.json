@@ -1,0 +1,42 @@
+{
+  "id": "user_session",
+  "name": "User Session",
+  "type": "entity",
+  "dbSchema": {
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "sessionId": {
+        "type": "string",
+        "validate": {
+          "required": true
+        }
+      },
+      "userId": {
+        "type": "string",
+        "validate": {
+          "required": true
+        }
+      },
+      "username": {
+        "type": "string"
+      },
+      "token": {
+        "type": "string"
+      },
+      "expiresAt": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "string"
+      }
+    }
+  },
+  "storage": {
+    "driver": "fs",
+    "path": "./data/user_session",
+    "file": "sessions.json",
+    "format": "json"
+  }
+}

@@ -1,0 +1,7 @@
+version: v1.0.4
+status: inprogress
+agent: KW-wonderAgent
+command: node dot-actionEntity-run-v1.0.4-inprogress-KW-wonderAgent.js
+working_directory: inprogress/test
+
+

@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EHHSlotBrowser Prototype v1.0.2</title>
+    <style>
+        #ehh-app {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .app-header {
+            background: #2c3e50;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .app-header .logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .main-nav a {
+            color: white;
+            margin-right: 15px;
+            text-decoration: none;
+        }
+        .main-nav a.active {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+        .app-sidebar {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .sidebar-stats {
+            display: flex;
+            gap: 15px;
+        }
+        .stat-item {
+            text-align: center;
+        }
+        .stat-label {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        .stat-value {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .app-main {
+            min-height: 400px;
+        }
+        .app-footer {
+            margin-top: 20px;
+            padding: 15px;
+            text-align: center;
+            color: #7f8c8d;
+            border-top: 1px solid #ddd;
+        }
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .card-header {
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+        }
+        .card-body {
+            padding: 15px;
+        }
+        .card-footer {
+            background: #f8f9fa;
+            padding: 15px;
+            display: flex;
+            gap: 10px;
+        }
+        .btn {
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+        .btn-sm {
+            padding: 4px 8px;
+            font-size: 12px;
+        }
+        .btn-danger {
+            background: #e74c3c;
+        }
+        .form-field {
+            margin-bottom: 15px;
+        }
+        .form-field label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .form-field input,
+        .form-field select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .data-table th,
+        .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        .data-table th {
+            background: #f2f2f2;
+            font-weight: bold;
+        }
+        .alert {
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+    <div id="ehh-app"></div>
+
+    <script>
+        // ==================== CONFIG ====================
+        const ehhBrowserConfig = {
+            version: "1.0.2",
+            status: "ready",
+            agent: "WA-Alpha wonderAgent",
+            runtime: "browser",
+            appName: "EHHSlotBrowser",
+            routes: {
+                home: { path: "/", view: "page_home", title: "Dashboard" },
+                users: { path: "/users", view: "page_users", title: "Users" },
+                create: { path: "/users/create", view: "page_create", title: "Create User" },
+                edit: { path: "/users/edit/:id", view: "page_edit", title: "Edit User" },
+                settings: { path: "/settings", view: "page_settings", title: "Settings" }
+            },
+            storage: {
+                adapter: "localStorage",
+                namespace: "ehh_app_v1",
+                entities: ["users", "projects", "sessions"]
+            },
+            validation: {
+                userSchema: {
+                    id: { type: "string", required: true },
+                    name: { type: "string", required: true, min: 2, max: 50 },
+                    email: { type: "string", required: true, format: "email" },
+                    role: { type: "string", required: true, enum: ["admin", "user", "guest"] },
+                    status: { type: "string", default: "active", enum: ["active", "inactive", "pending"] }
+                }
+            },
+            ui: {
+                theme: "default",
+                slots: ["header", "aside", "main", "footer"],
+                components: ["nav", "card", "form", "table", "alert"]
+            }
+        };
+
+        // ==================== TEMPLATES ====================
+        const ehhTemplates = {
+            slot_header: {
+                type: "slot",
+                name: "header",
+                tag: "header",
+                classes: "app-header",
+                children: [
+                    {
+                        type: "component",
+                        name: "logo",
+                        tag: "div",
+                        classes: "logo",
+                        text: "EHHSlotBrowser v1.0.2"
+                    },
+                    {
+                        type: "component",
+                        name: "nav",
+                        tag: "nav",
+                        classes: "main-nav",
+                        children: [
+                            { type: "link", text: "Home", href: "/", active: true },
+                            { type: "link", text: "Users", href: "/users" },
+                            { type: "link", text: "Create", href: "/users/create" },
+                            { type: "link", text: "Settings", href: "/settings" }
+                        ]
+                    }
+                ]
+            },
+            
+            slot_aside: {
+                type: "slot",
+                name: "aside",
+                tag: "aside",
+                classes: "app-sidebar",
+                children: [
+                    {
+                        type: "component",
+                        name: "stats",
+                        tag: "div",
+                        classes: "sidebar-stats",
+                        children: [
+                            { type: "stat", label: "Total Users", value: "{{userCount}}", id: "stat_users" },
+                            { type: "stat", label: "Active", value: "{{activeCount}}", id: "stat_active" },
+                            { type: "stat", label: "Storage", value: "{{storageUsed}}", id: "stat_storage" }
+                        ]
+                    }
+                ]
+            },
+            
+            slot_main: {
+                type: "slot",
+                name: "main",
+                tag: "main",
+                classes: "app-main",
+                children: []
+            },
+            
+            slot_footer: {
+                type: "slot",
+                name: "footer",
+                tag: "footer",
+                classes: "app-footer",
+                text: "© 2024 EHH Framework v1.0.2 | Status: {{appStatus}}"
+            },
+            
+            page_home: {
+                type: "page",
+                name: "home",
+                title: "Dashboard",
+                layout: ["header", "aside", "main", "footer"],
+                mainContent: {
+                    type: "container",
+                    classes: "dashboard-grid",
+                    children: [
+                        {
+                            type: "card",
+                            title: "Welcome",
+                            content: "This is a slot-driven browser prototype for testing routing and CRUD operations.",
+                            actions: [
+                                { type: "button", text: "View Users", action: "navigate", target: "/users", id: "btn_view_users" },
+                                { type: "button", text: "Create New", action: "navigate", target: "/users/create", id: "btn_create_new" }
+                            ]
+                        },
+                        {
+                            type: "card",
+                            title: "System Info",
+                            content: "Runtime: {{runtime}} | Storage: {{storageAdapter}}",
+                            id: "sysinfo_card"
+                        }
+                    ]
+                }
+            },
+            
+            page_users: {
+                type: "page",
+                name: "users",
+                title: "User Management",
+                layout: ["header", "aside", "main", "footer"],
+                mainContent: {
+                    type: "container",
+                    children: [
+                        {
+                            type: "card",
+                            title: "User List",
+                            actions: [
+                                { type: "button", text: "Add User", action: "navigate", target: "/users/create", id: "btn_add_user" }
+                            ],
+                            children: [
+                                {
+                                    type: "table",
+                                    id: "users_table",
+                                    headers: ["ID", "Name", "Email", "Role", "Actions"],
+                                    rows: []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            
+            page_create: {
+                type: "page",
+                name: "create",
+                title: "Create User",
+                layout: ["header", "aside", "main", "footer"],
+                mainContent: {
+                    type: "container",
+                    children: [
+                        {
+                            type: "card",
+                            title: "Create New User",
+                            children: [
+                                {
+                                    type: "form",
+                                    id: "create_user_form",
+                                    fields: [
+                                        { name: "name", label: "Full Name", type: "text", required: true, placeholder: "Enter name", id: "field_name" },
+                                        { name: "email", label: "Email", type: "email", required: true, placeholder: "user@example.com", id: "field_email" },
+                                        { 
+                                            name: "role", 
+                                            label: "Role", 
+                                            type: "select", 
+                                            options: [
+                                                { value: "admin", text: "Administrator" },
+                                                { value: "user", text: "Regular User" },
+                                                { value: "guest", text: "Guest" }
+                                            ],
+                                            required: true,
+                                            id: "field_role"
+                                        }
+                                    ],
+                                    actions: [
+                                        { type: "button", text: "Submit", action: "submit", form: "create_user_form", id: "btn_submit_create" },
+                                        { type: "button", text: "Cancel", action: "navigate", target: "/users", id: "btn_cancel_create" }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            
+            page_edit: {
+                type: "page",
+                name: "edit",
+                title: "Edit User",
+                layout: ["header", "aside", "main", "footer"],
+                mainContent: {
+                    type: "container",
+                    children: [
+                        {
+                            type: "card",
+                            title: "Edit User #{{userId}}",
+                            id: "edit_card",
+                            children: [
+                                {
+                                    type: "form",
+                                    id: "edit_user_form",
+                                    fields: [
+                                        { name: "name", label: "Full Name", type: "text", required: true, id: "field_name" },
+                                        { name: "email", label: "Email", type: "email", required: true, id: "field_email" },
+                                        { 
+                                            name: "role", 
+                                            label: "Role", 
+                                            type: "select", 
+                                            options: [
+                                                { value: "admin", text: "Administrator" },
+                                                { value: "user", text: "Regular User" },
+                                                { value: "guest", text: "Guest" }
+                                            ],
+                                            id: "field_role"
+                                        },
+                                        { 
+                                            name: "status", 
+                                            label: "Status", 
+                                            type: "select", 
+                                            options: [
+                                                { value: "active", text: "Active" },
+                                                { value: "inactive", text: "Inactive" },
+                                                { value: "pending", text: "Pending" }
+                                            ],
+                                            id: "field_status"
+                                        }
+                                    ],
+                                    actions: [
+                                        { type: "button", text: "Update", action: "submit", form: "edit_user_form", id: "btn_update_user" },
+                                        { type: "button", text: "Delete", action: "delete", confirm: true, id: "btn_delete_user" },
+                                        { type: "button", text: "Cancel", action: "navigate", target: "/users", id: "btn_cancel_edit" }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            },
+            
+            page_settings: {
+                type: "page",
+                name: "settings",
+                title: "Settings",
+                layout: ["header", "aside", "main", "footer"],
+                mainContent: {
+                    type: "container",
+                    children: [
+                        {
+                            type: "card",
+                            title: "Application Settings",
+                            children: [
+                                {
+                                    type: "form",
+                                    id: "settings_form",
+                                    fields: [
+                                        { name: "theme", label: "Theme", type: "select", options: [
+                                            { value: "default", text: "Default" },
+                                            { value: "dark", text: "Dark" },
+                                            { value: "light", text: "Light" }
+                                        ], id: "field_theme"},
+                                        { name: "storage_limit", label: "Storage Limit (MB)", type: "number", min: 1, max: 100, id: "field_storage_limit" }
+                                    ],
+                                    actions: [
+                                        { type: "button", text: "Save Settings", action: "submit", form: "settings_form", id: "btn_save_settings" },
+                                        { type: "button", text: "Clear Data", action: "clear_storage", confirm: true, id: "btn_clear_data" }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                }
+            }
+        };
+
+        // ==================== ACTIONAPP ====================
+        const ActionApp = {
+            config: ehhBrowserConfig,
+            templates: ehhTemplates,
+            currentRoute: null,
+            currentPage: null,
+            data: { users: [], settings: {}, stats: {} },
+            
+            init: function() {
+                window.ehhApp = this;
+                this.loadFromStorage();
+                this.setupRouting();
+                this.handleRouteChange();
+                this.updateStats();
+                console.log("ActionApp initialized v1.0.2");
+                return this;
+            },
+            
+            loadFromStorage: function() {
+                var usersData = localStorage.getItem(this.config.storage.namespace + "_users");
+                if (usersData) {
+                    try { this.data.users = JSON.parse(usersData); } 
+                    catch (e) { this.data.users = []; }
+                }
+                var settingsData = localStorage.getItem(this.config.storage.namespace + "_settings");
+                if (settingsData) {
+                    try { this.data.settings = JSON.parse(settingsData); } 
+                    catch (e) { this.data.settings = {}; }
+                }
+            },
+            
+            saveToStorage: function(entity, data) {
+                localStorage.setItem(this.config.storage.namespace + "_" + entity, JSON.stringify(data));
+                this.updateStats();
+                return true;
+            },
+            
+            setupRouting: function() {
+                var self = this;
+                window.onhashchange = function() { 
+                    self.handleRouteChange(); 
+                };
+                
+                document.addEventListener("click", function(e) {
+                    var target = e.target;
+                    if (target.tagName === "A" && target.getAttribute("href") && target.getAttribute("href").startsWith("#")) {
+                        e.preventDefault();
+                        window.location.hash = target.getAttribute("href").substring(1);
+                    }
+                });
+            },
+            
+            handleRouteChange: function() {
+                var hash = window.location.hash.substring(1) || "/";
+                var route = this.findRoute(hash);
+                if (route) {
+                    this.currentRoute = route;
+                    this.renderPage(route.view);
+                } else {
+                    window.location.hash = "/";
+                    this.currentRoute = this.config.routes.home;
+                    this.renderPage("page_home");
+                }
+            },
+            
+            findRoute: function(path) {
+                var routes = this.config.routes;
+                if (routes[path.substring(1)]) {
+                    return routes[path.substring(1)];
+                }
+                var pathParts = path.split("/").filter(Boolean);
+                if (pathParts[0] === "users" && pathParts.length === 1) {
+                    return routes.users;
+                }
+                if (pathParts[0] === "users" && pathParts[1] === "create") {
+                    return routes.create;
+                }
+                if (pathParts[0] === "users" && pathParts[1] === "edit" && pathParts[2]) {
+                    return {
+                        path: path,
+                        view: "page_edit",
+                        title: "Edit User",
+                        params: { id: pathParts[2] }
+                    };
+                }
+                if (pathParts[0] === "settings") {
+                    return routes.settings;
+                }
+                if (path === "/" || path === "") {
+                    return routes.home;
+                }
+                return null;
+            },
+            
+            renderPage: function(pageName) {
+                var appRoot = document.getElementById("ehh-app");
+                if (appRoot) {
+                    appRoot.innerHTML = "";
+                } else {
+                    appRoot = document.createElement("div");
+                    appRoot.id = "ehh-app";
+                    document.body.appendChild(appRoot);
+                }
+                
+                var pageTemplate = this.templates[pageName];
+                if (!pageTemplate) {
+                    console.error("Template not found:", pageName);
+                    return;
+                }
+                
+                this.currentPage = pageName;
+                var layout = pageTemplate.layout;
+                
+                if (layout.indexOf("header") !== -1) {
+                    var headerElement = this.renderSlot("slot_header");
+                    appRoot.appendChild(headerElement);
+                }
+                if (layout.indexOf("aside") !== -1) {
+                    var asideElement = this.renderSlot("slot_aside");
+                    appRoot.appendChild(asideElement);
+                }
+                if (layout.indexOf("main") !== -1) {
+                    var mainElement = this.renderSlot("slot_main");
+                    var mainContent = this.renderTemplate(pageTemplate.mainContent);
+                    if (mainContent) mainElement.appendChild(mainContent);
+                    appRoot.appendChild(mainElement);
+                }
+                if (layout.indexOf("footer") !== -1) {
+                    var footerElement = this.renderSlot("slot_footer");
+                    appRoot.appendChild(footerElement);
+                }
+                
+                document.title = pageTemplate.title + " | " + this.config.appName;
+                this.bindPageEvents();
+                console.log("Page rendered:", pageName);
+            },
+            
+            renderSlot: function(slotName) {
+                var slotTemplate = this.templates[slotName];
+                if (!slotTemplate) return document.createElement("div");
+                
+                var element = document.createElement(slotTemplate.tag);
+                element.className = slotTemplate.classes || "";
+                element.id = "slot_" + slotTemplate.name;
+                
+                if (slotTemplate.children && slotTemplate.children.length > 0) {
+                    if (slotTemplate.children[0]) {
+                        var child1 = this.renderTemplate(slotTemplate.children[0]);
+                        if (child1) element.appendChild(child1);
+                    }
+                    if (slotTemplate.children[1]) {
+                        var child2 = this.renderTemplate(slotTemplate.children[1]);
+                        if (child2) element.appendChild(child2);
+                    }
+                }
+                
+                if (slotTemplate.text) {
+                    var processedText = this.processTokens(slotTemplate.text);
+                    var textNode = document.createTextNode(processedText);
+                    element.appendChild(textNode);
+                }
+                
+                return element;
+            },
+            
+            renderTemplate: function(template) {
+                if (!template) return null;
+                var element;
+                
+                if (template.type === "container") {
+                    element = document.createElement("div");
+                    element.className = template.classes || "";
+                    if (template.children && template.children[0]) {
+                        var child1 = this.renderTemplate(template.children[0]);
+                        if (child1) element.appendChild(child1);
+                    }
+                    if (template.children && template.children[1]) {
+                        var child2 = this.renderTemplate(template.children[1]);
+                        if (child2) element.appendChild(child2);
+                    }
+                }
+                else if (template.type === "card") {
+                    element = document.createElement("div");
+                    element.className = "card";
+                    element.id = template.id || "";
+                    
+                    var titleEl = document.createElement("div");
+                    titleEl.className = "card-header";
+                    titleEl.textContent = template.title || "";
+                    element.appendChild(titleEl);
+                    
+                    var bodyEl = document.createElement("div");
+                    bodyEl.className = "card-body";
+                    if (template.content) {
+                        var contentText = this.processTokens(template.content);
+                        bodyEl.textContent = contentText;
+                    }
+                    if (template.children && template.children[0]) {
+                        var child1 = this.renderTemplate(template.children[0]);
+                        if (child1) bodyEl.appendChild(child1);
+                    }
+                    element.appendChild(bodyEl);
+                    
+                    if (template.actions && template.actions.length > 0) {
+                        var footerEl = document.createElement("div");
+                        footerEl.className = "card-footer";
+                        if (template.actions[0]) {
+                            var action1 = this.createButton(template.actions[0]);
+                            if (action1) footerEl.appendChild(action1);
+                        }
+                        if (template.actions[1]) {
+                            var action2 = this.createButton(template.actions[1]);
+                            if (action2) footerEl.appendChild(action2);
+                        }
+                        element.appendChild(footerEl);
+                    }
+                }
+                else if (template.type === "table") {
+                    element = document.createElement("table");
+                    element.className = "data-table";
+                    element.id = template.id || "";
+                    
+                    var thead = document.createElement("thead");
+                    var headerRow = document.createElement("tr");
+                    if (template.headers && template.headers[0]) {
+                        var th1 = document.createElement("th");
+                        th1.textContent = template.headers[0];
+                        headerRow.appendChild(th1);
+                    }
+                    if (template.headers && template.headers[1]) {
+                        var th2 = document.createElement("th");
+                        th2.textContent = template.headers[1];
+                        headerRow.appendChild(th2);
+                    }
+                    if (template.headers && template.headers[2]) {
+                        var th3 = document.createElement("th");
+                        th3.textContent = template.headers[2];
+                        headerRow.appendChild(th3);
+                    }
+                    if (template.headers && template.headers[3]) {
+                        var th4 = document.createElement("th");
+                        th4.textContent = template.headers[3];
+                        headerRow.appendChild(th4);
+                    }
+                    if (template.headers && template.headers[4]) {
+                        var th5 = document.createElement("th");
+                        th5.textContent = template.headers[4];
+                        headerRow.appendChild(th5);
+                    }
+                    thead.appendChild(headerRow);
+                    element.appendChild(thead);
+                    
+                    var tbody = document.createElement("tbody");
+                    tbody.id = template.id + "_body";
+                    element.appendChild(tbody);
+                    
+                    if (template.id === "users_table") {
+                        setTimeout(function() { ActionApp.populateUsersTable(); }, 0);
+                    }
+                }
+                else if (template.type === "form") {
+                    element = document.createElement("form");
+                    element.id = template.id || "";
+                    element.className = "app-form";
+                    
+                    if (template.fields && template.fields[0]) {
+                        var field1 = this.createFormField(template.fields[0]);
+                        if (field1) element.appendChild(field1);
+                    }
+                    if (template.fields && template.fields[1]) {
+                        var field2 = this.createFormField(template.fields[1]);
+                        if (field2) element.appendChild(field2);
+                    }
+                    if (template.fields && template.fields[2]) {
+                        var field3 = this.createFormField(template.fields[2]);
+                        if (field3) element.appendChild(field3);
+                    }
+                    if (template.fields && template.fields[3]) {
+                        var field4 = this.createFormField(template.fields[3]);
+                        if (field4) element.appendChild(field4);
+                    }
+                    
+                    if (template.actions && template.actions.length > 0) {
+                        var actionsDiv = document.createElement("div");
+                        actionsDiv.className = "form-actions";
+                        if (template.actions[0]) {
+                            var action1 = this.createButton(template.actions[0]);
+                            if (action1) actionsDiv.appendChild(action1);
+                        }
+                        if (template.actions[1]) {
+                            var action2 = this.createButton(template.actions[1]);
+                            if (action2) actionsDiv.appendChild(action2);
+                        }
+                        if (template.actions[2]) {
+                            var action3 = this.createButton(template.actions[2]);
+                            if (action3) actionsDiv.appendChild(action3);
+                        }
+                        element.appendChild(actionsDiv);
+                    }
+                    
+                    // Prevent default form submission
+                    element.onsubmit = function(e) {
+                        e.preventDefault();
+                        return false;
+                    };
+                }
+                else if (template.type === "element") {
+                    element = document.createElement(template.tag || "div");
+                    element.className = template.classes || "";
+                    if (template.content) {
+                        var contentText = this.processTokens(template.content);
+                        element.textContent = contentText;
+                    }
+                }
+                else if (template.type === "component") {
+                    element = document.createElement(template.tag || "div");
+                    element.className = template.classes || "";
+                    if (template.text) {
+                        element.textContent = template.text;
+                    }
+                }
+                else if (template.type === "link") {
+                    element = document.createElement("a");
+                    element.href = "#" + (template.href || "/");
+                    element.textContent = template.text || "";
+                    if (template.active) {
+                        element.className = "active";
+                    }
+                }
+                else if (template.type === "stat") {
+                    element = document.createElement("div");
+                    element.className = "stat-item";
+                    element.id = template.id || "";
+                    
+                    var label = document.createElement("div");
+                    label.className = "stat-label";
+                    label.textContent = template.label || "";
+                    element.appendChild(label);
+                    
+                    var value = document.createElement("div");
+                    value.className = "stat-value";
+                    value.textContent = template.value || "";
+                    element.appendChild(value);
+                }
+                else if (template.type === "button") {
+                    element = this.createButton(template);
+                }
+                else {
+                    element = document.createElement("div");
+                    if (template.text) {
+                        element.textContent = template.text;
+                    }
+                }
+                
+                return element;
+            },
+            
+            createButton: function(buttonDef) {
+                var button = document.createElement("button");
+                button.type = "button";
+                button.textContent = buttonDef.text || "Button";
+                button.className = "btn";
+                button.id = buttonDef.id || "";
+                
+                if (buttonDef.action) button.setAttribute("data-action", buttonDef.action);
+                if (buttonDef.target) button.setAttribute("data-target", buttonDef.target);
+                if (buttonDef.form) button.setAttribute("data-form", buttonDef.form);
+                if (buttonDef.confirm) button.setAttribute("data-confirm", "true");
+                
+                // Add click handler directly
+                var self = this;
+                button.onclick = function(e) {
+                    e.preventDefault();
+                    var action = this.getAttribute("data-action");
+                    var target = this.getAttribute("data-target");
+                    var formId = this.getAttribute("data-form");
+                    var confirmReq = this.getAttribute("data-confirm") === "true";
+                    
+                    if (confirmReq && !confirm("Are you sure?")) {
+                        return;
+                    }
+                    
+                    if (action === "navigate") {
+                        window.location.hash = target;
+                    }
+                    else if (action === "submit") {
+                        self.handleFormSubmit(formId);
+                    }
+                    else if (action === "delete") {
+                        var route = self.currentRoute;
+                        if (route && route.params && route.params.id) {
+                            if (confirm("Delete this user?")) {
+                                self.deleteUser(route.params.id);
+                            }
+                        }
+                    }
+                    else if (action === "clear_storage") {
+                        if (confirm("Clear all application data?")) {
+                            localStorage.clear();
+                            self.data.users = [];
+                            self.data.settings = {};
+                            self.showAlert("All data cleared!", "warning");
+                            self.updateStats();
+                            window.location.hash = "/";
+                        }
+                    }
+                };
+                
+                return button;
+            },
+            
+            createFormField: function(fieldDef) {
+                var container = document.createElement("div");
+                container.className = "form-field";
+                
+                var label = document.createElement("label");
+                label.textContent = fieldDef.label || fieldDef.name;
+                label.htmlFor = fieldDef.id || ("field_" + fieldDef.name);
+                container.appendChild(label);
+                
+                var input;
+                if (fieldDef.type === "select") {
+                    input = document.createElement("select");
+                    input.id = fieldDef.id || ("field_" + fieldDef.name);
+                    input.name = fieldDef.name;
+                    
+                    if (fieldDef.options && fieldDef.options[0]) {
+                        var option1 = document.createElement("option");
+                        option1.value = fieldDef.options[0].value || "";
+                        option1.textContent = fieldDef.options[0].text || "";
+                        input.appendChild(option1);
+                    }
+                    if (fieldDef.options && fieldDef.options[1]) {
+                        var option2 = document.createElement("option");
+                        option2.value = fieldDef.options[1].value || "";
+                        option2.textContent = fieldDef.options[1].text || "";
+                        input.appendChild(option2);
+                    }
+                    if (fieldDef.options && fieldDef.options[2]) {
+                        var option3 = document.createElement("option");
+                        option3.value = fieldDef.options[2].value || "";
+                        option3.textContent = fieldDef.options[2].text || "";
+                        input.appendChild(option3);
+                    }
+                }
+                else {
+                    input = document.createElement("input");
+                    input.type = fieldDef.type || "text";
+                    input.id = fieldDef.id || ("field_" + fieldDef.name);
+                    input.name = fieldDef.name;
+                    input.placeholder = fieldDef.placeholder || "";
+                    
+                    if (fieldDef.required) input.required = true;
+                    if (fieldDef.min) input.min = fieldDef.min;
+                    if (fieldDef.max) input.max = fieldDef.max;
+                    if (fieldDef.value) input.value = fieldDef.value;
+                }
+                
+                container.appendChild(input);
+                return container;
+            },
+            
+            bindPageEvents: function() {
+                // Forms are handled by button onclick handlers
+                // Additional event bindings if needed
+            },
+            
+            handleFormSubmit: function(formId) {
+                console.log("Form submit called:", formId);
+                
+                if (formId === "create_user_form") {
+                    var nameInput = document.getElementById("field_name");
+                    var emailInput = document.getElementById("field_email");
+                    var roleInput = document.getElementById("field_role");
+                    
+                    if (!nameInput || !emailInput || !roleInput) {
+                        this.showAlert("Form fields not found!", "error");
+                        return;
+                    }
+                    
+                    var name = nameInput.value;
+                    var email = emailInput.value;
+                    var role = roleInput.value;
+                    
+                    if (!name || !email) {
+                        this.showAlert("Name and email are required!", "error");
+                        return;
+                    }
+                    
+                    var userData = {
+                        name: name,
+                        email: email,
+                        role: role,
+                        status: "active"
+                    };
+                    
+                    this.createUser(userData);
+                }
+                else if (formId === "edit_user_form") {
+                    var route = this.currentRoute;
+                    if (!route || !route.params || !route.params.id) {
+                        this.showAlert("No user ID found!", "error");
+                        return;
+                    }
+                    
+                    var nameInput = document.getElementById("field_name");
+                    var emailInput = document.getElementById("field_email");
+                    var roleInput = document.getElementById("field_role");
+                    var statusInput = document.getElementById("field_status");
+                    
+                    if (!nameInput || !emailInput) {
+                        this.showAlert("Form fields not found!", "error");
+                        return;
+                    }
+                    
+                    var name = nameInput.value;
+                    var email = emailInput.value;
+                    var role = roleInput ? roleInput.value : "user";
+                    var status = statusInput ? statusInput.value : "active";
+                    
+                    var updates = {
+                        name: name,
+                        email: email,
+                        role: role,
+                        status: status
+                    };
+                    
+                    this.updateUser(route.params.id, updates);
+                }
+                else if (formId === "settings_form") {
+                    var themeInput = document.getElementById("field_theme");
+                    var storageLimitInput = document.getElementById("field_storage_limit");
+                    
+                    if (!themeInput) {
+                        this.showAlert("Settings form not found!", "error");
+                        return;
+                    }
+                    
+                    var theme = themeInput.value;
+                    var storageLimit = storageLimitInput ? storageLimitInput.value : "10";
+                    
+                    this.data.settings.theme = theme;
+                    this.data.settings.storageLimit = storageLimit;
+                    
+                    this.saveToStorage("settings", this.data.settings);
+                    this.showAlert("Settings saved!", "success");
+                }
+            },
+            
+            createUser: function(userData) {
+                var newId = "user_" + Date.now();
+                userData.id = newId;
+                userData.createdAt = new Date().toISOString();
+                userData.updatedAt = userData.createdAt;
+                
+                this.data.users.push(userData);
+                this.saveToStorage("users", this.data.users);
+                
+                this.showAlert("User '" + userData.name + "' created successfully!", "success");
+                window.location.hash = "/users";
+                
+                return userData;
+            },
+            
+            updateUser: function(id, updates) {
+                var userIndex = -1;
+                var users = this.data.users;
+                
+                if (users[0] && users[0].id === id) userIndex = 0;
+                else if (users[1] && users[1].id === id) userIndex = 1;
+                else if (users[2] && users[2].id === id) userIndex = 2;
+                else if (users[3] && users[3].id === id) userIndex = 3;
+                else if (users[4] && users[4].id === id) userIndex = 4;
+                
+                if (userIndex !== -1) {
+                    var originalUser = users[userIndex];
+                    users[userIndex] = {
+                        id: originalUser.id,
+                        name: updates.name || originalUser.name,
+                        email: updates.email || originalUser.email,
+                        role: updates.role || originalUser.role,
+                        status: updates.status || originalUser.status,
+                        createdAt: originalUser.createdAt,
+                        updatedAt: new Date().toISOString()
+                    };
+                    
+                    this.saveToStorage("users", users);
+                    this.showAlert("User updated successfully!", "success");
+                    window.location.hash = "/users";
+                    return users[userIndex];
+                }
+                
+                this.showAlert("User not found!", "error");
+                return null;
+            },
+            
+            deleteUser: function(id) {
+                var userIndex = -1;
+                var users = this.data.users;
+                
+                if (users[0] && users[0].id === id) userIndex = 0;
+                else if (users[1] && users[1].id === id) userIndex = 1;
+                else if (users[2] && users[2].id === id) userIndex = 2;
+                
+                if (userIndex !== -1) {
+                    users[userIndex].status = "inactive";
+                    users[userIndex].deletedAt = new Date().toISOString();
+                    
+                    this.saveToStorage("users", users);
+                    this.showAlert("User marked as inactive!", "warning");
+                    window.location.hash = "/users";
+                    return true;
+                }
+                
+                this.showAlert("User not found!", "error");
+                return false;
+            },
+            
+            populateUsersTable: function() {
+                var tbody = document.getElementById("users_table_body");
+                if (!tbody) {
+                    console.log("Table body not found");
+                    return;
+                }
+                
+                tbody.innerHTML = "";
+                var users = this.data.users;
+                
+                if (users[0]) {
+                    var row1 = this.createUserTableRow(users[0]);
+                    tbody.appendChild(row1);
+                }
+                if (users[1]) {
+                    var row2 = this.createUserTableRow(users[1]);
+                    tbody.appendChild(row2);
+                }
+                if (users[2]) {
+                    var row3 = this.createUserTableRow(users[2]);
+                    tbody.appendChild(row3);
+                }
+                if (users[3]) {
+                    var row4 = this.createUserTableRow(users[3]);
+                    tbody.appendChild(row4);
+                }
+                if (users[4]) {
+                    var row5 = this.createUserTableRow(users[4]);
+                    tbody.appendChild(row5);
+                }
+            },
+            
+            createUserTableRow: function(user) {
+                var row = document.createElement("tr");
+                
+                var idCell = document.createElement("td");
+                idCell.textContent = user.id.substring(0, 8) + "...";
+                row.appendChild(idCell);
+                
+                var nameCell = document.createElement("td");
+                nameCell.textContent = user.name || "";
+                row.appendChild(nameCell);
+                
+                var emailCell = document.createElement("td");
+                emailCell.textContent = user.email || "";
+                row.appendChild(emailCell);
+                
+                var roleCell = document.createElement("td");
+                roleCell.textContent = user.role || "";
+                row.appendChild(roleCell);
+                
+                var actionsCell = document.createElement("td");
+                actionsCell.style.display = "flex";
+                actionsCell.style.gap = "5px";
+                
+                var editBtn = document.createElement("button");
+                editBtn.textContent = "Edit";
+                editBtn.className = "btn-sm";
+                editBtn.onclick = function() {
+                    window.location.hash = "/users/edit/" + user.id;
+                };
+                actionsCell.appendChild(editBtn);
+                
+                var deleteBtn = document.createElement("button");
+                deleteBtn.textContent = "Delete";
+                deleteBtn.className = "btn-sm btn-danger";
+                deleteBtn.onclick = function() {
+                    if (confirm("Delete user '" + user.name + "'?")) {
+                        ActionApp.deleteUser(user.id);
+                    }
+                };
+                actionsCell.appendChild(deleteBtn);
+                
+                row.appendChild(actionsCell);
+                return row;
+            },
+            
+            loadUserForEdit: function() {
+                var route = this.currentRoute;
+                if (!route || !route.params || !route.params.id) {
+                    console.log("No user ID in route");
+                    return;
+                }
+                
+                var userId = route.params.id;
+                var user = null;
+                var users = this.data.users;
+                
+                if (users[0] && users[0].id === userId) user = users[0];
+                else if (users[1] && users[1].id === userId) user = users[1];
+                else if (users[2] && users[2].id === userId) user = users[2];
+                else if (users[3] && users[3].id === userId) user = users[3];
+                else if (users[4] && users[4].id === userId) user = users[4];
+                
+                if (user) {
+                    var nameInput = document.getElementById("field_name");
+                    var emailInput = document.getElementById("field_email");
+                    var roleInput = document.getElementById("field_role");
+                    var statusInput = document.getElementById("field_status");
+                    
+                    if (nameInput) nameInput.value = user.name || "";
+                    if (emailInput) emailInput.value = user.email || "";
+                    if (roleInput) roleInput.value = user.role || "user";
+                    if (statusInput) statusInput.value = user.status || "active";
+                    
+                    var cardTitle = document.querySelector("#edit_card .card-header");
+                    if (cardTitle) {
+                        cardTitle.textContent = "Edit User: " + user.name;
+                    }
+                } else {
+                    this.showAlert("User not found!", "error");
+                    window.location.hash = "/users";
+                }
+            },
+            
+            processTokens: function(text) {
+                if (!text) return "";
+                var processed = text;
+                
+                processed = processed.replace("{{runtime}}", this.config.runtime);
+                processed = processed.replace("{{storageAdapter}}", this.config.storage.adapter);
+                processed = processed.replace("{{appStatus}}", "Ready");
+                processed = processed.replace("{{userCount}}", this.data.users.length);
+                
+                var activeCount = 0;
+                var users = this.data.users;
+                if (users[0] && users[0].status === "active") activeCount++;
+                if (users[1] && users[1].status === "active") activeCount++;
+                if (users[2] && users[2].status === "active") activeCount++;
+                if (users[3] && users[3].status === "active") activeCount++;
+                if (users[4] && users[4].status === "active") activeCount++;
+                
+                processed = processed.replace("{{activeCount}}", activeCount);
+                
+                var totalSize = 0;
+                var usersJson = JSON.stringify(this.data.users);
+                var settingsJson = JSON.stringify(this.data.settings);
+                totalSize = (usersJson.length + settingsJson.length) / 1024;
+                processed = processed.replace("{{storageUsed}}", totalSize.toFixed(2) + " KB");
+                
+                if (this.currentRoute && this.currentRoute.params && this.currentRoute.params.id) {
+                    processed = processed.replace("{{userId}}", this.currentRoute.params.id);
+                }
+                
+                return processed;
+            },
+            
+            showAlert: function(message, type) {
+                var alertEl = document.createElement("div");
+                alertEl.className = "alert alert-" + (type || "info");
+                alertEl.textContent = message;
+                
+                var mainEl = document.querySelector(".app-main");
+                if (mainEl) {
+                    mainEl.insertBefore(alertEl, mainEl.firstChild);
+                    
+                    setTimeout(function() {
+                        if (alertEl.parentNode) {
+                            alertEl.parentNode.removeChild(alertEl);
+                        }
+                    }, 3000);
+                }
+            },
+            
+            updateStats: function() {
+                var userCountEl = document.getElementById("stat_users");
+                var activeCountEl = document.getElementById("stat_active");
+                var storageEl = document.getElementById("stat_storage");
+                
+                if (userCountEl) {
+                    var valueEl = userCountEl.querySelector(".stat-value");
+                    if (valueEl) valueEl.textContent = this.data.users.length;
+                }
+                
+                if (activeCountEl) {
+                    var valueEl = activeCountEl.querySelector(".stat-value");
+                    var activeCount = 0;
+                    var users = this.data.users;
+                    if (users[0] && users[0].status === "active") activeCount++;
+                    if (users[1] && users[1].status === "active") activeCount++;
+                    if (users[2] && users[2].status === "active") activeCount++;
+                    if (valueEl) valueEl.textContent = activeCount;
+                }
+                
+                if (storageEl) {
+                    var valueEl = storageEl.querySelector(".stat-value");
+                    var totalSize = 0;
+                    var usersJson = JSON.stringify(this.data.users);
+                    var settingsJson = JSON.stringify(this.data.settings);
+                    totalSize = (usersJson.length + settingsJson.length) / 1024;
+                    if (valueEl) valueEl.textContent = totalSize.toFixed(2) + " KB";
+                }
+            }
+        };
+
+        // ==================== INITIALIZATION ====================
+        document.addEventListener("DOMContentLoaded", function() {
+            ActionApp.init();
+        });
+    </script>
+</body>
+</html>

@@ -23,7 +23,7 @@ core_features:
     types: ["table", "tree"]
     operations: ["create", "read", "update", "delete"]
     storage:
-      providers: ["memory", "local_storage", "file_system"]
+      providers: ["memory", "local_storage", "file_system","indexdb"]
       default: "memory"
   
   action_system:

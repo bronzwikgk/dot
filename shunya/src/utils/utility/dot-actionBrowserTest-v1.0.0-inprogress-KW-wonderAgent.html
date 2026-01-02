@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Action Browser Utility Tester</title>
+    <meta name="description" content="Manual test page for IndexedDB and LocalStorage utilities." />
+  </head>
+  <body>
+    <main>
+      <article>
+        <header>
+          <h1>Action Browser Utility Tester</h1>
+          <p>
+            This page exercises the approved IndexedDB and LocalStorage helpers to demonstrate their browser-style
+            behavior in a controlled environment.
+          </p>
+        </header>
+        <section>
+          <h2>Controls</h2>
+          <p>
+            <button id="run-indexeddb">Run IndexedDB Flow</button>
+            <button id="run-localstorage">Run LocalStorage Flow</button>
+            <button id="run-all">Run Both Flows</button>
+          </p>
+        </section>
+        <section>
+          <h2>Results</h2>
+          <ul id="result-items"></ul>
+        </section>
+        <section>
+          <h2>Documented Methods</h2>
+          <p>IndexedDB utility methods:</p>
+          <ol id="indexed-methods"></ol>
+          <p>LocalStorage utility methods:</p>
+          <ol id="local-methods"></ol>
+        </section>
+      </article>
+    </main>
+
+    <script type="module">
+      /*
+Overview: Expose a browser page that runs IndexedDB and LocalStorage helpers and reports results.
+Purpose: Allow testers to verify the Node-shimmed utilities in a browser-like context without custom tooling.
+Audience: QA engineers and documentation readers who want an interactive validation surface for the helper shims.
+Problem Addressed: Existing automated runners execute in Node but there was no minimal HTML entry point for manual verification.
+Use Cases: Run IndexedDB/localStorage sequences, observe the outcome, and view the exported method metadata.
+Features: Buttons trigger each helper group, result logging, and in-page documentation of dataset lists.
+Benefits: Provides a simple, semantic page to validate browser utilities without needing Puppeteer or CLI tools.
+User Stories: As a tester I can load the page, invoke the flows, and read their output in the UI.
+User Flow: User opens the page, clicks a control, the script runs the helper sequence, and the UI lists the result.
+System Components: Depends on the approved IndexedDB and LocalStorage utility modules plus the DOM.
+Edge Cases: Handles missing helper failures, sequential button clicks, and empty dataset rendering.
+Test Cases: Click each flow button to verify the helpers and confirm error handling for repeated invocations.
+Configuration:
+- version: v1.0.0
+- status: inprogress
+- agent: KW-wonderAgent
+Schema:
+- type: object
+- properties:
+  - indexedDBUtility: object
+  - localStorageUtility: object
+  - resultEntries: array
+*/
+
+      import {
+        IndexedDBUtility,
+        DATASET_INDEXEDDB_METHODS_IMPLEMENTED
+      } from './dot-indexedDBUtility-v1.0.1-inprogress-KW-wonderAgent.js';
+      import {
+        LocalStorageUtility,
+        DATASET_LOCALSTORAGE_METHODS_IMPLEMENTED
+      } from './dot-localStorageUtility-v1.0.1-inprogress-KW-wonderAgent.js';
+
+      class BrowserUtilityTester {
+        constructor() {
+          this.indexedDBUtility = new IndexedDBUtility();
+          this.localStorageUtility = new LocalStorageUtility();
+          this.resultContainer = document.getElementById('result-items');
+        }
+
+        async runIndexedDBFlow() {
+          return this._executeAsync('IndexedDB', this._runIndexedDBSequence);
+        }
+
+        async runLocalStorageFlow() {
+          return this._executeAsync('LocalStorage', this._runLocalStorageSequence);
+        }
+
+        async runCombinedFlow() {
+          await this.runIndexedDBFlow();
+          await this.runLocalStorageFlow();
+          this._renderResult('Both utilities finished', 'success');
+        }
+
+        async _executeAsync(label, executor) {
+          var entry;
+          try {
+            entry = await executor.call(this);
+            this._renderResult(label + ' flow succeeded', 'success');
+            return entry;
+          } catch (error) {
+            this._renderResult(label + ' flow failed: ' + error.message, 'error');
+            throw error;
+          }
+        }
+
+        async _runIndexedDBSequence() {
+          var entries = [
+            { key: 'browser-key-1', value: { value: 123 } },
+            { key: 'browser-key-2', value: { value: 456 } },
+            { key: 'browser-key-3', value: { value: 789 } }
+          ];
+          await this.indexedDBUtility.openDB('browser-db');
+          this._logStep('IndexedDB: opened browser-db');
+          await this.indexedDBUtility.createStore('browser-store');
+          this._logStep('IndexedDB: created browser-store');
+          for (var i = 0; i < entries.length; i += 1) {
+            await this.indexedDBUtility.put('browser-store', entries[i].key, entries[i].value);
+            this._logStep('IndexedDB: wrote ' + entries[i].key);
+          }
+          var fetched = [];
+          for (var j = 0; j < entries.length; j += 1) {
+            var value = await this.indexedDBUtility.get('browser-store', entries[j].key);
+            fetched.push(value);
+            this._logStep('IndexedDB: read ' + entries[j].key);
+          }
+          for (var k = 0; k < entries.length; k += 1) {
+            await this.indexedDBUtility.delete('browser-store', entries[k].key);
+            this._logStep('IndexedDB: deleted ' + entries[k].key);
+          }
+          await this.indexedDBUtility.clear('browser-store');
+          this._logStep('IndexedDB: cleared browser-store');
+          await this.indexedDBUtility.close();
+          this._logStep('IndexedDB: closed browser-db');
+          return fetched;
+        }
+
+        async _runLocalStorageSequence() {
+          var pairs = [
+            { key: 'browser-local-1', value: 'value-one' },
+            { key: 'browser-local-2', value: 'value-two' },
+            { key: 'browser-local-3', value: 'value-three' }
+          ];
+          for (var i = 0; i < pairs.length; i += 1) {
+            await this.localStorageUtility.setItem(pairs[i].key, pairs[i].value);
+            this._logStep('LocalStorage: set ' + pairs[i].key);
+          }
+          var retrieved = [];
+          for (var j = 0; j < pairs.length; j += 1) {
+            var item = await this.localStorageUtility.getItem(pairs[j].key);
+            retrieved.push(item);
+            this._logStep('LocalStorage: read ' + pairs[j].key);
+          }
+          for (var k = 0; k < pairs.length; k += 1) {
+            await this.localStorageUtility.removeItem(pairs[k].key);
+            this._logStep('LocalStorage: removed ' + pairs[k].key);
+          }
+          await this.localStorageUtility.setItem('temp', 'value');
+          this._logStep('LocalStorage: set temp value');
+          await this.localStorageUtility.clear();
+          this._logStep('LocalStorage: cleared storage');
+          return retrieved;
+        }
+
+        _logStep(message) {
+          console.log(message);
+        }
+
+        _renderResult(text, type) {
+          var item = document.createElement('li');
+          item.textContent = text;
+          if (type === 'error') {
+            item.setAttribute('aria-live', 'assertive');
+          }
+          this.resultContainer.appendChild(item);
+        }
+      }
+
+      function populateList(listId, values) {
+        var container = document.getElementById(listId);
+        for (var i = 0; i < values.length; i += 1) {
+          var entry = document.createElement('li');
+          entry.textContent = values[i];
+          container.appendChild(entry);
+        }
+      }
+
+      var tester = new BrowserUtilityTester();
+      populateList('indexed-methods', DATASET_INDEXEDDB_METHODS_IMPLEMENTED);
+      populateList('local-methods', DATASET_LOCALSTORAGE_METHODS_IMPLEMENTED);
+
+      document.getElementById('run-indexeddb').addEventListener('click', function () {
+        tester.runIndexedDBFlow();
+      });
+      document.getElementById('run-localstorage').addEventListener('click', function () {
+        tester.runLocalStorageFlow();
+      });
+      document.getElementById('run-all').addEventListener('click', function () {
+        tester.runCombinedFlow();
+      });
+    </script>
+  </body>
+</html>

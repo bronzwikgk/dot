@@ -1,0 +1,13 @@
+Command: node dot-actionTestPuppet-v1.0.0-inprogress-KW-wonderAgent.js
+Working directory: inprogress/test
+
+Output:
+ActionTestPuppet v1.0.0: starting verification suite
+ActionTestPuppet: Puppeteer launch skipped because the module is unavailable
+ActionTestPuppet: environment snapshot {
+  browserAvailable: false,
+  indexedDBReady: false,
+  localStorageReady: true,
+  lastScenario: 'localstorage-workflow'
+}
+ActionTestPuppet v1.0.0: all browser utilities verified

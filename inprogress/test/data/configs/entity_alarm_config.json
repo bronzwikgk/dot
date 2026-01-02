@@ -1,0 +1,46 @@
+{
+  "id": "alarm",
+  "name": "Alarm",
+  "type": "entity",
+  "dbSchema": {
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "message": {
+        "type": "string",
+        "validate": {
+          "required": true
+        }
+      },
+      "severity": {
+        "type": "string",
+        "validate": {
+          "required": true,
+          "enum": [
+            "critical",
+            "high",
+            "medium",
+            "low"
+          ]
+        }
+      },
+      "status": {
+        "type": "string",
+        "default": "active"
+      },
+      "createdAt": {
+        "type": "string"
+      },
+      "acknowledgedAt": {
+        "type": "string"
+      }
+    }
+  },
+  "storage": {
+    "driver": "fs",
+    "path": "./data/alarm",
+    "file": "alarms.json",
+    "format": "json"
+  }
+}

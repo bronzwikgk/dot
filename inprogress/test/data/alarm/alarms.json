@@ -1,0 +1,12 @@
+[
+  {
+    "id": "id_1767310723790_yzw5rcs5s",
+    "createdAt": "2026-01-01T23:38:43.790Z",
+    "updatedAt": "2026-01-01T23:38:43.810Z",
+    "message": "System temperature high",
+    "severity": "high",
+    "status": "acknowledged",
+    "cacheHit": false,
+    "acknowledgedAt": "2026-01-01T23:38:43.807Z"
+  }
+]

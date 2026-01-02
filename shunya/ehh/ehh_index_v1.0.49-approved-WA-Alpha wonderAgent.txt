@@ -19,9 +19,9 @@ Agent: WA-Alpha wonderAgent
 
 - System Start Flow
     - Bootstrap
-        - load AppConfig (node/browser) [status=ready]
         - detect runtime and set globals [status=ready]
-        - instantiate ActionApp and ActionEntity [status=ready]
+        - load AppConfig (node/browser) [status=ready]
+        - instantiate ActionApp [status=ready]
     - Connect
         - register plugins/events [status=ready]
         - open storage adapters [status=ongoing]

@@ -1,0 +1,14 @@
+version: v1.0.0
+status: inprogress
+agent: KW-wonderAgent
+command: node dot-actionFS-test-v1.0.0-inprogress-KW-wonderAgent.js
+working_directory: inprogress/test
+
+ActionFs test: starting workspace at D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test\inputs\origin.txt
+Read initial content: initial content
+Read after append: []
+Final file exists: true
+Output directory contents: [ 'final.txt', 'moved' ]
+ActionFs test: completed, workspace cleaned
+

@@ -1,0 +1,16 @@
+version: v1.0.4
+status: inprogress
+agent: KW-wonderAgent
+command: node dot-actionFS-test-v1.0.4-inprogress-KW-wonderAgent.js
+working_directory: inprogress/test
+
+ActionFs test v1.0.4: verifying every helper in D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test-v1.0.4
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test-v1.0.4\configs\entity_config.json
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test-v1.0.4\files\entity.json
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test-v1.0.4\files\entity.json
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test-v1.0.4\files\events.jsonl
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test-v1.0.4\stats\report.txt
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test-v1.0.4\files\clear\a.txt
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\actionfs-test-v1.0.4\files\clear\b.txt
+ActionFs test v1.0.4: all helpers verified
+

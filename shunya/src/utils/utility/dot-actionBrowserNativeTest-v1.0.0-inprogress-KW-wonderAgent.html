@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Action Browser Native Storage Tester</title>
+    <meta name="description" content="Native browser test page for IndexedDB and LocalStorage flows without helper utilities." />
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        padding: 1rem;
+        background: #fefefe;
+        color: #1a1a1a;
+      }
+      main {
+        max-width: 820px;
+        margin: 0 auto;
+      }
+      button {
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+      #result-items {
+        list-style: decimal;
+        padding-left: 1.25rem;
+      }
+      .log-error {
+        color: maroon;
+      }
+      .log-success {
+        color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <article>
+        <header>
+          <h1>Action Browser Native Storage Tester</h1>
+          <p>
+            Run these controls to exercise <strong>native</strong> browser storage APIs (IndexedDB and LocalStorage) without
+            relying on the previously introduced utility shims.
+          </p>
+        </header>
+        <section>
+          <h2>Controls</h2>
+          <p>
+            <button id="native-indexeddb">Run Native IndexedDB Flow</button>
+            <button id="native-localstorage">Run Native LocalStorage Flow</button>
+            <button id="native-both">Run Both Native Flows</button>
+          </p>
+        </section>
+        <section>
+          <h2>Log Output</h2>
+          <ul id="result-items" aria-live="polite"></ul>
+        </section>
+      </article>
+    </main>
+    <script>
+      /*
+Overview: Provide a browser page that tests native IndexedDB and LocalStorage APIs for troubleshooting.
+Purpose: Confirm the browser storage APIs work without relying on the custom utility shims that are currently failing.
+Audience: Testers and developers validating browser storage behavior manually.
+Problem Addressed: Eliminates dependence on helper utilities so we can verify IndexedDB/localStorage directly.
+Use Cases: Run sequential storage operations, view console logs, and ensure data is stored, read, and cleared as expected.
+Features: Buttons for each flow, DOM log entries, console output for every operation, database cleanup, and error reporting.
+Benefits: Offers a self-contained browser test for the storage stack even when the utilities are broken.
+User Stories: As a tester I can run native storage operations and see each step in the console plus in-page log entries.
+User Flow: Click a control, the tester runs the native sequence, logs each action to console/DOM, and cleans up.
+System Components: Browser `indexedDB`, `localStorage`, and simple DOM elements.
+Edge Cases: Handles missing IndexedDB support, transaction errors, and cleanup failures while still reporting issues.
+Test Cases: Native IndexedDB CRUD (multi-data), LocalStorage CRUD (multi-key), and both flows run together for verification.
+Configuration:
+- version: v1.0.0
+- status: inprogress
+- agent: KW-wonderAgent
+Schema:
+- type: object
+- properties:
+  - nativeIndexedDBFlow: object
+  - nativeLocalStorageFlow: object
+  - logEntries: array
+*/
+
+      class NativeBrowserTester {
+        constructor() {
+          this.dbName = 'native-browser-test-db';
+          this.storeName = 'native-store';
+          this.entries = [
+            { key: 'native-key-1', value: { value: 11 } },
+            { key: 'native-key-2', value: { value: 22 } },
+            { key: 'native-key-3', value: { value: 33 } }
+          ];
+          this.localPairs = [
+            { key: 'native-local-1', value: 'value-one' },
+            { key: 'native-local-2', value: 'value-two' },
+            { key: 'native-local-3', value: 'value-three' }
+          ];
+          this.resultContainer = document.getElementById('result-items');
+        }
+
+        async runIndexedDBFlow() {
+          this.clearResults();
+          this.logStep('IndexedDB: starting native flow');
+          try {
+            var db = await this._openDB();
+            this.logStep('IndexedDB: opened database');
+            await this._addEntries(db);
+            var fetched = await this._readEntries(db);
+            this.logStep('IndexedDB: read entries count ' + fetched.length);
+            await this._deleteEntries(db);
+            this.logStep('IndexedDB: deleted entries');
+            await this._clearStore(db);
+            this.logStep('IndexedDB: cleared object store');
+            db.close();
+            this.logStep('IndexedDB: closed database');
+            await this._deleteDatabase();
+            this.logStep('IndexedDB: database deleted');
+            this.logStep('IndexedDB: native flow completed', 'success');
+          } catch (error) {
+            this.logStep('IndexedDB: native flow failed ' + error.message, 'error');
+          }
+        }
+
+        async runLocalStorageFlow() {
+          this.clearResults();
+          this.logStep('LocalStorage: starting native flow');
+          try {
+            for (var i = 0; i < this.localPairs.length; i += 1) {
+              var pair = this.localPairs[i];
+              window.localStorage.setItem(pair.key, pair.value);
+              this.logStep('LocalStorage: set ' + pair.key);
+            }
+            var retrieved = [];
+            for (var j = 0; j < this.localPairs.length; j += 1) {
+              var item = window.localStorage.getItem(this.localPairs[j].key);
+              retrieved.push(item);
+              this.logStep('LocalStorage: read ' + this.localPairs[j].key + ' => ' + item);
+            }
+            for (var k = 0; k < this.localPairs.length; k += 1) {
+              window.localStorage.removeItem(this.localPairs[k].key);
+              this.logStep('LocalStorage: removed ' + this.localPairs[k].key);
+            }
+            window.localStorage.setItem('native-temp', 'temp');
+            this.logStep('LocalStorage: set temp placeholder');
+            window.localStorage.clear();
+            this.logStep('LocalStorage: cleared storage');
+            this.logStep('LocalStorage: native flow completed', 'success');
+          } catch (error) {
+            this.logStep('LocalStorage: native flow failed ' + error.message, 'error');
+          }
+        }
+
+        async runBothFlows() {
+          this.clearResults();
+          await this.runIndexedDBFlow();
+          await this.runLocalStorageFlow();
+          this.logStep('Both native flows finished', 'success');
+        }
+
+        clearResults() {
+          while (this.resultContainer.firstChild) {
+            this.resultContainer.removeChild(this.resultContainer.firstChild);
+          }
+        }
+
+        logStep(message, level) {
+          console.log(message);
+          var entry = document.createElement('li');
+          entry.textContent = message;
+          if (level === 'error') {
+            entry.className = 'log-error';
+          }
+          if (level === 'success') {
+            entry.className = 'log-success';
+          }
+          this.resultContainer.appendChild(entry);
+        }
+
+        _openDB() {
+          var self = this;
+          return new Promise(function (resolve, reject) {
+            var request = window.indexedDB.open(self.dbName, 1);
+            request.onupgradeneeded = function () {
+              var db = request.result;
+              if (!db.objectStoreNames.contains(self.storeName)) {
+                db.createObjectStore(self.storeName, { keyPath: 'key' });
+              }
+              self.logStep('IndexedDB: store ensured during upgrade');
+            };
+            request.onsuccess = function () {
+              resolve(request.result);
+            };
+            request.onerror = function () {
+              reject(request.error);
+            };
+          });
+        }
+
+        _addEntries(db) {
+          var self = this;
+          return new Promise(function (resolve, reject) {
+            var transaction = db.transaction(self.storeName, 'readwrite');
+            var store = transaction.objectStore(self.storeName);
+            transaction.oncomplete = function () {
+              resolve();
+            };
+            transaction.onerror = function () {
+              reject(transaction.error);
+            };
+            transaction.onabort = function () {
+              reject(transaction.error);
+            };
+            for (var i = 0; i < self.entries.length; i += 1) {
+              (function (entry) {
+                var request = store.put({ key: entry.key, payload: entry.value });
+                request.onsuccess = function () {
+                  self.logStep('IndexedDB: wrote ' + entry.key);
+                };
+                request.onerror = function () {
+                  self.logStep('IndexedDB: write failed for ' + entry.key, 'error');
+                };
+              }(self.entries[i]));
+            }
+          });
+        }
+
+        _readEntries(db) {
+          var self = this;
+          return new Promise(function (resolve, reject) {
+            var results = [];
+            var remaining = self.entries.length;
+            var transaction = db.transaction(self.storeName, 'readonly');
+            var store = transaction.objectStore(self.storeName);
+            transaction.onerror = function () {
+              reject(transaction.error);
+            };
+            transaction.onabort = function () {
+              reject(transaction.error);
+            };
+            for (var i = 0; i < self.entries.length; i += 1) {
+              (function (entry) {
+                var request = store.get(entry.key);
+                request.onsuccess = function () {
+                  results.push(request.result);
+                  self.logStep('IndexedDB: read ' + entry.key);
+                  remaining -= 1;
+                  if (remaining <= 0) {
+                    resolve(results);
+                  }
+                };
+                request.onerror = function () {
+                  reject(request.error);
+                };
+              }(self.entries[i]));
+            }
+          });
+        }
+
+        _deleteEntries(db) {
+          var self = this;
+          return new Promise(function (resolve, reject) {
+            var transaction = db.transaction(self.storeName, 'readwrite');
+            var store = transaction.objectStore(self.storeName);
+            transaction.oncomplete = function () {
+              resolve();
+            };
+            transaction.onerror = function () {
+              reject(transaction.error);
+            };
+            transaction.onabort = function () {
+              reject(transaction.error);
+            };
+            for (var i = 0; i < self.entries.length; i += 1) {
+              (function (entry) {
+                var request = store.delete(entry.key);
+                request.onsuccess = function () {
+                  self.logStep('IndexedDB: deleted ' + entry.key);
+                };
+                request.onerror = function () {
+                  self.logStep('IndexedDB: delete failed for ' + entry.key, 'error');
+                };
+              }(self.entries[i]));
+            }
+          });
+        }
+
+        _clearStore(db) {
+          var self = this;
+          return new Promise(function (resolve, reject) {
+            var transaction = db.transaction(self.storeName, 'readwrite');
+            var store = transaction.objectStore(self.storeName);
+            transaction.onerror = function () {
+              reject(transaction.error);
+            };
+            transaction.onabort = function () {
+              reject(transaction.error);
+            };
+            var request = store.clear();
+            request.onsuccess = function () {
+              resolve();
+            };
+            request.onerror = function () {
+              reject(request.error);
+            };
+          });
+        }
+
+        _deleteDatabase() {
+          var self = this;
+          return new Promise(function (resolve, reject) {
+            var deleteRequest = window.indexedDB.deleteDatabase(self.dbName);
+            deleteRequest.onsuccess = function () {
+              resolve();
+            };
+            deleteRequest.onerror = function () {
+              reject(deleteRequest.error);
+            };
+            deleteRequest.onblocked = function () {
+              reject(new Error('Delete blocked'));
+            };
+          });
+        }
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var tester = new NativeBrowserTester();
+        document.getElementById('native-indexeddb').addEventListener('click', function () {
+          tester.runIndexedDBFlow();
+        });
+        document.getElementById('native-localstorage').addEventListener('click', function () {
+          tester.runLocalStorageFlow();
+        });
+        document.getElementById('native-both').addEventListener('click', function () {
+          tester.runBothFlows();
+        });
+      });
+    </script>
+  </body>
+</html>

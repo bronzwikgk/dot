@@ -1,0 +1,12 @@
+[
+  {
+    "id": "id_1767310723742_a5tpvqymj",
+    "createdAt": "2026-01-01T23:38:43.742Z",
+    "updatedAt": "2026-01-01T23:38:43.742Z",
+    "sessionId": "session_123",
+    "userId": "user_001",
+    "username": "john_doe",
+    "token": "token_abc",
+    "expiresAt": "2026-01-02T23:38:43.741Z"
+  }
+]

@@ -1,0 +1,61 @@
+{
+  "id": "user_register",
+  "name": "User Register",
+  "type": "entity",
+  "dbSchema": {
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "username": {
+        "type": "string",
+        "validate": {
+          "required": true,
+          "minLength": 3
+        }
+      },
+      "email": {
+        "type": "string",
+        "validate": {
+          "required": true,
+          "format": "email"
+        }
+      },
+      "password": {
+        "type": "string",
+        "validate": {
+          "required": true,
+          "minLength": 6
+        }
+      },
+      "userId": {
+        "type": "string",
+        "validate": {
+          "required": true
+        }
+      },
+      "role": {
+        "type": "string",
+        "default": "user"
+      },
+      "createdAt": {
+        "type": "string"
+      },
+      "updatedAt": {
+        "type": "string"
+      }
+    }
+  },
+  "storage": {
+    "driver": "fs",
+    "path": "./data/user_register",
+    "file": "users.json",
+    "format": "json"
+  },
+  "cacheHints": {
+    "ttl": 300,
+    "keys": [
+      "user_register_list"
+    ]
+  }
+}

@@ -1,7 +1,0 @@
-Flow: Add Service,
-    - User adds service via UI (GitLab, GitHub, DigitalOcean, custom FS, etc.).
-    - User saves credentials + service name.
-    - System fetches repositories/projects from that service.
-    - For each repo → fetch branches.
-    - For each branch → fetch folder + file tree.
-    - Build and store an index tree.

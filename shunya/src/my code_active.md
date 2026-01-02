@@ -22,32 +22,17 @@ Establish a structured manifest that makes assets, configuration layers, core se
 - `pluginConfig`: plugin lifecycle declarations, dependencies, and initialization order.
 - `utilityConfig`: reusable helpers, defaults, and shared constants that other areas consume.
 
+## Core
+- `Entry.js`: bootstraps the platform, wires central services (routing, persistence, logging), and exposes the primary lifecycle hooks.
+- `ActionApp.js`: orchestrates actions, handles intent/context switching, integrates plugin payloads, and surfaces telemetry.
 
 ## Documentation
-- Features
-    - Config-driven runtime selection (browser/node) with RBAC aware defaults
-    - Unified storage adapters (JSON/JSONL files, IndexedDB, localStorage) for entity CRUD
-    - Parser/renderer utilities that regenerate docs and support include-driven templates
-    - Action-focused flows: ActionApp bootstraps, ActionEntity handles CRUD/tree ops, ActionView/Event drive UI hooks
-    - Detailed testing guidance with naming/versioning, storage mocking, and regression traceability
-
-- Core Concept
-    - ActionApp orchestrates plugins, utilities, validators, and storage adapters based on AppConfig.
-    - ActionEntity exposes CRUD/tree operations plus browser/node adaptations fed by EntityConfig.
-    - ActionEvent/ActionView connote UI wiring while ActionValidator enforces schema/RBAC rules.
-    - Storage adapters (localStorage, IndexedDB, JSON/JSONL files, HTTP wrappers) abstract persistence access.
-    - Parser/renderer utilities keep documentation and datasets synchronized with the index.
-
 - `User docs`: end-user guidance, flow walkthroughs, and how-tos.
 - `Developer docs`: integration guides, coding patterns, plugin creation notes, and contribution workflows.
 - `About`: overview of the platform mission, principles, team, and governance.
 - `API`: contract definitions, authentication, response codes, and error handling conventions.
 
 ## Source
-### Core
-- `Entry.js`: bootstraps the platform, wires central services (routing, persistence, logging), and exposes the primary lifecycle hooks.
-- `ActionApp.js`: orchestrates actions, handles intent/context switching, integrates plugin payloads, and surfaces telemetry.
-
 ### Plugins
 - `ActionEntity`: entity lifecycle helpers and synchronization adapters.
 - `ActionView`: rendering adapters, view utilities, and reactive plumbing.
@@ -63,6 +48,9 @@ Establish a structured manifest that makes assets, configuration layers, core se
 - `Include`: generic include helpers for templates, stories, or code generation.
 - `ActionTree`: tree walkers for batch operations, reports, or hierarchical transforms.
 - `ActionFs`: filesystem helpers for asset management, caching layers, or migration tooling.
+    - Methods:
+        - readconfig:
+        - createfile:
 - `ActionIndexDb`: indexedDB helpers for client persistence strategies.
 - `ActionLocalStorage`: localStorage bindings, cache eviction strategies, and persistence helpers.
 - `HttpService`: HTTP client wrappers with retry, timeout, and circuit metadata.
@@ -104,3 +92,43 @@ Establish a structured manifest that makes assets, configuration layers, core se
 - `Spa`: single-page application workflows and client hydration.
 - `NodejsApi`: REST/GraphQL backends built with Node.js services.
 - `SpreadSheet Server`: spreadsheet-driven backends or data transformation services.
+
+## Latest Active Version
+    - ActionFS: D:\Users\0dot1\Documents\Github\dot\shunya\src\utils\utility\dot-actionFs-v1.0.5-approved-KW-wonderAgent.js
+    - ActionFS_tests: D:\Users\0dot1\Documents\Github\dot\inprogress\test\dot-utility-suite-v1.0.5-inprogress-KW-wonderAgent.js
+## Latest Approved Version
+
+
+
+
+Classes and method
+- actionEntity : A class that handles all data operations, including schema validation for fields and persistant storage using utility helpers
+    - init
+        - creates a cache object
+        - loads all data from paths in config.
+            - loads list of entity into this.entityCollection, an array object with an entity config as an item.
+                - traverse content, parse,resolve directives like include or dynamic variables., if entity storage policy is for cache on system start, it loads the data from the entity config storage path into cache. 
+A tree with all the major flows and steps in minmal words with conditions
+
+
+Flow: Add Service,
+    - User adds service via UI (GitLab, GitHub, DigitalOcean, custom FS, etc.).
+    - User saves credentials + service name.
+    - System fetches repositories/projects from that service.
+    - For each repo → fetch branches.
+    - For each branch → fetch folder + file tree.
+    - Build and store an index tree.
+
+
+
+Flow
+    - request - visit
+        - instance created
+        - app start
+        - load files and data
+            - traverse
+            - parse
+            - resolve
+                - directives
+                    - include
+                    - dynamic variables

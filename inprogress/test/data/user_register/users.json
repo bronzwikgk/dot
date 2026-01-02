@@ -1,0 +1,12 @@
+[
+  {
+    "id": "id_1767310723737_01549gr13",
+    "createdAt": "2026-01-01T23:38:43.737Z",
+    "updatedAt": "2026-01-01T23:38:43.737Z",
+    "username": "john_doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "userId": "user_001",
+    "role": "user"
+  }
+]

@@ -1,0 +1,128 @@
+version: v1.0.3
+status: inprogress
+agent: KW-wonderAgent
+command: node -e "const path = require('path'); global.setTimeout = (fn, ms, ...args) => { fn(...args); return { ref() {}, unref() {} }; }; require('module')._load(path.resolve('..\\..\\shunya\\src\\plugins\\actionEntity\\actionEntity_v4.js'), null, true);"
+working_directory: inprogress/test
+Cleaned up old data directory
+Created fresh data directory
+
+=== ActionEntity v1 Fixed Example ===
+
+Initializing ActionEntity...
+Creating storage for user_register at D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\user_register\users.json...
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\user_register\users.json
+Creating storage for user_session at D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\user_session\sessions.json...
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\user_session\sessions.json
+Creating storage for alarm at D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\alarm\alarms.json...
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\alarm\alarms.json
+Loaded 3 entity configs
+
+1. Creating user...
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\user_register\users.json
+Created user_register record with ID: id_1767309649754_9kaz5v9rn
+Create Response: {
+  "success": true,
+  "data": {
+    "id": "id_1767309649754_9kaz5v9rn",
+    "username": "john_doe",
+    "email": "john@example.com",
+    "password": "password123",
+    "userId": "user_001",
+    "role": "user",
+    "createdAt": "2026-01-01T23:20:49.754Z",
+    "updatedAt": "2026-01-01T23:20:49.754Z"
+  },
+  "meta": {
+    "entity": "user_register",
+    "action": "create",
+    "timestamp": "2026-01-01T23:20:49.750Z",
+    "cacheHit": false
+  },
+  "error": null
+}
+
+2. Creating user session...
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\user_session\sessions.json
+Created user_session record with ID: id_1767309649759_8bkrldjih
+Session Response: {
+  "success": true,
+  "data": {
+    "id": "id_1767309649759_8bkrldjih",
+    "sessionId": "session_123",
+    "userId": "user_001",
+    "username": "john_doe",
+    "token": "token_abc",
+    "expiresAt": "2026-01-02T23:20:49.759Z",
+    "createdAt": "2026-01-01T23:20:49.759Z",
+    "updatedAt": "2026-01-01T23:20:49.759Z"
+  },
+  "meta": {
+    "entity": "user_session",
+    "action": "create",
+    "timestamp": "2026-01-01T23:20:49.759Z",
+    "cacheHit": false
+  },
+  "error": null
+}
+
+3. Creating alarm...
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\alarm\alarms.json
+Created alarm record with ID: id_1767309649762_sww51imib
+Alarm Response: {
+  "success": true,
+  "data": {
+    "id": "id_1767309649762_sww51imib",
+    "message": "System temperature high",
+    "severity": "high",
+    "status": "active",
+    "createdAt": "2026-01-01T23:20:49.762Z",
+    "updatedAt": "2026-01-01T23:20:49.762Z"
+  },
+  "meta": {
+    "entity": "alarm",
+    "action": "create",
+    "timestamp": "2026-01-01T23:20:49.762Z",
+    "cacheHit": false
+  },
+  "error": null
+}
+
+4. Listing alarms...
+Loaded 1 records for alarm
+Cached alarm:list with 1 records, TTL: 300s
+Cache expired for alarm:list
+Found 1 alarms
+
+5. Listing users...
+Loaded 1 records for user_register
+Cached user_register:list with 1 records, TTL: 300s
+Cache expired for user_register:list
+Found 1 users
+
+6. Updating alarm...
+Cached alarm:id_1767309649762_sww51imib with TTL: 300s
+Cache expired for alarm:id_1767309649762_sww51imib
+Created file: D:\Users\0dot1\Documents\Github\dot\inprogress\test\data\alarm\alarms.json
+Updated alarm record: id_1767309649762_sww51imib
+Invalidated cache for alarm:id_1767309649762_sww51imib and alarm:list
+Update Alarm Response: {
+  "success": true,
+  "data": {
+    "id": "id_1767309649762_sww51imib",
+    "message": "System temperature high",
+    "severity": "high",
+    "status": "acknowledged",
+    "createdAt": "2026-01-01T23:20:49.762Z",
+    "updatedAt": "2026-01-01T23:20:49.773Z",
+    "cacheHit": false,
+    "acknowledgedAt": "2026-01-01T23:20:49.772Z"
+  },
+  "meta": {
+    "entity": "alarm",
+    "action": "update",
+    "timestamp": "2026-01-01T23:20:49.772Z",
+    "cacheHit": false
+  },
+  "error": null
+}
+
