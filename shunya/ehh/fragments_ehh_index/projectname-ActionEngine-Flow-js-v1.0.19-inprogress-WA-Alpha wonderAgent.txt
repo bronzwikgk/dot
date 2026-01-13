@@ -1,6 +1,0 @@
-ActionEngine Flow.js (path: shunya/src/action_framework.js)
-- p_eng_4_2_6 /ActionEngine Flow.js : [type="plugin" priority="2" role="Orchestrates flows and transitions state machines." path="shunya/src/action_framework.js"]
-- p_eng_4_2_6_1 defineFlow : [type="method" priority="1" role="Defines a workflow diagram." path="shunya/src/action_framework.js"]
-- p_eng_4_2_6_2 execute : [type="method" priority="1" role="Runs the defined flow." path="shunya/src/action_framework.js"]
-- p_eng_4_2_6_3 transition : [type="method" priority="1" role="Moves the run to the next step." path="shunya/src/action_framework.js"]
-- p_eng_4_2_6_4 abort : [type="method" priority="1" role="Stops the ongoing flow." path="shunya/src/action_framework.js"]
