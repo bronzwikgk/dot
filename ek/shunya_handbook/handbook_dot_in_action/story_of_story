@@ -1,0 +1,70 @@
+# Story of a Story ver 0.0.1
+
+**Story:** A task is a story, the journey of a story passes between stages and status.
+
+## Journey Major Milestones
+
+- **Birth - Shunya - InQue:** The inception of an idea.
+- **Process - Dot - In Development:** The development phase.
+- **End - Ek - Deployed to Market:** The completion and release phase.
+
+## **Story Lifecycle**
+
+- **Idea Input:** Can be through various means such as:
+  - Message
+  - Notification
+  - File Link
+  - Verbal
+  - Document
+- **Labels Added:** [Priority, Audience]
+- **Self Assign:** A Team Member Self Assigns the Story
+
+### MVI in Story Description
+- Stages in Comment.
+- Approved in Files
+- Deployed to a URL
+
+## Type of Stories
+
+- dataset
+- user story
+- user flow
+- system flow
+- actionEngine flow
+- template
+- plugin
+- utility
+- class
+- method
+- Product
+- Project
+- Document
+- proposal
+- change 
+- release
+- Comment
+- Page
+- App
+- Plugin
+- Etc.
+
+## Story Generic Activity Flow
+
+1. Understand MVI (Minimum Viable Input provided)
+2. Choose Appropriate Template.
+3. Elaborate Story Manifest in the Objective, Purpose, Story Overview, in the comment box.
+4. Divide your Story in 5d Activity Stages, in the comment box.
+5. Create Tasks for each sub-story, in the task box.
+6. Create a Roadmap in a comment box, in the relevant folder in the current repo. Create a new branch for projects and modules.
+7. Add due date.
+8. Change status to InAction.
+9. Add in Comments, either content or link to file.
+10. Finish the story, write commit message with task ID in it.
+11. Make a push.
+12. Let appropriate people know.
+13. Get Approvals at the end of each stage.
+
+## Templates
+
+- [Story Manifest](https://gitlab.com/bronzwik/shunya-projects/-/wikis/story-manifest-v-0-0-1)
+- Generic Document Template

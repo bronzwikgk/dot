@@ -1,0 +1,6 @@
+{
+  "screen": { "synonyms": ["find", "show", "list", "get", "display", "filter"] },
+  "alert": { "synonyms": ["alert", "notify", "watch", "trigger", "when"] },
+  "compare": { "synonyms": ["compare", "versus", "vs", "contrast"] },
+  "backtest": { "synonyms": ["backtest", "test", "simulate", "historical"] }
+}

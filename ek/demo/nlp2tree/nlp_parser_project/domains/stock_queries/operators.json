@@ -1,0 +1,14 @@
+{
+  "comparison": {
+    ">": ["greater than", "above", "higher than"],
+    "<": ["less than", "below", "lower than"],
+    "=": ["equals", "is", "equal to"],
+    ">=": ["at least", "greater than or equal to"],
+    "<=": ["at most", "less than or equal to"],
+    "!=": ["not equal", "is not"]
+  },
+  "logical": {
+    "AND": ["and", "&"],
+    "OR": ["or", "|"]
+  }
+}

@@ -1,0 +1,75 @@
+header bg: public/shunya_handbook/handbook_dot_in_action/assest/img/handbook_header_dia.png
+
+# Handbook: Dots in Action (Dia)
+
+**Audience:** Internal Team at Shunya.ek
+
+## Map
+
+- **Intro to Handbook:** A comprehensive guide to our development process, embodying our commitment to efficiency and innovation.
+- **Who We Are:** Makers, builders, designers, coders, engineers united under Shunya.ek, striving to build efficient software tools.
+- **What We Do:** We craft templates, apps, frameworks, tools, plugins, utilities, and workflow systems aimed at professionals and amateurs.
+- **Where We Do It:** From our offices in Goa & Faridabad, extending to wherever our remote capabilities take us.
+- **How We Do It:** By embracing a 5D approach to Discover, Define, Design, Document, Develop, and Deploy.
+- **When Do We Do:** Our projects are timeless, focusing on creating lasting solutions in an efficient manner.
+- **Glossary:** Key terms and concepts used within Shunya.ek.
+- **KnowledgeCenter:** Central hub for sharing insights, learnings, and documentation.
+- **Assets:** Resources and tools available for team use.
+
+## Elevator Pitch Dot In Action
+
+**Elevator Pitch:**  
+*A fearless adventure is knowing what to do when no one’s there to tell you what to do.*
+
+## Story Objective
+
+- **Speed Up Processes:** Increase the speed of label changes, activity logs, and merge requests.
+- **Achieve Milestones:** Timely completion of project milestones.
+- **Workflow Pipeline Guide:** Provide a step-by-step workflow pipeline for Shunya.ek in 5D.
+- **Framework Development:** Discover, Define, Design, Document, Develop, and Deploy a framework for the team.
+- **Reduce Errors/Rework:** Minimize errors and rework in development processes.
+
+## Story Purpose
+
+- **Peak Efficiency:** Become the most efficient organization globally in software development.
+- **Resource Optimization:** Optimize every resource, from bits & bytes to energy bills.
+- **Maximize Speed:** Ensure the fastest delivery times without compromising quality.
+- **Joyful Work Life:** Foster a joyful and fulfilling work environment in 5D.
+
+### What is 5D?
+
+5D represents a plan of action for an efficient release cycle, involving a collaborative effort between humans and AI through stages of Review, Audit, and Approval.
+
+### 5D Way to Work and Stages of Existence
+
+1. **Discover:** Identify problems and explore the surrounding context.
+2. **Define:** Craft a clear solution vision.
+3. **Design:** Architect the system to solve the problem.
+4. **Develop:** Build the application with precision.
+5. **Deploy:** Release the solution to the end-users.
+
+## Stage Pipeline across Status
+
+- **Creation:** Stories are initiated by humans or agents.
+- **Population:** MVI (Minimum Viable Information) is filled by the actor.
+- **Labeling:** Stories are categorized at {{ Story Inaction }}.
+- **Acceptance:** Actor officially begins the story.
+- **5D Begins:** Notification to {{ Story Followers }}.
+- **Documentation:** Creation of Story Branch, Folder, File {{ Utility }}, and TOC (Table of Content).
+- **Review:** Collaborative review with the Author.
+
+## FAQ
+
+- **Who We Are:** A team of professionals passionate about solving complex workflow problems.
+- **What We Do:** We create efficient, user-friendly software solutions.
+- **How We Do It:** Through a structured 5D process that ensures clarity and efficiency from start to finish.
+- **Where We Do It:** Globally, with a strong presence in Goa & Faridabad and an expansive remote network.
+- **Why We Do It:** To fill the market gap with simple, integrated, nextGen systems.
+- **When Do We Do It:** Our projects are ongoing, with a focus on continuous improvement and innovation.
+- **Where Do We Do It Again:** At Shunya.ek, we're not just confined to physical locations but extend our capabilities wherever technology takes us.
+
+## KC
+
+For more in-depth knowledge and resources, refer to our central hub: [https://linear.app/method](https://linear.app/method)
+
+This handbook encapsulates the essence of Shunya.ek's approach to software development, embodying our values, processes, and commitment to excellence.

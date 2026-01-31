@@ -1,0 +1,76 @@
+# Story Manifest-v-0-0-1
+
+## Story Meta
+### Title:
+*Provide the title of your story.*
+
+### Version:
+*Specify the version of the document.*
+
+### Author:
+*If the author is a human, provide [alias, email, id, name]. If AI, specify {Model && ServiceID}.*
+
+## MVI { !NLP Task: to be Created by AI }
+
+### Objective:
+*Define the main objective of {this-story}.*
+
+### Purpose:
+*Explain the purpose behind initiating {this-story} in action.*
+
+### Problem:
+*Clearly define the problem or pain points that this product aims to address. In the future, a Sia Agent will do this process, by identifying high-value problems from User Reviews.*
+
+## Solution
+*Outline the proposed solution for addressing the identified problem.*
+
+### Scope of Work
+  - **Modules and Features:** *List the key modules and features of the solution.*
+  - **Actors:** *Define the roles of actors interacting with the system.*
+  - **Actions:** *Specify the actions that can be performed by the actors.*
+  - **User Flow and User Stories:** *Describe user interactions and narratives.*
+  - **Services:** *Detail the services provided by the solution.*
+  - **Dataset:** *Mention any relevant datasets used in the solution.*
+
+### Current World: {{!rework: this section }}
+* **Type of Project:** *Describe the nature of the project (e.g., research, development, application).*
+* **Technique Strategy:** *Outline the methodologies and strategies that are being used.*
+* **Existing Projects/Products:** *Research and list existing projects or products that are similar or relevant.*
+* **Competition:** *Identify and analyze potential competitors in the market.*
+* **Inspiration:** *Discuss any inspirations or benchmarks for the project.*
+* **Tutorials:** *List resources and tutorials that might be helpful for the project.*
+* **Common Features In Project:** *Identify features commonly found in similar projects.*
+
+### Tech Specs
+  - **Pipeline:** *Describe the data or process flow within the solution.*
+  - **Architecture:** *Explain the overall architecture of the solution.*
+  - **Techniques:** *Highlight the techniques or technologies used.*
+  - **Classes and Methods:** *Provide insights into code structure.*
+  - **Database:** *Describe the database schema and design.*
+  - **User Interface:** *Explain the UI components and design principles.*
+
+### User Docs
+- **How to Install:** *Provide instructions on how to install the product.*
+- **How to Test:** *Explain the testing procedures and guidelines.*
+- **How to Use:** *Offer guidance on using the product effectively.*
+
+## Roadmap
+*Outline the future plans and milestones for the product.*
+
+## Activity
+*Record the activities and progress during the product discovery phase.*
+
+## Team
+*List the members of the product discovery team and their roles.*
+
+## Resources
+*List the resources to create and maintain this project.*
+
+## Scope of Work
+*Outline the boundaries and deliverables of the project.*
+
+## Work Effort Breakdown
+*Break down the project into smaller tasks and estimate the effort required for each.*
+
+## Glossary
+*Include a glossary of terms and acronyms used in this document.*

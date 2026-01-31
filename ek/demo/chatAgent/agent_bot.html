@@ -1,0 +1,2243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AST Chatbot Agent with Tools</title>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-accent: #e9ecef;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --text-accent: #0d6efd;
+            --border-color: #dee2e6;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.12);
+            --radius-sm: 6px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --success-color: #28a745;
+            --warning-color: #ffc107;
+            --error-color: #dc3545;
+            --info-color: #17a2b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            height: 100vh;
+            padding: 0;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-primary);
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-weight: 400;
+            font-size: 1.4rem;
+            color: var(--text-primary);
+        }
+
+        /* Session Info */
+        .session-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.9rem;
+        }
+
+        .session-badge {
+            background: var(--bg-accent);
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 2px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            padding: 2px;
+        }
+
+        .tab-button {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+            font-weight: 500;
+        }
+
+        .tab-button:hover {
+            background: var(--bg-accent);
+        }
+
+        .tab-button.active {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            overflow: hidden;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 20px;
+            padding: 20px;
+            min-height: 0;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .tab-content.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Chat Container */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            min-height: 0;
+        }
+
+        .message {
+            margin-bottom: 16px;
+            max-width: 85%;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            margin-left: auto;
+        }
+
+        .message-content {
+            padding: 12px 16px;
+            border-radius: var(--radius-md);
+            line-height: 1.5;
+            font-size: 0.95rem;
+        }
+
+        .message.user .message-content {
+            background: var(--text-accent);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+
+        .message.bot .message-content {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-bottom-left-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .message-text {
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        .message-text strong {
+            font-weight: 600;
+        }
+
+        .message-text em {
+            font-style: italic;
+        }
+
+        .message-text code {
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            background: var(--bg-accent);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.9em;
+        }
+
+        .message-text pre {
+            background: var(--bg-accent);
+            padding: 8px;
+            border-radius: var(--radius-sm);
+            overflow-x: auto;
+            margin: 6px 0;
+            font-size: 0.85em;
+        }
+
+        .message-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .action-button {
+            padding: 4px 8px;
+            background: var(--bg-accent);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            cursor: pointer;
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+
+        .action-button:hover {
+            background: var(--text-accent);
+            color: white;
+            border-color: var(--text-accent);
+        }
+
+        .confidence-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            font-size: 0.75rem;
+            border-radius: 10px;
+            margin-top: 6px;
+            background: var(--bg-accent);
+        }
+
+        .confidence-high { color: var(--success-color); }
+        .confidence-medium { color: var(--warning-color); }
+        .confidence-low { color: var(--error-color); }
+
+        /* Tool Output */
+        .tool-output {
+            background: var(--bg-accent);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 12px;
+            margin-top: 8px;
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-size: 0.85rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Typing Indicator */
+        .typing-indicator {
+            padding: 12px 16px;
+            display: none;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: var(--text-secondary);
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+        /* Input Area */
+        .input-area {
+            padding: 16px;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            flex-shrink: 0;
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 10px;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            resize: none;
+            min-height: 48px;
+            max-height: 100px;
+            font-family: inherit;
+            line-height: 1.5;
+        }
+
+        .message-input:focus {
+            outline: none;
+            border-color: var(--text-accent);
+        }
+
+        .send-button {
+            padding: 12px 24px;
+            background: var(--text-accent);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-size: 0.95rem;
+            cursor: pointer;
+            align-self: flex-end;
+            transition: background 0.2s;
+        }
+
+        .send-button:hover {
+            background: #0b5ed7;
+        }
+
+        .send-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+        .sidebar-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 16px;
+        }
+
+        .sidebar-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: var(--text-primary);
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        /* Quick Tools */
+        .quick-tools {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+        }
+
+        .tool-button {
+            padding: 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .tool-button:hover {
+            background: var(--bg-accent);
+            border-color: var(--text-accent);
+        }
+
+        .tool-icon {
+            font-size: 1rem;
+        }
+
+        /* AST Panel */
+        .ast-panel {
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-size: 0.8rem;
+            background: var(--bg-accent);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            max-height: 150px;
+            overflow-y: auto;
+            white-space: pre;
+            line-height: 1.4;
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 10px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--text-accent);
+            margin-bottom: 2px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        /* Session Management */
+        .session-management {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .session-controls {
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-button {
+            flex: 1;
+            padding: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .control-button:hover {
+            background: var(--bg-accent);
+        }
+
+        .control-button.save {
+            background: var(--success-color);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .control-button.clear {
+            background: var(--error-color);
+            color: white;
+            border-color: var(--error-color);
+        }
+
+        /* About & Changelog Content */
+        .about-content, .changelog-content {
+            flex: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .about-section, .changelog-section {
+            margin-bottom: 24px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+        }
+
+        .about-section:last-child, .changelog-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-section h3, .changelog-section h3 {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--text-accent);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .about-section h3:before, .changelog-section h3:before {
+            content: "▸";
+            color: var(--text-accent);
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .feature-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 16px;
+            transition: transform 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-2px);
+            border-color: var(--text-accent);
+        }
+
+        .feature-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-title:before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .feature-description {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 10px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list li:before {
+            content: "•";
+            color: var(--text-accent);
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        /* Changelog Specific */
+        .changelog-entry {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .changelog-entry:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .changelog-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .changelog-version {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-accent);
+            background: var(--bg-accent);
+            padding: 4px 12px;
+            border-radius: var(--radius-sm);
+        }
+
+        .changelog-date {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .changelog-features {
+            list-style: none;
+            margin-left: 20px;
+        }
+
+        .changelog-features li {
+            padding: 6px 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .changelog-features li:before {
+            content: "→";
+            color: var(--success-color);
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        /* CSS Theme Variations */
+        body.dark-theme {
+            --bg-primary: #1a1a1a;
+            --bg-secondary: #2d2d2d;
+            --bg-accent: #3d3d3d;
+            --text-primary: #ffffff;
+            --text-secondary: #b0b0b0;
+            --border-color: #404040;
+        }
+
+        body.light-theme {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8f9fa;
+            --bg-accent: #e9ecef;
+            --text-primary: #212529;
+            --text-secondary: #6c757d;
+            --border-color: #dee2e6;
+        }
+
+        body.blue-theme {
+            --bg-primary: #f0f8ff;
+            --bg-secondary: #e1f0ff;
+            --bg-accent: #d0e7ff;
+            --text-primary: #003366;
+            --text-secondary: #336699;
+            --border-color: #99ccff;
+            --text-accent: #0066cc;
+        }
+
+        /* Hidden canvas for screenshots */
+        #screenshotCanvas {
+            display: none;
+            position: fixed;
+            top: -10000px;
+            left: -10000px;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--text-secondary);
+            border-radius: 3px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+                padding: 12px;
+                gap: 12px;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+            
+            .quick-tools {
+                grid-template-columns: 1fr;
+            }
+            
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                flex-direction: column;
+                gap: 12px;
+                align-items: stretch;
+            }
+            
+            .tabs {
+                justify-content: center;
+            }
+            
+            .session-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body class="light-theme">
+    <div class="app-container">
+        <!-- Header with Tabs -->
+        <div class="header">
+            <div>
+                <h1>AST Chatbot Agent with Tools</h1>
+                <div class="session-info">
+                    <span class="session-badge" id="sessionId">Session: Loading...</span>
+                    <span id="sessionStatus" class="session-badge">Memory: Active</span>
+                </div>
+            </div>
+            <div class="tabs">
+                <button class="tab-button active" onclick="switchTab('demo')">Demo</button>
+                <button class="tab-button" onclick="switchTab('tools')">Tools</button>
+                <button class="tab-button" onclick="switchTab('about')">About</button>
+                <button class="tab-button" onclick="switchTab('changelog')">Changelog</button>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Demo Tab -->
+            <div id="demo-tab" class="tab-content active">
+                <!-- Chat Interface -->
+                <div class="chat-container">
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Messages will appear here -->
+                    </div>
+
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </div>
+
+                    <div class="input-area">
+                        <div class="input-wrapper">
+                            <textarea 
+                                class="message-input" 
+                                id="messageInput"
+                                placeholder="Ask me anything or request tools (e.g., 'change theme', 'take screenshot', 'modify CSS')..."
+                                rows="2"
+                            ></textarea>
+                            <button class="send-button" id="sendButton" onclick="sendMessage()">
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tools Tab -->
+            <div id="tools-tab" class="tab-content">
+                <div class="about-content">
+                    <div class="about-section">
+                        <h3>🛠️ Available Tools & Operations</h3>
+                        <div class="quick-tools">
+                            <button class="tool-button" onclick="executeTool('theme_dark')">
+                                <span class="tool-icon">🌙</span>
+                                Dark Theme
+                            </button>
+                            <button class="tool-button" onclick="executeTool('theme_light')">
+                                <span class="tool-icon">☀️</span>
+                                Light Theme
+                            </button>
+                            <button class="tool-button" onclick="executeTool('theme_blue')">
+                                <span class="tool-icon">🔵</span>
+                                Blue Theme
+                            </button>
+                            <button class="tool-button" onclick="executeTool('screenshot')">
+                                <span class="tool-icon">📸</span>
+                                Take Screenshot
+                            </button>
+                            <button class="tool-button" onclick="executeTool('inspect_html')">
+                                <span class="tool-icon">🔍</span>
+                                Inspect HTML
+                            </button>
+                            <button class="tool-button" onclick="executeTool('export_chat')">
+                                <span class="tool-icon">📤</span>
+                                Export Chat
+                            </button>
+                            <button class="tool-button" onclick="executeTool('clear_chat')">
+                                <span class="tool-icon">🗑️</span>
+                                Clear Chat
+                            </button>
+                            <button class="tool-button" onclick="executeTool('save_session')">
+                                <span class="tool-icon">💾</span>
+                                Save Session
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>📋 Command Examples</h3>
+                        <div class="tool-output">
+                            <strong>Theme Management:</strong>
+                            • "Switch to dark theme"
+                            • "Change to light mode"
+                            • "Apply blue theme"
+                            
+                            <strong>Screenshot & Export:</strong>
+                            • "Take screenshot of chat"
+                            • "Export conversation"
+                            • "Save current view"
+                            
+                            <strong>CSS Manipulation:</strong>
+                            • "Make text larger"
+                            • "Change background color"
+                            • "Modify chat bubble colors"
+                            
+                            <strong>Session Control:</strong>
+                            • "Save this session"
+                            • "Clear chat history"
+                            • "Load previous session"
+                        </div>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>🎨 CSS Customization</h3>
+                        <div class="session-management">
+                            <div class="input-wrapper">
+                                <input type="text" id="cssProperty" placeholder="CSS Property (e.g., background-color)" 
+                                       style="flex: 1; padding: 8px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+                                <input type="text" id="cssValue" placeholder="Value (e.g., #f0f0f0)" 
+                                       style="flex: 1; padding: 8px; border: 1px solid var(--border-color); border-radius: var(--radius-sm);">
+                                <button class="control-button" onclick="applyCustomCSS()">Apply</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="about-section">
+                        <h3>📊 Current Session Data</h3>
+                        <div class="tool-output" id="sessionData">
+                            Loading session data...
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- About Tab -->
+            <div id="about-tab" class="tab-content">
+                <div class="about-content">
+                    <!-- 1. Session Memory & Persistence -->
+                    <div class="about-section">
+                        <h3>💾 1. Session Memory & Persistence</h3>
+                        <ul class="feature-list">
+                            <li><strong>Local Storage Integration</strong> – Automatically saves conversations to browser's local storage</li>
+                            <li><strong>Session Recovery</strong> – Continue where you left off after page refresh or browser restart</li>
+                            <li><strong>Multiple Sessions</strong> – Store up to 10 previous sessions with automatic rotation</li>
+                            <li><strong>Auto-save</strong> – Real-time saving after each message without user intervention</li>
+                            <li><strong>Session Management UI</strong> – Intuitive interface to save, load, and clear sessions</li>
+                        </ul>
+                    </div>
+
+                    <!-- 2. HTML/CSS Manipulation Tools -->
+                    <div class="about-section">
+                        <h3>🎨 2. HTML/CSS Manipulation Tools</h3>
+                        <ul class="feature-list">
+                            <li><strong>Theme Switching</strong> – Dark/Light/Blue themes with real-time switching and persistence</li>
+                            <li><strong>CSS Property Modification</strong> – Change any CSS variable dynamically through chat commands</li>
+                            <li><strong>HTML Inspection</strong> – View page structure, element counts, and current HTML state</li>
+                            <li><strong>Real-time Updates</strong> – Immediate visual feedback for all style changes</li>
+                        </ul>
+                    </div>
+
+                    <!-- 3. Screenshot & Export Tools -->
+                    <div class="about-section">
+                        <h3>📸 3. Screenshot & Export Tools</h3>
+                        <ul class="feature-list">
+                            <li><strong>Chat Screenshot</strong> – Capture conversation as PNG image with formatting preserved</li>
+                            <li><strong>HTML2Canvas Integration</strong> – High-quality screenshots when library is available</li>
+                            <li><strong>Fallback Method</strong> – Basic screenshot capability using native canvas API</li>
+                            <li><strong>Automatic Download</strong> – Screenshots download immediately with timestamped filenames</li>
+                        </ul>
+                    </div>
+
+                    <!-- 4. Command Parsing System -->
+                    <div class="about-section">
+                        <h3>🤖 4. Command Parsing System</h3>
+                        <ul class="feature-list">
+                            <li><strong>Natural Language Understanding</strong> – Understands commands like "switch to dark theme"</li>
+                            <li><strong>Tool Routing</strong> – Intelligently routes commands to appropriate tools</li>
+                            <li><strong>Error Handling</strong> – Graceful error messages for invalid or unrecognized commands</li>
+                            <li><strong>Context Awareness</strong> – Understands variations in command phrasing and synonyms</li>
+                        </ul>
+                    </div>
+
+                    <!-- 5. Enhanced Chat Agent -->
+                    <div class="about-section">
+                        <h3>💬 5. Enhanced Chat Agent</h3>
+                        <ul class="feature-list">
+                            <li><strong>Tool Integration</strong> – Seamlessly blends chat and tool responses in conversation flow</li>
+                            <li><strong>Confidence Scoring</strong> – Shows confidence levels for FAQ responses with color coding</li>
+                            <li><strong>System Messages</strong> – Tool execution notifications and status updates</li>
+                            <li><strong>Statistics Tracking</strong> – Comprehensive usage metrics including success rates and tool usage</li>
+                        </ul>
+                    </div>
+
+                    <!-- 6. UI Enhancements -->
+                    <div class="about-section">
+                        <h3>✨ 6. UI Enhancements</h3>
+                        <ul class="feature-list">
+                            <li><strong>Tool Buttons</strong> – Quick access to common tools from sidebar and chat interface</li>
+                            <li><strong>Action Buttons</strong> – Contextual actions embedded in chat responses</li>
+                            <li><strong>Session Info Display</strong> – Real-time session statistics in header and sidebar</li>
+                            <li><strong>Storage Monitoring</strong> – Track local storage usage with warnings for high usage</li>
+                        </ul>
+                    </div>
+
+                    <!-- 7. Data Management -->
+                    <div class="about-section">
+                        <h3>🗃️ 7. Data Management</h3>
+                        <ul class="feature-list">
+                            <li><strong>JSON Export</strong> – Download conversations as structured JSON with metadata</li>
+                            <li><strong>Import Ready</strong> – Export format ready for re-import and analysis</li>
+                            <li><strong>Storage Cleanup</strong> – Automatic cleanup of old sessions beyond limit</li>
+                            <li><strong>Backup System</strong> – Multiple session backups with timestamp preservation</li>
+                        </ul>
+                    </div>
+
+                    <!-- 8. Tool Categories -->
+                    <div class="about-section">
+                        <h3>🛠️ 8. Tool Categories Implemented</h3>
+                        <div class="feature-grid">
+                            <div class="feature-card">
+                                <div class="feature-title">Theme Tools</div>
+                                <div class="feature-description">Dark/Light/Blue themes with real-time switching</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-title">Screenshot Tools</div>
+                                <div class="feature-description">Chat capture with HTML2Canvas integration</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-title">Export Tools</div>
+                                <div class="feature-description">JSON export with conversation metadata</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-title">CSS Tools</div>
+                                <div class="feature-description">Dynamic style modification and inspection</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-title">Session Tools</div>
+                                <div class="feature-description">Save/load/clear session management</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-title">Inspection Tools</div>
+                                <div class="feature-description">HTML/CSS analysis and page statistics</div>
+                            </div>
+                            <div class="feature-card">
+                                <div class="feature-title">Statistics Tools</div>
+                                <div class="feature-description">Usage metrics and performance tracking</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Usage Examples -->
+                    <div class="about-section">
+                        <h3>🎯 Usage Examples</h3>
+                        <div class="tool-output">
+                            <strong>Try these commands:</strong>
+                            • "Switch to dark theme"
+                            • "Take screenshot of this chat"
+                            • "Export our conversation"
+                            • "Change background color to #f0f0f0"
+                            • "Save this session"
+                            • "Show me session statistics"
+                            • "Clear chat history"
+                            • "What tools do you have?"
+                            • "How does session memory work?"
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Changelog Tab -->
+            <div id="changelog-tab" class="tab-content">
+                <div class="changelog-content">
+                    <!-- v1.3.0 -->
+                    <div class="changelog-section">
+                        <div class="changelog-entry">
+                            <div class="changelog-header">
+                                <span class="changelog-version">v1.3.0</span>
+                                <span class="changelog-date">Current Version</span>
+                            </div>
+                            <h3>Complete Agent with Tools & Memory</h3>
+                            <ul class="changelog-features">
+                                <li><strong>Added Session Persistence</strong> – Full local storage integration with auto-save</li>
+                                <li><strong>Enhanced Tool System</strong> – 8 tool categories with natural language parsing</li>
+                                <li><strong>Theme Management</strong> – Dark/Light/Blue themes with persistent preferences</li>
+                                <li><strong>Screenshot Capability</strong> – Chat capture with HTML2Canvas fallback</li>
+                                <li><strong>CSS Manipulation</strong> – Dynamic style changes through chat commands</li>
+                                <li><strong>Export System</strong> – JSON export with comprehensive metadata</li>
+                                <li><strong>About & Changelog Tabs</strong> – Complete documentation within interface</li>
+                                <li><strong>Enhanced UI</strong> – Action buttons, session info, and storage monitoring</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- v1.2.0 -->
+                    <div class="changelog-section">
+                        <div class="changelog-entry">
+                            <div class="changelog-header">
+                                <span class="changelog-version">v1.2.0</span>
+                                <span class="changelog-date">Previous Version</span>
+                            </div>
+                            <h3>Advanced AST Implementation</h3>
+                            <ul class="changelog-features">
+                                <li><strong>Complete AST Structure</strong> – Full Abstract Syntax Tree implementation</li>
+                                <li><strong>Rich Text Formatting</strong> – Markdown-like formatting in responses</li>
+                                <li><strong>Confidence Scoring</strong> – Color-coded confidence indicators</li>
+                                <li><strong>Real-time Visualization</strong> – Live AST structure display</li>
+                                <li><strong>Statistics Dashboard</strong> – Performance metrics and tracking</li>
+                                <li><strong>Knowledge Base</strong> – 8 comprehensive FAQ categories</li>
+                                <li><strong>Responsive Design</strong> – Mobile-friendly interface</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- v1.1.0 -->
+                    <div class="changelog-section">
+                        <div class="changelog-entry">
+                            <div class="changelog-header">
+                                <span class="changelog-version">v1.1.0</span>
+                                <span class="changelog-date">Initial Release</span>
+                            </div>
+                            <h3>Basic FAQ Chatbot Foundation</h3>
+                            <ul class="changelog-features">
+                                <li><strong>AST Architecture</strong> – Basic Abstract Syntax Tree implementation</li>
+                                <li><strong>Pattern Matching</strong> – Regex and keyword-based query matching</li>
+                                <li><strong>Natural Language Processing</strong> – Tokenization and synonym expansion</li>
+                                <li><strong>Basic Chat Interface</strong> – Simple conversation UI</li>
+                                <li><strong>FAQ Knowledge Base</strong> – Initial set of predefined questions</li>
+                                <li><strong>Tab Interface</strong> – Basic Demo/About tab structure</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Future Plans -->
+                    <div class="changelog-section">
+                        <div class="changelog-entry">
+                            <div class="changelog-header">
+                                <span class="changelog-version">Future Plans</span>
+                                <span class="changelog-date">Upcoming Features</span>
+                            </div>
+                            <h3>Planned Enhancements</h3>
+                            <ul class="changelog-features">
+                                <li><strong>Machine Learning Integration</strong> – Adaptive learning from conversations</li>
+                                <li><strong>Multi-language Support</strong> – Internationalization and localization</li>
+                                <li><strong>Voice Interface</strong> – Speech recognition and synthesis</li>
+                                <li><strong>Plugin System</strong> – Extensible architecture for third-party tools</li>
+                                <li><strong>Cloud Sync</strong> – Cross-device session synchronization</li>
+                                <li><strong>Advanced Analytics</strong> – Conversation insights and pattern recognition</li>
+                                <li><strong>Collaborative Features</strong> – Shared sessions and team collaboration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <!-- Quick Tools -->
+                <div class="sidebar-card">
+                    <div class="sidebar-title">Quick Tools</div>
+                    <div class="quick-tools">
+                        <button class="tool-button" onclick="askQuestion('Take screenshot of chat')">
+                            <span class="tool-icon">📸</span>
+                            Screenshot
+                        </button>
+                        <button class="tool-button" onclick="askQuestion('Switch to dark theme')">
+                            <span class="tool-icon">🌙</span>
+                            Dark Mode
+                        </button>
+                        <button class="tool-button" onclick="askQuestion('Show session info')">
+                            <span class="tool-icon">📊</span>
+                            Session Info
+                        </button>
+                        <button class="tool-button" onclick="askQuestion('Export conversation')">
+                            <span class="tool-icon">📤</span>
+                            Export
+                        </button>
+                    </div>
+                </div>
+
+                <!-- AST Visualization -->
+                <div class="sidebar-card">
+                    <div class="sidebar-title">AST Structure</div>
+                    <div class="ast-panel" id="astPanel">
+                        Loading AST...
+                    </div>
+                </div>
+
+                <!-- Session Management -->
+                <div class="sidebar-card">
+                    <div class="sidebar-title">Session Control</div>
+                    <div class="session-management">
+                        <div class="session-controls">
+                            <button class="control-button" onclick="saveCurrentSession()">
+                                Save
+                            </button>
+                            <button class="control-button" onclick="clearCurrentSession()">
+                                Clear
+                            </button>
+                            <button class="control-button" onclick="exportChatHistory()">
+                                Export
+                            </button>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value" id="sessionMessages">0</div>
+                                <div class="stat-label">Messages</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value" id="sessionSize">0KB</div>
+                                <div class="stat-label">Size</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tools Status -->
+                <div class="sidebar-card">
+                    <div class="sidebar-title">Tools Status</div>
+                    <div class="tool-output" id="toolsStatus" style="font-size: 0.8rem; max-height: 100px;">
+                        Tools ready...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hidden canvas for screenshots -->
+    <canvas id="screenshotCanvas"></canvas>
+
+    <script>
+        // Session Management System
+        class SessionManager {
+            constructor() {
+                this.SESSION_KEY = 'ast_chatbot_sessions';
+                this.CURRENT_SESSION_KEY = 'ast_chatbot_current_session';
+                this.MAX_SESSIONS = 10;
+                this.currentSessionId = this.generateSessionId();
+                this.loadSession();
+            }
+
+            generateSessionId() {
+                return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+            }
+
+            saveSession(messages, stats, astState) {
+                const session = {
+                    id: this.currentSessionId,
+                    timestamp: Date.now(),
+                    messages: messages,
+                    stats: stats,
+                    astState: astState,
+                    theme: document.body.className
+                };
+
+                // Save current session
+                localStorage.setItem(this.CURRENT_SESSION_KEY, JSON.stringify(session));
+
+                // Save to sessions history
+                const allSessions = this.getAllSessions();
+                allSessions.unshift(session);
+                
+                // Keep only last MAX_SESSIONS
+                if (allSessions.length > this.MAX_SESSIONS) {
+                    allSessions.splice(this.MAX_SESSIONS);
+                }
+                
+                localStorage.setItem(this.SESSION_KEY, JSON.stringify(allSessions));
+                
+                return session;
+            }
+
+            loadSession() {
+                try {
+                    const saved = localStorage.getItem(this.CURRENT_SESSION_KEY);
+                    if (saved) {
+                        const session = JSON.parse(saved);
+                        this.currentSessionId = session.id;
+                        return session;
+                    }
+                } catch (e) {
+                    console.error('Error loading session:', e);
+                }
+                return null;
+            }
+
+            getAllSessions() {
+                try {
+                    const sessions = localStorage.getItem(this.SESSION_KEY);
+                    return sessions ? JSON.parse(sessions) : [];
+                } catch (e) {
+                    return [];
+                }
+            }
+
+            clearCurrentSession() {
+                localStorage.removeItem(this.CURRENT_SESSION_KEY);
+                this.currentSessionId = this.generateSessionId();
+            }
+
+            clearAllSessions() {
+                localStorage.removeItem(this.SESSION_KEY);
+                localStorage.removeItem(this.CURRENT_SESSION_KEY);
+                this.currentSessionId = this.generateSessionId();
+            }
+
+            getStorageInfo() {
+                const sessions = this.getAllSessions();
+                const current = this.loadSession();
+                
+                return {
+                    totalSessions: sessions.length,
+                    currentSessionId: this.currentSessionId,
+                    currentMessages: current ? current.messages.length : 0,
+                    storageUsed: this.calculateStorageSize()
+                };
+            }
+
+            calculateStorageSize() {
+                let total = 0;
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    const value = localStorage.getItem(key);
+                    total += key.length + value.length;
+                }
+                return (total / 1024).toFixed(2) + ' KB';
+            }
+        }
+
+        // Tool Execution System
+        class ToolExecutor {
+            constructor(sessionManager, chatAgent) {
+                this.sessionManager = sessionManager;
+                this.chatAgent = chatAgent;
+                this.tools = {
+                    'theme_dark': () => this.changeTheme('dark'),
+                    'theme_light': () => this.changeTheme('light'),
+                    'theme_blue': () => this.changeTheme('blue'),
+                    'screenshot': () => this.takeScreenshot(),
+                    'inspect_html': () => this.inspectHTML(),
+                    'export_chat': () => this.exportChat(),
+                    'clear_chat': () => this.clearChat(),
+                    'save_session': () => this.saveSession(),
+                    'modify_css': (property, value) => this.modifyCSS(property, value),
+                    'get_stats': () => this.getStats(),
+                    'session_info': () => this.getSessionInfo()
+                };
+            }
+
+            changeTheme(theme) {
+                document.body.className = theme + '-theme';
+                this.chatAgent.addSystemMessage(`Theme changed to ${theme} mode`);
+                return `Theme successfully changed to ${theme} mode`;
+            }
+
+            takeScreenshot() {
+                const canvas = document.getElementById('screenshotCanvas');
+                const ctx = canvas.getContext('2d');
+                
+                // Set canvas size to match chat container
+                const chatContainer = document.querySelector('.chat-container');
+                canvas.width = chatContainer.offsetWidth;
+                canvas.height = chatContainer.offsetHeight;
+                
+                // Use html2canvas if available, otherwise use basic method
+                if (typeof html2canvas !== 'undefined') {
+                    return new Promise((resolve) => {
+                        html2canvas(chatContainer).then(canvas => {
+                            const dataUrl = canvas.toDataURL('image/png');
+                            this.downloadImage(dataUrl, 'chat-screenshot.png');
+                            resolve('Screenshot taken and downloaded as chat-screenshot.png');
+                        });
+                    });
+                } else {
+                    // Basic screenshot method
+                    ctx.fillStyle = getComputedStyle(chatContainer).backgroundColor;
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    
+                    // Draw chat messages
+                    const messages = document.querySelectorAll('.message');
+                    let yPos = 20;
+                    
+                    ctx.fillStyle = getComputedStyle(document.body).color;
+                    ctx.font = '14px Arial';
+                    
+                    messages.forEach(msg => {
+                        const text = msg.textContent || msg.innerText;
+                        ctx.fillText(text.substring(0, 100), 20, yPos);
+                        yPos += 30;
+                    });
+                    
+                    const dataUrl = canvas.toDataURL('image/png');
+                    this.downloadImage(dataUrl, 'chat-screenshot-basic.png');
+                    return 'Basic screenshot taken (install html2canvas for better quality)';
+                }
+            }
+
+            downloadImage(dataUrl, filename) {
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = filename;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+
+            inspectHTML() {
+                const elements = document.querySelectorAll('*');
+                const elementCount = elements.length;
+                const bodyHTML = document.body.outerHTML.substring(0, 500) + '...';
+                
+                return `HTML Inspection:\n` +
+                       `• Total elements: ${elementCount}\n` +
+                       `• Body HTML (first 500 chars):\n${bodyHTML}\n` +
+                       `• Current theme: ${document.body.className}`;
+            }
+
+            exportChat() {
+                const messages = this.chatAgent.getConversationHistory();
+                const exportData = {
+                    timestamp: new Date().toISOString(),
+                    sessionId: this.sessionManager.currentSessionId,
+                    messages: messages,
+                    stats: this.chatAgent.getStats()
+                };
+                
+                const dataStr = JSON.stringify(exportData, null, 2);
+                const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+                
+                const exportFileDefaultName = `chat-export-${Date.now()}.json`;
+                
+                const linkElement = document.createElement('a');
+                linkElement.setAttribute('href', dataUri);
+                linkElement.setAttribute('download', exportFileDefaultName);
+                linkElement.click();
+                
+                return `Chat exported successfully as ${exportFileDefaultName}`;
+            }
+
+            clearChat() {
+                this.chatAgent.clearConversation();
+                return 'Chat cleared successfully';
+            }
+
+            saveSession() {
+                const messages = this.chatAgent.getConversationHistory();
+                const stats = this.chatAgent.getStats();
+                const astState = this.chatAgent.getASTState();
+                
+                this.sessionManager.saveSession(messages, stats, astState);
+                return 'Session saved successfully';
+            }
+
+            modifyCSS(property, value) {
+                try {
+                    document.documentElement.style.setProperty(`--${property}`, value);
+                    return `CSS property '${property}' set to '${value}'`;
+                } catch (e) {
+                    return `Error modifying CSS: ${e.message}`;
+                }
+            }
+
+            getStats() {
+                const stats = this.chatAgent.getStats();
+                const sessionInfo = this.sessionManager.getStorageInfo();
+                
+                return `Statistics:\n` +
+                       `• Total queries: ${stats.totalQueries}\n` +
+                       `• Success rate: ${stats.successRate}%\n` +
+                       `• Average confidence: ${stats.avgConfidence}%\n` +
+                       `• Session messages: ${sessionInfo.currentMessages}\n` +
+                       `• Storage used: ${sessionInfo.storageUsed}`;
+            }
+
+            getSessionInfo() {
+                const info = this.sessionManager.getStorageInfo();
+                return `Session Information:\n` +
+                       `• Session ID: ${info.currentSessionId}\n` +
+                       `• Total sessions saved: ${info.totalSessions}\n` +
+                       `• Messages in current: ${info.currentMessages}\n` +
+                       `• Storage used: ${info.storageUsed}`;
+            }
+
+            executeTool(toolName, ...args) {
+                if (this.tools[toolName]) {
+                    try {
+                        const result = this.tools[toolName](...args);
+                        this.chatAgent.addSystemMessage(`Tool executed: ${toolName}`);
+                        return result;
+                    } catch (error) {
+                        return `Error executing tool ${toolName}: ${error.message}`;
+                    }
+                } else {
+                    return `Tool '${toolName}' not found`;
+                }
+            }
+
+            parseCommand(command) {
+                const lowerCommand = command.toLowerCase();
+                
+                // Theme commands
+                if (lowerCommand.includes('dark theme') || lowerCommand.includes('dark mode')) {
+                    return { tool: 'theme_dark', args: [] };
+                }
+                if (lowerCommand.includes('light theme') || lowerCommand.includes('light mode')) {
+                    return { tool: 'theme_light', args: [] };
+                }
+                if (lowerCommand.includes('blue theme')) {
+                    return { tool: 'theme_blue', args: [] };
+                }
+                
+                // Screenshot commands
+                if (lowerCommand.includes('screenshot') || lowerCommand.includes('capture')) {
+                    return { tool: 'screenshot', args: [] };
+                }
+                
+                // Export commands
+                if (lowerCommand.includes('export') || lowerCommand.includes('download chat')) {
+                    return { tool: 'export_chat', args: [] };
+                }
+                
+                // Clear commands
+                if (lowerCommand.includes('clear chat') || lowerCommand.includes('reset chat')) {
+                    return { tool: 'clear_chat', args: [] };
+                }
+                
+                // Save commands
+                if (lowerCommand.includes('save session') || lowerCommand.includes('backup')) {
+                    return { tool: 'save_session', args: [] };
+                }
+                
+                // Stats commands
+                if (lowerCommand.includes('stat') || lowerCommand.includes('metrics')) {
+                    return { tool: 'get_stats', args: [] };
+                }
+                
+                // Session info commands
+                if (lowerCommand.includes('session info') || lowerCommand.includes('session data')) {
+                    return { tool: 'session_info', args: [] };
+                }
+                
+                // CSS modification commands
+                const cssMatch = lowerCommand.match(/change (.*?) to (.*)/i);
+                if (cssMatch) {
+                    const property = cssMatch[1].replace(/\s+/g, '-');
+                    const value = cssMatch[2];
+                    return { tool: 'modify_css', args: [property, value] };
+                }
+                
+                // HTML inspection
+                if (lowerCommand.includes('inspect html') || lowerCommand.includes('view html')) {
+                    return { tool: 'inspect_html', args: [] };
+                }
+                
+                return null;
+            }
+        }
+
+        // Enhanced Chatbot Agent with Tool Support
+        class EnhancedChatbotAgent {
+            constructor() {
+                this.sessionManager = new SessionManager();
+                this.toolExecutor = new ToolExecutor(this.sessionManager, this);
+                this.initializeAST();
+                this.conversationHistory = [];
+                this.stats = {
+                    totalQueries: 0,
+                    successfulMatches: 0,
+                    totalConfidence: 0,
+                    toolsExecuted: 0
+                };
+                this.loadFromSession();
+            }
+
+            initializeAST() {
+                this.astBuilder = new FAQASTBuilder();
+                this.nlp = new NLPProcessor();
+                this.initializeKnowledgeBase();
+                this.ast = this.astBuilder.getAST();
+            }
+
+            initializeKnowledgeBase() {
+                // Add tool-related FAQs
+                this.astBuilder.addFAQ(
+                    'tools',
+                    'What tools do you have?',
+                    'I have these available tools:\n\n' +
+                    '• **Theme Management** - Switch between dark/light/blue themes\n' +
+                    '• **Screenshot Tool** - Capture chat conversations\n' +
+                    '• **HTML Inspection** - View current page structure\n' +
+                    '• **Chat Export** - Save conversations as JSON files\n' +
+                    '• **Session Control** - Save/load chat sessions\n' +
+                    '• **CSS Modification** - Change styles dynamically\n' +
+                    '• **Statistics** - View usage metrics\n\n' +
+                    'Try: "switch to dark theme", "take screenshot", or "export chat"',
+                    ['tools', 'features', 'capabilities', 'what', 'can', 'do'],
+                    [/what.*tools/, /what.*can.*you.*do/],
+                    ['Theme Switching', 'Screenshots', 'Export Tools']
+                );
+
+                this.astBuilder.addFAQ(
+                    'session',
+                    'How does session memory work?',
+                    'I use **local storage** to persist conversations:\n\n' +
+                    '• **Automatic saving** - Sessions are saved automatically\n' +
+                    '• **Session recovery** - Continue where you left off\n' +
+                    '• **Multiple sessions** - Store up to 10 previous sessions\n' +
+                    '• **Export capability** - Download conversations as JSON\n\n' +
+                    'Commands: "save session", "clear chat", "show session info"',
+                    ['session', 'memory', 'save', 'persist', 'storage'],
+                    [/session.*memory/, /how.*save/, /persist.*chat/],
+                    ['Local Storage', 'Auto-save', 'Session Recovery']
+                );
+            }
+
+            processQuery(userQuery) {
+                this.stats.totalQueries++;
+                
+                // First, check if this is a tool command
+                const toolCommand = this.toolExecutor.parseCommand(userQuery);
+                if (toolCommand) {
+                    this.stats.toolsExecuted++;
+                    const result = this.toolExecutor.executeTool(toolCommand.tool, ...toolCommand.args);
+                    
+                    this.conversationHistory.push({
+                        type: 'tool',
+                        query: userQuery,
+                        tool: toolCommand.tool,
+                        result: result,
+                        timestamp: new Date().toISOString()
+                    });
+                    
+                    return {
+                        success: true,
+                        answer: `**Tool executed successfully!**\n\n${result}`,
+                        confidence: 1.0,
+                        isTool: true,
+                        tool: toolCommand.tool
+                    };
+                }
+                
+                // Otherwise, use AST-based FAQ matching
+                const { node, score } = this.findMatchingFAQ(userQuery);
+                
+                this.conversationHistory.push({
+                    type: 'chat',
+                    query: userQuery,
+                    confidence: score,
+                    matchedIntent: node ? node.value : null,
+                    timestamp: new Date().toISOString()
+                });
+
+                if (score > 0.3) {
+                    this.stats.successfulMatches++;
+                    this.stats.totalConfidence += score;
+                    
+                    const answer = this.getAnswerFromNode(node);
+                    
+                    return {
+                        success: true,
+                        answer: answer,
+                        confidence: score,
+                        intent: node ? node.value : 'unknown',
+                        isTool: false
+                    };
+                } else {
+                    return {
+                        success: false,
+                        answer: "I'm not sure about that. You can:\n" +
+                               "• Ask about my tools and capabilities\n" +
+                               "• Request actions like 'switch to dark theme'\n" +
+                               "• Ask about session memory\n" +
+                               "• Say 'take screenshot' or 'export chat'",
+                        confidence: score,
+                        isTool: false
+                    };
+                }
+            }
+
+            findMatchingFAQ(userQuery) {
+                const tokens = this.nlp.tokenize(userQuery);
+                const expandedQuery = this.nlp.expandQuery(tokens);
+                
+                let bestMatch = null;
+                let bestScore = 0;
+
+                this.ast.children.forEach(intentNode => {
+                    if (intentNode.type === ASTNodeType.INTENT) {
+                        let score = 0;
+                        const keywords = [];
+                        const patterns = [];
+
+                        intentNode.children.forEach(child => {
+                            if (child.type === ASTNodeType.KEYWORD) {
+                                keywords.push(child.value);
+                            } else if (child.type === ASTNodeType.PATTERN) {
+                                patterns.push(child.value);
+                            }
+                        });
+
+                        const matched = [];
+                        keywords.forEach(keyword => {
+                            if (expandedQuery.includes(keyword)) {
+                                score += 2;
+                                matched.push(keyword);
+                            }
+                        });
+
+                        patterns.forEach(pattern => {
+                            const regex = new RegExp(pattern, 'i');
+                            if (regex.test(userQuery)) {
+                                score += 3;
+                            }
+                        });
+
+                        if (matched.length > 0) {
+                            score += Math.min(matched.length, 5);
+                        }
+
+                        if (score > bestScore) {
+                            bestScore = score;
+                            bestMatch = intentNode;
+                        }
+                    }
+                });
+
+                const normalizedScore = Math.min(bestScore / 15, 1);
+                return { node: bestMatch, score: normalizedScore };
+            }
+
+            getAnswerFromNode(node) {
+                if (!node) return null;
+                for (const child of node.children) {
+                    if (child.type === ASTNodeType.ANSWER) {
+                        return child.value;
+                    }
+                }
+                return null;
+            }
+
+            getConversationHistory() {
+                return this.conversationHistory;
+            }
+
+            getStats() {
+                return {
+                    totalQueries: this.stats.totalQueries,
+                    successfulMatches: this.stats.successfulMatches,
+                    successRate: this.stats.totalQueries > 0 
+                        ? Math.round((this.stats.successfulMatches / this.stats.totalQueries) * 100)
+                        : 0,
+                    avgConfidence: this.stats.successfulMatches > 0
+                        ? Math.round((this.stats.totalConfidence / this.stats.successfulMatches) * 100)
+                        : 0,
+                    toolsExecuted: this.stats.toolsExecuted
+                };
+            }
+
+            getASTState() {
+                return {
+                    intents: this.astBuilder.getIntentCount(),
+                    patterns: this.ast.children.reduce((count, intent) => {
+                        return count + intent.children.filter(c => c.type === ASTNodeType.PATTERN).length;
+                    }, 0)
+                };
+            }
+
+            addSystemMessage(message) {
+                this.conversationHistory.push({
+                    type: 'system',
+                    message: message,
+                    timestamp: new Date().toISOString()
+                });
+            }
+
+            clearConversation() {
+                this.conversationHistory = [];
+                this.stats = {
+                    totalQueries: 0,
+                    successfulMatches: 0,
+                    totalConfidence: 0,
+                    toolsExecuted: 0
+                };
+            }
+
+            saveToSession() {
+                this.sessionManager.saveSession(
+                    this.conversationHistory,
+                    this.getStats(),
+                    this.getASTState()
+                );
+            }
+
+            loadFromSession() {
+                const session = this.sessionManager.loadSession();
+                if (session) {
+                    this.conversationHistory = session.messages || [];
+                    this.stats = session.stats || this.stats;
+                    if (session.theme) {
+                        document.body.className = session.theme;
+                    }
+                }
+            }
+
+            visualizeAST() {
+                const astText = this.visualizeASTNode(this.ast);
+                return astText;
+            }
+
+            visualizeASTNode(node = this.ast, depth = 0) {
+                const indent = '  '.repeat(depth);
+                let result = `${indent}${node.type}: ${node.value || 'root'}\n`;
+                
+                node.children.forEach(child => {
+                    result += this.visualizeASTNode(child, depth + 1);
+                });
+                
+                return result;
+            }
+        }
+
+        // AST Classes (from previous implementation)
+        const ASTNodeType = {
+            INTENT: 'INTENT',
+            QUESTION: 'QUESTION',
+            ANSWER: 'ANSWER',
+            KEYWORD: 'KEYWORD',
+            PATTERN: 'PATTERN',
+            FEATURE: 'FEATURE'
+        };
+
+        class ASTNode {
+            constructor(type, value = null, children = []) {
+                this.type = type;
+                this.value = value;
+                this.children = children;
+            }
+
+            addChild(node) {
+                this.children.push(node);
+            }
+        }
+
+        class FAQASTBuilder {
+            constructor() {
+                this.root = new ASTNode(ASTNodeType.INTENT, 'faq_system');
+                this.intents = new Map();
+            }
+
+            addFAQ(intent, question, answer, keywords = [], patterns = [], features = []) {
+                const intentNode = new ASTNode(ASTNodeType.INTENT, intent);
+                
+                const questionNode = new ASTNode(ASTNodeType.QUESTION, question);
+                intentNode.addChild(questionNode);
+                
+                const answerNode = new ASTNode(ASTNodeType.ANSWER, answer);
+                intentNode.addChild(answerNode);
+                
+                keywords.forEach(keyword => {
+                    const keywordNode = new ASTNode(ASTNodeType.KEYWORD, keyword);
+                    intentNode.addChild(keywordNode);
+                });
+                
+                patterns.forEach(pattern => {
+                    const patternNode = new ASTNode(ASTNodeType.PATTERN, pattern);
+                    intentNode.addChild(patternNode);
+                });
+
+                features.forEach(feature => {
+                    const featureNode = new ASTNode(ASTNodeType.FEATURE, feature);
+                    intentNode.addChild(featureNode);
+                });
+                
+                this.intents.set(intent, intentNode);
+                this.root.addChild(intentNode);
+                
+                return intentNode;
+            }
+
+            getAST() {
+                return this.root;
+            }
+
+            getIntentCount() {
+                return this.intents.size;
+            }
+        }
+
+        class NLPProcessor {
+            constructor() {
+                this.stopWords = new Set(['a', 'an', 'the', 'is', 'are', 'am', 'be', 'been']);
+                this.synonyms = {
+                    'tools': ['features', 'capabilities', 'functions'],
+                    'session': ['memory', 'storage', 'persistence'],
+                    'theme': ['mode', 'appearance', 'style'],
+                    'screenshot': ['capture', 'photo', 'image'],
+                    'export': ['download', 'save', 'backup']
+                };
+            }
+
+            tokenize(text) {
+                return text.toLowerCase()
+                    .replace(/[^\w\s]/g, '')
+                    .split(/\s+/)
+                    .filter(token => !this.stopWords.has(token) && token.length > 1);
+            }
+
+            getSynonyms(word) {
+                for (const [key, synonyms] of Object.entries(this.synonyms)) {
+                    if (key === word || synonyms.includes(word)) {
+                        return [key, ...synonyms];
+                    }
+                }
+                return [word];
+            }
+
+            expandQuery(tokens) {
+                const expanded = new Set();
+                tokens.forEach(token => {
+                    this.getSynonyms(token).forEach(syn => expanded.add(syn));
+                });
+                return Array.from(expanded);
+            }
+        }
+
+        // Initialize enhanced chatbot
+        const chatbot = new EnhancedChatbotAgent();
+
+        // DOM Elements
+        const chatMessages = document.getElementById('chatMessages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const typingIndicator = document.getElementById('typingIndicator');
+        const astPanel = document.getElementById('astPanel');
+        const sidebar = document.getElementById('sidebar');
+        const sessionId = document.getElementById('sessionId');
+        const sessionStatus = document.getElementById('sessionStatus');
+        const sessionMessages = document.getElementById('sessionMessages');
+        const sessionSize = document.getElementById('sessionSize');
+        const toolsStatus = document.getElementById('toolsStatus');
+        const sessionData = document.getElementById('sessionData');
+        const storageInfo = document.getElementById('storageInfo');
+
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-button').forEach(button => {
+                button.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+            document.querySelector(`button[onclick="switchTab('${tabName}')"]`).classList.add('active');
+            
+            // Show/hide sidebar
+            sidebar.style.display = tabName === 'demo' ? 'flex' : 'none';
+            
+            // Update tools tab content
+            if (tabName === 'tools') {
+                updateToolsStatus();
+                updateSessionData();
+            }
+            if (tabName === 'about') {
+                updateStorageInfo();
+            }
+        }
+
+        // Initialize UI
+        function initializeUI() {
+            updateSessionDisplay();
+            updateASTDisplay();
+            updateStats();
+            updateToolsStatus();
+            renderStoredMessages();
+            
+            addMessage(
+                "🤖 **Welcome to the Enhanced AST Chatbot Agent!**\n\n" +
+                "I now have **session memory** and **tool capabilities**:\n\n" +
+                "• 💾 **Persistent sessions** (automatically saved)\n" +
+                "• 🎨 **Theme switching** (dark/light/blue)\n" +
+                "• 📸 **Screenshot capture**\n" +
+                "• 📤 **Chat export** (JSON format)\n" +
+                "• 🛠️ **CSS manipulation**\n\n" +
+                "Try: 'switch to dark theme', 'take screenshot', or 'show session info'",
+                'bot',
+                1.0
+            );
+        }
+
+        // Update session display
+        function updateSessionDisplay() {
+            const sessionInfo = chatbot.sessionManager.getStorageInfo();
+            sessionId.textContent = `Session: ${sessionInfo.currentSessionId.substring(0, 15)}...`;
+            sessionMessages.textContent = chatbot.getConversationHistory().length;
+            sessionSize.textContent = sessionInfo.storageUsed;
+            
+            // Update status based on storage
+            const usedKB = parseFloat(sessionInfo.storageUsed);
+            if (usedKB > 50) {
+                sessionStatus.textContent = 'Memory: High';
+                sessionStatus.style.color = 'var(--warning-color)';
+            } else {
+                sessionStatus.textContent = 'Memory: Normal';
+                sessionStatus.style.color = 'var(--success-color)';
+            }
+        }
+
+        // Update AST display
+        function updateASTDisplay() {
+            const astText = chatbot.visualizeAST();
+            astPanel.textContent = astText;
+        }
+
+        // Update statistics
+        function updateStats() {
+            const stats = chatbot.getStats();
+            
+            // Update main stats display if elements exist
+            const totalQueriesEl = document.getElementById('totalQueries');
+            const successRateEl = document.getElementById('successRate');
+            const intentCountEl = document.getElementById('intentCount');
+            const avgConfidenceEl = document.getElementById('avgConfidence');
+            
+            if (totalQueriesEl) totalQueriesEl.textContent = stats.totalQueries;
+            if (successRateEl) successRateEl.textContent = `${stats.successRate}%`;
+            if (intentCountEl) intentCountEl.textContent = chatbot.getASTState().intents;
+            if (avgConfidenceEl) avgConfidenceEl.textContent = `${stats.avgConfidence}%`;
+        }
+
+        // Update tools status
+        function updateToolsStatus() {
+            const stats = chatbot.getStats();
+            toolsStatus.innerHTML = `
+                <strong>Tools Status:</strong><br>
+                • Tools executed: ${stats.toolsExecuted}<br>
+                • Theme: ${document.body.className.replace('-theme', '')}<br>
+                • Session: ${chatbot.sessionManager.currentSessionId.substring(0, 10)}...<br>
+                • Ready: ✅
+            `;
+        }
+
+        // Update session data display
+        function updateSessionData() {
+            const history = chatbot.getConversationHistory();
+            const toolCount = history.filter(msg => msg.type === 'tool').length;
+            const chatCount = history.filter(msg => msg.type === 'chat').length;
+            
+            sessionData.innerHTML = `
+                <strong>Current Session:</strong><br>
+                • Total messages: ${history.length}<br>
+                • Chat messages: ${chatCount}<br>
+                • Tool executions: ${toolCount}<br>
+                • Last activity: ${history.length > 0 ? 
+                    new Date(history[history.length-1].timestamp).toLocaleTimeString() : 
+                    'No activity yet'}<br>
+                • Auto-save: Enabled
+            `;
+        }
+
+        // Update storage info
+        function updateStorageInfo() {
+            const info = chatbot.sessionManager.getStorageInfo();
+            const sessions = chatbot.sessionManager.getAllSessions();
+            
+            let sessionsList = '';
+            sessions.slice(0, 3).forEach((session, i) => {
+                const time = new Date(session.timestamp).toLocaleDateString();
+                sessionsList += `${i+1}. ${time} (${session.messages?.length || 0} msgs)<br>`;
+            });
+            
+            storageInfo.innerHTML = `
+                <strong>Storage Information:</strong><br>
+                • Total sessions stored: ${info.totalSessions}<br>
+                • Storage used: ${info.storageUsed}<br>
+                • Max sessions: ${chatbot.sessionManager.MAX_SESSIONS}<br>
+                <br>
+                <strong>Recent Sessions:</strong><br>
+                ${sessionsList || 'No saved sessions'}
+            `;
+        }
+
+        // Render stored messages
+        function renderStoredMessages() {
+            chatMessages.innerHTML = '';
+            const history = chatbot.getConversationHistory();
+            
+            history.forEach(msg => {
+                if (msg.type === 'chat' || msg.type === 'tool') {
+                    const sender = msg.type === 'tool' ? 'bot' : 
+                                 msg.query.toLowerCase().includes('tool') ? 'user' : 
+                                 msg.confidence !== undefined ? 'bot' : 'user';
+                    
+                    if (sender === 'user') {
+                        addMessage(msg.query, 'user');
+                    } else if (msg.type === 'tool') {
+                        addMessage(`**Tool executed:** ${msg.query}\n\n${msg.result}`, 'bot', 1.0, true);
+                    } else {
+                        addMessage(msg.answer || msg.query, 'bot', msg.confidence);
+                    }
+                }
+            });
+        }
+
+        // Add message to chat
+        function addMessage(text, sender, confidence = null, isTool = false) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = 'message-content';
+            
+            const textDiv = document.createElement('div');
+            textDiv.className = 'message-text';
+            textDiv.innerHTML = formatText(text);
+            
+            contentDiv.appendChild(textDiv);
+            
+            if (isTool) {
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'message-actions';
+                actionsDiv.innerHTML = `
+                    <button class="action-button" onclick="executeTool('theme_dark')">Dark Theme</button>
+                    <button class="action-button" onclick="executeTool('screenshot')">Screenshot</button>
+                    <button class="action-button" onclick="executeTool('export_chat')">Export</button>
+                `;
+                contentDiv.appendChild(actionsDiv);
+            }
+            
+            if (confidence !== null && sender === 'bot' && !isTool) {
+                const confidencePercent = Math.round(confidence * 100);
+                const confidenceClass = confidencePercent > 80 ? 'confidence-high' : 
+                                      confidencePercent > 60 ? 'confidence-medium' : 'confidence-low';
+                
+                const confidenceBadge = document.createElement('div');
+                confidenceBadge.className = `confidence-badge ${confidenceClass}`;
+                confidenceBadge.textContent = `Confidence: ${confidencePercent}%`;
+                contentDiv.appendChild(confidenceBadge);
+            }
+            
+            messageDiv.appendChild(contentDiv);
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Format text with markdown-like syntax
+        function formatText(text) {
+            return text
+                .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                .replace(/`([^`]+)`/g, '<code>$1</code>')
+                .replace(/```([\s\S]*?)```/g, '<pre>$1</pre>')
+                .replace(/\n/g, '<br>');
+        }
+
+        // Show/hide typing indicator
+        function showTyping() {
+            typingIndicator.style.display = 'block';
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function hideTyping() {
+            typingIndicator.style.display = 'none';
+        }
+
+        // Send message
+        async function sendMessage() {
+            const text = messageInput.value.trim();
+            if (!text) return;
+            
+            messageInput.value = '';
+            addMessage(text, 'user');
+            
+            messageInput.disabled = true;
+            sendButton.disabled = true;
+            
+            showTyping();
+            
+            await new Promise(resolve => setTimeout(resolve, 300 + Math.random() * 300));
+            
+            hideTyping();
+            
+            const response = chatbot.processQuery(text);
+            addMessage(response.answer, 'bot', response.confidence, response.isTool);
+            
+            // Auto-save session
+            chatbot.saveToSession();
+            
+            // Update all displays
+            updateSessionDisplay();
+            updateASTDisplay();
+            updateStats();
+            updateToolsStatus();
+            
+            messageInput.disabled = false;
+            sendButton.disabled = false;
+            messageInput.focus();
+        }
+
+        // Execute tool directly
+        function executeTool(toolName) {
+            const result = chatbot.toolExecutor.executeTool(toolName);
+            addMessage(`**Tool executed:** ${toolName}\n\n${result}`, 'bot', 1.0, true);
+            chatbot.saveToSession();
+            updateSessionDisplay();
+            updateToolsStatus();
+        }
+
+        // Quick question function
+        function askQuestion(question) {
+            messageInput.value = question;
+            sendMessage();
+        }
+
+        // Apply custom CSS
+        function applyCustomCSS() {
+            const property = document.getElementById('cssProperty').value;
+            const value = document.getElementById('cssValue').value;
+            
+            if (property && value) {
+                const result = chatbot.toolExecutor.executeTool('modify_css', property, value);
+                addMessage(`**CSS Modified:** ${property} = ${value}\n\n${result}`, 'bot', 1.0, true);
+                
+                document.getElementById('cssProperty').value = '';
+                document.getElementById('cssValue').value = '';
+            }
+        }
+
+        // Session management functions
+        function saveCurrentSession() {
+            chatbot.saveToSession();
+            addMessage('**Session saved successfully!**', 'bot', 1.0);
+            updateSessionDisplay();
+            updateStorageInfo();
+        }
+
+        function clearCurrentSession() {
+            if (confirm('Clear current chat session?')) {
+                chatbot.clearConversation();
+                chatbot.sessionManager.clearCurrentSession();
+                chatMessages.innerHTML = '';
+                addMessage('Chat session cleared.', 'bot', 1.0);
+                updateSessionDisplay();
+                updateStats();
+            }
+        }
+
+        function clearAllSessions() {
+            if (confirm('Clear ALL saved sessions? This cannot be undone.')) {
+                chatbot.sessionManager.clearAllSessions();
+                chatbot.clearConversation();
+                chatMessages.innerHTML = '';
+                addMessage('All sessions cleared.', 'bot', 1.0);
+                updateSessionDisplay();
+                updateStorageInfo();
+            }
+        }
+
+        function loadPreviousSession() {
+            const sessions = chatbot.sessionManager.getAllSessions();
+            if (sessions.length > 0) {
+                if (confirm(`Load previous session from ${new Date(sessions[0].timestamp).toLocaleDateString()}?`)) {
+                    chatbot.sessionManager.saveSession(
+                        sessions[0].messages,
+                        sessions[0].stats,
+                        sessions[0].astState
+                    );
+                    chatbot.loadFromSession();
+                    renderStoredMessages();
+                    addMessage('Previous session loaded.', 'bot', 1.0);
+                    updateSessionDisplay();
+                    updateStorageInfo();
+                }
+            } else {
+                addMessage('No previous sessions found.', 'bot', 1.0);
+            }
+        }
+
+        function exportChatHistory() {
+            const result = chatbot.toolExecutor.executeTool('export_chat');
+            addMessage(`**Export completed:**\n\n${result}`, 'bot', 1.0, true);
+        }
+
+        // Auto-resize textarea
+        messageInput.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = Math.min(this.scrollHeight, 100) + 'px';
+        });
+
+        // Enter key support
+        messageInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // Initialize on load
+        window.onload = function() {
+            initializeUI();
+            messageInput.focus();
+        };
+    </script>
+</body>
+</html>

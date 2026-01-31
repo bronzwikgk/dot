@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NL2AST Engine | Turn Business Language into Structured Logic</title>
+    <style>
+        :root {
+            --primary: #0f4c81; /* A deeper, more corporate blue */
+            --secondary: #3b82f6; /* A brighter blue for accents */
+            --dark: #111827;
+            --gray: #4b5563;
+            --light-gray: #f3f4f6;
+            --white: #ffffff;
+            --border: #e5e7eb;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--white);
+            color: var(--dark);
+            line-height: 1.7;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+        a { color: var(--secondary); text-decoration: none; transition: color 0.3s ease; }
+        a:hover { color: var(--primary); }
+
+        /* Header & Nav */
+        .main-header {
+            padding: 20px 0;
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .main-header .container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 800; color: var(--primary); }
+        .main-nav a { margin-left: 25px; font-weight: 600; font-size: 1rem; }
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid transparent;
+        }
+        .btn-primary { background-color: var(--primary); color: var(--white); }
+        .btn-primary:hover { background-color: #0c3b66; transform: translateY(-2px); }
+        .btn-secondary { background-color: transparent; color: var(--primary); border-color: var(--primary); }
+
+        /* Hero Section */
+        .hero { text-align: center; padding: 120px 0; background-color: var(--light-gray); }
+        .hero h1 { font-size: 3.5rem; font-weight: 800; line-height: 1.2; margin-bottom: 20px; }
+        .hero p { font-size: 1.25rem; color: var(--gray); max-width: 800px; margin: 0 auto 40px; }
+        .hero .cta-buttons { display: flex; justify-content: center; gap: 20px; }
+
+        /* Features Section */
+        .features { padding: 100px 0; }
+        .section-title { text-align: center; font-size: 2.5rem; font-weight: 800; margin-bottom: 60px; }
+        .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+        .feature-card { background: var(--white); border: 1px solid var(--border); padding: 40px; border-radius: 12px; text-align: center; }
+        .feature-card .icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+        .feature-card h3 { font-size: 1.5rem; margin-bottom: 15px; }
+        .feature-card p { color: var(--gray); }
+
+        /* How It Works Section */
+        .how-it-works { padding: 100px 0; background-color: var(--light-gray); }
+        .how-it-works-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; align-items: center; }
+        .step { text-align: center; }
+        .step-number { font-size: 1.5rem; font-weight: 800; color: var(--primary); margin-bottom: 15px; border: 3px solid var(--border); width: 60px; height: 60px; line-height: 54px; border-radius: 50%; margin: 0 auto 20px; }
+        .step h4 { font-size: 1.2rem; margin-bottom: 10px; }
+        pre { background: #1e293b; color: #e5e7eb; padding: 20px; border-radius: 8px; text-align: left; font-family: 'Courier New', Courier, monospace; font-size: 0.9rem; overflow-x: auto; }
+        .arrow { font-size: 2.5rem; color: var(--border); font-weight: bold; }
+
+        /* Use Cases Section */
+        .use-cases { padding: 100px 0; }
+        .use-cases-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+        .use-case-card { background: var(--light-gray); padding: 30px; border-radius: 12px; border-left: 5px solid var(--secondary); }
+        .use-case-card h4 { font-size: 1.25rem; margin-bottom: 10px; color: var(--primary); }
+
+        /* Final CTA */
+        .final-cta { padding: 100px 0; background-color: var(--dark); color: var(--white); text-align: center; }
+        .final-cta h2 { font-size: 2.5rem; margin-bottom: 30px; }
+        .final-cta .btn-primary { background-color: var(--secondary); }
+        .final-cta .btn-primary:hover { background-color: #5b21b6; }
+
+        /* Footer */
+        .main-footer { padding: 40px 0; text-align: center; color: var(--gray); font-size: 0.9rem; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="container">
+            <div class="logo">NL2AST</div>
+            <nav class="main-nav">
+                <a href="#features">Features</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="#use-cases">Use Cases</a>
+                <a href="#" class="btn btn-secondary">Contact Us</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Translate Business Language into Structured Logic. Instantly.</h1>
+            <p>Empower your teams with a parser that offers unparalleled Speed, Consistency, and Control. NL2AST converts plain English into a flawless, machine-readable Abstract Syntax Tree, ready for any system.</p>
+            <div class="cta-buttons">
+                <a href="#" class="btn btn-primary">Request a Demo</a>
+                <a href="#" class="btn btn-secondary">Read Documentation</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">A Framework Built for Business</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="icon">⚙️</div>
+                    <h3>Total Control</h3>
+                    <p>You define the dictionary. Our engine adapts to your unique business terminology, from financial metrics to logistics terms. Your language, your rules.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">⚡</div>
+                    <h3>Blazing Speed</h3>
+                    <p>Automate the conversion of business rules and natural language queries in milliseconds. Eliminate manual translation and accelerate your workflows.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🔗</div>
+                    <h3>Absolute Consistency</h3>
+                    <p>Get deterministic, repeatable results. The same natural language query always produces the same structured output, ensuring reliability across your systems.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">Simple Process, Powerful Results</h2>
+            <div class="how-it-works-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>Define Your Domain</h4>
+                    <pre>"fields": {
+  "price": { 
+    "type": "number", 
+    "synonyms": ["price", "cost"]
+  }
+}</pre>
+                </div>
+                <div class="arrow">→</div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>Write in Plain English</h4>
+                    <pre>"find stocks with price > $100"</pre>
+                </div>
+                <div class="arrow">→</div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>Get a Structured AST</h4>
+                    <pre>"conditions": [{
+  "field": "price",
+  "operator": ">",
+  "value": 100
+}]</pre>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="use-cases" class="use-cases">
+        <div class="container">
+            <h2 class="section-title">Powering Critical Business Logic</h2>
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <h4>Financial Services</h4>
+                    <p>Instantly parse complex trading rules, compliance checks, and portfolio screening queries written in natural language.</p>
+                </div>
+                <div class="use-case-card">
+                    <h4>Business Intelligence</h4>
+                    <p>Empower analysts to build complex data queries without writing SQL, leading to faster insights and broader data access.</p>
+                </div>
+                <div class="use-case-card">
+                    <h4>Logistics & Operations</h4>
+                    <p>Define and update routing, inventory, and fulfillment rules on the fly using simple, understandable language.</p>
+                </div>
+                <div class="use-case-card">
+                    <h4>Internal Tooling</h4>
+                    <p>Build powerful, user-friendly admin panels and internal tools where complex logic can be managed by non-technical staff.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="final-cta">
+        <div class="container">
+            <h2>Ready to Bring Clarity to Your Business Logic?</h2>
+            <p style="margin-bottom: 30px; font-size: 1.1rem;">Let's talk about how NL2AST can fit into your technology stack.</p>
+            <a href="#" class="btn btn-primary">Request a Demo</a>
+        </div>
+    </section>
+
+    <footer class="main-footer">
+        <div class="container">
+            <p>&copy; 2026 NL2AST Engine. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

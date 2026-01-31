@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP Parser Engine</title>
+    <!-- The styles are copied from the original file for consistency -->
+    <style>
+        :root {
+            --primary: #2563eb; --secondary: #7c3aed; --success: #10b981;
+            --warning: #f59e0b; --danger: #ef4444; --info: #3b82f6;
+            --light: #f8fafc; --dark: #1e293b; --gray: #64748b; --border: #e2e8f0;
+        }
+        body { font-family: sans-serif; background: #f0f4ff; color: var(--dark); padding: 20px; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 40px; padding: 30px; background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .logo { font-size: 2.8rem; font-weight: 800; background: linear-gradient(135deg, var(--primary), var(--secondary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { color: var(--gray); font-size: 1.1rem; }
+        .tabs { display: flex; background: white; border-radius: 12px; padding: 8px; margin-bottom: 30px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .tab-btn { flex: 1; padding: 16px 24px; border: none; background: none; font-size: 16px; font-weight: 600; color: var(--gray); cursor: pointer; border-radius: 8px; transition: all 0.3s ease; }
+        .tab-btn.active { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .card { background: white; border-radius: 16px; padding: 30px; margin-bottom: 30px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .card-header { margin-bottom: 25px; padding-bottom: 15px; border-bottom: 2px solid var(--border); }
+        .card-title { font-size: 1.5rem; font-weight: 700; color: var(--dark); }
+        .btn { padding: 12px 24px; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: white; }
+        .form-group { margin-bottom: 20px; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 600; }
+        textarea { width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: 10px; font-size: 16px; min-height: 120px; }
+        .output-panel { background: var(--light); border-radius: 12px; padding: 20px; font-family: monospace; font-size: 14px; overflow-x: auto; white-space: pre-wrap; max-height: 400px; }
+        .agent-card { background: white; border-radius: 12px; padding: 20px; margin-bottom: 20px; border: 2px solid var(--border); }
+        .agent-header { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+        .agent-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 18px; }
+        .agent-title { font-weight: 700; color: var(--dark); flex: 1; }
+        .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-left: auto; }
+        .status-success { background: #d1fae5; color: #065f46; }
+        .status-processing { background: #fef3c7; color: #92400e; }
+        .status-pending { background: #e5e7eb; color: #374151; }
+        .agent-output { background: var(--light); border-radius: 8px; padding: 15px; font-family: monospace; font-size: 13px; margin-top: 10px; }
+        #loading-indicator { font-weight: bold; color: var(--primary); padding: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">📄 NLP Parser Engine</div>
+            <p class="tagline">A generic Natural Language Parser. Currently loaded with the <strong><span id="domain-name">...</span></strong> domain.</p>
+        </header>
+
+        <div class="tabs">
+            <button id="tab-btn-query" class="tab-btn active">Query Parser</button>
+            <button id="tab-btn-pipeline" class="tab-btn">Agent Pipeline</button>
+        </div>
+
+        <!-- Main Query Parser Tab -->
+        <div id="query-tab" class="tab-content active">
+            <div id="loading-indicator">Loading Domain...</div>
+            <div id="main-content" style="display: none;">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">Natural Language Query</h2>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Enter your query:</label>
+                        <textarea id="nlQuery" placeholder="Example: Show me tech stocks with price > $100"></textarea>
+                    </div>
+                    <button id="parse-btn" class="btn btn-primary">Parse Query</button>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2 class="card-title">Intermediate Representation (IR)</h2></div>
+                    <div class="output-panel" id="irOutput">// IR will appear here</div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header"><h2 class="card-title">Final Executable Rule (JSON)</h2></div>
+                    <div class="output-panel" id="jsonOutput">// JSON output will appear here</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pipeline Visualization Tab -->
+        <div id="pipeline-tab" class="tab-content">
+             <div class="card">
+                <div class="card-header"><h2 class="card-title">Agent Collaboration Simulation</h2></div>
+                <div class="agent-card" id="intentAgent">
+                    <div class="agent-header">
+                        <div class="agent-icon">1</div>
+                        <div class="agent-title">Intent Recognition Agent</div>
+                        <div class="status-badge status-pending">Pending</div>
+                    </div>
+                    <div class="agent-output">Waiting for query...</div>
+                </div>
+                <div class="agent-card" id="schemaAgent">
+                    <div class="agent-header">
+                        <div class="agent-icon">2</div>
+                        <div class="agent-title">Schema Linking Agent</div>
+                        <div class="status-badge status-pending">Pending</div>
+                    </div>
+                    <div class="agent-output">...</div>
+                </div>
+                <div class="agent-card" id="decomposeAgent">
+                    <div class="agent-header">
+                        <div class="agent-icon">3</div>
+                        <div class="agent-title">Query Decomposition Agent</div>
+                        <div class="status-badge status-pending">Pending</div>
+                    </div>
+                    <div class="agent-output">...</div>
+                </div>
+                <div class="agent-card" id="synthesisAgent">
+                    <div class="agent-header">
+                        <div class="agent-icon">4</div>
+                        <div class="agent-title">IR & Rule Synthesis Agent</div>
+                        <div class="status-badge status-pending">Pending</div>
+                    </div>
+                    <div class="agent-output">...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- The application logic is now in a separate module -->
+    <script src="../src/app/ui_app.js" type="module"></script>
+</body>
+</html>

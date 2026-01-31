@@ -1,0 +1,263 @@
+# Shunya Guidelines
+
+## Introduction
+
+Welcome to team Shunya.ek! At O.1, we believe in minimal rules and meaningful guidelines. Give them a thorough read and follow them during your time with us to maintain a productive and collaborative environment.
+
+Every bit matters, and your adherence to these guidelines contributes to our collective success.
+
+## Index
+
+- Shunya Guidelines
+- Generic Guidelines
+- Semantic Versioning Guidelines
+- Document Guidelines
+- Story Guidelines
+- Issue Guidelines
+- File and Folder Guidelines
+- Naming Guidelines
+- Coding Guidelines
+- Testing Guidelines
+- Deployment Guidelines
+- Audit Guidelines
+- Communication Guidelines
+- Search Guidelines: [How to search for the right issue, file]
+- Working with LLM
+- GPT Guidelines: Guidelines for GPT
+
+## Shunya 
+
+- Make mistakes.
+- Knowledge should be free and remain free.
+- Help your mate.
+- Wherever you are, it's a start.
+- Reinvent the wheel if needed.
+- Google before anything.
+- Plan and communicate.
+- Be responsible for your actions.
+- Never be sure unless you are.
+- Motivate instead of demotivate.
+
+## Generic Guidelines
+
+### Form and Function
+
+Aesthetics and utility must blend to create meaningful experiences. Consider both aspects of your work and communication.
+
+### Naming Conventions
+
+Use descriptive labels for ease of identification and differentiation. Names should include a reference to the parent category and a unique identifier.
+
+### Appreciation of Beauty
+
+Embrace and contribute to the aesthetic aspects of our work and environment, enriching our professional experience.
+
+### Data-Based Decision Making
+
+Utilize AI for Data Insights: Use AI to gain insights from data, but do not rely on it as the sole decision-maker.
+
+## Workflow and Practices
+
+### Commit Frequency
+
+Make a commit every 2 hours to ensure continuous progress and tracking. [To be Automated]
+
+### Self-Learning and Reporting
+
+Engage in self-learning activities.
+
+Maintain a history of your learning journey.
+
+Submit a Learning Report to document your progress and insights.
+
+### Follow Established Standards
+
+Adherence to standards is crucial for maintaining quality and consistency.
+
+Key areas to focus on include:
+
+- Naming Conventions
+- File and Folder Structure
+- Communication Practices
+- Assets and Resources Management
+- Service Protocols
+- Suggested Feeds
+
+### Everything We Publish Should Be
+
+- Thoughtful
+- Interesting
+- Proud
+- Bold
+- Human
+
+## Guidelines - Collate and Consolidate
+
+### Working with LLM
+
+#### Guidelines to Work with LLMS:
+
+- Start From Unknown. Take the Brief and understand more about the brief using LLM's.
+- Make a list of prompts and, a list of guidelines for each prompt.
+- Request Datasets
+- Build Dataset, Table of Content
+- Evaluate Always:
+  - Ask for a map and Tree
+  - Compare both
+  - Evaluate Output
+- Build Mapping
+- Evaluate
+- Seek Recommendations.
+
+## GPT Guidelines
+
+### GPT Guidelines - ver 1.1.8
+
+#### Table of Contents
+
+- Generic Guidelines
+- Document Guidelines
+- List Management
+- Code Principles
+- Glossary & Evaluation
+
+### GPT Guidelines Generic
+
+#### Adherence & Output Count
+
+Follow guidelines, including token, word, and character counts in outputs.
+
+#### Custom Label & User Query
+
+Start with a custom instruction label and ask users for their names.
+
+### Document
+
+#### Output & Formatting
+
+Generate single block outputs in {OutputSpace}, using markdown with title format name-ver-0-0-1.
+
+#### Version & Structure
+
+Apply semantic versioning starting at 0-0-1; include collapsible sections for structured content.
+
+### List Management
+
+#### Unique IDs & Collapsible Titles
+
+Lists should have unique, indexable IDs with collapsible titles.
+
+### Code Principles
+
+#### SOLID & OOP
+
+Adhere to SOLID and Object-Oriented Programming principles.
+
+#### No ES6 Syntax
+
+Avoid using ES6 Syntax.
+
+#### No forEach
+
+Same goes for forEach and other ES6 methods, use a traditional for loop.
+
+### Glossary & Evaluation
+
+#### Footer Glossary & Evaluation Report
+
+Include a glossary and an evaluation report assessing guideline adherence.
+
+#### Guidelines Followed
+
+All Applicable
+
+- Tokens: [number]
+- Words: [number]
+- Characters: [number]
+
+## Guidelines - Semantic Versioning
+
+### Simplified Guide to Semantic Versioning
+
+Semantic Versioning (SemVer) is a versioning system that helps clarify software changes. It uses Major.Minor.Patch format.
+
+#### Purpose
+
+SemVer ensures clear communication of software updates, making it easy for users and developers to understand the impact of changes.
+
+#### Key Principles
+
+- Major Version (X.y.z): Major changes breaking compatibility.
+- Minor Version (x.Y.z): Backward-compatible additions.
+- Patch Version (x.y.Z): Bug fixes and tweaks.
+
+#### Version Updates
+
+- Major Update: Significant changes (X.y.z → X+1.0.0).
+- Minor Update: New features (x.Y.z → x.Y+1.0).
+- Patch Update: Bug fixes (x.y.Z → x.y.Z+1).
+
+#### Decision Table
+
+Quick reference for version updates based on change type.
+
+#### Stable Version
+
+A thoroughly tested and reliable release.
+
+#### Best Practices
+
+- Start at 1.0.0.
+- Maintain backward compatibility.
+- Keep a changelog.
+
+#### Versioning Across Environments
+
+- Development: Detailed pre-release versions.
+- Staging: Align with production plans.
+- Production: Stable SemVer.
+
+#### Practical Quiz on Semantic Versioning
+
+Test your SemVer knowledge with these practical questions:
+
+- [Questions and Answers here]
+
+## Communication Guidelines
+
+### Effective Communication Guidelines: Priorities and Practices
+
+#### Value of Time and Clarity
+
+Recognizing the importance of time and the need for clear communication is fundamental. We promote conversations and discussion over comments here in Linearapp, GitLab, or any other communication app. Avoid unnecessary meetings and discussions when possible.
+
+#### Communication Tools
+
+We utilize Discord and WhatsApp for efficient communication. You'll receive email invitations to join the relevant channels and groups.
+
+#### Logging and Audit
+
+Every communication should be recorded and subject to review, ensuring transparency and accountability.
+
+#### Workplace Culture
+
+Our environment is professional yet enjoyable. We encourage respect and teamwork, rejecting any forms of bullying or heroism.
+
+#### Simplicity in Dialogue
+
+Adopt a 'donkey' approach in conversations. The person initiating the discussion should simplify their language, promoting easy understanding for everyone.
+
+#### Structured Communication Requests
+
+Before any discussion, submit a communication request detailing the agenda, priority, and expected timeframe. This ensures focused and productive interactions.
+
+## Document Guidelines
+
+### Each Page follows the Generic Document Template.
+
+### Each Page to have a Linked TOC.
+
+### Each Item in a list should have a Unique Indexable ID.
+
+### Each Item List should have a total Item.
+

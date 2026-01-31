@@ -1,0 +1,31 @@
+Intro :
+We build things
+we take `action` on `entity`.
+Story of a Story:
+
+Status:
+
+Each status represent a state of a story,
+  often used for comparison or audit purpose.
+
+Stages and Scenes:
+  - 5d Activity:
+
+Dataset:
+  - action:
+  - entity:
+  - operation:
+  - roles:
+  - flows
+  
+Guidelines:
+  - Project Repo / Branch / Folder / File Structure and naming guidelines.
+  - handbook activity commit
+Templates:
+handbooks:
+TechStack:
+Cloud Resources:
+  Assets:
+  Code:
+    - Gitlab
+      - actorinAction : Each of you will be provided with a personal repo. All your stories should be stored in their respective branches as per the guidelines

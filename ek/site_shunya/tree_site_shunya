@@ -1,0 +1,10 @@
+### template - page-site:
+    nav-site
+    content - site
+    footer - site
+
+root:
+    about
+    work
+    story
+    get in touch

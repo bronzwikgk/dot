@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "stock": {
+      "synonyms": ["stocks", "shares", "equities", "stock"]
+    }
+  },
+  "fields": {
+    "price": { "type": "number", "synonyms": ["price", "cost", "value", "stock price"] },
+    "volume": { "type": "number", "synonyms": ["volume", "trading volume", "shares traded"] },
+    "pe_ratio": { "type": "number", "synonyms": ["pe", "pe ratio", "price to earnings"] },
+    "market_cap": { "type": "number", "synonyms": ["market cap", "capitalization", "size"] },
+    "dividend_yield": { "type": "percentage", "synonyms": ["dividend", "dividend yield", "yield"] },
+    "rsi": { "type": "number", "synonyms": ["rsi", "relative strength index"] },
+    "sma_50": { "type": "number", "synonyms": ["50-day ma", "50-day moving average"] },
+    "sma_200": { "type": "number", "synonyms": ["200-day ma", "200-day moving average"] },
+    "sector": { "type": "category", "synonyms": ["sector", "industry"] }
+  },
+  "values": {
+    "sector": {
+      "technology": ["tech", "technology", "software", "hardware"],
+      "healthcare": ["healthcare", "medical", "pharma", "biotech"],
+      "finance": ["financial", "banking", "finance", "insurance"],
+      "energy": ["energy", "oil", "gas", "renewable"]
+    }
+  }
+}

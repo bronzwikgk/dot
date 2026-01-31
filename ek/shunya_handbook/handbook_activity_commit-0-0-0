@@ -1,0 +1,62 @@
+## handbook activity commit -0-0-0
+
+# Introduction
+
+This handbook outlines the standard operating procedures for our development team regarding code commits. It includes practices for logging in and out at the start and end of each work session, along with making hourly commits.
+
+## Commit Guidelines
+
+### General Commit Practices
+
+- **Frequency:** Make commits at least hourly during active development.
+- **Atomic Commits:** Each commit should represent a single logical change or an incremental flow, logged in change log.
+- **Testing:** Ensure the code passes all tests before committing.
+- **Share:** By deploying it to gitlab pages.
+
+### Login and Logout Commits
+
+#### Purpose
+
+Serve as bookends to a developer's work session.
+
+#### Login Commit
+
+- **Message Format:** "Login: [Date & Time] - Starting session"
+- **Action:** Make a login commit when starting your work session.
+- **Guideline:** Share a message with the team, it could be motivational, inspirational, or your life learning from yesterday. It can also be your agenda for the day.
+
+#### Logout Commit
+
+- **Message Format:** "Logout: [Date & Time] - Ending session"
+- **Action:** Make a logout commit at the end of your work session.
+- **Guideline:** Share a message with the team, it could be motivational, inspirational, or your life learning from Today. It can also be a funny summary of the day.
+
+### Hourly Commit Messages
+
+#### Purpose
+
+Document ongoing progress and ensure work is not lost.
+
+- **Message Format:** "Progress: [Date & Time] - Brief description of work done"
+
+### Commit Message Structure
+
+- **Title:** A concise summary of the commit content
+- **Body (Optional):** A detailed description of changes made and other relevant information.
+- **Format:** "[Type of commit]: [Date & Time] - [Message]"
+
+### Examples
+
+- **Login Commit:** "Login: 2024-02-01 09:00 - Starting session"
+- **Hourly Commit:** "Progress: 2024-02-01 10:00 - Implemented user authentication logic"
+- **Logout Commit:** "Logout: 2024-02-01 17:00 - Ending session"
+
+## Best Practices
+
+- **Consistency:** Adhere to the commit guidelines and message format.
+- **Communication:** Keep the team informed about progress and issues.
+- **Documentation:** Document changes well in commit messages and project documentation.
+
+## Conclusion
+
+Following these guidelines enhances collaboration and productivity, ensuring our project history is intelligible and work sessions are effectively documented.

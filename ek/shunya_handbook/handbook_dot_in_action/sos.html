@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story of a Story ver 0.0.1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+            box-sizing: border-box;
+        }
+
+        header {
+            background-image: url('your-image-url.jpg'); /* Add your image URL here */
+            color: white;
+            background-size: cover;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -250px; /* Initially hide the sidebar */
+            bottom: 0;
+            width: 250px;
+            overflow-y: auto;
+            background-color: #f0f0f0;
+            padding: 20px;
+            transition: left 0.3s ease; /* Smooth transition animation */
+            z-index: 900;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar ul li a {
+            text-decoration: none;
+            color: #333;
+        }
+
+        .content {
+            margin-left: 0; /* Adjust content margin */
+            padding: 20px;
+            transition: margin-left 0.3s ease; /* Smooth transition animation */
+        }
+
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            cursor: pointer;
+            z-index: 1100;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: 100%;
+                left: -100%; /* Initially hide the sidebar */
+                transition: left 0.3s ease; /* Smooth transition animation */
+            }
+            .menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Elevator Pitch</h1>
+    <p>A fearless adventure is knowing what to do when no one’s there to tell you what to do.</p>
+    <div class="menu-btn" onclick="toggleSidebar()">&#9776;</div> <!-- Hamburger button -->
+</header>
+
+<div class="sidebar" id="sidebar">
+    <h2>Table of Contents</h2>
+    <ul>
+        <li><a href="#journey">Journey Major Milestones</a></li>
+        <li><a href="#lifecycle">Story Lifecycle</a></li>
+        <li><a href="#types">Type of Stories</a></li>
+        <li><a href="#activity">Story Generic Activity Flow</a></li>
+        <li><a href="#templates">Templates</a></li>
+    </ul>
+</div>
+
+<div class="content">
+    <section id="journey">
+        <h2>Journey Major Milestones</h2>
+        <p><strong>Birth - Shunya - InQue:</strong> The inception of an idea.</p>
+        <p><strong>Process - Dot - In Development:</strong> The development phase.</p>
+        <p><strong>End - Ek - Deployed to Market:</strong> The completion and release phase.</p>
+    </section>
+    <section id="lifecycle">
+        <h2>Story Lifecycle</h2>
+        <ul>
+            <li>Idea Input can be through various means such as Message, Notification, File Link, Verbal, Document.</li>
+            <li>Labels Added: [Priority, Audience]</li>
+            <li>Self Assign: A Team Member Self Assigns the Story</li>
+        </ul>
+    </section>
+    <section id="types">
+        <h2>Type of Stories</h2>
+        <p>Product, Project, Document, Issue, Comment, Class, Page, App, Plugin, etc.</p>
+    </section>
+    <section id="activity">
+        <h2>Story Generic Activity Flow</h2>
+        <p>Steps include understanding MVI, choosing an appropriate template, elaborating story manifest, dividing your story in 5d activity stages, creating tasks for each sub-story, and more.</p>
+    </section>
+    <section id="templates">
+        <h2>Templates</h2>
+        <p>Links to templates like <a href="https://gitlab.com/bronzwik/shunya-projects/-/wikis/story-manifest-v-0-0-1">Story Manifest</a> and Generic Document Template are provided here.</p>
+    </section>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.getElementById('sidebar');
+        sidebar.style.left = (sidebar.style.left === '0px') ? '-250px' : '0px';
+        const content = document.querySelector('.content');
+        content.style.marginLeft = (content.style.marginLeft === '250px') ? '0px' : '250px';
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+- Create Chrome Profile
+
+- Sign In with Google.
+- Sign in with Google - gitlab.
+
+- Learn About Gitlab 
+    - Project
+    - Issues [ Description, Formatting, task, comments ]
+    - Lables
+    - Milestones
+
+- Download and Install Github Desktop [ Link :"https://desktop.github.com/"]
+- Clone project to work on using github desktop.
+- Request communication channel access.
+- Request Story access.
+- Request Story Activity access.
+- Choose Story to work on, keeping priority in mind.
+- https://bronzwik-docs-bronzwik-cc185ed7041fbf99009c4ceca958646e15ff4a7a.gitlab.io/shunya_handbook/index.html
