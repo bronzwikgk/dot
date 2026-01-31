@@ -3,9 +3,246 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Self-Destruct Message</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Courier New', monospace;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #00ff00;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(0, 40, 0, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 40, 0, 0.3) 0%, transparent 20%);
+            overflow: hidden;
+        }
+        
+        .container {
+            text-align: center;
+            padding: 30px;
+            border: 2px solid #00ff00;
+            border-radius: 5px;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            background-color: rgba(10, 20, 10, 0.8);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ff00, transparent);
+            animation: scanline 3s linear infinite;
+        }
+        
+        @keyframes scanline {
+            0% { top: 0; }
+            100% { top: 100%; }
+        }
+        
+        h1 {
+            color: #ff3333;
+            font-size: 28px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px rgba(255, 50, 50, 0.7);
+            letter-spacing: 1px;
+        }
+        
+        .message {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px dashed #00aa00;
+            border-radius: 3px;
+            background-color: rgba(0, 20, 0, 0.3);
+        }
+        
+        .warning {
+            color: #ff9900;
+            font-weight: bold;
+            margin: 15px 0;
+            font-size: 20px;
+        }
+        
+        .timer-container {
+            margin: 25px 0;
+            padding: 15px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            border: 1px solid #005500;
+        }
+        
+        .timer {
+            font-size: 48px;
+            font-weight: bold;
+            color: #ff3333;
+            text-shadow: 0 0 10px rgba(255, 50, 50, 0.8);
+            margin: 10px 0;
+            font-family: 'Digital-7', monospace;
+        }
+        
+        .timer-label {
+            font-size: 14px;
+            color: #00cc00;
+            letter-spacing: 2px;
+            margin-top: 5px;
+        }
+        
+        .redirect-notice {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #aaaaaa;
+            font-style: italic;
+        }
+        
+        .flashing {
+            animation: flash 1s infinite;
+        }
+        
+        @keyframes flash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .danger-zone {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ff3333;
+            border-radius: 3px;
+            background-color: rgba(80, 0, 0, 0.2);
+            color: #ff6666;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                width: 95%;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .timer {
+                font-size: 36px;
+            }
+            
+            .message {
+                font-size: 16px;
+            }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <p>You are entering restricted zone.</p>
+    <div class="container">
+        <h1>⚠️ MISSION IMPOSSIBLE ⚠️</h1>
+        
+        <div class="message">
+            <p>This message will self-destruct in <span id="countdown">5</span> seconds.</p>
+            <p class="warning">You are about to enter a restricted zone.</p>
+            <p>Access to this information is classified. Any unauthorized dissemination, distribution, or copying of this communication is strictly prohibited.</p>
+        </div>
+        
+        <div class="timer-container">
+            <div class="timer flashing" id="timer">5</div>
+            <div class="timer-label">SECONDS REMAINING</div>
+        </div>
+        
+        <div class="danger-zone">
+            <p>⚠️ WARNING: Proceeding beyond this point requires Level 7 clearance ⚠️</p>
+        </div>
+        
+        <div class="redirect-notice" id="redirect-notice">
+            Preparing redirect to restricted zone...
+        </div>
+    </div>
+
+    <script>
+        // Set the initial countdown time in seconds
+        let countdownTime = 5;
+        const timerElement = document.getElementById('timer');
+        const countdownElement = document.getElementById('countdown');
+        const redirectNotice = document.getElementById('redirect-notice');
+        
+        // Update the timer display
+        function updateTimer() {
+            timerElement.textContent = countdownTime;
+            countdownElement.textContent = countdownTime;
+            
+            // Change timer color when reaching last 2 seconds
+            if (countdownTime <= 2) {
+                timerElement.style.color = '#ff0000';
+                timerElement.style.textShadow = '0 0 15px rgba(255, 0, 0, 0.9)';
+                timerElement.style.animation = 'flash 0.5s infinite';
+            }
+            
+            // Update redirect notice message
+            if (countdownTime === 3) {
+                redirectNotice.textContent = "Initiating secure connection...";
+            } else if (countdownTime === 2) {
+                redirectNotice.textContent = "Establishing encrypted channel...";
+            } else if (countdownTime === 1) {
+                redirectNotice.textContent = "Redirecting to restricted zone...";
+            }
+            
+            // If countdown reaches zero, redirect
+            if (countdownTime === 0) {
+                redirectToRestrictedZone();
+            } else {
+                countdownTime--;
+            }
+        }
+        
+        // Function to redirect to another page
+        function redirectToRestrictedZone() {
+            // In a real scenario, you would redirect to an actual URL
+            // For demonstration, we'll redirect to a placeholder page
+            window.location.href = "../ek/demo/index_demo.html";
+            
+            // For testing purposes, you can use this alert instead
+            // alert("Redirecting to restricted zone...");
+            // console.log("Redirect would happen here. In a real implementation, the page would navigate to the restricted zone.");
+        }
+        
+        // Start the countdown timer
+        updateTimer(); // Show initial value immediately
+        const countdownInterval = setInterval(updateTimer, 1000);
+        
+        // Optional: Add sound effects for a more immersive experience
+        window.addEventListener('click', function() {
+            // Create a simple beep sound when user clicks anywhere
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        });
+    </script>
 </body>
 </html>
