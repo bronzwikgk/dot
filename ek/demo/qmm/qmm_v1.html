@@ -1,0 +1,1788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Quantum Market Mechanics — Markets are physical. Finally measurable.">
+  <meta name="keywords" content="quantum, market, physics, trading, e-quantum, phase state, k-factor">
+  <meta name="author" content="Sunya Ek Pvt Ltd">
+  <title>QMM · Quantum Market Mechanics</title>
+  <style>
+    /* ============================================================================
+       QUANTUM MARKET MECHANICS — COMPLETE DESIGN SYSTEM
+       Vanilla CSS · No Dependencies · Semantic · Responsive
+       ============================================================================ */
+
+    /* ----------------------------------------------------------------------------
+       RESET & BASE
+       ---------------------------------------------------------------------------- */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      color: #0f1317;
+      background: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* ----------------------------------------------------------------------------
+       DESIGN TOKENS — SCIENCE THEME · QUANTUM BLUE
+       ---------------------------------------------------------------------------- */
+    :root {
+      /* Quantum Blue — Primary */
+      --q-50: #e6f0ff;
+      --q-100: #cce0ff;
+      --q-200: #99c2ff;
+      --q-300: #66a3ff;
+      --q-400: #3385ff;
+      --q-500: #0a58ca;
+      --q-600: #0846a1;
+      --q-700: #063578;
+      --q-800: #04234f;
+      --q-900: #021226;
+      
+      /* Neutrals — Physics Lab */
+      --n-50: #fafbfc;
+      --n-100: #f5f7fa;
+      --n-200: #eaeef2;
+      --n-300: #d0d7dd;
+      --n-400: #a6b3bf;
+      --n-500: #7c8b9c;
+      --n-600: #5d6b7a;
+      --n-700: #3f4a57;
+      --n-800: #262e36;
+      --n-900: #0f1317;
+      
+      /* Phase States */
+      --solid: #9c7c5b;
+      --liquid: #0a58ca;
+      --gas: #d45a5a;
+      
+      /* Quantum States */
+      --up: #198754;
+      --down: #dc3545;
+      --flat: #ffc107;
+      
+      /* Surface */
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --border: #eaeef2;
+      --card: #ffffff;
+      
+      /* Text */
+      --text-primary: #0f1317;
+      --text-secondary: #5d6b7a;
+      --text-tertiary: #7c8b9c;
+      
+      /* Typography */
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
+      
+      /* Scale — Major Second */
+      --text-xs: 0.75rem;
+      --text-sm: 0.875rem;
+      --text-base: 1rem;
+      --text-md: 1.125rem;
+      --text-lg: 1.25rem;
+      --text-xl: 1.5rem;
+      --text-2xl: 1.875rem;
+      --text-3xl: 2.25rem;
+      --text-4xl: 3rem;
+      --text-5xl: 3.75rem;
+      
+      /* Spacing — 4px grid */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-5: 1.25rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+      --space-10: 2.5rem;
+      --space-12: 3rem;
+      --space-16: 4rem;
+      --space-20: 5rem;
+      --space-24: 6rem;
+      
+      /* Layout */
+      --container-max: 1280px;
+      --container-padding: 1.5rem;
+      --radius-sm: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --radius-xl: 12px;
+      --radius-2xl: 16px;
+      --radius-full: 9999px;
+      
+      /* Shadows */
+      --shadow-sm: 0 2px 4px rgba(0,0,0,0.02);
+      --shadow-md: 0 4px 8px rgba(0,0,0,0.02);
+      --shadow-lg: 0 8px 16px rgba(0,0,0,0.02);
+      
+      /* Quantum Gauge */
+      --gauge-height: 24px;
+      --gauge-radius: 9999px;
+      --gauge-bg: #d0d7dd;
+      --gauge-fill: #0a58ca;
+    }
+
+    /* ----------------------------------------------------------------------------
+       TYPOGRAPHY
+       ---------------------------------------------------------------------------- */
+    h1, .h1 {
+      font-size: var(--text-4xl);
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-4);
+    }
+    h2, .h2 {
+      font-size: var(--text-3xl);
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -0.01em;
+      margin-bottom: var(--space-4);
+    }
+    h3, .h3 {
+      font-size: var(--text-2xl);
+      font-weight: 600;
+      line-height: 1.3;
+      margin-bottom: var(--space-3);
+    }
+    h4, .h4 {
+      font-size: var(--text-xl);
+      font-weight: 500;
+      line-height: 1.4;
+      margin-bottom: var(--space-2);
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, var(--q-500), var(--q-700));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .mono {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+    }
+    .text-center {
+      text-align: center;
+    }
+
+    /* ----------------------------------------------------------------------------
+       LAYOUT
+       ---------------------------------------------------------------------------- */
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--container-padding);
+    }
+    .section-header {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto var(--space-12);
+    }
+    .section-eyebrow {
+      display: inline-block;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--q-500);
+      margin-bottom: var(--space-2);
+    }
+
+    /* ----------------------------------------------------------------------------
+       BUTTONS
+       ---------------------------------------------------------------------------- */
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-md);
+      font-weight: 500;
+      font-size: var(--text-base);
+      line-height: 1;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: 1px solid transparent;
+      gap: var(--space-2);
+    }
+    .button-primary {
+      background: var(--q-500);
+      color: white;
+    }
+    .button-primary:hover {
+      background: var(--q-600);
+    }
+    .button-outline {
+      background: transparent;
+      border-color: var(--q-500);
+      color: var(--q-500);
+    }
+    .button-outline:hover {
+      background: var(--q-50);
+    }
+    .button-small {
+      padding: var(--space-2) var(--space-4);
+      font-size: var(--text-sm);
+    }
+    .button-large {
+      padding: var(--space-4) var(--space-8);
+      font-size: var(--text-lg);
+    }
+
+    /* ----------------------------------------------------------------------------
+       HEADER & NAVIGATION
+       ---------------------------------------------------------------------------- */
+    .site-header {
+      background: rgba(255,255,255,0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 80px;
+    }
+    .logo a {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-1);
+      text-decoration: none;
+    }
+    .logo-q {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--q-500);
+    }
+    .logo-mm {
+      font-size: var(--text-xl);
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .logo-tagline {
+      font-size: var(--text-xs);
+      color: var(--text-tertiary);
+      margin-left: var(--space-2);
+      font-weight: 400;
+    }
+    .nav-list {
+      display: flex;
+      gap: var(--space-6);
+      list-style: none;
+    }
+    .nav-list a {
+      font-size: var(--text-sm);
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: color 0.2s;
+      padding: var(--space-2) 0;
+      position: relative;
+    }
+    .nav-list a:hover {
+      color: var(--q-500);
+    }
+    .nav-list a.active {
+      color: var(--q-500);
+    }
+    .nav-list a.active::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--q-500);
+      border-radius: var(--radius-full);
+    }
+    .mobile-menu-toggle {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 24px;
+      height: 20px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+    }
+    .mobile-menu-toggle span {
+      width: 100%;
+      height: 2px;
+      background: var(--text-primary);
+      transition: all 0.2s;
+    }
+    .header-cta {
+      display: flex;
+      gap: var(--space-3);
+    }
+
+    /* ----------------------------------------------------------------------------
+       FOOTER
+       ---------------------------------------------------------------------------- */
+    .site-footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: var(--space-16) 0 var(--space-8);
+      margin-top: var(--space-20);
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 3fr 2fr;
+      gap: var(--space-8);
+    }
+    .footer-brand .footer-logo {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--q-500);
+      margin-bottom: var(--space-2);
+    }
+    .footer-tagline {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-4);
+    }
+    .footer-copyright {
+      color: var(--text-tertiary);
+      font-size: var(--text-sm);
+    }
+    .footer-links {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+    .footer-column h4 {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-4);
+    }
+    .footer-column ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .footer-column a {
+      color: var(--text-tertiary);
+      font-size: var(--text-sm);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .footer-column a:hover {
+      color: var(--q-500);
+    }
+    .footer-social h4 {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-secondary);
+      margin-bottom: var(--space-4);
+    }
+    .social-icons {
+      display: flex;
+      gap: var(--space-4);
+      margin-bottom: var(--space-4);
+    }
+    .social-icons a {
+      color: var(--text-tertiary);
+      transition: color 0.2s;
+    }
+    .social-icons a:hover {
+      color: var(--q-500);
+    }
+    .footer-legal {
+      color: var(--text-tertiary);
+      font-size: var(--text-xs);
+      border-top: 1px solid var(--border);
+      padding-top: var(--space-4);
+      margin-top: var(--space-4);
+    }
+
+    /* ----------------------------------------------------------------------------
+       HOME PAGE — HERO
+       ---------------------------------------------------------------------------- */
+    .hero {
+      padding: var(--space-20) 0 var(--space-16);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--q-500);
+      background: var(--q-50);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-full);
+      margin-bottom: var(--space-4);
+    }
+    .hero-title {
+      font-size: var(--text-5xl);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      margin-bottom: var(--space-6);
+    }
+    .hero-description {
+      font-size: var(--text-lg);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-8);
+      max-width: 600px;
+    }
+    .hero-cta {
+      display: flex;
+      gap: var(--space-4);
+      margin-bottom: var(--space-12);
+    }
+    .hero-stats {
+      display: flex;
+      gap: var(--space-8);
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+    }
+    .stat-value {
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--q-500);
+    }
+    .stat-label {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+    }
+    .quantum-gauge-preview {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-lg);
+    }
+    .gauge-card {
+      margin-bottom: var(--space-4);
+    }
+    .gauge-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: var(--space-3);
+    }
+    .gauge-title {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+    .gauge-confidence {
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+    .confidence-high {
+      color: var(--up);
+    }
+    .gauge-container {
+      background: var(--gauge-bg);
+      height: var(--gauge-height);
+      border-radius: var(--gauge-radius);
+      overflow: hidden;
+      margin-bottom: var(--space-3);
+    }
+    .gauge-bar {
+      height: 100%;
+      width: 64%;
+      background: var(--gauge-fill);
+      border-radius: var(--gauge-radius);
+      transition: width 0.3s ease;
+    }
+    .gauge-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .gauge-ratio {
+      font-size: var(--text-sm);
+      color: var(--text-tertiary);
+    }
+    .gauge-probs {
+      display: flex;
+      gap: var(--space-3);
+      font-size: var(--text-sm);
+      font-weight: 600;
+    }
+    .prob-up { color: var(--up); }
+    .prob-flat { color: var(--flat); }
+    .prob-down { color: var(--down); }
+    .phase-badge-preview {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-top: var(--space-4);
+      padding-top: var(--space-4);
+      border-top: 1px solid var(--border);
+    }
+    .phase-badge {
+      display: inline-block;
+      padding: var(--space-1) var(--space-3);
+      border-radius: var(--radius-full);
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .phase-liquid {
+      background: var(--liquid);
+      color: white;
+    }
+    .phase-label {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+    }
+
+    /* ----------------------------------------------------------------------------
+       PROBLEM SECTION
+       ---------------------------------------------------------------------------- */
+    .problem {
+      padding: var(--space-16) 0;
+      background: var(--surface);
+    }
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+    }
+    .problem-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s;
+    }
+    .problem-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-2px);
+    }
+    .problem-icon {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-4);
+    }
+
+    /* ----------------------------------------------------------------------------
+       LAWS PREVIEW
+       ---------------------------------------------------------------------------- */
+    .solution {
+      padding: var(--space-16) 0;
+    }
+    .laws-preview {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+      margin-bottom: var(--space-12);
+    }
+    .law-category {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+    }
+    .law-category h4 {
+      font-size: var(--text-lg);
+      margin-bottom: var(--space-4);
+      color: var(--q-500);
+    }
+    .law-category ul {
+      list-style: none;
+    }
+    .law-category li {
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--border);
+      font-size: var(--text-sm);
+      display: flex;
+      gap: var(--space-2);
+    }
+    .law-category li:last-child {
+      border-bottom: none;
+    }
+
+    /* ----------------------------------------------------------------------------
+       PRODUCTS
+       ---------------------------------------------------------------------------- */
+    .products {
+      padding: var(--space-16) 0;
+      background: var(--surface);
+    }
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      transition: all 0.2s;
+    }
+    .product-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .product-icon {
+      font-size: var(--text-3xl);
+      margin-bottom: var(--space-3);
+    }
+    .product-type {
+      font-size: var(--text-xs);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--q-500);
+      margin-bottom: var(--space-2);
+    }
+    .product-desc {
+      font-size: var(--text-sm);
+      color: var(--text-secondary);
+      margin-bottom: var(--space-4);
+    }
+    .product-audience {
+      font-size: var(--text-xs);
+      color: var(--text-tertiary);
+      padding-top: var(--space-3);
+      border-top: 1px solid var(--border);
+    }
+
+    /* ----------------------------------------------------------------------------
+       CTA SECTION
+       ---------------------------------------------------------------------------- */
+    .cta-section {
+      padding: var(--space-16) 0;
+    }
+    .cta-card {
+      background: linear-gradient(135deg, var(--q-800), var(--q-900));
+      border-radius: var(--radius-2xl);
+      padding: var(--space-16);
+      text-align: center;
+      color: white;
+    }
+    .cta-card h2 {
+      color: white;
+      margin-bottom: var(--space-4);
+    }
+    .cta-card p {
+      color: rgba(255,255,255,0.8);
+      margin-bottom: var(--space-8);
+      font-size: var(--text-lg);
+    }
+    .cta-actions {
+      display: flex;
+      gap: var(--space-4);
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+    .cta-legal {
+      font-size: var(--text-xs);
+      opacity: 0.6;
+    }
+
+    /* ----------------------------------------------------------------------------
+       ABOUT PAGE
+       ---------------------------------------------------------------------------- */
+    .about-hero {
+      padding: var(--space-20) 0 var(--space-12);
+      background: linear-gradient(to bottom, var(--surface), transparent);
+    }
+    .about-hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .manifesto-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+      padding: var(--space-16) 0;
+    }
+    .manifesto-quote blockquote {
+      font-size: var(--text-2xl);
+      font-weight: 500;
+      line-height: 1.4;
+      color: var(--text-primary);
+      border-left: 4px solid var(--q-500);
+      padding-left: var(--space-6);
+    }
+    .manifesto-quote cite {
+      display: block;
+      margin-top: var(--space-4);
+      font-size: var(--text-base);
+      font-style: normal;
+      color: var(--text-secondary);
+    }
+    .philosophy-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+    .philosophy-card {
+      text-align: center;
+      padding: var(--space-6);
+    }
+    .philosophy-icon {
+      font-size: var(--text-4xl);
+      margin-bottom: var(--space-4);
+    }
+
+    /* ----------------------------------------------------------------------------
+       DEMO PAGE
+       ---------------------------------------------------------------------------- */
+    .demo-hero {
+      padding: var(--space-16) 0;
+      text-align: center;
+      background: linear-gradient(to bottom, var(--surface), transparent);
+    }
+    .demo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+    .demo-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+    }
+    .demo-selector {
+      width: 100%;
+      padding: var(--space-3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-size: var(--text-base);
+      margin-bottom: var(--space-6);
+    }
+    .demo-update-btn {
+      width: 100%;
+      margin-bottom: var(--space-6);
+    }
+    .demo-debug {
+      background: var(--surface);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      font-family: var(--font-mono);
+      font-size: var(--text-xs);
+    }
+    .demo-debug dl {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+    }
+    .demo-debug dt {
+      color: var(--text-tertiary);
+    }
+    .demo-debug dd {
+      color: var(--text-primary);
+      font-weight: 600;
+    }
+
+    /* ----------------------------------------------------------------------------
+       DOCS PAGE
+       ---------------------------------------------------------------------------- */
+    .docs-hero {
+      padding: var(--space-16) 0;
+      background: linear-gradient(to bottom, var(--surface), transparent);
+      text-align: center;
+    }
+    .docs-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: var(--space-8);
+      margin-top: var(--space-12);
+    }
+    .docs-sidebar {
+      background: var(--surface);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      position: sticky;
+      top: 100px;
+      height: fit-content;
+    }
+    .docs-nav h4 {
+      margin-bottom: var(--space-4);
+      color: var(--text-secondary);
+    }
+    .docs-nav ul {
+      list-style: none;
+      margin-bottom: var(--space-6);
+    }
+    .docs-nav li {
+      margin-bottom: var(--space-2);
+    }
+    .docs-nav a {
+      color: var(--text-tertiary);
+      text-decoration: none;
+      font-size: var(--text-sm);
+      transition: color 0.2s;
+    }
+    .docs-nav a:hover {
+      color: var(--q-500);
+    }
+    .docs-content {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-8);
+    }
+    .docs-content pre {
+      background: var(--surface);
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+      overflow-x: auto;
+      font-family: var(--font-mono);
+      font-size: var(--text-sm);
+      margin: var(--space-4) 0;
+    }
+    .docs-content code {
+      font-family: var(--font-mono);
+      font-size: 0.9em;
+      background: var(--surface);
+      padding: var(--space-1) var(--space-2);
+      border-radius: var(--radius-sm);
+    }
+
+    /* ----------------------------------------------------------------------------
+       LAWS PAGE
+       ---------------------------------------------------------------------------- */
+    .laws-hero {
+      padding: var(--space-16) 0;
+      text-align: center;
+      background: linear-gradient(to bottom, var(--surface), transparent);
+    }
+    .laws-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-6);
+      margin-top: var(--space-12);
+    }
+    .law-book {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+    }
+    .law-book h3 {
+      color: var(--q-500);
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-2);
+      border-bottom: 2px solid var(--border);
+    }
+    .law-list {
+      list-style: none;
+    }
+    .law-list li {
+      padding: var(--space-2) 0;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      gap: var(--space-2);
+    }
+    .law-number {
+      font-weight: 600;
+      color: var(--q-500);
+      min-width: 60px;
+    }
+
+    /* ----------------------------------------------------------------------------
+       GLOSSARY PAGE
+       ---------------------------------------------------------------------------- */
+    .glossary-hero {
+      padding: var(--space-16) 0;
+      text-align: center;
+      background: linear-gradient(to bottom, var(--surface), transparent);
+    }
+    .glossary-search {
+      max-width: 600px;
+      margin: var(--space-8) auto;
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      width: 100%;
+      font-size: var(--text-base);
+    }
+    .glossary-alphabet {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+      justify-content: center;
+      margin-bottom: var(--space-12);
+    }
+    .glossary-letter {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-full);
+      background: var(--surface);
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .glossary-letter:hover {
+      background: var(--q-500);
+      color: white;
+    }
+    .glossary-term {
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--border);
+    }
+    .glossary-term:last-child {
+      border-bottom: none;
+    }
+    .glossary-term h3 {
+      color: var(--q-500);
+      margin-bottom: var(--space-2);
+    }
+    .glossary-definition {
+      color: var(--text-secondary);
+      margin-bottom: var(--space-2);
+    }
+    .glossary-formula {
+      font-family: var(--font-mono);
+      background: var(--surface);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-md);
+      display: inline-block;
+      font-size: var(--text-sm);
+    }
+
+    /* ----------------------------------------------------------------------------
+       RESPONSIVE
+       ---------------------------------------------------------------------------- */
+    @media (max-width: 1024px) {
+      .hero-grid,
+      .manifesto-grid,
+      .demo-grid,
+      .docs-grid {
+        grid-template-columns: 1fr;
+      }
+      .products-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+      }
+      .footer-links {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+    @media (max-width: 768px) {
+      .nav-list {
+        display: none;
+      }
+      .mobile-menu-toggle {
+        display: flex;
+      }
+      .header-cta {
+        display: none;
+      }
+      .hero-title {
+        font-size: var(--text-4xl);
+      }
+      .problem-grid,
+      .laws-preview,
+      .products-grid,
+      .philosophy-grid,
+      .laws-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-links {
+        grid-template-columns: 1fr;
+        gap: var(--space-6);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- ========================================================================
+       HEADER — BRAND · NAVIGATION
+    ========================================================================= -->
+    <header class="site-header">
+      <div class="container">
+        <div class="header-inner">
+          <div class="logo">
+            <a href="#" data-route="home">
+              <span class="logo-q">Q</span><span class="logo-mm">MM</span>
+              <span class="logo-tagline">Markets are physical.</span>
+            </a>
+          </div>
+          
+          <nav class="main-nav">
+            <button class="mobile-menu-toggle" aria-label="Menu">
+              <span></span><span></span><span></span>
+            </button>
+            <ul class="nav-list">
+              <li><a href="#" data-route="home" class="active">HOME</a></li>
+              <li><a href="#" data-route="about">ABOUT</a></li>
+              <li><a href="#" data-route="demo">DEMO</a></li>
+              <li><a href="#" data-route="docs">DOCS</a></li>
+              <li><a href="#" data-route="laws">LAWS</a></li>
+              <li><a href="#" data-route="glossary">GLOSSARY</a></li>
+            </ul>
+          </nav>
+          
+          <div class="header-cta">
+            <a href="#" data-route="demo" class="button button-small button-outline">TRY DEMO</a>
+            <a href="#" data-route="docs" class="button button-small">GET STARTED</a>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- ========================================================================
+       ROUTER VIEW — DYNAMIC CONTENT
+    ========================================================================= -->
+    <main id="router-view">
+      <!-- HOME PAGE (DEFAULT) -->
+      <section class="hero">
+        <div class="container">
+          <div class="hero-grid">
+            <div class="hero-content">
+              <div class="hero-badge">QUANTUM MARKET MECHANICS</div>
+              <h1 class="hero-title">
+                Markets are <span class="text-gradient">physical</span>.
+                <br>Finally measurable.
+              </h1>
+              <p class="hero-description">
+                Not a trading strategy. Not a black box. Not another indicator.
+                <br><strong>A new scientific paradigm.</strong>
+              </p>
+              <div class="hero-cta">
+                <a href="#" data-route="demo" class="button button-primary button-large">
+                  <span>⚡</span> See the Demo
+                </a>
+                <a href="#" data-route="docs" class="button button-outline button-large">
+                  <span>📘</span> Read the Docs
+                </a>
+              </div>
+              <div class="hero-stats">
+                <div class="stat">
+                  <span class="stat-value">22</span>
+                  <span class="stat-label">Universal Laws</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">95</span>
+                  <span class="stat-label">Measurable Features</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">50+</span>
+                  <span class="stat-label">Instruments</span>
+                </div>
+                <div class="stat">
+                  <span class="stat-value">5+</span>
+                  <span class="stat-label">Asset Classes</span>
+                </div>
+              </div>
+            </div>
+            <div class="hero-visual">
+              <div class="quantum-gauge-preview">
+                <div class="gauge-card">
+                  <div class="gauge-header">
+                    <span class="gauge-title">E-QUANTUM · RELIANCE.NS</span>
+                    <span class="gauge-confidence confidence-high">81%</span>
+                  </div>
+                  <div class="gauge-container">
+                    <div class="gauge-bar" style="width: 64%;"></div>
+                  </div>
+                  <div class="gauge-footer">
+                    <span class="gauge-ratio">2.4x threshold</span>
+                    <div class="gauge-probs">
+                      <span class="prob-up">⬆️ 67%</span>
+                      <span class="prob-flat">➡️ 21%</span>
+                      <span class="prob-down">⬇️ 12%</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="phase-badge-preview">
+                  <span class="phase-badge phase-liquid">LIQUID</span>
+                  <span class="phase-label">Current regime: Momentum optimal</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="problem">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">THE PROBLEM</span>
+            <h2>90% of strategies fail within 6 months.</h2>
+            <p class="section-subhead">Technical analysis is 100 years old. Machine learning is a black box. Both lack first principles.</p>
+          </div>
+          <div class="problem-grid">
+            <div class="problem-card">
+              <div class="problem-icon">📉</div>
+              <h3>Instrument-Specific</h3>
+              <p>Strategies built on one stock fail on another. Reliance ≠ Bitcoin ≠ Gold. Yet the physics is identical.</p>
+            </div>
+            <div class="problem-card">
+              <div class="problem-icon">🎲</div>
+              <h3>Backtest Overfitting</h3>
+              <p>Curve-fitting to historical noise. Looks perfect in sample. Crashes out-of-sample.</p>
+            </div>
+            <div class="problem-card">
+              <div class="problem-icon">⚫</div>
+              <h3>Black Boxes</h3>
+              <p>Neural networks predict without explaining. You cannot trust what you cannot understand.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="solution">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">THE SOLUTION</span>
+            <h2>Physics. Not opinions.</h2>
+            <p class="section-subhead">22 universal laws. 95 measurable features. 1 paradigm.</p>
+          </div>
+          <div class="laws-preview">
+            <div class="law-category">
+              <h4>Book I — Motion</h4>
+              <ul>
+                <li><span class="mono">Law 1</span> Mass = Price / SMA</li>
+                <li><span class="mono">Law 2</span> Force = (Volume × Price) / ATR</li>
+                <li><span class="mono">Law 3</span> Velocity = ROC</li>
+                <li><span class="mono">Law 4</span> Acceleration = ΔV</li>
+                <li><span class="mono">Law 5</span> Inertia = V_5 / V_20</li>
+              </ul>
+            </div>
+            <div class="law-category">
+              <h4>Book II — Interaction</h4>
+              <ul>
+                <li><span class="mono">Law 6</span> Energy Conservation</li>
+                <li><span class="mono">Law 7</span> Power = F% × V%</li>
+                <li><span class="mono">Law 8</span> Efficiency = V / F</li>
+                <li><span class="mono">Law 9</span> Gravity = β × R_m</li>
+                <li><span class="mono">Law 10</span> Friction = (Spread/P) × Mass</li>
+              </ul>
+            </div>
+            <div class="law-category">
+              <h4>Book VI — Quantum</h4>
+              <ul>
+                <li><span class="mono">Law 20</span> E-Quantum = (Tick/Price) × Mass × K</li>
+                <li><span class="mono">Law 21</span> Phase = f(ATR%, Friction%)</li>
+                <li><span class="mono">Law 22</span> K-Factor = Calibration</li>
+              </ul>
+            </div>
+          </div>
+          <div class="solution-cta text-center">
+            <a href="#" data-route="laws" class="button button-outline">View All 22 Laws →</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="products">
+        <div class="container">
+          <div class="section-header">
+            <span class="section-eyebrow">THE PRODUCTS</span>
+            <h2>From discovery to deployment.</h2>
+            <p class="section-subhead">One paradigm. Three interfaces.</p>
+          </div>
+          <div class="products-grid">
+            <div class="product-card">
+              <div class="product-icon">🔬</div>
+              <h3>Project Physics Engine</h3>
+              <div class="product-type">Research Desktop</div>
+              <p class="product-desc">Discover universal strategies. 50 instruments. 100 generations. Walk-forward validated.</p>
+              <div class="product-audience">For quant researchers</div>
+            </div>
+            <div class="product-card">
+              <div class="product-icon">⚡</div>
+              <h3>E-Quantum API</h3>
+              <div class="product-type">Tick Probability Service</div>
+              <p class="product-desc">Force vs threshold. ⬆️67% / ➡️21% / ⬇️12%. Real-time confidence.</p>
+              <div class="product-audience">For algo traders</div>
+            </div>
+            <div class="product-card">
+              <div class="product-icon">🌀</div>
+              <h3>Phase State API</h3>
+              <div class="product-type">Regime Classification</div>
+              <p class="product-desc">Solid · Liquid · Gas. Know the phase. Predict the transition.</p>
+              <div class="product-audience">For asset managers</div>
+            </div>
+            <div class="product-card">
+              <div class="product-icon">📊</div>
+              <h3>Quantum Terminal</h3>
+              <div class="product-type">Trader Dashboard</div>
+              <p class="product-desc">Watchlist. Signals. Confidence. Position sizing. Plain English.</p>
+              <div class="product-audience">For retail traders</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <div class="container">
+          <div class="cta-card">
+            <h2>Stop guessing. Start measuring.</h2>
+            <p>The first universal trading paradigm since 1930. Built on laws, not heuristics.</p>
+            <div class="cta-actions">
+              <a href="#" data-route="demo" class="button button-primary button-large">
+                <span>⚡</span> Try the Demo
+              </a>
+              <a href="#" data-route="docs" class="button button-outline button-large">
+                <span>📘</span> Read the Whitepaper
+              </a>
+            </div>
+            <p class="cta-legal">Patents pending. Not financial advice.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ========================================================================
+       FOOTER
+    ========================================================================= -->
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-grid">
+          <div class="footer-brand">
+            <div class="footer-logo">QMM</div>
+            <p class="footer-tagline">Markets are physical. Finally measurable.</p>
+            <p class="footer-copyright">© 2026 Sunya Ek Pvt Ltd. Patents Pending.</p>
+          </div>
+          
+          <div class="footer-links">
+            <div class="footer-column">
+              <h4>Product</h4>
+              <ul>
+                <li><a href="#" data-route="demo">Demo</a></li>
+                <li><a href="#" data-route="docs">Documentation</a></li>
+                <li><a href="#" data-route="pricing">Pricing</a></li>
+                <li><a href="#" data-route="changelog">Changelog</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4>Science</h4>
+              <ul>
+                <li><a href="#" data-route="laws">22 Laws</a></li>
+                <li><a href="#" data-route="glossary">Glossary</a></li>
+                <li><a href="#" data-route="features">95 Features</a></li>
+                <li><a href="#" data-route="whitepaper">Whitepaper</a></li>
+              </ul>
+            </div>
+            <div class="footer-column">
+              <h4>Company</h4>
+              <ul>
+                <li><a href="#" data-route="about">About</a></li>
+                <li><a href="#" data-route="careers">Careers</a></li>
+                <li><a href="#" data-route="contact">Contact</a></li>
+                <li><a href="#" data-route="legal">Legal</a></li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="footer-social">
+            <h4>Connect</h4>
+            <div class="social-icons">
+              <a href="#" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.17 6.839 9.49.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.464-1.11-1.464-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.03-2.682-.103-.253-.447-1.27.098-2.646 0 0 .84-.269 2.75 1.025.8-.223 1.65-.334 2.5-.334.85 0 1.7.111 2.5.334 1.91-1.294 2.75-1.025 2.75-1.025.545 1.376.201 2.393.099 2.646.64.698 1.03 1.591 1.03 2.682 0 3.841-2.337 4.687-4.565 4.935.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0022 12c0-5.523-4.477-10-10-10z"/></svg>
+              </a>
+              <a href="#" aria-label="Twitter">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84"/></svg>
+              </a>
+              <a href="#" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+            </div>
+            <p class="footer-legal">Not financial advice. For research purposes only.</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ========================================================================
+     ROUTER & PAGE RENDERING — VANILLA JS SPA
+  ========================================================================= -->
+  <script>
+    // ------------------------------------------------------------------------
+    // ROUTER — Complete SPA Navigation
+    // ------------------------------------------------------------------------
+    const QMMRouter = {
+      routes: {
+        'home': { path: '#', title: 'Home | Quantum Market Mechanics' },
+        'about': { path: '#about', title: 'About | Quantum Market Mechanics' },
+        'demo': { path: '#demo', title: 'Live Demo | Quantum Market Mechanics' },
+        'docs': { path: '#docs', title: 'Documentation | Quantum Market Mechanics' },
+        'laws': { path: '#laws', title: '22 Laws | Quantum Market Mechanics' },
+        'glossary': { path: '#glossary', title: 'Glossary | Quantum Market Mechanics' }
+      },
+
+      currentRoute: 'home',
+
+      init() {
+        window.addEventListener('DOMContentLoaded', () => this.handleRoute());
+        window.addEventListener('hashchange', () => this.handleRoute());
+        document.addEventListener('click', (e) => {
+          const link = e.target.closest('a[data-route]');
+          if (link) {
+            e.preventDefault();
+            this.navigate(link.dataset.route);
+          }
+        });
+      },
+
+      navigate(route) {
+        if (this.routes[route]) {
+          window.location.hash = this.routes[route].path;
+          this.currentRoute = route;
+          this.render();
+        }
+      },
+
+      getRouteFromHash() {
+        const hash = window.location.hash.slice(1) || 'home';
+        const route = Object.keys(this.routes).find(
+          key => this.routes[key].path === `#${hash}` || (hash === '' && key === 'home')
+        );
+        return route || 'home';
+      },
+
+      handleRoute() {
+        this.currentRoute = this.getRouteFromHash();
+        this.render();
+        this.updateActiveNav();
+        document.title = this.routes[this.currentRoute]?.title || 'Quantum Market Mechanics';
+      },
+
+      render() {
+        const view = document.getElementById('router-view');
+        if (!view) return;
+
+        switch (this.currentRoute) {
+          case 'about': view.innerHTML = Pages.about(); break;
+          case 'demo': view.innerHTML = Pages.demo(); break;
+          case 'docs': view.innerHTML = Pages.docs(); break;
+          case 'laws': view.innerHTML = Pages.laws(); break;
+          case 'glossary': view.innerHTML = Pages.glossary(); break;
+          default: view.innerHTML = Pages.home();
+        }
+      },
+
+      updateActiveNav() {
+        document.querySelectorAll('.nav-list a').forEach(link => {
+          link.classList.remove('active');
+          if (link.dataset.route === this.currentRoute) {
+            link.classList.add('active');
+          }
+        });
+      }
+    };
+
+    // ------------------------------------------------------------------------
+    // PAGE TEMPLATES
+    // ------------------------------------------------------------------------
+    const Pages = {
+      home: () => document.getElementById('router-view')?.innerHTML || '', // Keep default DOM
+
+      about: () => `
+        <section class="about-hero">
+          <div class="container">
+            <div class="about-hero-content">
+              <div class="hero-badge">SUNYA EK · EST. 2026</div>
+              <h1>The Quantum Market Mechanics Paradigm</h1>
+              <p class="hero-description">
+                From zero to one. From nothing to the first tick. 
+                Markets are not random walks. They are physical systems.
+              </p>
+            </div>
+          </div>
+        </section>
+        <section class="container">
+          <div class="manifesto-grid">
+            <div class="manifesto-quote">
+              <blockquote>
+                <p>"Price is mass. Volume is force. ROC is velocity. ATR is distance. Tick size is Planck's constant."</p>
+                <cite>— Sunya Ek, 2026</cite>
+              </blockquote>
+            </div>
+            <div class="manifesto-text">
+              <h2>Not a metaphor. Measurement.</h2>
+              <p>These are not analogies. These are measurable, testable, universal quantities that obey discoverable laws. The same physics applies to Reliance and Bitcoin, Gold and EURUSD.</p>
+              <p style="margin-top: var(--space-4);">We do not predict. We measure probability. We do not guarantee. We provide edge. We do not offer certainty. We deliver consistency in the world of probability.</p>
+            </div>
+          </div>
+          <div class="philosophy-grid">
+            <div class="philosophy-card">
+              <div class="philosophy-icon">⚛️</div>
+              <h3>First Principles</h3>
+              <p style="color: var(--text-secondary);">22 universal laws derived from observable market behavior, not heuristics.</p>
+            </div>
+            <div class="philosophy-card">
+              <div class="philosophy-icon">📐</div>
+              <h3>Measurable</h3>
+              <p style="color: var(--text-secondary);">95 normalized features. Every quantity is computable from OHLCV.</p>
+            </div>
+            <div class="philosophy-card">
+              <div class="philosophy-icon">🔮</div>
+              <h3>Interpretable</h3>
+              <p style="color: var(--text-secondary);">Every decision traces to a law. Every signal has a rule ID.</p>
+            </div>
+          </div>
+        </section>
+      `,
+
+      demo: () => `
+        <section class="demo-hero">
+          <div class="container">
+            <div class="hero-badge">LIVE DEMO</div>
+            <h1>E-Quantum Threshold Engine</h1>
+            <p class="hero-description">Force vs energy. Tick probability. Real-time confidence.</p>
+          </div>
+        </section>
+        <section class="container">
+          <div class="demo-grid">
+            <div class="demo-card">
+              <h3 style="margin-bottom: var(--space-6);">⚡ E-Quantum Gauge</h3>
+              <select class="demo-selector" id="demo-instrument">
+                <option value="RELIANCE.NS">RELIANCE.NS</option>
+                <option value="HDFC.NS">HDFC.NS</option>
+                <option value="ICICI.NS">ICICI.NS</option>
+                <option value="TCS.NS">TCS.NS</option>
+                <option value="INFY.NS">INFY.NS</option>
+              </select>
+              <button class="button button-primary demo-update-btn" id="demo-update">Update Prediction</button>
+              
+              <div class="gauge-card" style="margin-bottom: var(--space-6);">
+                <div class="gauge-header">
+                  <span class="gauge-title" id="demo-gauge-title">E-QUANTUM · RELIANCE.NS</span>
+                  <span class="gauge-confidence confidence-high" id="demo-confidence">81%</span>
+                </div>
+                <div class="gauge-container">
+                  <div class="gauge-bar" id="demo-gauge" style="width: 64%;"></div>
+                </div>
+                <div class="gauge-footer">
+                  <span class="gauge-ratio" id="demo-ratio">2.4x threshold</span>
+                  <div class="gauge-probs" id="demo-probs">
+                    <span class="prob-up">⬆️ 67%</span>
+                    <span class="prob-flat">➡️ 21%</span>
+                    <span class="prob-down">⬇️ 12%</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="phase-badge-preview" style="margin-bottom: var(--space-6);">
+                <span class="phase-badge phase-liquid" id="demo-phase">LIQUID</span>
+                <span class="phase-label" id="demo-phase-label">Current regime: Momentum optimal</span>
+              </div>
+
+              <div class="demo-debug">
+                <h4 style="margin-bottom: var(--space-3);">Raw Measurements</h4>
+                <dl>
+                  <dt>E-Quantum</dt>
+                  <dd id="debug-eq">0.00182%</dd>
+                  <dt>Force %ile</dt>
+                  <dd id="debug-force">78th</dd>
+                  <dt>Mass</dt>
+                  <dd id="debug-mass">1.02</dd>
+                  <dt>K-Factor</dt>
+                  <dd id="debug-k">1.00</dd>
+                </dl>
+              </div>
+            </div>
+            
+            <div class="demo-card">
+              <h3 style="margin-bottom: var(--space-6);">📘 About E-Quantum</h3>
+              <p style="margin-bottom: var(--space-4);"><strong>E-Quantum</strong> is the minimum energy required for one tick:</p>
+              <pre style="background: var(--surface); padding: var(--space-4); border-radius: var(--radius-lg); font-family: var(--font-mono);">E_q = (Tick_Size / Price) × Mass × K</pre>
+              <p style="margin: var(--space-4) 0;">When <strong>Force > E_q</strong>, probability of up tick increases. When <strong>Force < -E_q</strong>, probability of down tick increases.</p>
+              <p style="color: var(--text-secondary); font-size: var(--text-sm);">This is not a prediction. This is a measurement of probabilistic edge.</p>
+            </div>
+          </div>
+        </section>
+      `,
+
+      docs: () => `
+        <section class="docs-hero">
+          <div class="container">
+            <div class="hero-badge">DOCUMENTATION</div>
+            <h1>Build with QMM</h1>
+            <p class="hero-description">Universal physics features. One API. Any instrument.</p>
+          </div>
+        </section>
+        <section class="container">
+          <div class="docs-grid">
+            <div class="docs-sidebar">
+              <div class="docs-nav">
+                <h4>Getting Started</h4>
+                <ul>
+                  <li><a href="#" style="color: var(--q-500);">Quickstart</a></li>
+                  <li><a href="#">Authentication</a></li>
+                  <li><a href="#">Core Concepts</a></li>
+                </ul>
+                <h4 style="margin-top: var(--space-6);">API Reference</h4>
+                <ul>
+                  <li><a href="#">E-Quantum API</a></li>
+                  <li><a href="#">Phase State API</a></li>
+                  <li><a href="#">Features API</a></li>
+                </ul>
+                <h4 style="margin-top: var(--space-6);">Resources</h4>
+                <ul>
+                  <li><a href="#">95 Features</a></li>
+                  <li><a href="#">22 Laws</a></li>
+                  <li><a href="#">Glossary</a></li>
+                </ul>
+              </div>
+            </div>
+            <div class="docs-content">
+              <h2>Quickstart</h2>
+              <p style="margin-bottom: var(--space-4);">Get E-Quantum tick probabilities for any instrument in 3 lines:</p>
+              <pre>const response = await fetch('https://api.qmm.tech/v1/quantum/predict', {
+  method: 'POST',
+  headers: { 'Authorization': 'Bearer YOUR_API_KEY' },
+  body: JSON.stringify({
+    instrument: 'RELIANCE.NS',
+    timestamp: '2026-03-13'
+  })
+});
+
+const { probability_up, probability_down, confidence } = await response.json();</pre>
+              
+              <h3 style="margin-top: var(--space-8);">Authentication</h3>
+              <p>All API requests require an API key passed via the <code>Authorization</code> header. Get your key from the <a href="#" data-route="pricing">dashboard</a>.</p>
+              
+              <h3 style="margin-top: var(--space-8);">Core Concepts</h3>
+              <p>QMM is built on 22 universal laws. The most important for the E-Quantum API are:</p>
+              <ul style="margin-left: var(--space-6); margin-top: var(--space-4);">
+                <li><strong>Mass</strong> — Price / SMA(20). Resistance to movement.</li>
+                <li><strong>Force</strong> — (Volume × Price) / ATR. Buying pressure.</li>
+                <li><strong>E-Quantum</strong> — (Tick/Price) × Mass × K. Energy threshold.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+      `,
+
+      laws: () => `
+        <section class="laws-hero">
+          <div class="container">
+            <div class="hero-badge">22 UNIVERSAL LAWS</div>
+            <h1>The Laws of Market Physics</h1>
+            <p class="hero-description">Validated across 50+ instruments, 10+ years, 5+ asset classes.</p>
+          </div>
+        </section>
+        <section class="container">
+          <div class="laws-grid">
+            <div class="law-book">
+              <h3>Book I — Motion</h3>
+              <ul class="law-list">
+                <li><span class="law-number">Law 1</span> Mass = Price / SMA</li>
+                <li><span class="law-number">Law 2</span> Force = (V × P) / ATR</li>
+                <li><span class="law-number">Law 3</span> Velocity = ROC</li>
+                <li><span class="law-number">Law 4</span> Acceleration = ΔV</li>
+                <li><span class="law-number">Law 5</span> Inertia = V_5 / V_20</li>
+              </ul>
+            </div>
+            <div class="law-book">
+              <h3>Book II — Interaction</h3>
+              <ul class="law-list">
+                <li><span class="law-number">Law 6</span> Energy Conservation</li>
+                <li><span class="law-number">Law 7</span> Power = F% × V%</li>
+                <li><span class="law-number">Law 8</span> Efficiency = V / F</li>
+                <li><span class="law-number">Law 9</span> Gravity = β × R_m</li>
+                <li><span class="law-number">Law 10</span> Friction = (Spread/P) × Mass</li>
+              </ul>
+            </div>
+            <div class="law-book">
+              <h3>Book III — Strategy</h3>
+              <ul class="law-list">
+                <li><span class="law-number">Law 11</span> State Transition</li>
+                <li><span class="law-number">Law 12</span> Universality</li>
+                <li><span class="law-number">Law 13</span> Predictability</li>
+                <li><span class="law-number">Law 14</span> Diminishing Returns</li>
+                <li><span class="law-number">Law 15</span> Decay</li>
+              </ul>
+            </div>
+            <div class="law-book">
+              <h3>Book IV — Certainty</h3>
+              <ul class="law-list">
+                <li><span class="law-number">Law 16</span> Probability</li>
+                <li><span class="law-number">Law 17</span> Parsimony</li>
+              </ul>
+            </div>
+            <div class="law-book">
+              <h3>Book V — Discovery</h3>
+              <ul class="law-list">
+                <li><span class="law-number">Law 18</span> Data Sufficiency</li>
+                <li><span class="law-number">Law 19</span> Iteration</li>
+              </ul>
+            </div>
+            <div class="law-book">
+              <h3>Book VI — Quantum</h3>
+              <ul class="law-list">
+                <li><span class="law-number">Law 20</span> E-Quantum</li>
+                <li><span class="law-number">Law 21</span> Phase State</li>
+                <li><span class="law-number">Law 22</span> K-Factor</li>
+              </ul>
+            </div>
+          </div>
+          <p style="text-align: center; margin-top: var(--space-12); color: var(--text-secondary);">Each law is validated with p < 0.01 on out-of-sample instruments.</p>
+        </section>
+      `,
+
+      glossary: () => `
+        <section class="glossary-hero">
+          <div class="container">
+            <div class="hero-badge">LEXICON</div>
+            <h1>The Language of Market Physics</h1>
+            <p class="hero-description">95 features. 22 laws. 1 paradigm.</p>
+          </div>
+        </section>
+        <section class="container">
+          <input type="text" placeholder="Search glossary..." class="glossary-search" id="glossary-search">
+          <div class="glossary-alphabet" id="glossary-alphabet">
+            ${'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').map(l => `<span class="glossary-letter">${l}</span>`).join('')}
+          </div>
+          <div style="max-width: 800px; margin: 0 auto;">
+            <div class="glossary-term">
+              <h3>E-Quantum</h3>
+              <p class="glossary-definition">The minimum energy required to move price by one tick. Threshold for quantum motion.</p>
+              <span class="glossary-formula">E_q = (Tick_Size / Price) × Mass × K</span>
+            </div>
+            <div class="glossary-term">
+              <h3>Force</h3>
+              <p class="glossary-definition">Buying or selling pressure normalized by volatility.</p>
+              <span class="glossary-formula">F = (Volume × Price) / ATR</span>
+            </div>
+            <div class="glossary-term">
+              <h3>Friction</h3>
+              <p class="glossary-definition">Opposing force vector. Always subtracts from applied force.</p>
+              <span class="glossary-formula">F_fric = (Spread / Price) × Mass × k</span>
+            </div>
+            <div class="glossary-term">
+              <h3>Inertia</h3>
+              <p class="glossary-definition">Resistance to change in velocity. Trend persistence.</p>
+              <span class="glossary-formula">I = V_5 / V_20</span>
+            </div>
+            <div class="glossary-term">
+              <h3>K-Factor</h3>
+              <p class="glossary-definition">Calibration layer. Adapts universal laws to instrument-specific behavior.</p>
+              <span class="glossary-formula">K = K_class × K_inst × K_regime</span>
+            </div>
+            <div class="glossary-term">
+              <h3>Mass</h3>
+              <p class="glossary-definition">Resistance to percentage movement. Price relative to its recent average.</p>
+              <span class="glossary-formula">M = P / SMA_20</span>
+            </div>
+            <div class="glossary-term">
+              <h3>Phase State</h3>
+              <p class="glossary-definition">Market regime classification. Solid, Liquid, or Gas.</p>
+              <span class="glossary-formula">Phase = f(ATR%ile, Friction%ile)</span>
+            </div>
+            <div class="glossary-term">
+              <h3>Velocity</h3>
+              <p class="glossary-definition">Rate of price change. Speed and direction.</p>
+              <span class="glossary-formula">V = ROC_5</span>
+            </div>
+          </div>
+        </section>
+      `
+    };
+
+    // ------------------------------------------------------------------------
+    // DEMO INTERACTIVITY
+    // ------------------------------------------------------------------------
+    window.initDemo = function() {
+      const updateBtn = document.getElementById('demo-update');
+      if (!updateBtn) return;
+
+      const data = {
+        'RELIANCE.NS': { eq: 0.00182, force: 78, mass: 1.02, k: 1.00, gauge: 64, conf: 81, ratio: 2.4, up: 67, flat: 21, down: 12, phase: 'LIQUID' },
+        'HDFC.NS': { eq: 0.00215, force: 42, mass: 0.89, k: 0.98, gauge: 28, conf: 54, ratio: 0.8, up: 38, flat: 42, down: 20, phase: 'SOLID' },
+        'ICICI.NS': { eq: 0.00195, force: 65, mass: 1.04, k: 1.01, gauge: 48, conf: 72, ratio: 1.7, up: 55, flat: 28, down: 17, phase: 'LIQUID' },
+        'TCS.NS': { eq: 0.00168, force: 81, mass: 0.96, k: 0.99, gauge: 82, conf: 65, ratio: 3.2, up: 72, flat: 18, down: 10, phase: 'GAS' },
+        'INFY.NS': { eq: 0.00188, force: 35, mass: 0.78, k: 0.97, gauge: 22, conf: 48, ratio: 0.6, up: 32, flat: 45, down: 23, phase: 'SOLID' }
+      };
+
+      function updateDemo(instrument) {
+        const d = data[instrument];
+        if (!d) return;
+        
+        document.getElementById('demo-gauge-title').textContent = `E-QUANTUM · ${instrument}`;
+        document.getElementById('demo-confidence').textContent = `${d.conf}%`;
+        document.getElementById('demo-gauge').style.width = `${d.gauge}%`;
+        document.getElementById('demo-ratio').textContent = `${d.ratio}x threshold`;
+        document.getElementById('demo-probs').innerHTML = `
+          <span class="prob-up">⬆️ ${d.up}%</span>
+          <span class="prob-flat">➡️ ${d.flat}%</span>
+          <span class="prob-down">⬇️ ${d.down}%</span>
+        `;
+        document.getElementById('demo-phase').textContent = d.phase;
+        document.getElementById('demo-phase').className = `phase-badge phase-${d.phase.toLowerCase()}`;
+        document.getElementById('demo-phase-label').textContent = 
+          d.phase === 'LIQUID' ? 'Current regime: Momentum optimal' :
+          d.phase === 'SOLID' ? 'Current regime: Mean reversion' : 'Current regime: High volatility';
+        
+        document.getElementById('debug-eq').textContent = `${d.eq}%`;
+        document.getElementById('debug-force').textContent = `${d.force}th`;
+        document.getElementById('debug-mass').textContent = d.mass;
+        document.getElementById('debug-k').textContent = d.k;
+      }
+
+      updateBtn.addEventListener('click', () => {
+        const select = document.getElementById('demo-instrument');
+        updateDemo(select.value);
+      });
+
+      // Initial update
+      updateDemo('RELIANCE.NS');
+    };
+
+    // ------------------------------------------------------------------------
+    // INITIALIZE
+    // ------------------------------------------------------------------------
+    document.addEventListener('DOMContentLoaded', () => {
+      QMMRouter.init();
+      
+      // Initialize demo when demo page loads
+      const observer = new MutationObserver(() => {
+        if (window.location.hash === '#demo' || window.location.hash === '') {
+          setTimeout(window.initDemo, 50);
+        }
+      });
+      observer.observe(document.getElementById('router-view'), { childList: true, subtree: true });
+    });
+  </script>
+</body>
+</html>
