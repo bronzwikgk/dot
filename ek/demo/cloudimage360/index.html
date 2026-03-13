@@ -43,6 +43,8 @@
         border-radius: 12px;
         padding: 20px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-direction: column;
       }
 
       .example h2 {
@@ -52,10 +54,22 @@
       }
 
       .viewer-container {
-        width: 100%;
+        width: auto;
+        max-width: 100%;
+        height: 60vh;
         background: #fafafa;
         border-radius: 8px;
         overflow: hidden;
+        margin: 0 auto;
+      }
+
+      #basic-viewer,
+      #controlled-viewer {
+        aspect-ratio: 16 / 9;
+      }
+
+      #zoom-viewer {
+        aspect-ratio: 1 / 1;
       }
 
       .controls {
@@ -110,7 +124,6 @@
           data-folder="https://scaleflex.cloudimg.io/v7/demo/suv-orange-car-360/"
           data-filename-x="orange-{index}.jpg"
           data-amount-x="73"
-          data-aspect-ratio="16/9"
           data-autoplay
           data-fullscreen
           data-bottom-circle
@@ -132,7 +145,6 @@
           data-folder="https://scaleflex.cloudimg.io/v7/demo/vivo-mobile/"
           data-filename-x="product-{index}.jpg"
           data-amount-x="60"
-          data-aspect-ratio="1/1"
           data-zoom-max="3"
           data-fullscreen
         ></div>
@@ -177,7 +189,6 @@
         folder: "https://scaleflex.cloudimg.io/v7/demo/suv-orange-car-360/",
         filenameX: "orange-{index}.jpg",
         amountX: 73,
-        aspectRatio: "16/9",
         fullscreen: true,
         inertia: true,
         dragSpeed: 100,
