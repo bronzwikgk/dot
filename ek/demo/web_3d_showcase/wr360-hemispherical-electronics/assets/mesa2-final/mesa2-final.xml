@@ -1,0 +1,1125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <settings>
+    <preloader image="images/Mesa2.0048.webp?t=1655229596" />
+    <userInterface showZoomButtons="true" showToolTips="true" showHotspotsButton="true" showFullScreenButton="true" showTogglePlayButton="false" showArrows="true" toolbarAlign="center" toolbarBackColor="transparent" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0" toolbarAlpha="1" showProgressNumbers="true" showFullScreenToolbar="true" fullScreenBackColor="#FFFFFF" toolbarPosition="0" customCursorClass="default_cursor" viewerHint="" toolbarAutohide="false" showToolbarOnLoadStart="false" skin="round" />
+    <control dragSpeed="0.13" doubleClickZooms="false" disableMouseControl="false" showHighresOnFullScreen="true" mouseHoverDrag="false" hideHotspotsOnLoad="false" hideHotspotsOnZoom="true" rowSensitivity="15" dragSensitivity="10" inBrowserFullScreen="true" doubleClickFullscreen="true" zoomSteps="1" zoomSpeed="500" singleClickZooms="false" pauseOnPreload="false" resumePreloadOnHover="false" mouseWheelDrag="true" mouseWheelDragZoomOnly="true" allowRotateInputInZoom="false" allowPanX="true" allowPanY="true" dragAcceleration="1" centerZoom="false" maxZoom="100" />
+    <rotation firstImage="47" rotate="false" rotatePeriod="7" bounce="false" rotateDirection="1" forceDirection="false" inertiaRelToDragSpeed="true" inertiaTimeToStop="700" inertiaMaxInterval="120" useInertia="true" flipHorizontalInput="false" flipVerticalInput="true" bounceRows="true" rowsOnSingleIndex="false" flipAxis="false" spinOnPageScroll="false" pageScrollFollow="false" pageScrollDelay="300" pageScrollPeriod="3" />
+  </settings>
+  <hotspots>
+    <hotspot id="x1" renderMode="0" indicatorImage="spot-clean7.svg" activateOnClick="true" deactivateOnClick="true" effects="pulseSimple,1000,1" contentFadeIn="100" contentFadeOut="100" wrap="false" minIndicatorScale="90" margin="0,0,40,40" align="center,right">
+      <spotinfo txt="Dual microphone input" css="font-family:Arial;font-size:13px;color:#FFFFFF;width:170px;padding:8px 10px 8px 10px;border:1px solid #C0C0C0;border-radius:4px;background-color:rgba(235,118,0,1);" link="#E3E3E3,0.7,1,20,8,4" />
+    </hotspot>
+    <hotspot id="x2" renderMode="0" indicatorImage="spot-clean7.svg" activateOnClick="true" deactivateOnClick="true" effects="pulseSimple,1000,1" contentFadeIn="100" contentFadeOut="100" wrap="false" minIndicatorScale="90" margin="0,40,30,0" align="center,left">
+      <spotinfo txt="Active viewing area: 7&quot;" css="font-family:Arial;font-size:13px;color:#FFFFFF;width:160px;padding:8px 10px 8px 10px;border:1px solid #C0C0C0;border-radius:4px;background-color:rgba(235,118,0,1);" link="#E3E3E3,0.7,1,20,8,6" />
+    </hotspot>
+    <hotspot id="x3" renderMode="3" indicatorImage="spot-clean7.svg" activateOnClick="true" deactivateOnClick="true" effects="pulseSimple,1000,1" contentFadeIn="100" contentFadeOut="100" wrap="false" minIndicatorScale="90">
+      <spotinfo lbxPosition="fixed" lbxCloseColor="#F5F5F5" txt="&lt;div style=&quot;padding:0px 5px 0 5px;&quot;&gt;This is a demo of a new hotspot mode that supports scrolling content, responsive positioning, optional browser window centering and external third-party embeds. To use this mode, select &quot;Rotating indicator with content in lightbox popup&quot; on the first tab of the Hotspot form and use Text Content tab to either add your text (supports HTML) or a third-party embed URL that you can enter via a dedicated button in the toolbar of the Text Content tab. See more under #2 in this &lt;a href=&quot;https://www.webrotate360.com/blog/2021/7-key-features-in-the-latest-webrotate-360-product-viewer-v3-6-5-beta.aspx&quot; target=&quot;_blank&quot; style=&quot;color: #fff;text-decoration:underline;&quot;&gt;blog post&lt;/a&gt;.&#xD;&#xA;&#xD;&#xA;Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Qui tempore autem a ratione tempore et rerum porro 33 consequatur ipsam hic ipsum saepe! Sit optio harum ad molestiae ipsa aut fugiat illum aut dolorem modi.&#xD;&#xA;&#xD;&#xA;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&#xD;&#xA;&#xD;&#xA;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&#xD;&#xA;&lt;/div&gt;" css="font-family:Arial;font-size:13px;color:#FFFFFF;line-height:22px;width:100%;padding:30px 40px 30px 30px;border-radius:4px;background-color:rgba(235,118,0,1);max-width:500px;max-height:400px;" link="#E3E3E3,0.7,1,20,8,4" />
+    </hotspot>
+    <hotspot id="x4" renderMode="3" indicatorImage="spot-clean7.svg" activateOnClick="true" deactivateOnClick="true" effects="pulseSimple,1000,1" contentFadeIn="100" contentFadeOut="100" wrap="false" minIndicatorScale="90">
+      <spotinfo lbxPosition="fixed" lbxCloseColor="#eb7600" txt="[[https://www.youtube.com/embed/0pCjnreszSs]]" css="font-family:Arial;font-size:13px;color:#FFFFFF;width:95%;padding:40px;background-color:rgba(255,255,255,0.5);max-width:1200px;max-height:768px;height:95%;" link="#E3E3E3,0.7,1,0,8,8" />
+    </hotspot>
+  </hotspots>
+  <images rows="7">
+    <image src="images/Mesa2.0001.webp?t=1655229596">
+      <hotspot source="x1" offsetX="87" offsetY="744" />
+      <hotspot source="x2" offsetX="474" offsetY="141" />
+    </image>
+    <image src="images/Mesa2.0002.webp?t=1655229596">
+      <hotspot source="x1" offsetX="92" offsetY="749" />
+      <hotspot source="x2" offsetX="474" offsetY="145" />
+    </image>
+    <image src="images/Mesa2.0003.webp?t=1655229596">
+      <hotspot source="x1" offsetX="99" offsetY="752" />
+      <hotspot source="x2" offsetX="472" offsetY="148" />
+    </image>
+    <image src="images/Mesa2.0004.webp?t=1655229596">
+      <hotspot source="x1" offsetX="108" offsetY="755" />
+      <hotspot source="x2" offsetX="466" offsetY="151" />
+    </image>
+    <image src="images/Mesa2.0005.webp?t=1655229596">
+      <hotspot source="x1" offsetX="121" offsetY="758" />
+      <hotspot source="x2" offsetX="458" offsetY="154" />
+    </image>
+    <image src="images/Mesa2.0006.webp?t=1655229596">
+      <hotspot source="x1" offsetX="138" offsetY="761" />
+      <hotspot source="x2" offsetX="447" offsetY="157" />
+    </image>
+    <image src="images/Mesa2.0007.webp?t=1655229596">
+      <hotspot source="x1" offsetX="155" offsetY="764" />
+      <hotspot source="x2" offsetX="435" offsetY="160" />
+    </image>
+    <image src="images/Mesa2.0008.webp?t=1655229596">
+      <hotspot source="x1" offsetX="176" offsetY="766" />
+      <hotspot source="x2" offsetX="419" offsetY="162" />
+    </image>
+    <image src="images/Mesa2.0009.webp?t=1655229596">
+      <hotspot source="x1" offsetX="202" offsetY="769" />
+      <hotspot source="x2" offsetX="403" offsetY="164" />
+    </image>
+    <image src="images/Mesa2.0010.webp?t=1655229596">
+      <hotspot source="x1" offsetX="225" offsetY="771" />
+      <hotspot source="x2" offsetX="384" offsetY="165" />
+    </image>
+    <image src="images/Mesa2.0011.webp?t=1655229596">
+      <hotspot source="x1" offsetX="252" offsetY="771" />
+      <hotspot source="x2" offsetX="365" offsetY="165" />
+    </image>
+    <image src="images/Mesa2.0012.webp?t=1655229596">
+      <hotspot source="x1" offsetX="279" offsetY="770" />
+    </image>
+    <image src="images/Mesa2.0013.webp?t=1655229596" />
+    <image src="images/Mesa2.0014.webp?t=1655229596" />
+    <image src="images/Mesa2.0015.webp?t=1655229596" />
+    <image src="images/Mesa2.0016.webp?t=1655229596" />
+    <image src="images/Mesa2.0017.webp?t=1655229596" />
+    <image src="images/Mesa2.0018.webp?t=1655229596" />
+    <image src="images/Mesa2.0019.webp?t=1655229596" />
+    <image src="images/Mesa2.0020.webp?t=1655229596">
+      <hotspot source="x3" offsetX="121" offsetY="324" />
+    </image>
+    <image src="images/Mesa2.0021.webp?t=1655229596">
+      <hotspot source="x3" offsetX="112" offsetY="323" />
+    </image>
+    <image src="images/Mesa2.0022.webp?t=1655229596">
+      <hotspot source="x3" offsetX="106" offsetY="321" />
+    </image>
+    <image src="images/Mesa2.0023.webp?t=1655229596">
+      <hotspot source="x3" offsetX="102" offsetY="320" />
+    </image>
+    <image src="images/Mesa2.0024.webp?t=1655229596">
+      <hotspot source="x3" offsetX="100" offsetY="319" />
+    </image>
+    <image src="images/Mesa2.0025.webp?t=1655229596">
+      <hotspot source="x3" offsetX="102" offsetY="318" />
+    </image>
+    <image src="images/Mesa2.0026.webp?t=1655229596">
+      <hotspot source="x3" offsetX="106" offsetY="316" />
+    </image>
+    <image src="images/Mesa2.0027.webp?t=1655229596">
+      <hotspot source="x3" offsetX="114" offsetY="315" />
+    </image>
+    <image src="images/Mesa2.0028.webp?t=1655229596">
+      <hotspot source="x3" offsetX="124" offsetY="314" />
+    </image>
+    <image src="images/Mesa2.0029.webp?t=1655229596">
+      <hotspot source="x3" offsetX="138" offsetY="313" />
+    </image>
+    <image src="images/Mesa2.0030.webp?t=1655229596">
+      <hotspot source="x3" offsetX="153" offsetY="312" />
+    </image>
+    <image src="images/Mesa2.0031.webp?t=1655229596">
+      <hotspot source="x3" offsetX="171" offsetY="311" />
+    </image>
+    <image src="images/Mesa2.0032.webp?t=1655229596">
+      <hotspot source="x3" offsetX="192" offsetY="310" />
+    </image>
+    <image src="images/Mesa2.0033.webp?t=1655229596">
+      <hotspot source="x3" offsetX="214" offsetY="310" />
+    </image>
+    <image src="images/Mesa2.0034.webp?t=1655229596">
+      <hotspot source="x3" offsetX="238" offsetY="309" />
+    </image>
+    <image src="images/Mesa2.0035.webp?t=1655229596">
+      <hotspot source="x3" offsetX="262" offsetY="309" />
+    </image>
+    <image src="images/Mesa2.0036.webp?t=1655229596">
+      <hotspot source="x3" offsetX="287" offsetY="309" />
+    </image>
+    <image src="images/Mesa2.0037.webp?t=1655229596">
+      <hotspot source="x3" offsetX="312" offsetY="309" />
+    </image>
+    <image src="images/Mesa2.0038.webp?t=1655229596" />
+    <image src="images/Mesa2.0039.webp?t=1655229596" />
+    <image src="images/Mesa2.0040.webp?t=1655229596" />
+    <image src="images/Mesa2.0041.webp?t=1655229596">
+      <hotspot source="x1" offsetX="198" offsetY="717" />
+      <hotspot source="x2" offsetX="311" offsetY="117" />
+    </image>
+    <image src="images/Mesa2.0042.webp?t=1655229596">
+      <hotspot source="x1" offsetX="177" offsetY="718" />
+      <hotspot source="x2" offsetX="338" offsetY="118" />
+    </image>
+    <image src="images/Mesa2.0043.webp?t=1655229596">
+      <hotspot source="x1" offsetX="159" offsetY="720" />
+      <hotspot source="x2" offsetX="363" offsetY="119" />
+    </image>
+    <image src="images/Mesa2.0044.webp?t=1655229596">
+      <hotspot source="x1" offsetX="143" offsetY="722" />
+      <hotspot source="x2" offsetX="385" offsetY="121" />
+    </image>
+    <image src="images/Mesa2.0045.webp?t=1655229596">
+      <hotspot source="x1" offsetX="127" offsetY="725" />
+      <hotspot source="x2" offsetX="406" offsetY="123" />
+    </image>
+    <image src="images/Mesa2.0046.webp?t=1655229596">
+      <hotspot source="x1" offsetX="114" offsetY="728" />
+      <hotspot source="x2" offsetX="425" offsetY="125" />
+    </image>
+    <image src="images/Mesa2.0047.webp?t=1655229596">
+      <hotspot source="x1" offsetX="104" offsetY="731" />
+      <hotspot source="x2" offsetX="441" offsetY="128" />
+    </image>
+    <image src="images/Mesa2.0048.webp?t=1655229596">
+      <hotspot source="x1" offsetX="95" offsetY="735" />
+      <hotspot source="x2" offsetX="453" offsetY="131" />
+    </image>
+    <image src="images/Mesa2.0049.webp?t=1655229596">
+      <hotspot source="x1" offsetX="90" offsetY="738" />
+      <hotspot source="x2" offsetX="463" offsetY="134" />
+    </image>
+    <image src="images/Mesa2.0050.webp?t=1655229596">
+      <hotspot source="x1" offsetX="87" offsetY="742" />
+      <hotspot source="x2" offsetX="470" offsetY="138" />
+    </image>
+    <image src="images/Mesa2.0051.webp?t=1655229596">
+      <hotspot source="x1" offsetX="93" offsetY="739" />
+      <hotspot source="x2" offsetX="478" offsetY="145" />
+    </image>
+    <image src="images/Mesa2.0052.webp?t=1655229596">
+      <hotspot source="x1" offsetX="96" offsetY="746" />
+      <hotspot source="x2" offsetX="479" offsetY="144" />
+    </image>
+    <image src="images/Mesa2.0053.webp?t=1655229596">
+      <hotspot source="x1" offsetX="103" offsetY="754" />
+      <hotspot source="x2" offsetX="476" offsetY="143" />
+    </image>
+    <image src="images/Mesa2.0054.webp?t=1655229596">
+      <hotspot source="x1" offsetX="113" offsetY="761" />
+      <hotspot source="x2" offsetX="471" offsetY="142" />
+    </image>
+    <image src="images/Mesa2.0055.webp?t=1655229596">
+      <hotspot source="x1" offsetX="126" offsetY="768" />
+      <hotspot source="x2" offsetX="462" offsetY="141" />
+    </image>
+    <image src="images/Mesa2.0056.webp?t=1655229596">
+      <hotspot source="x1" offsetX="141" offsetY="773" />
+      <hotspot source="x2" offsetX="451" offsetY="140" />
+    </image>
+    <image src="images/Mesa2.0057.webp?t=1655229596">
+      <hotspot source="x1" offsetX="160" offsetY="779" />
+      <hotspot source="x2" offsetX="438" offsetY="139" />
+    </image>
+    <image src="images/Mesa2.0058.webp?t=1655229596">
+      <hotspot source="x1" offsetX="182" offsetY="784" />
+      <hotspot source="x2" offsetX="422" offsetY="139" />
+    </image>
+    <image src="images/Mesa2.0059.webp?t=1655229596">
+      <hotspot source="x1" offsetX="203" offsetY="787" />
+      <hotspot source="x2" offsetX="406" offsetY="138" />
+    </image>
+    <image src="images/Mesa2.0060.webp?t=1655229596">
+      <hotspot source="x1" offsetX="227" offsetY="789" />
+      <hotspot source="x2" offsetX="388" offsetY="138" />
+    </image>
+    <image src="images/Mesa2.0061.webp?t=1655229596">
+      <hotspot source="x1" offsetX="251" offsetY="791" />
+      <hotspot source="x2" offsetX="367" offsetY="138" />
+    </image>
+    <image src="images/Mesa2.0062.webp?t=1655229596" />
+    <image src="images/Mesa2.0063.webp?t=1655229596" />
+    <image src="images/Mesa2.0064.webp?t=1655229596" />
+    <image src="images/Mesa2.0065.webp?t=1655229596" />
+    <image src="images/Mesa2.0066.webp?t=1655229596" />
+    <image src="images/Mesa2.0067.webp?t=1655229596" />
+    <image src="images/Mesa2.0068.webp?t=1655229596" />
+    <image src="images/Mesa2.0069.webp?t=1655229596">
+      <hotspot source="x3" offsetX="131" offsetY="312" />
+    </image>
+    <image src="images/Mesa2.0070.webp?t=1655229596">
+      <hotspot source="x3" offsetX="120" offsetY="313" />
+    </image>
+    <image src="images/Mesa2.0071.webp?t=1655229596">
+      <hotspot source="x3" offsetX="110" offsetY="315" />
+    </image>
+    <image src="images/Mesa2.0072.webp?t=1655229596">
+      <hotspot source="x3" offsetX="104" offsetY="317" />
+    </image>
+    <image src="images/Mesa2.0073.webp?t=1655229596">
+      <hotspot source="x3" offsetX="100" offsetY="320" />
+    </image>
+    <image src="images/Mesa2.0074.webp?t=1655229596">
+      <hotspot source="x3" offsetX="99" offsetY="323" />
+    </image>
+    <image src="images/Mesa2.0075.webp?t=1655229596">
+      <hotspot source="x3" offsetX="100" offsetY="326" />
+    </image>
+    <image src="images/Mesa2.0076.webp?t=1655229596">
+      <hotspot source="x3" offsetX="105" offsetY="328" />
+    </image>
+    <image src="images/Mesa2.0077.webp?t=1655229596">
+      <hotspot source="x3" offsetX="112" offsetY="331" />
+    </image>
+    <image src="images/Mesa2.0078.webp?t=1655229596">
+      <hotspot source="x3" offsetX="123" offsetY="334" />
+    </image>
+    <image src="images/Mesa2.0079.webp?t=1655229596">
+      <hotspot source="x3" offsetX="137" offsetY="336" />
+    </image>
+    <image src="images/Mesa2.0080.webp?t=1655229596">
+      <hotspot source="x3" offsetX="152" offsetY="338" />
+    </image>
+    <image src="images/Mesa2.0081.webp?t=1655229596">
+      <hotspot source="x3" offsetX="171" offsetY="340" />
+    </image>
+    <image src="images/Mesa2.0082.webp?t=1655229596">
+      <hotspot source="x3" offsetX="192" offsetY="342" />
+    </image>
+    <image src="images/Mesa2.0083.webp?t=1655229596">
+      <hotspot source="x3" offsetX="214" offsetY="343" />
+    </image>
+    <image src="images/Mesa2.0084.webp?t=1655229596">
+      <hotspot source="x3" offsetX="238" offsetY="344" />
+    </image>
+    <image src="images/Mesa2.0085.webp?t=1655229596">
+      <hotspot source="x3" offsetX="262" offsetY="345" />
+    </image>
+    <image src="images/Mesa2.0086.webp?t=1655229596">
+      <hotspot source="x3" offsetX="288" offsetY="345" />
+    </image>
+    <image src="images/Mesa2.0087.webp?t=1655229596">
+      <hotspot source="x3" offsetX="313" offsetY="345" />
+    </image>
+    <image src="images/Mesa2.0088.webp?t=1655229596" />
+    <image src="images/Mesa2.0089.webp?t=1655229596" />
+    <image src="images/Mesa2.0090.webp?t=1655229596" />
+    <image src="images/Mesa2.0091.webp?t=1655229596">
+      <hotspot source="x1" offsetX="200" offsetY="680" />
+      <hotspot source="x2" offsetX="311" offsetY="151" />
+    </image>
+    <image src="images/Mesa2.0092.webp?t=1655229596">
+      <hotspot source="x1" offsetX="182" offsetY="683" />
+      <hotspot source="x2" offsetX="339" offsetY="151" />
+    </image>
+    <image src="images/Mesa2.0093.webp?t=1655229596">
+      <hotspot source="x1" offsetX="162" offsetY="688" />
+      <hotspot source="x2" offsetX="365" offsetY="151" />
+    </image>
+    <image src="images/Mesa2.0094.webp?t=1655229596">
+      <hotspot source="x1" offsetX="147" offsetY="692" />
+      <hotspot source="x2" offsetX="388" offsetY="150" />
+    </image>
+    <image src="images/Mesa2.0095.webp?t=1655229596">
+      <hotspot source="x1" offsetX="131" offsetY="698" />
+      <hotspot source="x2" offsetX="409" offsetY="150" />
+    </image>
+    <image src="images/Mesa2.0096.webp?t=1655229596">
+      <hotspot source="x1" offsetX="119" offsetY="704" />
+      <hotspot source="x2" offsetX="429" offsetY="149" />
+    </image>
+    <image src="images/Mesa2.0097.webp?t=1655229596">
+      <hotspot source="x1" offsetX="107" offsetY="710" />
+      <hotspot source="x2" offsetX="445" offsetY="149" />
+    </image>
+    <image src="images/Mesa2.0098.webp?t=1655229596">
+      <hotspot source="x1" offsetX="100" offsetY="717" />
+      <hotspot source="x2" offsetX="458" offsetY="148" />
+    </image>
+    <image src="images/Mesa2.0099.webp?t=1655229596">
+      <hotspot source="x1" offsetX="95" offsetY="724" />
+      <hotspot source="x2" offsetX="468" offsetY="147" />
+    </image>
+    <image src="images/Mesa2.0100.webp?t=1655229596">
+      <hotspot source="x1" offsetX="93" offsetY="730" />
+      <hotspot source="x2" offsetX="475" offsetY="146" />
+    </image>
+    <image src="images/Mesa2.0101.webp?t=1655229596">
+      <hotspot source="x1" offsetX="97" offsetY="723" />
+      <hotspot source="x2" offsetX="483" offsetY="157" />
+    </image>
+    <image src="images/Mesa2.0102.webp?t=1655229596">
+      <hotspot source="x1" offsetX="100" offsetY="735" />
+      <hotspot source="x2" offsetX="483" offsetY="152" />
+    </image>
+    <image src="images/Mesa2.0103.webp?t=1655229596">
+      <hotspot source="x1" offsetX="107" offsetY="744" />
+      <hotspot source="x2" offsetX="481" offsetY="147" />
+    </image>
+    <image src="images/Mesa2.0104.webp?t=1655229596">
+      <hotspot source="x1" offsetX="117" offsetY="754" />
+      <hotspot source="x2" offsetX="475" offsetY="141" />
+    </image>
+    <image src="images/Mesa2.0105.webp?t=1655229596">
+      <hotspot source="x1" offsetX="129" offsetY="765" />
+      <hotspot source="x2" offsetX="467" offsetY="136" />
+    </image>
+    <image src="images/Mesa2.0106.webp?t=1655229596">
+      <hotspot source="x1" offsetX="144" offsetY="774" />
+      <hotspot source="x2" offsetX="455" offsetY="131" />
+    </image>
+    <image src="images/Mesa2.0107.webp?t=1655229596">
+      <hotspot source="x1" offsetX="164" offsetY="782" />
+      <hotspot source="x2" offsetX="442" offsetY="127" />
+    </image>
+    <image src="images/Mesa2.0108.webp?t=1655229596">
+      <hotspot source="x1" offsetX="183" offsetY="789" />
+      <hotspot source="x2" offsetX="427" offsetY="124" />
+    </image>
+    <image src="images/Mesa2.0109.webp?t=1655229596">
+      <hotspot source="x1" offsetX="204" offsetY="794" />
+      <hotspot source="x2" offsetX="408" offsetY="119" />
+    </image>
+    <image src="images/Mesa2.0110.webp?t=1655229596">
+      <hotspot source="x1" offsetX="229" offsetY="799" />
+      <hotspot source="x2" offsetX="390" offsetY="116" />
+    </image>
+    <image src="images/Mesa2.0111.webp?t=1655229596">
+      <hotspot source="x1" offsetX="253" offsetY="801" />
+    </image>
+    <image src="images/Mesa2.0112.webp?t=1655229596" />
+    <image src="images/Mesa2.0113.webp?t=1655229596" />
+    <image src="images/Mesa2.0114.webp?t=1655229596" />
+    <image src="images/Mesa2.0115.webp?t=1655229596" />
+    <image src="images/Mesa2.0116.webp?t=1655229596" />
+    <image src="images/Mesa2.0117.webp?t=1655229596" />
+    <image src="images/Mesa2.0118.webp?t=1655229596" />
+    <image src="images/Mesa2.0119.webp?t=1655229596" />
+    <image src="images/Mesa2.0120.webp?t=1655229596">
+      <hotspot source="x3" offsetX="118" offsetY="305" />
+    </image>
+    <image src="images/Mesa2.0121.webp?t=1655229596">
+      <hotspot source="x3" offsetX="109" offsetY="310" />
+    </image>
+    <image src="images/Mesa2.0122.webp?t=1655229596">
+      <hotspot source="x3" offsetX="102" offsetY="317" />
+    </image>
+    <image src="images/Mesa2.0123.webp?t=1655229596">
+      <hotspot source="x3" offsetX="99" offsetY="323" />
+    </image>
+    <image src="images/Mesa2.0124.webp?t=1655229596">
+      <hotspot source="x3" offsetX="97" offsetY="330" />
+    </image>
+    <image src="images/Mesa2.0125.webp?t=1655229596">
+      <hotspot source="x3" offsetX="98" offsetY="337" />
+    </image>
+    <image src="images/Mesa2.0126.webp?t=1655229596">
+      <hotspot source="x3" offsetX="103" offsetY="344" />
+    </image>
+    <image src="images/Mesa2.0127.webp?t=1655229596">
+      <hotspot source="x3" offsetX="111" offsetY="351" />
+    </image>
+    <image src="images/Mesa2.0128.webp?t=1655229596">
+      <hotspot source="x3" offsetX="122" offsetY="357" />
+    </image>
+    <image src="images/Mesa2.0129.webp?t=1655229596">
+      <hotspot source="x3" offsetX="135" offsetY="363" />
+    </image>
+    <image src="images/Mesa2.0130.webp?t=1655229596">
+      <hotspot source="x3" offsetX="151" offsetY="368" />
+    </image>
+    <image src="images/Mesa2.0131.webp?t=1655229596">
+      <hotspot source="x3" offsetX="170" offsetY="373" />
+    </image>
+    <image src="images/Mesa2.0132.webp?t=1655229596">
+      <hotspot source="x3" offsetX="191" offsetY="377" />
+    </image>
+    <image src="images/Mesa2.0133.webp?t=1655229596">
+      <hotspot source="x3" offsetX="214" offsetY="380" />
+    </image>
+    <image src="images/Mesa2.0134.webp?t=1655229596">
+      <hotspot source="x3" offsetX="238" offsetY="382" />
+    </image>
+    <image src="images/Mesa2.0135.webp?t=1655229596">
+      <hotspot source="x3" offsetX="263" offsetY="384" />
+    </image>
+    <image src="images/Mesa2.0136.webp?t=1655229596">
+      <hotspot source="x3" offsetX="287" offsetY="384" />
+    </image>
+    <image src="images/Mesa2.0137.webp?t=1655229596">
+      <hotspot source="x3" offsetX="312" offsetY="383" />
+    </image>
+    <image src="images/Mesa2.0138.webp?t=1655229596" />
+    <image src="images/Mesa2.0139.webp?t=1655229596" />
+    <image src="images/Mesa2.0140.webp?t=1655229596" />
+    <image src="images/Mesa2.0141.webp?t=1655229596">
+      <hotspot source="x2" offsetX="313" offsetY="195" />
+    </image>
+    <image src="images/Mesa2.0142.webp?t=1655229596">
+      <hotspot source="x1" offsetX="181" offsetY="643" />
+      <hotspot source="x2" offsetX="341" offsetY="195" />
+    </image>
+    <image src="images/Mesa2.0143.webp?t=1655229596">
+      <hotspot source="x1" offsetX="164" offsetY="649" />
+      <hotspot source="x2" offsetX="366" offsetY="193" />
+    </image>
+    <image src="images/Mesa2.0144.webp?t=1655229596">
+      <hotspot source="x1" offsetX="148" offsetY="656" />
+      <hotspot source="x2" offsetX="390" offsetY="191" />
+    </image>
+    <image src="images/Mesa2.0145.webp?t=1655229596">
+      <hotspot source="x1" offsetX="135" offsetY="663" />
+      <hotspot source="x2" offsetX="412" offsetY="187" />
+    </image>
+    <image src="images/Mesa2.0146.webp?t=1655229596">
+      <hotspot source="x1" offsetX="122" offsetY="671" />
+      <hotspot source="x2" offsetX="432" offsetY="183" />
+    </image>
+    <image src="images/Mesa2.0147.webp?t=1655229596">
+      <hotspot source="x1" offsetX="111" offsetY="681" />
+      <hotspot source="x2" offsetX="448" offsetY="179" />
+    </image>
+    <image src="images/Mesa2.0148.webp?t=1655229596">
+      <hotspot source="x1" offsetX="103" offsetY="691" />
+      <hotspot source="x2" offsetX="462" offsetY="174" />
+    </image>
+    <image src="images/Mesa2.0149.webp?t=1655229596">
+      <hotspot source="x1" offsetX="99" offsetY="701" />
+      <hotspot source="x2" offsetX="472" offsetY="168" />
+    </image>
+    <image src="images/Mesa2.0150.webp?t=1655229596">
+      <hotspot source="x1" offsetX="97" offsetY="711" />
+      <hotspot source="x2" offsetX="479" offsetY="163" />
+    </image>
+    <image src="images/Mesa2.0151.webp?t=1655229596">
+      <hotspot source="x1" offsetX="102" offsetY="701" />
+      <hotspot source="x2" offsetX="487" offsetY="180" />
+    </image>
+    <image src="images/Mesa2.0152.webp?t=1655229596">
+      <hotspot source="x1" offsetX="105" offsetY="716" />
+      <hotspot source="x2" offsetX="488" offsetY="170" />
+    </image>
+    <image src="images/Mesa2.0153.webp?t=1655229596">
+      <hotspot source="x1" offsetX="111" offsetY="727" />
+      <hotspot source="x2" offsetX="486" offsetY="160" />
+    </image>
+    <image src="images/Mesa2.0154.webp?t=1655229596">
+      <hotspot source="x1" offsetX="121" offsetY="740" />
+      <hotspot source="x2" offsetX="480" offsetY="150" />
+    </image>
+    <image src="images/Mesa2.0155.webp?t=1655229596">
+      <hotspot source="x1" offsetX="133" offsetY="753" />
+      <hotspot source="x2" offsetX="472" offsetY="141" />
+    </image>
+    <image src="images/Mesa2.0156.webp?t=1655229596">
+      <hotspot source="x1" offsetX="148" offsetY="764" />
+      <hotspot source="x2" offsetX="460" offsetY="132" />
+    </image>
+    <image src="images/Mesa2.0157.webp?t=1655229596">
+      <hotspot source="x1" offsetX="167" offsetY="774" />
+      <hotspot source="x2" offsetX="447" offsetY="125" />
+    </image>
+    <image src="images/Mesa2.0158.webp?t=1655229596">
+      <hotspot source="x1" offsetX="186" offsetY="783" />
+      <hotspot source="x2" offsetX="430" offsetY="116" />
+    </image>
+    <image src="images/Mesa2.0159.webp?t=1655229596">
+      <hotspot source="x1" offsetX="208" offsetY="790" />
+      <hotspot source="x2" offsetX="412" offsetY="110" />
+    </image>
+    <image src="images/Mesa2.0160.webp?t=1655229596">
+      <hotspot source="x1" offsetX="230" offsetY="794" />
+      <hotspot source="x2" offsetX="392" offsetY="105" />
+    </image>
+    <image src="images/Mesa2.0161.webp?t=1655229596">
+      <hotspot source="x1" offsetX="254" offsetY="797" />
+    </image>
+    <image src="images/Mesa2.0162.webp?t=1655229596" />
+    <image src="images/Mesa2.0163.webp?t=1655229596" />
+    <image src="images/Mesa2.0164.webp?t=1655229596" />
+    <image src="images/Mesa2.0165.webp?t=1655229596" />
+    <image src="images/Mesa2.0166.webp?t=1655229596" />
+    <image src="images/Mesa2.0167.webp?t=1655229596" />
+    <image src="images/Mesa2.0168.webp?t=1655229596" />
+    <image src="images/Mesa2.0169.webp?t=1655229596" />
+    <image src="images/Mesa2.0170.webp?t=1655229596">
+      <hotspot source="x3" offsetX="117" offsetY="300" />
+    </image>
+    <image src="images/Mesa2.0171.webp?t=1655229596">
+      <hotspot source="x3" offsetX="108" offsetY="310" />
+    </image>
+    <image src="images/Mesa2.0172.webp?t=1655229596">
+      <hotspot source="x3" offsetX="101" offsetY="319" />
+    </image>
+    <image src="images/Mesa2.0173.webp?t=1655229596">
+      <hotspot source="x3" offsetX="96" offsetY="330" />
+    </image>
+    <image src="images/Mesa2.0174.webp?t=1655229596">
+      <hotspot source="x3" offsetX="96" offsetY="340" />
+    </image>
+    <image src="images/Mesa2.0175.webp?t=1655229596">
+      <hotspot source="x3" offsetX="97" offsetY="351" />
+    </image>
+    <image src="images/Mesa2.0176.webp?t=1655229596">
+      <hotspot source="x3" offsetX="102" offsetY="362" />
+    </image>
+    <image src="images/Mesa2.0177.webp?t=1655229596">
+      <hotspot source="x3" offsetX="110" offsetY="372" />
+    </image>
+    <image src="images/Mesa2.0178.webp?t=1655229596">
+      <hotspot source="x3" offsetX="121" offsetY="382" />
+    </image>
+    <image src="images/Mesa2.0179.webp?t=1655229596">
+      <hotspot source="x3" offsetX="135" offsetY="393" />
+    </image>
+    <image src="images/Mesa2.0180.webp?t=1655229596">
+      <hotspot source="x3" offsetX="151" offsetY="401" />
+    </image>
+    <image src="images/Mesa2.0181.webp?t=1655229596">
+      <hotspot source="x3" offsetX="170" offsetY="408" />
+    </image>
+    <image src="images/Mesa2.0182.webp?t=1655229596">
+      <hotspot source="x3" offsetX="191" offsetY="415" />
+    </image>
+    <image src="images/Mesa2.0183.webp?t=1655229596">
+      <hotspot source="x3" offsetX="213" offsetY="419" />
+    </image>
+    <image src="images/Mesa2.0184.webp?t=1655229596">
+      <hotspot source="x3" offsetX="237" offsetY="423" />
+    </image>
+    <image src="images/Mesa2.0185.webp?t=1655229596">
+      <hotspot source="x3" offsetX="263" offsetY="425" />
+    </image>
+    <image src="images/Mesa2.0186.webp?t=1655229596">
+      <hotspot source="x3" offsetX="287" offsetY="425" />
+    </image>
+    <image src="images/Mesa2.0187.webp?t=1655229596">
+      <hotspot source="x3" offsetX="313" offsetY="425" />
+    </image>
+    <image src="images/Mesa2.0188.webp?t=1655229596" />
+    <image src="images/Mesa2.0189.webp?t=1655229596" />
+    <image src="images/Mesa2.0190.webp?t=1655229596" />
+    <image src="images/Mesa2.0191.webp?t=1655229596">
+      <hotspot source="x2" offsetX="315" offsetY="251" />
+    </image>
+    <image src="images/Mesa2.0192.webp?t=1655229596">
+      <hotspot source="x1" offsetX="183" offsetY="598" />
+      <hotspot source="x2" offsetX="341" offsetY="250" />
+    </image>
+    <image src="images/Mesa2.0193.webp?t=1655229596">
+      <hotspot source="x1" offsetX="168" offsetY="605" />
+      <hotspot source="x2" offsetX="368" offsetY="247" />
+    </image>
+    <image src="images/Mesa2.0194.webp?t=1655229596">
+      <hotspot source="x1" offsetX="151" offsetY="614" />
+      <hotspot source="x2" offsetX="392" offsetY="242" />
+    </image>
+    <image src="images/Mesa2.0195.webp?t=1655229596">
+      <hotspot source="x1" offsetX="136" offsetY="624" />
+      <hotspot source="x2" offsetX="415" offsetY="235" />
+    </image>
+    <image src="images/Mesa2.0196.webp?t=1655229596">
+      <hotspot source="x1" offsetX="125" offsetY="635" />
+      <hotspot source="x2" offsetX="435" offsetY="227" />
+    </image>
+    <image src="images/Mesa2.0197.webp?t=1655229596">
+      <hotspot source="x1" offsetX="115" offsetY="646" />
+      <hotspot source="x2" offsetX="452" offsetY="219" />
+    </image>
+    <image src="images/Mesa2.0198.webp?t=1655229596">
+      <hotspot source="x1" offsetX="108" offsetY="659" />
+      <hotspot source="x2" offsetX="465" offsetY="210" />
+    </image>
+    <image src="images/Mesa2.0199.webp?t=1655229596">
+      <hotspot source="x1" offsetX="102" offsetY="673" />
+      <hotspot source="x2" offsetX="476" offsetY="200" />
+    </image>
+    <image src="images/Mesa2.0200.webp?t=1655229596">
+      <hotspot source="x1" offsetX="101" offsetY="687" />
+      <hotspot source="x2" offsetX="483" offsetY="190" />
+    </image>
+    <image src="images/Mesa2.0201.webp?t=1655229596">
+      <hotspot source="x1" offsetX="106" offsetY="671" />
+      <hotspot source="x2" offsetX="492" offsetY="212" />
+    </image>
+    <image src="images/Mesa2.0202.webp?t=1655229596">
+      <hotspot source="x1" offsetX="108" offsetY="686" />
+      <hotspot source="x2" offsetX="492" offsetY="198" />
+    </image>
+    <image src="images/Mesa2.0203.webp?t=1655229596">
+      <hotspot source="x1" offsetX="115" offsetY="703" />
+      <hotspot source="x2" offsetX="490" offsetY="183" />
+    </image>
+    <image src="images/Mesa2.0204.webp?t=1655229596">
+      <hotspot source="x1" offsetX="125" offsetY="718" />
+      <hotspot source="x2" offsetX="485" offsetY="169" />
+    </image>
+    <image src="images/Mesa2.0205.webp?t=1655229596">
+      <hotspot source="x1" offsetX="137" offsetY="732" />
+      <hotspot source="x2" offsetX="475" offsetY="155" />
+    </image>
+    <image src="images/Mesa2.0206.webp?t=1655229596">
+      <hotspot source="x1" offsetX="151" offsetY="745" />
+      <hotspot source="x2" offsetX="464" offsetY="142" />
+    </image>
+    <image src="images/Mesa2.0207.webp?t=1655229596">
+      <hotspot source="x1" offsetX="168" offsetY="757" />
+      <hotspot source="x2" offsetX="450" offsetY="130" />
+    </image>
+    <image src="images/Mesa2.0208.webp?t=1655229596">
+      <hotspot source="x1" offsetX="188" offsetY="767" />
+      <hotspot source="x2" offsetX="434" offsetY="120" />
+    </image>
+    <image src="images/Mesa2.0209.webp?t=1655229596">
+      <hotspot source="x1" offsetX="209" offsetY="775" />
+      <hotspot source="x2" offsetX="415" offsetY="109" />
+    </image>
+    <image src="images/Mesa2.0210.webp?t=1655229596">
+      <hotspot source="x1" offsetX="232" offsetY="782" />
+      <hotspot source="x2" offsetX="396" offsetY="101" />
+    </image>
+    <image src="images/Mesa2.0211.webp?t=1655229596">
+      <hotspot source="x1" offsetX="255" offsetY="783" />
+    </image>
+    <image src="images/Mesa2.0212.webp?t=1655229596" />
+    <image src="images/Mesa2.0213.webp?t=1655229596" />
+    <image src="images/Mesa2.0214.webp?t=1655229596" />
+    <image src="images/Mesa2.0215.webp?t=1655229596" />
+    <image src="images/Mesa2.0216.webp?t=1655229596" />
+    <image src="images/Mesa2.0217.webp?t=1655229596" />
+    <image src="images/Mesa2.0218.webp?t=1655229596" />
+    <image src="images/Mesa2.0219.webp?t=1655229596" />
+    <image src="images/Mesa2.0220.webp?t=1655229596">
+      <hotspot source="x3" offsetX="114" offsetY="299" />
+    </image>
+    <image src="images/Mesa2.0221.webp?t=1655229596">
+      <hotspot source="x3" offsetX="105" offsetY="313" />
+    </image>
+    <image src="images/Mesa2.0222.webp?t=1655229596">
+      <hotspot source="x3" offsetX="98" offsetY="327" />
+    </image>
+    <image src="images/Mesa2.0223.webp?t=1655229596">
+      <hotspot source="x3" offsetX="94" offsetY="341" />
+    </image>
+    <image src="images/Mesa2.0224.webp?t=1655229596">
+      <hotspot source="x3" offsetX="93" offsetY="355" />
+    </image>
+    <image src="images/Mesa2.0225.webp?t=1655229596">
+      <hotspot source="x3" offsetX="96" offsetY="369" />
+    </image>
+    <image src="images/Mesa2.0226.webp?t=1655229596">
+      <hotspot source="x3" offsetX="101" offsetY="383" />
+    </image>
+    <image src="images/Mesa2.0227.webp?t=1655229596">
+      <hotspot source="x3" offsetX="109" offsetY="397" />
+    </image>
+    <image src="images/Mesa2.0228.webp?t=1655229596">
+      <hotspot source="x3" offsetX="120" offsetY="410" />
+    </image>
+    <image src="images/Mesa2.0229.webp?t=1655229596">
+      <hotspot source="x3" offsetX="134" offsetY="423" />
+    </image>
+    <image src="images/Mesa2.0230.webp?t=1655229596">
+      <hotspot source="x3" offsetX="151" offsetY="435" />
+    </image>
+    <image src="images/Mesa2.0231.webp?t=1655229596">
+      <hotspot source="x3" offsetX="170" offsetY="445" />
+    </image>
+    <image src="images/Mesa2.0232.webp?t=1655229596">
+      <hotspot source="x3" offsetX="191" offsetY="453" />
+    </image>
+    <image src="images/Mesa2.0233.webp?t=1655229596">
+      <hotspot source="x3" offsetX="214" offsetY="460" />
+    </image>
+    <image src="images/Mesa2.0234.webp?t=1655229596">
+      <hotspot source="x3" offsetX="237" offsetY="464" />
+    </image>
+    <image src="images/Mesa2.0235.webp?t=1655229596">
+      <hotspot source="x3" offsetX="263" offsetY="467" />
+    </image>
+    <image src="images/Mesa2.0236.webp?t=1655229596">
+      <hotspot source="x3" offsetX="289" offsetY="467" />
+    </image>
+    <image src="images/Mesa2.0237.webp?t=1655229596">
+      <hotspot source="x3" offsetX="312" offsetY="465" />
+    </image>
+    <image src="images/Mesa2.0238.webp?t=1655229596" />
+    <image src="images/Mesa2.0239.webp?t=1655229596" />
+    <image src="images/Mesa2.0240.webp?t=1655229596" />
+    <image src="images/Mesa2.0241.webp?t=1655229596">
+      <hotspot source="x2" offsetX="316" offsetY="316" />
+    </image>
+    <image src="images/Mesa2.0242.webp?t=1655229596">
+      <hotspot source="x1" offsetX="185" offsetY="549" />
+      <hotspot source="x2" offsetX="343" offsetY="311" />
+    </image>
+    <image src="images/Mesa2.0243.webp?t=1655229596">
+      <hotspot source="x1" offsetX="168" offsetY="558" />
+      <hotspot source="x2" offsetX="369" offsetY="306" />
+    </image>
+    <image src="images/Mesa2.0244.webp?t=1655229596">
+      <hotspot source="x1" offsetX="152" offsetY="569" />
+      <hotspot source="x2" offsetX="394" offsetY="300" />
+    </image>
+    <image src="images/Mesa2.0245.webp?t=1655229596">
+      <hotspot source="x1" offsetX="138" offsetY="581" />
+      <hotspot source="x2" offsetX="417" offsetY="291" />
+    </image>
+    <image src="images/Mesa2.0246.webp?t=1655229596">
+      <hotspot source="x1" offsetX="126" offsetY="594" />
+      <hotspot source="x2" offsetX="438" offsetY="280" />
+    </image>
+    <image src="images/Mesa2.0247.webp?t=1655229596">
+      <hotspot source="x1" offsetX="118" offsetY="608" />
+      <hotspot source="x2" offsetX="454" offsetY="269" />
+    </image>
+    <image src="images/Mesa2.0248.webp?t=1655229596">
+      <hotspot source="x1" offsetX="110" offsetY="624" />
+      <hotspot source="x2" offsetX="468" offsetY="256" />
+    </image>
+    <image src="images/Mesa2.0249.webp?t=1655229596">
+      <hotspot source="x1" offsetX="105" offsetY="640" />
+      <hotspot source="x2" offsetX="479" offsetY="242" />
+    </image>
+    <image src="images/Mesa2.0250.webp?t=1655229596">
+      <hotspot source="x1" offsetX="104" offsetY="654" />
+      <hotspot source="x2" offsetX="487" offsetY="227" />
+    </image>
+    <image src="images/Mesa2.0251.webp?t=1655229596">
+      <hotspot source="x1" offsetX="108" offsetY="637" />
+      <hotspot source="x2" offsetX="495" offsetY="253" />
+      <hotspot source="x4" offsetX="450" offsetY="156" />
+    </image>
+    <image src="images/Mesa2.0252.webp?t=1655229596">
+      <hotspot source="x1" offsetX="112" offsetY="655" />
+      <hotspot source="x2" offsetX="496" offsetY="234" />
+      <hotspot source="x4" offsetX="448" offsetY="142" />
+    </image>
+    <image src="images/Mesa2.0253.webp?t=1655229596">
+      <hotspot source="x1" offsetX="118" offsetY="671" />
+      <hotspot source="x2" offsetX="494" offsetY="215" />
+      <hotspot source="x4" offsetX="443" offsetY="128" />
+    </image>
+    <image src="images/Mesa2.0254.webp?t=1655229596">
+      <hotspot source="x1" offsetX="129" offsetY="690" />
+      <hotspot source="x2" offsetX="488" offsetY="197" />
+      <hotspot source="x4" offsetX="436" offsetY="116" />
+    </image>
+    <image src="images/Mesa2.0255.webp?t=1655229596">
+      <hotspot source="x1" offsetX="141" offsetY="705" />
+      <hotspot source="x2" offsetX="480" offsetY="180" />
+      <hotspot source="x4" offsetX="425" offsetY="103" />
+    </image>
+    <image src="images/Mesa2.0256.webp?t=1655229596">
+      <hotspot source="x1" offsetX="155" offsetY="719" />
+      <hotspot source="x2" offsetX="468" offsetY="163" />
+      <hotspot source="x4" offsetX="414" offsetY="91" />
+    </image>
+    <image src="images/Mesa2.0257.webp?t=1655229596">
+      <hotspot source="x1" offsetX="173" offsetY="732" />
+      <hotspot source="x2" offsetX="454" offsetY="148" />
+      <hotspot source="x4" offsetX="401" offsetY="81" />
+    </image>
+    <image src="images/Mesa2.0258.webp?t=1655229596">
+      <hotspot source="x1" offsetX="190" offsetY="743" />
+      <hotspot source="x2" offsetX="438" offsetY="133" />
+      <hotspot source="x4" offsetX="385" offsetY="71" />
+    </image>
+    <image src="images/Mesa2.0259.webp?t=1655229596">
+      <hotspot source="x1" offsetX="211" offsetY="752" />
+      <hotspot source="x2" offsetX="419" offsetY="120" />
+      <hotspot source="x4" offsetX="367" offsetY="63" />
+    </image>
+    <image src="images/Mesa2.0260.webp?t=1655229596">
+      <hotspot source="x1" offsetX="234" offsetY="757" />
+      <hotspot source="x2" offsetX="398" offsetY="110" />
+      <hotspot source="x4" offsetX="349" offsetY="57" />
+    </image>
+    <image src="images/Mesa2.0261.webp?t=1655229596">
+      <hotspot source="x1" offsetX="254" offsetY="761" />
+      <hotspot source="x4" offsetX="331" offsetY="52" />
+    </image>
+    <image src="images/Mesa2.0262.webp?t=1655229596">
+      <hotspot source="x4" offsetX="312" offsetY="49" />
+    </image>
+    <image src="images/Mesa2.0263.webp?t=1655229596">
+      <hotspot source="x4" offsetX="292" offsetY="47" />
+    </image>
+    <image src="images/Mesa2.0264.webp?t=1655229596">
+      <hotspot source="x4" offsetX="273" offsetY="47" />
+    </image>
+    <image src="images/Mesa2.0265.webp?t=1655229596">
+      <hotspot source="x4" offsetX="253" offsetY="49" />
+    </image>
+    <image src="images/Mesa2.0266.webp?t=1655229596">
+      <hotspot source="x4" offsetX="233" offsetY="52" />
+    </image>
+    <image src="images/Mesa2.0267.webp?t=1655229596">
+      <hotspot source="x4" offsetX="213" offsetY="57" />
+    </image>
+    <image src="images/Mesa2.0268.webp?t=1655229596">
+      <hotspot source="x4" offsetX="196" offsetY="64" />
+    </image>
+    <image src="images/Mesa2.0269.webp?t=1655229596">
+      <hotspot source="x4" offsetX="180" offsetY="71" />
+    </image>
+    <image src="images/Mesa2.0270.webp?t=1655229596">
+      <hotspot source="x4" offsetX="164" offsetY="81" />
+    </image>
+    <image src="images/Mesa2.0271.webp?t=1655229596">
+      <hotspot source="x3" offsetX="103" offsetY="319" />
+      <hotspot source="x4" offsetX="150" offsetY="92" />
+    </image>
+    <image src="images/Mesa2.0272.webp?t=1655229596">
+      <hotspot source="x3" offsetX="97" offsetY="336" />
+      <hotspot source="x4" offsetX="138" offsetY="103" />
+    </image>
+    <image src="images/Mesa2.0273.webp?t=1655229596">
+      <hotspot source="x3" offsetX="93" offsetY="353" />
+      <hotspot source="x4" offsetX="129" offsetY="116" />
+    </image>
+    <image src="images/Mesa2.0274.webp?t=1655229596">
+      <hotspot source="x3" offsetX="92" offsetY="371" />
+      <hotspot source="x4" offsetX="121" offsetY="129" />
+    </image>
+    <image src="images/Mesa2.0275.webp?t=1655229596">
+      <hotspot source="x3" offsetX="95" offsetY="389" />
+      <hotspot source="x4" offsetX="116" offsetY="143" />
+    </image>
+    <image src="images/Mesa2.0276.webp?t=1655229596">
+      <hotspot source="x3" offsetX="100" offsetY="406" />
+      <hotspot source="x4" offsetX="114" offsetY="157" />
+    </image>
+    <image src="images/Mesa2.0277.webp?t=1655229596">
+      <hotspot source="x3" offsetX="109" offsetY="423" />
+      <hotspot source="x4" offsetX="114" offsetY="171" />
+    </image>
+    <image src="images/Mesa2.0278.webp?t=1655229596">
+      <hotspot source="x3" offsetX="120" offsetY="439" />
+      <hotspot source="x4" offsetX="116" offsetY="186" />
+    </image>
+    <image src="images/Mesa2.0279.webp?t=1655229596">
+      <hotspot source="x3" offsetX="134" offsetY="454" />
+      <hotspot source="x4" offsetX="123" offsetY="200" />
+    </image>
+    <image src="images/Mesa2.0280.webp?t=1655229596">
+      <hotspot source="x3" offsetX="151" offsetY="468" />
+      <hotspot source="x4" offsetX="131" offsetY="213" />
+    </image>
+    <image src="images/Mesa2.0281.webp?t=1655229596">
+      <hotspot source="x3" offsetX="170" offsetY="479" />
+      <hotspot source="x4" offsetX="142" offsetY="226" />
+    </image>
+    <image src="images/Mesa2.0282.webp?t=1655229596">
+      <hotspot source="x3" offsetX="191" offsetY="490" />
+      <hotspot source="x4" offsetX="155" offsetY="238" />
+    </image>
+    <image src="images/Mesa2.0283.webp?t=1655229596">
+      <hotspot source="x3" offsetX="214" offsetY="498" />
+      <hotspot source="x4" offsetX="170" offsetY="249" />
+    </image>
+    <image src="images/Mesa2.0284.webp?t=1655229596">
+      <hotspot source="x3" offsetX="238" offsetY="504" />
+      <hotspot source="x4" offsetX="186" offsetY="258" />
+    </image>
+    <image src="images/Mesa2.0285.webp?t=1655229596">
+      <hotspot source="x3" offsetX="262" offsetY="506" />
+      <hotspot source="x4" offsetX="206" offsetY="266" />
+    </image>
+    <image src="images/Mesa2.0286.webp?t=1655229596">
+      <hotspot source="x3" offsetX="287" offsetY="506" />
+      <hotspot source="x4" offsetX="226" offsetY="272" />
+    </image>
+    <image src="images/Mesa2.0287.webp?t=1655229596">
+      <hotspot source="x3" offsetX="313" offsetY="504" />
+      <hotspot source="x4" offsetX="248" offsetY="276" />
+    </image>
+    <image src="images/Mesa2.0288.webp?t=1655229596">
+      <hotspot source="x4" offsetX="270" offsetY="278" />
+    </image>
+    <image src="images/Mesa2.0289.webp?t=1655229596">
+      <hotspot source="x4" offsetX="293" offsetY="278" />
+    </image>
+    <image src="images/Mesa2.0290.webp?t=1655229596">
+      <hotspot source="x4" offsetX="316" offsetY="276" />
+    </image>
+    <image src="images/Mesa2.0291.webp?t=1655229596">
+      <hotspot source="x4" offsetX="337" offsetY="272" />
+    </image>
+    <image src="images/Mesa2.0292.webp?t=1655229596">
+      <hotspot source="x1" offsetX="185" offsetY="499" />
+      <hotspot source="x2" offsetX="344" offsetY="381" />
+      <hotspot source="x4" offsetX="358" offsetY="265" />
+    </image>
+    <image src="images/Mesa2.0293.webp?t=1655229596">
+      <hotspot source="x1" offsetX="169" offsetY="510" />
+      <hotspot source="x2" offsetX="369" offsetY="376" />
+      <hotspot source="x4" offsetX="377" offsetY="258" />
+    </image>
+    <image src="images/Mesa2.0294.webp?t=1655229596">
+      <hotspot source="x1" offsetX="153" offsetY="522" />
+      <hotspot source="x2" offsetX="394" offsetY="367" />
+      <hotspot source="x4" offsetX="394" offsetY="248" />
+    </image>
+    <image src="images/Mesa2.0295.webp?t=1655229596">
+      <hotspot source="x1" offsetX="140" offsetY="537" />
+      <hotspot source="x2" offsetX="418" offsetY="354" />
+      <hotspot source="x4" offsetX="409" offsetY="237" />
+    </image>
+    <image src="images/Mesa2.0296.webp?t=1655229596">
+      <hotspot source="x1" offsetX="129" offsetY="550" />
+      <hotspot source="x2" offsetX="439" offsetY="340" />
+      <hotspot source="x4" offsetX="422" offsetY="226" />
+    </image>
+    <image src="images/Mesa2.0297.webp?t=1655229596">
+      <hotspot source="x1" offsetX="119" offsetY="566" />
+      <hotspot source="x2" offsetX="456" offsetY="325" />
+      <hotspot source="x4" offsetX="433" offsetY="213" />
+    </image>
+    <image src="images/Mesa2.0298.webp?t=1655229596">
+      <hotspot source="x1" offsetX="113" offsetY="583" />
+      <hotspot source="x2" offsetX="471" offsetY="308" />
+      <hotspot source="x4" offsetX="441" offsetY="200" />
+    </image>
+    <image src="images/Mesa2.0299.webp?t=1655229596">
+      <hotspot source="x1" offsetX="108" offsetY="600" />
+      <hotspot source="x2" offsetX="482" offsetY="291" />
+      <hotspot source="x4" offsetX="447" offsetY="186" />
+    </image>
+    <image src="images/Mesa2.0300.webp?t=1655229596">
+      <hotspot source="x1" offsetX="107" offsetY="618" />
+      <hotspot source="x2" offsetX="490" offsetY="273" />
+      <hotspot source="x4" offsetX="450" offsetY="171" />
+    </image>
+    <image src="images/Mesa2.0301.webp?t=1655229596">
+      <hotspot source="x4" offsetX="452" offsetY="215" />
+    </image>
+    <image src="images/Mesa2.0302.webp?t=1655229596">
+      <hotspot source="x4" offsetX="451" offsetY="198" />
+    </image>
+    <image src="images/Mesa2.0303.webp?t=1655229596">
+      <hotspot source="x4" offsetX="445" offsetY="181" />
+    </image>
+    <image src="images/Mesa2.0304.webp?t=1655229596">
+      <hotspot source="x4" offsetX="439" offsetY="165" />
+    </image>
+    <image src="images/Mesa2.0305.webp?t=1655229596">
+      <hotspot source="x4" offsetX="429" offsetY="148" />
+    </image>
+    <image src="images/Mesa2.0306.webp?t=1655229596">
+      <hotspot source="x4" offsetX="417" offsetY="134" />
+    </image>
+    <image src="images/Mesa2.0307.webp?t=1655229596">
+      <hotspot source="x4" offsetX="403" offsetY="121" />
+    </image>
+    <image src="images/Mesa2.0308.webp?t=1655229596">
+      <hotspot source="x4" offsetX="387" offsetY="110" />
+    </image>
+    <image src="images/Mesa2.0309.webp?t=1655229596">
+      <hotspot source="x4" offsetX="370" offsetY="100" />
+    </image>
+    <image src="images/Mesa2.0310.webp?t=1655229596">
+      <hotspot source="x4" offsetX="351" offsetY="92" />
+    </image>
+    <image src="images/Mesa2.0311.webp?t=1655229596">
+      <hotspot source="x4" offsetX="333" offsetY="86" />
+    </image>
+    <image src="images/Mesa2.0312.webp?t=1655229596">
+      <hotspot source="x4" offsetX="312" offsetY="82" />
+    </image>
+    <image src="images/Mesa2.0313.webp?t=1655229596">
+      <hotspot source="x4" offsetX="292" offsetY="80" />
+    </image>
+    <image src="images/Mesa2.0314.webp?t=1655229596">
+      <hotspot source="x4" offsetX="272" offsetY="80" />
+    </image>
+    <image src="images/Mesa2.0315.webp?t=1655229596">
+      <hotspot source="x4" offsetX="251" offsetY="82" />
+    </image>
+    <image src="images/Mesa2.0316.webp?t=1655229596">
+      <hotspot source="x4" offsetX="231" offsetY="87" />
+    </image>
+    <image src="images/Mesa2.0317.webp?t=1655229596">
+      <hotspot source="x4" offsetX="212" offsetY="92" />
+    </image>
+    <image src="images/Mesa2.0318.webp?t=1655229596">
+      <hotspot source="x4" offsetX="194" offsetY="100" />
+    </image>
+    <image src="images/Mesa2.0319.webp?t=1655229596">
+      <hotspot source="x4" offsetX="176" offsetY="110" />
+    </image>
+    <image src="images/Mesa2.0320.webp?t=1655229596">
+      <hotspot source="x4" offsetX="160" offsetY="121" />
+    </image>
+    <image src="images/Mesa2.0321.webp?t=1655229596">
+      <hotspot source="x4" offsetX="146" offsetY="134" />
+    </image>
+    <image src="images/Mesa2.0322.webp?t=1655229596">
+      <hotspot source="x4" offsetX="134" offsetY="149" />
+    </image>
+    <image src="images/Mesa2.0323.webp?t=1655229596">
+      <hotspot source="x4" offsetX="125" offsetY="163" />
+    </image>
+    <image src="images/Mesa2.0324.webp?t=1655229596">
+      <hotspot source="x4" offsetX="117" offsetY="180" />
+    </image>
+    <image src="images/Mesa2.0325.webp?t=1655229596">
+      <hotspot source="x4" offsetX="112" offsetY="197" />
+    </image>
+    <image src="images/Mesa2.0326.webp?t=1655229596">
+      <hotspot source="x4" offsetX="110" offsetY="215" />
+    </image>
+    <image src="images/Mesa2.0327.webp?t=1655229596">
+      <hotspot source="x4" offsetX="111" offsetY="231" />
+    </image>
+    <image src="images/Mesa2.0328.webp?t=1655229596">
+      <hotspot source="x4" offsetX="114" offsetY="250" />
+    </image>
+    <image src="images/Mesa2.0329.webp?t=1655229596">
+      <hotspot source="x4" offsetX="120" offsetY="266" />
+    </image>
+    <image src="images/Mesa2.0330.webp?t=1655229596">
+      <hotspot source="x4" offsetX="129" offsetY="283" />
+    </image>
+    <image src="images/Mesa2.0331.webp?t=1655229596">
+      <hotspot source="x4" offsetX="140" offsetY="298" />
+    </image>
+    <image src="images/Mesa2.0332.webp?t=1655229596">
+      <hotspot source="x4" offsetX="153" offsetY="313" />
+    </image>
+    <image src="images/Mesa2.0333.webp?t=1655229596">
+      <hotspot source="x4" offsetX="169" offsetY="326" />
+    </image>
+    <image src="images/Mesa2.0334.webp?t=1655229596">
+      <hotspot source="x4" offsetX="187" offsetY="337" />
+    </image>
+    <image src="images/Mesa2.0335.webp?t=1655229596">
+      <hotspot source="x4" offsetX="204" offsetY="345" />
+    </image>
+    <image src="images/Mesa2.0336.webp?t=1655229596">
+      <hotspot source="x4" offsetX="225" offsetY="352" />
+    </image>
+    <image src="images/Mesa2.0337.webp?t=1655229596">
+      <hotspot source="x4" offsetX="247" offsetY="357" />
+    </image>
+    <image src="images/Mesa2.0338.webp?t=1655229596">
+      <hotspot source="x4" offsetX="271" offsetY="360" />
+    </image>
+    <image src="images/Mesa2.0339.webp?t=1655229596">
+      <hotspot source="x4" offsetX="292" offsetY="360" />
+    </image>
+    <image src="images/Mesa2.0340.webp?t=1655229596">
+      <hotspot source="x4" offsetX="318" offsetY="357" />
+    </image>
+    <image src="images/Mesa2.0341.webp?t=1655229596">
+      <hotspot source="x4" offsetX="336" offsetY="353" />
+    </image>
+    <image src="images/Mesa2.0342.webp?t=1655229596">
+      <hotspot source="x1" offsetX="185" offsetY="449" />
+      <hotspot source="x4" offsetX="358" offsetY="346" />
+    </image>
+    <image src="images/Mesa2.0343.webp?t=1655229596">
+      <hotspot source="x4" offsetX="378" offsetY="337" />
+    </image>
+    <image src="images/Mesa2.0344.webp?t=1655229596">
+      <hotspot source="x4" offsetX="396" offsetY="325" />
+    </image>
+    <image src="images/Mesa2.0345.webp?t=1655229596">
+      <hotspot source="x4" offsetX="412" offsetY="313" />
+    </image>
+    <image src="images/Mesa2.0346.webp?t=1655229596">
+      <hotspot source="x4" offsetX="425" offsetY="299" />
+    </image>
+    <image src="images/Mesa2.0347.webp?t=1655229596">
+      <hotspot source="x4" offsetX="436" offsetY="283" />
+    </image>
+    <image src="images/Mesa2.0348.webp?t=1655229596">
+      <hotspot source="x4" offsetX="443" offsetY="267" />
+    </image>
+    <image src="images/Mesa2.0349.webp?t=1655229596">
+      <hotspot source="x4" offsetX="449" offsetY="249" />
+    </image>
+    <image src="images/Mesa2.0350.webp?t=1655229596">
+      <hotspot source="x4" offsetX="452" offsetY="230" />
+    </image>
+  </images>
+</config>

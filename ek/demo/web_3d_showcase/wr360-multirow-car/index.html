@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Multi-row Car Viewer</title>
+    <link
+      rel="stylesheet"
+      href="./assets/vendor/css/round-regular.css"
+      type="text/css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body { margin: 0; background: #fff; }
+      main { width: 100%; }
+
+      #wr360PlayerId {
+        width: 100%;
+        height: min(60vh, 72vw);
+        min-height: 260px;
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section aria-label="multi-row car viewer">
+        <div id="wr360PlayerId" class="wr360_player ssab">
+          <div class="customprogress">
+            <div class="prognumbers"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="./assets/vendor/js/jquery.min.js"></script>
+    <script src="./assets/vendor/js/jquery.easing.min.js"></script>
+    <script src="./assets/vendor/js/imagerotator.js"></script>
+    <script>
+      jQuery(function () {
+        jQuery("#wr360PlayerId").rotator({
+          configFileURL: "./assets/ssab/ssab.xml",
+          rootPath: "./assets/ssab/",
+          graphicsPath: "./assets/graphics/",
+          responsiveBaseWidth: 1200,
+          responsiveMinHeight: 260,
+          inBrowserFullScreen: false,
+          googleEventTracking: false,
+          licenseFileURL: "./assets/license2.txt"
+        });
+      });
+    </script>
+  </body>
+</html>

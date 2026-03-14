@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <settings>
+    <preloader image="images/GTBIKE_DEMO.41.jpg" />
+    <userInterface showZoomButtons="false" showToolTips="true" showHotspotsButton="true" showFullScreenButton="false" showTogglePlayButton="true" showArrows="true" toolbarAlign="center" toolbarBackColor="transparent" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0" toolbarAlpha="0.2" showProgressNumbers="true" showFullScreenToolbar="false" fullScreenBackColor="#FFFFFF" />
+    <control dragSpeed="0.24" doubleClickZooms="false" disableMouseControl="false" showHighresOnFullScreen="true" mouseHoverDrag="false" hideHotspotsOnLoad="false" hideHotspotsOnZoom="true" rowSensitivity="15" dragSensitivity="10" inBrowserFullScreen="false" doubleClickFullscreen="false" />
+    <rotation firstImage="40" rotate="once" rotatePeriod="6" bounce="false" rotateDirection="-1" forceDirection="false" inertiaRelToDragSpeed="true" inertiaTimeToStop="700" inertiaMaxInterval="120" useInertia="true" flipHorizontalInput="false" bounceRows="true" />
+  </settings>
+  <hotspots>
+    <hotspot id="12x142thruaxle" renderMode="3" effects="pulseRipple,2000,1" minIndicatorScale="80" indicatorImage="circ-cross-thick-red.svg" activateOnClick="true" deactivateOnClick="true">
+      <spotinfo src="images/spots/thru-axle.jpg" lbxBackCover="true" />
+    </hotspot>
+    <hotspot id="improvedrolling" renderMode="3" effects="scaleUp" minIndicatorScale="80" indicatorImage="circ-cross-thick-red.svg" disabled="true" activateOnClick="true" deactivateOnClick="true">
+      <spotinfo src="images/spots/ImprovedRolling.jpg" lbxBackCover="true" />
+    </hotspot>
+    <hotspot id="efficientpedaling" renderMode="3" effects="scaleUp" minIndicatorScale="80" indicatorImage="circ-cross-thick-red.svg" activateOnClick="true" deactivateOnClick="true">
+      <spotinfo src="images/spots/EfficientPedaling.jpg" lbxBackCover="true" />
+    </hotspot>
+  </hotspots>
+  <images rows="1">
+    <image src="images/GTBIKE_DEMO.1.jpg">
+      <hotspot source="12x142thruaxle" offsetX="313" offsetY="467" />
+      <hotspot source="improvedrolling" offsetX="544" offsetY="387" />
+      <hotspot source="efficientpedaling" offsetX="551" offsetY="474" />
+    </image>
+    <image src="images/GTBIKE_DEMO.2.jpg">
+      <hotspot source="12x142thruaxle" offsetX="326" offsetY="465" />
+      <hotspot source="improvedrolling" offsetX="544" offsetY="388" />
+      <hotspot source="efficientpedaling" offsetX="550" offsetY="474" />
+    </image>
+    <image src="images/GTBIKE_DEMO.3.jpg">
+      <hotspot source="12x142thruaxle" offsetX="346" offsetY="464" />
+      <hotspot source="improvedrolling" offsetX="545" offsetY="387" />
+      <hotspot source="efficientpedaling" offsetX="549" offsetY="473" />
+    </image>
+    <image src="images/GTBIKE_DEMO.4.jpg">
+      <hotspot source="12x142thruaxle" offsetX="372" offsetY="464" />
+      <hotspot source="improvedrolling" offsetX="549" offsetY="388" />
+      <hotspot source="efficientpedaling" offsetX="551" offsetY="473" />
+    </image>
+    <image src="images/GTBIKE_DEMO.5.jpg">
+      <hotspot source="12x142thruaxle" offsetX="401" offsetY="468" />
+      <hotspot source="improvedrolling" offsetX="557" offsetY="391" />
+      <hotspot source="efficientpedaling" offsetX="556" offsetY="472" />
+    </image>
+    <image src="images/GTBIKE_DEMO.6.jpg" />
+    <image src="images/GTBIKE_DEMO.7.jpg" />
+    <image src="images/GTBIKE_DEMO.8.jpg" />
+    <image src="images/GTBIKE_DEMO.9.jpg" />
+    <image src="images/GTBIKE_DEMO.10.jpg" />
+    <image src="images/GTBIKE_DEMO.11.jpg" />
+    <image src="images/GTBIKE_DEMO.12.jpg" />
+    <image src="images/GTBIKE_DEMO.13.jpg" />
+    <image src="images/GTBIKE_DEMO.14.jpg" />
+    <image src="images/GTBIKE_DEMO.15.jpg" />
+    <image src="images/GTBIKE_DEMO.16.jpg" />
+    <image src="images/GTBIKE_DEMO.17.jpg" />
+    <image src="images/GTBIKE_DEMO.18.jpg" />
+    <image src="images/GTBIKE_DEMO.19.jpg" />
+    <image src="images/GTBIKE_DEMO.20.jpg" />
+    <image src="images/GTBIKE_DEMO.21.jpg" />
+    <image src="images/GTBIKE_DEMO.22.jpg" />
+    <image src="images/GTBIKE_DEMO.23.jpg" />
+    <image src="images/GTBIKE_DEMO.24.jpg" />
+    <image src="images/GTBIKE_DEMO.25.jpg" />
+    <image src="images/GTBIKE_DEMO.26.jpg" />
+    <image src="images/GTBIKE_DEMO.27.jpg" />
+    <image src="images/GTBIKE_DEMO.28.jpg" />
+    <image src="images/GTBIKE_DEMO.29.jpg" />
+    <image src="images/GTBIKE_DEMO.30.jpg" />
+    <image src="images/GTBIKE_DEMO.31.jpg" />
+    <image src="images/GTBIKE_DEMO.32.jpg" />
+    <image src="images/GTBIKE_DEMO.33.jpg">
+      <hotspot source="12x142thruaxle" offsetX="512" offsetY="450" />
+      <hotspot source="improvedrolling" offsetX="621" offsetY="376" />
+      <hotspot source="efficientpedaling" offsetX="633" offsetY="469" />
+    </image>
+    <image src="images/GTBIKE_DEMO.34.jpg">
+      <hotspot source="12x142thruaxle" offsetX="457" offsetY="457" />
+      <hotspot source="improvedrolling" offsetX="605" offsetY="380" />
+      <hotspot source="efficientpedaling" offsetX="618" offsetY="471" />
+    </image>
+    <image src="images/GTBIKE_DEMO.35.jpg">
+      <hotspot source="12x142thruaxle" offsetX="410" offsetY="465" />
+      <hotspot source="improvedrolling" offsetX="591" offsetY="382" />
+      <hotspot source="efficientpedaling" offsetX="604" offsetY="472" />
+    </image>
+    <image src="images/GTBIKE_DEMO.36.jpg">
+      <hotspot source="12x142thruaxle" offsetX="371" offsetY="470" />
+      <hotspot source="improvedrolling" offsetX="578" offsetY="385" />
+      <hotspot source="efficientpedaling" offsetX="590" offsetY="474" />
+    </image>
+    <image src="images/GTBIKE_DEMO.37.jpg">
+      <hotspot source="12x142thruaxle" offsetX="341" offsetY="474" />
+      <hotspot source="improvedrolling" offsetX="566" offsetY="386" />
+      <hotspot source="efficientpedaling" offsetX="580" offsetY="475" />
+    </image>
+    <image src="images/GTBIKE_DEMO.38.jpg">
+      <hotspot source="12x142thruaxle" offsetX="320" offsetY="474" />
+      <hotspot source="improvedrolling" offsetX="557" offsetY="387" />
+      <hotspot source="efficientpedaling" offsetX="569" offsetY="475" />
+    </image>
+    <image src="images/GTBIKE_DEMO.39.jpg">
+      <hotspot source="12x142thruaxle" offsetX="310" offsetY="472" />
+      <hotspot source="improvedrolling" offsetX="550" offsetY="388" />
+      <hotspot source="efficientpedaling" offsetX="559" offsetY="475" />
+    </image>
+    <image src="images/GTBIKE_DEMO.40.jpg">
+      <hotspot source="12x142thruaxle" offsetX="307" offsetY="470" />
+      <hotspot source="improvedrolling" offsetX="548" offsetY="386" />
+      <hotspot source="efficientpedaling" offsetX="556" offsetY="474" />
+    </image>
+    <image src="images/GTBIKE_DEMO.41.jpg">
+      <hotspot source="12x142thruaxle" offsetX="311" offsetY="469" />
+      <hotspot source="improvedrolling" offsetX="551" offsetY="385" />
+      <hotspot source="efficientpedaling" offsetX="559" offsetY="473" />
+    </image>
+    <image src="images/GTBIKE_DEMO.42.jpg">
+      <hotspot source="12x142thruaxle" offsetX="317" offsetY="464" />
+      <hotspot source="improvedrolling" offsetX="565" offsetY="380" />
+      <hotspot source="efficientpedaling" offsetX="574" offsetY="469" />
+    </image>
+    <image src="images/GTBIKE_DEMO.43.jpg">
+      <hotspot source="12x142thruaxle" offsetX="330" offsetY="458" />
+      <hotspot source="improvedrolling" offsetX="586" offsetY="369" />
+      <hotspot source="efficientpedaling" offsetX="596" offsetY="465" />
+    </image>
+    <image src="images/GTBIKE_DEMO.44.jpg">
+      <hotspot source="12x142thruaxle" offsetX="345" offsetY="449" />
+      <hotspot source="improvedrolling" offsetX="615" offsetY="356" />
+      <hotspot source="efficientpedaling" offsetX="624" offsetY="456" />
+    </image>
+    <image src="images/GTBIKE_DEMO.45.jpg">
+      <hotspot source="12x142thruaxle" offsetX="364" offsetY="439" />
+      <hotspot source="improvedrolling" offsetX="651" offsetY="341" />
+      <hotspot source="efficientpedaling" offsetX="660" offsetY="447" />
+    </image>
+    <image src="images/GTBIKE_DEMO.46.jpg">
+      <hotspot source="12x142thruaxle" offsetX="386" offsetY="428" />
+      <hotspot source="improvedrolling" offsetX="689" offsetY="325" />
+      <hotspot source="efficientpedaling" offsetX="699" offsetY="436" />
+    </image>
+    <image src="images/GTBIKE_DEMO.47.jpg">
+      <hotspot source="12x142thruaxle" offsetX="409" offsetY="415" />
+      <hotspot source="improvedrolling" offsetX="730" offsetY="306" />
+      <hotspot source="efficientpedaling" offsetX="739" offsetY="425" />
+    </image>
+    <image src="images/GTBIKE_DEMO.48.jpg">
+      <hotspot source="12x142thruaxle" offsetX="430" offsetY="405" />
+      <hotspot source="improvedrolling" offsetX="766" offsetY="290" />
+      <hotspot source="efficientpedaling" offsetX="776" offsetY="414" />
+    </image>
+    <image src="images/GTBIKE_DEMO.49.jpg">
+      <hotspot source="12x142thruaxle" offsetX="445" offsetY="396" />
+      <hotspot source="improvedrolling" offsetX="794" offsetY="277" />
+      <hotspot source="efficientpedaling" offsetX="805" offsetY="408" />
+    </image>
+    <image src="images/GTBIKE_DEMO.50.jpg">
+      <hotspot source="12x142thruaxle" offsetX="451" offsetY="393" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="815" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.51.jpg">
+      <hotspot source="12x142thruaxle" offsetX="450" offsetY="390" />
+      <hotspot source="improvedrolling" offsetX="805" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="815" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.52.jpg">
+      <hotspot source="12x142thruaxle" offsetX="448" offsetY="383" />
+      <hotspot source="improvedrolling" offsetX="803" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="814" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.53.jpg">
+      <hotspot source="12x142thruaxle" offsetX="445" offsetY="374" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="272" />
+      <hotspot source="efficientpedaling" offsetX="811" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.54.jpg">
+      <hotspot source="12x142thruaxle" offsetX="442" offsetY="362" />
+      <hotspot source="improvedrolling" offsetX="803" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="808" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.55.jpg">
+      <hotspot source="12x142thruaxle" offsetX="439" offsetY="349" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="805" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.56.jpg">
+      <hotspot source="12x142thruaxle" offsetX="437" offsetY="335" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="272" />
+      <hotspot source="efficientpedaling" offsetX="802" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.57.jpg">
+      <hotspot source="12x142thruaxle" offsetX="434" offsetY="321" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="274" />
+      <hotspot source="efficientpedaling" offsetX="799" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.58.jpg">
+      <hotspot source="12x142thruaxle" offsetX="433" offsetY="311" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="796" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.59.jpg">
+      <hotspot source="12x142thruaxle" offsetX="432" offsetY="304" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="795" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.60.jpg">
+      <hotspot source="12x142thruaxle" offsetX="432" offsetY="301" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="274" />
+      <hotspot source="efficientpedaling" offsetX="795" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.61.jpg">
+      <hotspot source="12x142thruaxle" offsetX="432" offsetY="305" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="795" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.62.jpg">
+      <hotspot source="12x142thruaxle" offsetX="432" offsetY="311" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="796" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.63.jpg">
+      <hotspot source="12x142thruaxle" offsetX="434" offsetY="322" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="274" />
+      <hotspot source="efficientpedaling" offsetX="799" offsetY="404" />
+    </image>
+    <image src="images/GTBIKE_DEMO.64.jpg">
+      <hotspot source="12x142thruaxle" offsetX="436" offsetY="336" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="803" offsetY="405" />
+    </image>
+    <image src="images/GTBIKE_DEMO.65.jpg">
+      <hotspot source="12x142thruaxle" offsetX="438" offsetY="349" />
+      <hotspot source="improvedrolling" offsetX="803" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="805" offsetY="405" />
+    </image>
+    <image src="images/GTBIKE_DEMO.66.jpg">
+      <hotspot source="12x142thruaxle" offsetX="443" offsetY="363" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="808" offsetY="405" />
+    </image>
+    <image src="images/GTBIKE_DEMO.67.jpg">
+      <hotspot source="12x142thruaxle" offsetX="445" offsetY="375" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="811" offsetY="405" />
+    </image>
+    <image src="images/GTBIKE_DEMO.68.jpg">
+      <hotspot source="12x142thruaxle" offsetX="448" offsetY="385" />
+      <hotspot source="improvedrolling" offsetX="804" offsetY="272" />
+      <hotspot source="efficientpedaling" offsetX="813" offsetY="405" />
+    </image>
+    <image src="images/GTBIKE_DEMO.69.jpg">
+      <hotspot source="12x142thruaxle" offsetX="450" offsetY="391" />
+      <hotspot source="improvedrolling" offsetX="803" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="815" offsetY="405" />
+    </image>
+    <image src="images/GTBIKE_DEMO.70.jpg">
+      <hotspot source="12x142thruaxle" offsetX="451" offsetY="394" />
+      <hotspot source="improvedrolling" offsetX="803" offsetY="273" />
+      <hotspot source="efficientpedaling" offsetX="815" offsetY="405" />
+    </image>
+    <image src="images/GTBIKE_DEMO.71.jpg">
+      <hotspot source="12x142thruaxle" offsetX="446" offsetY="397" />
+      <hotspot source="improvedrolling" offsetX="793" offsetY="277" />
+      <hotspot source="efficientpedaling" offsetX="804" offsetY="407" />
+    </image>
+    <image src="images/GTBIKE_DEMO.72.jpg">
+      <hotspot source="12x142thruaxle" offsetX="430" offsetY="404" />
+      <hotspot source="improvedrolling" offsetX="765" offsetY="289" />
+      <hotspot source="efficientpedaling" offsetX="777" offsetY="414" />
+    </image>
+    <image src="images/GTBIKE_DEMO.73.jpg">
+      <hotspot source="12x142thruaxle" offsetX="409" offsetY="416" />
+      <hotspot source="improvedrolling" offsetX="728" offsetY="306" />
+      <hotspot source="efficientpedaling" offsetX="740" offsetY="425" />
+    </image>
+    <image src="images/GTBIKE_DEMO.74.jpg">
+      <hotspot source="12x142thruaxle" offsetX="386" offsetY="427" />
+      <hotspot source="improvedrolling" offsetX="689" offsetY="324" />
+      <hotspot source="efficientpedaling" offsetX="699" offsetY="436" />
+    </image>
+    <image src="images/GTBIKE_DEMO.75.jpg">
+      <hotspot source="12x142thruaxle" offsetX="364" offsetY="438" />
+      <hotspot source="improvedrolling" offsetX="650" offsetY="341" />
+      <hotspot source="efficientpedaling" offsetX="660" offsetY="447" />
+    </image>
+    <image src="images/GTBIKE_DEMO.76.jpg">
+      <hotspot source="12x142thruaxle" offsetX="345" offsetY="450" />
+      <hotspot source="improvedrolling" offsetX="616" offsetY="357" />
+      <hotspot source="efficientpedaling" offsetX="625" offsetY="456" />
+    </image>
+    <image src="images/GTBIKE_DEMO.77.jpg">
+      <hotspot source="12x142thruaxle" offsetX="330" offsetY="459" />
+      <hotspot source="improvedrolling" offsetX="586" offsetY="369" />
+      <hotspot source="efficientpedaling" offsetX="595" offsetY="463" />
+    </image>
+    <image src="images/GTBIKE_DEMO.78.jpg">
+      <hotspot source="12x142thruaxle" offsetX="318" offsetY="464" />
+      <hotspot source="improvedrolling" offsetX="566" offsetY="378" />
+      <hotspot source="efficientpedaling" offsetX="573" offsetY="469" />
+    </image>
+    <image src="images/GTBIKE_DEMO.79.jpg">
+      <hotspot source="12x142thruaxle" offsetX="310" offsetY="469" />
+      <hotspot source="improvedrolling" offsetX="551" offsetY="384" />
+      <hotspot source="efficientpedaling" offsetX="560" offsetY="474" />
+    </image>
+    <image src="images/GTBIKE_DEMO.80.jpg">
+      <hotspot source="12x142thruaxle" offsetX="307" offsetY="470" />
+      <hotspot source="improvedrolling" offsetX="547" offsetY="387" />
+      <hotspot source="efficientpedaling" offsetX="555" offsetY="476" />
+    </image>
+  </images>
+</config>

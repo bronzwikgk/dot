@@ -1,0 +1,170 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<config>
+  <settings>
+    <preloader image="images/39.jpg" />
+    <userInterface showZoomButtons="true" showToolTips="true" showHotspotsButton="true" showFullScreenButton="true" showTogglePlayButton="false" showArrows="true" toolbarAlign="center" toolbarBackColor="#FFFFFF" toolbarHoverColor="#808285" toolbarForeColor="#A7A9AE" toolbarBackAlpha="0.59" toolbarAlpha="0.9" showProgressNumbers="true" showFullScreenToolbar="true" fullScreenBackColor="#FFFFFF" />
+    <control mouseWheelDrag="true" mouseWheelDragZoomOnly="true" dragSpeed="0.13" zoomSpeed="500" doubleClickZooms="true" disableMouseControl="false" showHighresOnFullScreen="true" mouseHoverDrag="false" hideHotspotsOnLoad="false" hideHotspotsOnZoom="true" rowSensitivity="15" dragSensitivity="10" inBrowserFullScreen="true" doubleClickFullscreen="false" />
+    <rotation firstImage="38" rotate="false" rotatePeriod="7" bounce="true" rotateDirection="-1" forceDirection="false" inertiaRelToDragSpeed="true" inertiaTimeToStop="700" inertiaMaxInterval="120" useInertia="false" flipHorizontalInput="false" flipVerticalInput="false" bounceRows="true" />
+  </settings>
+  <hotspots>
+    <hotspot id="expand" renderMode="0" effects="scaleUp" indicatorImage="pixel.png" activateOnClick="true" deactivateOnClick="false">
+      <spotinfo/>
+    </hotspot>
+    <hotspot id="overview" renderMode="0" wrap="false" effects="pulseRipple,2000,1" minIndicatorScale="80" indicatorImage="circ-cross-thick-blue.svg" margin="0,0,0,50" align="center,right" activateOnClick="true" deactivateOnClick="true">
+      <spotinfo>
+        <cdata><![CDATA[<h5>BENEFITS</h5>
+<ul>
+<li>Weather-resistant</li>
+<li>Durable resin construction</li>
+<li>Comes with two extra cushions</li>
+<li>Available in four colors</li>
+</ul><a href="http://www.webrotate360.com/Downloads/Resources/Readme.pdf" target="_blank">Download brochure</a>]]></cdata>
+      </spotinfo>
+    </hotspot>
+  </hotspots>
+  <images rows="1" highresWidth="1285" highresHeight="992">
+    <image src="images/1.jpg" label="label1">
+      <hotspot source="overview" offsetX="232" offsetY="313" />
+      <highres src="images/highres/1.jpg" />
+    </image>
+    <image src="images/2.jpg">
+      <hotspot source="overview" offsetX="232" offsetY="313" />
+      <highres src="images/highres/2.jpg" />
+    </image>
+    <image src="images/3.jpg">
+      <hotspot source="overview" offsetX="183" offsetY="314" />
+      <highres src="images/highres/3.jpg" />
+    </image>
+    <image src="images/4.jpg">
+      <hotspot source="overview" offsetX="136" offsetY="312" />
+      <highres src="images/highres/4.jpg" />
+    </image>
+    <image src="images/5.jpg">
+      <hotspot source="overview" offsetX="81" offsetY="307" />
+      <highres src="images/highres/5.jpg" />
+    </image>
+    <image src="images/6.jpg">
+      <hotspot source="overview" offsetX="40" offsetY="296" />
+      <highres src="images/highres/6.jpg" />
+    </image>
+    <image src="images/7.jpg">
+      <hotspot source="overview" offsetX="24" offsetY="281" />
+      <highres src="images/highres/7.jpg" />
+    </image>
+    <image src="images/8.jpg">
+      <hotspot source="overview" offsetX="64" offsetY="274" />
+      <highres src="images/highres/8.jpg" />
+    </image>
+    <image src="images/9.jpg">
+      <hotspot source="overview" offsetX="95" offsetY="270" />
+      <highres src="images/highres/9.jpg" />
+    </image>
+    <image src="images/10.jpg">
+      <hotspot source="overview" offsetX="135" offsetY="262" />
+      <highres src="images/highres/10.jpg" />
+    </image>
+    <image src="images/11.jpg">
+      <hotspot source="overview" offsetX="171" offsetY="255" />
+      <highres src="images/highres/11.jpg" />
+    </image>
+    <image src="images/12.jpg">
+      <hotspot source="overview" offsetX="204" offsetY="248" />
+      <highres src="images/highres/12.jpg" />
+    </image>
+    <image src="images/13.jpg">
+      <hotspot source="overview" offsetX="228" offsetY="242" />
+      <highres src="images/highres/13.jpg" />
+    </image>
+    <image src="images/14.jpg">
+      <hotspot source="overview" offsetX="245" offsetY="238" />
+      <highres src="images/highres/14.jpg" />
+    </image>
+    <image src="images/15.jpg">
+      <hotspot source="overview" offsetX="240" offsetY="236" />
+      <highres src="images/highres/15.jpg" />
+    </image>
+    <image src="images/16.jpg">
+      <hotspot source="overview" offsetX="240" offsetY="233" />
+      <highres src="images/highres/16.jpg" />
+    </image>
+    <image src="images/17.jpg">
+      <hotspot source="overview" offsetX="243" offsetY="229" />
+      <highres src="images/highres/17.jpg" />
+    </image>
+    <image src="images/18.jpg">
+      <hotspot source="overview" offsetX="256" offsetY="224" />
+      <highres src="images/highres/18.jpg" />
+    </image>
+    <image src="images/19.jpg">
+      <highres src="images/highres/19.jpg" />
+    </image>
+    <image src="images/20.jpg">
+      <highres src="images/highres/20.jpg" />
+    </image>
+    <image src="images/21.jpg">
+      <highres src="images/highres/21.jpg" />
+    </image>
+    <image src="images/22.jpg">
+      <highres src="images/highres/22.jpg" />
+    </image>
+    <image src="images/23.jpg">
+      <highres src="images/highres/23.jpg" />
+    </image>
+    <image src="images/24.jpg">
+      <highres src="images/highres/24.jpg" />
+    </image>
+    <image src="images/25.jpg">
+      <highres src="images/highres/25.jpg" />
+    </image>
+    <image src="images/26.jpg">
+      <highres src="images/highres/26.jpg" />
+    </image>
+    <image src="images/27.jpg">
+      <highres src="images/highres/27.jpg" />
+    </image>
+    <image src="images/28.jpg">
+      <highres src="images/highres/28.jpg" />
+    </image>
+    <image src="images/29.jpg">
+      <highres src="images/highres/29.jpg" />
+    </image>
+    <image src="images/30.jpg">
+      <highres src="images/highres/30.jpg" />
+    </image>
+    <image src="images/31.jpg">
+      <highres src="images/highres/31.jpg" />
+    </image>
+    <image src="images/32.jpg">
+      <hotspot source="expand" offsetX="504" offsetY="227" />
+      <highres src="images/highres/32.jpg" />
+    </image>
+    <image src="images/33.jpg">
+      <hotspot source="expand" offsetX="516" offsetY="233" />
+      <highres src="images/highres/33.jpg" />
+    </image>
+    <image src="images/34.jpg">
+      <hotspot source="expand" offsetX="520" offsetY="237" />
+      <highres src="images/highres/34.jpg" />
+    </image>
+    <image src="images/35.jpg">
+      <hotspot source="expand" offsetX="516" offsetY="243" />
+      <highres src="images/highres/35.jpg" />
+    </image>
+    <image src="images/36.jpg">
+      <hotspot source="expand" offsetX="501" offsetY="248" />
+      <highres src="images/highres/36.jpg" />
+    </image>
+    <image src="images/37.jpg">
+      <hotspot source="expand" offsetX="470" offsetY="253" />
+      <highres src="images/highres/37.jpg" />
+    </image>
+    <image src="images/38.jpg">
+      <hotspot source="expand" offsetX="445" offsetY="255" />
+      <highres src="images/highres/38.jpg" />
+    </image>
+    <image src="images/39.jpg">
+      <hotspot source="expand" offsetX="407" offsetY="256" />
+      <highres src="images/highres/39.jpg" />
+    </image>
+  </images>
+</config>

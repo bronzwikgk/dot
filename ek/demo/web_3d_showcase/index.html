@@ -1,0 +1,150 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3D Showcase</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #1b1f24;
+      --muted: #5a6572;
+      --border: #d8dde6;
+      --accent: #0f62fe;
+      --shadow: 0 8px 24px rgba(15, 24, 40, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: linear-gradient(180deg, #f9fbff 0%, var(--bg) 100%);
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      padding: 10px 20px;
+      border-bottom: 1px solid var(--border);
+      background: var(--panel);
+    }
+
+    .tab {
+      appearance: none;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      border-radius: 999px;
+      padding: 8px 14px;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .tab[aria-selected="true"] {
+      border-color: var(--accent);
+      background: #eef4ff;
+      color: #0b3fa5;
+      font-weight: 600;
+    }
+
+    main {
+      padding: 12px 20px 20px;
+      min-height: 0;
+    }
+
+    .viewer {
+      width: 100%;
+      min-height: 280px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: #fff;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #fff;
+    }
+
+    @media (max-width: 720px) {
+      .tabs { padding-inline: 12px; }
+      main { padding-inline: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="tabs" role="tablist" aria-label="3D demo tabs">
+    <button class="tab" role="tab" aria-selected="true" aria-controls="frame" data-src="./wr360-3d-bike-content/index.html">3D Bike</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="frame" data-src="./wr360-multirow-car/index.html">Multi-row Car</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="frame" data-src="./wr360-hemispherical-electronics/index.html">Hemispherical Electronics</button>
+    <button class="tab" role="tab" aria-selected="false" aria-controls="frame" data-src="./wr360-chair-content/index.html">Chair + Stool</button>
+  </nav>
+
+  <main>
+    <section class="viewer" aria-live="polite">
+      <iframe id="frame" title="3D showcase player" src="./wr360-3d-bike-content/index.html" loading="eager"></iframe>
+    </section>
+  </main>
+
+  <script>
+    const tabs = Array.from(document.querySelectorAll('.tab'));
+    const frame = document.getElementById('frame');
+    const viewer = document.querySelector('.viewer');
+    const MIN_HEIGHT = 280;
+
+    function activateTab(tab) {
+      tabs.forEach((btn) => btn.setAttribute('aria-selected', 'false'));
+      tab.setAttribute('aria-selected', 'true');
+      frame.src = tab.dataset.src;
+      setTimeout(resizeViewerToContent, 60);
+    }
+
+    function resizeViewerToContent() {
+      const maxHeight = Math.round(window.innerHeight * 0.6);
+      let contentHeight = maxHeight;
+      try {
+        const doc = frame.contentDocument;
+        if (doc && doc.body) {
+          contentHeight = Math.max(
+            doc.body.scrollHeight || 0,
+            doc.documentElement ? doc.documentElement.scrollHeight : 0
+          );
+        }
+      } catch (e) {
+        contentHeight = maxHeight;
+      }
+      const nextHeight = Math.max(MIN_HEIGHT, Math.min(maxHeight, contentHeight));
+      viewer.style.height = nextHeight + 'px';
+    }
+
+    frame.addEventListener('load', resizeViewerToContent);
+    window.addEventListener('resize', resizeViewerToContent);
+
+    tabs.forEach((tab) => {
+      tab.addEventListener('click', () => activateTab(tab));
+      tab.addEventListener('keydown', (e) => {
+        if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+        const current = tabs.indexOf(tab);
+        const next = e.key === 'ArrowRight'
+          ? tabs[(current + 1) % tabs.length]
+          : tabs[(current - 1 + tabs.length) % tabs.length];
+        next.focus();
+        activateTab(next);
+      });
+    });
+
+    resizeViewerToContent();
+  </script>
+</body>
+</html>

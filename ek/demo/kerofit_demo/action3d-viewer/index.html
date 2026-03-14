@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Action3D Viewer</title>
+    <script
+      type="module"
+      src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.2.0/model-viewer.min.js"
+    ></script>
+    <style>
+      :root {
+        color-scheme: light;
+      }
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+        background: linear-gradient(180deg, #f7f9fc 0%, #e8eef6 100%);
+        min-height: 100vh;
+        display: grid;
+        place-items: center;
+      }
+      .card {
+        width: min(1100px, 96vw);
+        height: min(85vh, 800px);
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 12px 30px rgba(20, 30, 50, 0.12);
+        overflow: hidden;
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+      .topbar {
+        padding: 12px 16px;
+        border-bottom: 1px solid #e6ebf2;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+      .model-picker {
+        min-width: 280px;
+        max-width: 60vw;
+        font: inherit;
+        padding: 6px 10px;
+        border: 1px solid #cbd5e1;
+        border-radius: 8px;
+        background: #fff;
+      }
+      .surface-controls {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .surface-controls button {
+        font: inherit;
+        font-size: 0.9rem;
+        padding: 6px 10px;
+        border: 1px solid #cbd5e1;
+        background: #fff;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      .surface-controls button.active {
+        border-color: #0284c7;
+        color: #0369a1;
+        box-shadow: 0 0 0 1px rgba(2, 132, 199, 0.15) inset;
+      }
+      .viewer-wrap {
+        position: relative;
+        width: 100%;
+        height: 100%;
+      }
+      model-viewer {
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(circle at 50% 45%, #f8fbff, #dce7f3 72%);
+      }
+      .hint-panel {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        width: min(340px, calc(100% - 28px));
+        background: rgba(255, 255, 255, 0.92);
+        border: 1px solid #dbe5f1;
+        border-radius: 12px;
+        padding: 10px 12px;
+        backdrop-filter: blur(6px);
+      }
+      .hint-panel h3 {
+        margin: 0 0 6px;
+        font-size: 0.95rem;
+      }
+      .hint-panel ul {
+        margin: 0;
+        padding-left: 18px;
+        display: grid;
+        gap: 4px;
+        color: #334155;
+        font-size: 0.86rem;
+      }
+      .hotspot-pin {
+        width: 22px;
+        height: 22px;
+        border-radius: 999px;
+        border: 2px solid #ffffff;
+        background: #0284c7;
+        color: #ffffff;
+        font-size: 0.78rem;
+        font-weight: 700;
+        line-height: 1;
+        display: grid;
+        place-items: center;
+        box-shadow: 0 6px 14px rgba(2, 132, 199, 0.35);
+        cursor: pointer;
+      }
+      .hotspot-pin:focus-visible {
+        outline: 2px solid #0ea5e9;
+        outline-offset: 2px;
+      }
+      .hotspot-note {
+        margin-top: 8px;
+        padding: 8px 10px;
+        border: 1px solid #dbe5f1;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.95);
+        font-size: 0.84rem;
+        color: #334155;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="topbar">
+        <span id="model-name">SheenChair.glb</span>
+        <label>
+          Model:
+          <select id="model-select" class="model-picker">
+            <option value="./models/SheenChair.glb">SheenChair.glb</option>
+            <option value="./models/02 Alira Range (1).glb">02 Alira Range (1).glb</option>
+            <option value="./models/Aquaclick Thermostat.glb">Aquaclick Thermostat.glb</option>
+            <option value="./models/Aquaclick Thermostat (1).glb">Aquaclick Thermostat (1).glb</option>
+          </select>
+        </label>
+        <div class="surface-controls" aria-label="Material Finish Presets">
+          <button type="button" id="finish-original" class="active">Original</button>
+          <button type="button" id="finish-metal">Brushed Metal</button>
+          <button type="button" id="finish-chrome">Chrome</button>
+        </div>
+      </div>
+      <div class="viewer-wrap">
+        <model-viewer
+          id="viewer"
+          src="./models/SheenChair.glb"
+          alt="SheenChair.glb model"
+          camera-controls
+          auto-rotate
+          shadow-intensity="1.2"
+          exposure="1.25"
+          tone-mapping="aces"
+          interaction-prompt="auto"
+          camera-orbit="30deg 75deg auto"
+          min-camera-orbit="auto 30deg auto"
+          max-camera-orbit="auto 95deg auto"
+          environment-image="https://modelviewer.dev/shared-assets/environments/aircraft_workshop_01_1k.hdr"
+          skybox-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.jpg"
+          ar
+        >
+          <button
+            id="hotspot-a"
+            class="hotspot-pin"
+            slot="hotspot-a"
+            data-normal="0 1 0"
+            aria-label="Hotspot 1"
+          >
+            1
+          </button>
+          <button
+            id="hotspot-b"
+            class="hotspot-pin"
+            slot="hotspot-b"
+            data-normal="0 1 0"
+            aria-label="Hotspot 2"
+          >
+            2
+          </button>
+          <button
+            id="hotspot-c"
+            class="hotspot-pin"
+            slot="hotspot-c"
+            data-normal="0 1 0"
+            aria-label="Hotspot 3"
+          >
+            3
+          </button>
+        </model-viewer>
+        <aside class="hint-panel" aria-label="Interaction Hints">
+          <h3>How to interact</h3>
+          <ul>
+            <li>Drag: rotate model</li>
+            <li>Scroll / pinch: zoom in or out</li>
+            <li>Right-drag / two-finger drag: move camera target</li>
+            <li>Tap preset buttons: apply metal finish lighting look</li>
+            <li>Change model from selector to compare results</li>
+          </ul>
+          <p id="hotspot-note" class="hotspot-note">
+            Click hotspot markers on the model to inspect key areas.
+          </p>
+        </aside>
+      </div>
+    </div>
+    <script>
+      const select = document.getElementById("model-select");
+      const name = document.getElementById("model-name");
+      const viewer = document.getElementById("viewer");
+      const btnOriginal = document.getElementById("finish-original");
+      const btnMetal = document.getElementById("finish-metal");
+      const btnChrome = document.getElementById("finish-chrome");
+      const hotspotA = document.getElementById("hotspot-a");
+      const hotspotB = document.getElementById("hotspot-b");
+      const hotspotC = document.getElementById("hotspot-c");
+      const hotspotNote = document.getElementById("hotspot-note");
+      const finishButtons = [btnOriginal, btnMetal, btnChrome];
+      let originalMaterialState = null;
+      const hotspotNotes = {
+        a: "Primary zone: overall form and proportion of the product.",
+        b: "Material zone: check reflections, roughness and finish quality.",
+        c: "Functional zone: inspect edge details and assembly transitions."
+      };
+
+      function setActive(button) {
+        finishButtons.forEach((b) => b.classList.remove("active"));
+        button.classList.add("active");
+      }
+
+      function snapshotOriginalMaterials() {
+        if (!viewer.model || originalMaterialState) return;
+        originalMaterialState = viewer.model.materials.map((m) => ({
+          pbrMetallicRoughness: {
+            metallicFactor: m.pbrMetallicRoughness.metallicFactor,
+            roughnessFactor: m.pbrMetallicRoughness.roughnessFactor
+          },
+          baseColorFactor: [...m.pbrMetallicRoughness.baseColorFactor]
+        }));
+      }
+
+      function applyFinish(kind) {
+        if (!viewer.model) return;
+        snapshotOriginalMaterials();
+
+        viewer.model.materials.forEach((material, index) => {
+          const pbr = material.pbrMetallicRoughness;
+          const base = pbr.baseColorFactor;
+
+          if (kind === "original" && originalMaterialState) {
+            const source = originalMaterialState[index];
+            if (source) {
+              pbr.setMetallicFactor(source.pbrMetallicRoughness.metallicFactor);
+              pbr.setRoughnessFactor(source.pbrMetallicRoughness.roughnessFactor);
+              pbr.setBaseColorFactor(source.baseColorFactor);
+            }
+            return;
+          }
+
+          if (kind === "metal") {
+            pbr.setMetallicFactor(0.85);
+            pbr.setRoughnessFactor(0.35);
+            pbr.setBaseColorFactor([0.86, 0.88, 0.9, base[3] ?? 1]);
+          }
+
+          if (kind === "chrome") {
+            pbr.setMetallicFactor(1.0);
+            pbr.setRoughnessFactor(0.08);
+            pbr.setBaseColorFactor([0.95, 0.96, 0.98, base[3] ?? 1]);
+          }
+        });
+      }
+
+      function setHotspotPositions() {
+        if (!viewer.model) return;
+        const dims = viewer.getDimensions();
+        const center = viewer.getBoundingBoxCenter();
+        const x = Number(center.x || 0);
+        const y = Number(center.y || 0);
+        const z = Number(center.z || 0);
+        const dx = Number(dims.x || 1);
+        const dy = Number(dims.y || 1);
+        const dz = Number(dims.z || 1);
+
+        hotspotA.dataset.position = `${x.toFixed(3)} ${(y + dy * 0.28).toFixed(3)} ${(z + dz * 0.45).toFixed(3)}`;
+        hotspotB.dataset.position = `${(x - dx * 0.32).toFixed(3)} ${(y + dy * 0.02).toFixed(3)} ${z.toFixed(3)}`;
+        hotspotC.dataset.position = `${(x + dx * 0.30).toFixed(3)} ${(y - dy * 0.22).toFixed(3)} ${(z - dz * 0.36).toFixed(3)}`;
+      }
+
+      function bindHotspotNotes() {
+        hotspotA.onclick = () => (hotspotNote.textContent = hotspotNotes.a);
+        hotspotB.onclick = () => (hotspotNote.textContent = hotspotNotes.b);
+        hotspotC.onclick = () => (hotspotNote.textContent = hotspotNotes.c);
+      }
+
+      viewer.addEventListener("load", () => {
+        originalMaterialState = null;
+        snapshotOriginalMaterials();
+        setHotspotPositions();
+      });
+
+      select.addEventListener("change", () => {
+        const src = select.value;
+        const label = select.options[select.selectedIndex].text;
+        viewer.src = src;
+        viewer.alt = label + " model";
+        name.textContent = label;
+        setActive(btnOriginal);
+        hotspotNote.textContent = "Click hotspot markers on the model to inspect key areas.";
+      });
+
+      btnOriginal.addEventListener("click", () => {
+        applyFinish("original");
+        setActive(btnOriginal);
+      });
+
+      btnMetal.addEventListener("click", () => {
+        applyFinish("metal");
+        setActive(btnMetal);
+      });
+
+      btnChrome.addEventListener("click", () => {
+        applyFinish("chrome");
+        setActive(btnChrome);
+      });
+
+      bindHotspotNotes();
+    </script>
+  </body>
+</html>

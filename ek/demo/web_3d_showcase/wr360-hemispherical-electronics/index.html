@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hemispherical Electronics Viewer</title>
+    <link
+      rel="stylesheet"
+      href="./assets/vendor/css/round-mesa.css"
+      type="text/css"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+
+      body { margin: 0; background: #fff; }
+      main { width: 100%; }
+
+      #wr360PlayerId {
+        width: 100%;
+        height: min(60vh, 72vw);
+        min-height: 260px;
+        background: #fff;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <section aria-label="Hemispherical 3D electronics viewer">
+        <div id="wr360PlayerId" class="wr360_player"></div>
+      </section>
+    </main>
+
+    <script src="./assets/vendor/js/jquery.min.js"></script>
+    <script src="./assets/vendor/js/jquery.easing.min.js"></script>
+    <script src="./assets/vendor/js/imagerotator-beta.js"></script>
+    <script>
+      jQuery(function () {
+        jQuery("#wr360PlayerId").rotator({
+          configFileURL: "./assets/mesa2-final/mesa2-final.xml",
+          rootPath: "./assets/mesa2-final/",
+          graphicsPath: "./assets/graphics/",
+          responsiveBaseWidth: 1200,
+          responsiveMinHeight: 260,
+          inBrowserFullScreen: false,
+          googleEventTracking: false,
+          licenseFileURL: "./assets/license2.txt"
+        });
+      });
+    </script>
+  </body>
+</html>
