@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Immersive Showroom | Client Proposal</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
     <style>
         /* --- CSS Variables & Theming --- */
@@ -21,6 +22,9 @@
             --accent: #2563eb;
             --accent-glow: rgba(37, 99, 235, 0.3);
             --border: #e4e4e7;
+            --demo-grad-1: #f2f7ff;
+            --demo-grad-2: #e5eefb;
+            --demo-grad-3: #d6e5f9;
             --hero-image: url('https://image.qwenlm.ai/public_source/098d05f0-dc4e-4936-9bc2-0bf2b6e3f5d1/1d72558fd-cf1b-4167-8826-56283d431c5b.png');
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
         }
@@ -34,6 +38,9 @@
             --accent: #fbbf24; /* Gold accent for dark mode */
             --accent-glow: rgba(251, 191, 36, 0.3);
             --border: #27272a;
+            --demo-grad-1: #0f172a;
+            --demo-grad-2: #111827;
+            --demo-grad-3: #1f2937;
             --hero-image: url('https://image.qwenlm.ai/public_source/098d05f0-dc4e-4936-9bc2-0bf2b6e3f5d1/1cad80999-845e-471d-813e-2c5084944f95.png');
             --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
         }
@@ -173,10 +180,10 @@
             width: 300px;
             background: var(--bg-sidebar);
             border-right: 1px solid var(--border);
-            padding: 1.5rem;
+            padding: 1rem;
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1rem;
             z-index: 5;
             transition: var(--transition);
         }
@@ -204,19 +211,19 @@
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 0.625rem;
         }
 
         .product-card {
             background: var(--bg-panel);
-            padding: 1rem;
+            padding: 0.75rem;
             border-radius: 8px;
             border: 1px solid var(--border);
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
         .product-card:hover, .product-card.selected {
@@ -225,8 +232,8 @@
         }
 
         .product-thumb {
-            width: 48px;
-            height: 48px;
+            width: 40px;
+            height: 40px;
             background: var(--border);
             border-radius: 4px;
         }
@@ -234,7 +241,10 @@
         #canvas-container {
             flex: 1;
             position: relative;
-            background: radial-gradient(circle at center, var(--bg-panel) 0%, var(--bg-body) 100%);
+            background:
+                radial-gradient(1200px 600px at 75% 18%, rgba(255, 255, 255, 0.6), transparent 60%),
+                radial-gradient(900px 500px at 18% 80%, rgba(37, 99, 235, 0.14), transparent 58%),
+                linear-gradient(145deg, var(--demo-grad-1) 0%, var(--demo-grad-2) 45%, var(--demo-grad-3) 100%);
             overflow: hidden;
         }
 
@@ -243,10 +253,10 @@
         /* --- UI Overlays in 3D --- */
         .ui-overlay {
             position: absolute;
-            top: 1rem;
-            right: 1rem;
+            top: 0.75rem;
+            right: 0.75rem;
             background: var(--bg-panel);
-            padding: 1rem;
+            padding: 0.75rem 0.9rem;
             border-radius: 8px;
             box-shadow: var(--shadow);
             border: 1px solid var(--border);
@@ -321,7 +331,7 @@
 <body>
 
     <header>
-        <h1>LUMINA SHOWROOM</h1>
+        <h1>KEROFIT SHOWROOM</h1>
         <nav>
             <button id="btn-proposal" class="active" onclick="switchTab('proposal')">Proposal</button>
             <button id="btn-demo" onclick="switchTab('demo')">Live Demo</button>
@@ -431,13 +441,13 @@
         };
 
         // --- THREE.JS SETUP ---
-        let scene, camera, renderer, currentMesh, hotspots = [], gltfLoader, activeLoadToken = 0;
+        let scene, camera, renderer, currentMesh, hotspots = [], gltfLoader, controls, activeLoadToken = 0;
         const container = document.getElementById('canvas-container');
 
         function init3D() {
             scene = new THREE.Scene();
             // Add some fog for depth
-            scene.fog = new THREE.FogExp2(0xf4f4f5, 0.05);
+            scene.fog = new THREE.FogExp2(0xf4f4f5, 0.028);
 
             camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
             camera.position.set(0, 0, 5);
@@ -445,15 +455,37 @@
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(container.clientWidth, container.clientHeight);
             renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.physicallyCorrectLights = true;
+            renderer.toneMapping = THREE.ACESFilmicToneMapping;
+            renderer.toneMappingExposure = 1.08;
             container.appendChild(renderer.domElement);
 
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.06;
+            controls.autoRotate = true;
+            controls.autoRotateSpeed = 0.2; // very slow rotation
+            controls.minDistance = 1.5;
+            controls.maxDistance = 10;
+
             // Lighting
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.42);
             scene.add(ambientLight);
 
-            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            dirLight.position.set(5, 5, 5);
-            scene.add(dirLight);
+            const hemiLight = new THREE.HemisphereLight(0xdbeafe, 0xcbd5e1, 0.7);
+            scene.add(hemiLight);
+
+            const keyLight = new THREE.DirectionalLight(0xffffff, 1.15);
+            keyLight.position.set(4, 5, 6);
+            scene.add(keyLight);
+
+            const rimLight = new THREE.DirectionalLight(0x93c5fd, 0.65);
+            rimLight.position.set(-5, 2, -4);
+            scene.add(rimLight);
+
+            const fillLight = new THREE.PointLight(0xfef3c7, 0.55, 30);
+            fillLight.position.set(0, 3, 3);
+            scene.add(fillLight);
 
             gltfLoader = new THREE.GLTFLoader();
 
@@ -520,6 +552,47 @@
             addHotspots();
         }
 
+        function createHotspotNumberSprite(index, colorHex) {
+            const size = 128;
+            const canvas = document.createElement('canvas');
+            canvas.width = size;
+            canvas.height = size;
+            const ctx = canvas.getContext('2d');
+            if (!ctx) return null;
+
+            const color = `#${colorHex.toString(16).padStart(6, '0')}`;
+            const stroke = state.theme === 'light' ? '#ffffff' : '#111827';
+            const textColor = state.theme === 'light' ? '#ffffff' : '#111827';
+
+            ctx.clearRect(0, 0, size, size);
+            ctx.fillStyle = color;
+            ctx.beginPath();
+            ctx.arc(size / 2, size / 2, 42, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.lineWidth = 8;
+            ctx.strokeStyle = stroke;
+            ctx.stroke();
+
+            ctx.fillStyle = textColor;
+            ctx.font = 'bold 56px Inter, Arial, sans-serif';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(String(index), size / 2, size / 2 + 1);
+
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            const material = new THREE.SpriteMaterial({
+                map: texture,
+                transparent: true,
+                depthWrite: false
+            });
+            const sprite = new THREE.Sprite(material);
+            sprite.scale.set(0.22, 0.22, 1);
+            sprite.position.set(0, 0, 0.11);
+            return sprite;
+        }
+
         function addHotspots() {
             const positions = [
                 { x: 1, y: 0.5, z: 0.5 },
@@ -527,14 +600,41 @@
                 { x: 0, y: 1, z: -0.8 }
             ];
 
-            positions.forEach(pos => {
-                const spotGeo = new THREE.SphereGeometry(0.1, 16, 16);
-                const spotMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            positions.forEach((pos, idx) => {
+                const hotspotColor = state.theme === 'light' ? 0x1d4ed8 : 0xfbbf24;
+                const spotGeo = new THREE.SphereGeometry(0.075, 22, 22);
+                const spotMat = new THREE.MeshStandardMaterial({
+                    color: hotspotColor,
+                    emissive: hotspotColor,
+                    emissiveIntensity: 0.85,
+                    roughness: 0.25,
+                    metalness: 0.15
+                });
                 const spot = new THREE.Mesh(spotGeo, spotMat);
                 spot.position.set(pos.x, pos.y, pos.z);
+
+                const haloGeo = new THREE.SphereGeometry(0.16, 18, 18);
+                const haloMat = new THREE.MeshBasicMaterial({
+                    color: hotspotColor,
+                    transparent: true,
+                    opacity: 0.22,
+                    depthWrite: false
+                });
+                const halo = new THREE.Mesh(haloGeo, haloMat);
+                spot.add(halo);
+
+                const badge = createHotspotNumberSprite(idx + 1, hotspotColor);
+                if (badge) spot.add(badge);
                 
                 // Add pulsing animation data
-                spot.userData = { isHotspot: true, originalY: pos.y, speed: 0.05 };
+                spot.userData = {
+                    isHotspot: true,
+                    originalY: pos.y,
+                    speed: 0.05,
+                    halo,
+                    badge,
+                    phase: Math.random() * Math.PI * 2
+                };
                 
                 scene.add(spot);
                 hotspots.push(spot);
@@ -544,18 +644,19 @@
         function animate() {
             requestAnimationFrame(animate);
 
-            if(currentMesh) {
-                currentMesh.rotation.x += 0.005;
-                currentMesh.rotation.y += 0.01;
-            }
-
             // Animate Hotspots
             const time = Date.now() * 0.002;
             hotspots.forEach(spot => {
-                spot.position.y = spot.userData.originalY + Math.sin(time) * 0.1;
-                spot.scale.setScalar(1 + Math.sin(time * 2) * 0.2);
+                const phaseTime = time + spot.userData.phase;
+                spot.position.y = spot.userData.originalY + Math.sin(phaseTime) * 0.08;
+                spot.scale.setScalar(1 + Math.sin(phaseTime * 2) * 0.14);
+                if (spot.userData.halo) {
+                    const haloScale = 1.08 + Math.sin(phaseTime * 2.1) * 0.2;
+                    spot.userData.halo.scale.setScalar(haloScale);
+                }
             });
 
+            if (controls) controls.update();
             renderer.render(scene, camera);
         }
 
@@ -613,6 +714,28 @@
             if(scene) {
                 const color = state.theme === 'light' ? 0xf4f4f5 : 0x09090b;
                 scene.fog.color.setHex(color);
+                hotspots.forEach((spot) => {
+                    const hotspotColor = state.theme === 'light' ? 0x1d4ed8 : 0xfbbf24;
+                    if (spot.material && spot.material.color) {
+                        spot.material.color.setHex(hotspotColor);
+                    }
+                    if (spot.material && spot.material.emissive) {
+                        spot.material.emissive.setHex(hotspotColor);
+                    }
+                    if (spot.userData.halo && spot.userData.halo.material && spot.userData.halo.material.color) {
+                        spot.userData.halo.material.color.setHex(hotspotColor);
+                    }
+                    if (spot.userData.badge) {
+                        const parent = spot.userData.badge.parent;
+                        if (parent) parent.remove(spot.userData.badge);
+                        const idx = hotspots.indexOf(spot);
+                        const newBadge = createHotspotNumberSprite(idx + 1, hotspotColor);
+                        if (newBadge) {
+                            spot.add(newBadge);
+                            spot.userData.badge = newBadge;
+                        }
+                    }
+                });
                 // Update material colors to match theme contrast if needed
             }
         }
