@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersive Showroom | Client Proposal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <style>
+        /* --- CSS Variables & Theming --- */
+        :root {
+            --font-main: 'Inter', system-ui, -apple-system, sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            
+            /* Light Theme Defaults */
+            --bg-body: #f4f4f5;
+            --bg-panel: #ffffff;
+            --bg-sidebar: #f9f9fa;
+            --text-primary: #18181b;
+            --text-secondary: #52525b;
+            --accent: #2563eb;
+            --accent-glow: rgba(37, 99, 235, 0.3);
+            --border: #e4e4e7;
+            --hero-image: url('https://image.qwenlm.ai/public_source/098d05f0-dc4e-4936-9bc2-0bf2b6e3f5d1/1d72558fd-cf1b-4167-8826-56283d431c5b.png');
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #09090b;
+            --bg-panel: #18181b;
+            --bg-sidebar: #0c0c0e;
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --accent: #fbbf24; /* Gold accent for dark mode */
+            --accent-glow: rgba(251, 191, 36, 0.3);
+            --border: #27272a;
+            --hero-image: url('https://image.qwenlm.ai/public_source/098d05f0-dc4e-4936-9bc2-0bf2b6e3f5d1/1cad80999-845e-471d-813e-2c5084944f95.png');
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Reset & Base --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
+            color: var(--text-primary);
+            transition: var(--transition);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- Layout --- */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: var(--bg-panel);
+            border-bottom: none;
+            z-index: 10;
+        }
+
+        h1 { font-size: 1.25rem; font-weight: 700; letter-spacing: -0.025em; }
+        
+        nav { display: flex; gap: 1rem; }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        button:hover, button.active {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: var(--accent-glow);
+        }
+
+        main {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* --- Views --- */
+        .view-section {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+            display: flex;
+        }
+
+        .view-section.active {
+            opacity: 1;
+            pointer-events: all;
+            z-index: 1;
+        }
+
+        /* --- Proposal View --- */
+        #proposal-view {
+            flex-direction: column;
+            overflow-y: auto;
+            background: var(--bg-body);
+        }
+
+        .hero-banner {
+            width: 100%;
+            height: 40vh;
+            background-image: var(--hero-image);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-overlay {
+            background: rgba(0,0,0,0.4);
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            color: white;
+            backdrop-filter: blur(4px);
+        }
+
+        .content-container {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        article { margin-bottom: 3rem; }
+        h2 { font-size: 2rem; margin-bottom: 1rem; color: var(--accent); }
+        p { line-height: 1.6; color: var(--text-secondary); margin-bottom: 1rem; font-size: 1.1rem; }
+
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .roadmap-item {
+            background: var(--bg-panel);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+
+        .roadmap-item h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .roadmap-item span { font-size: 0.875rem; color: var(--accent); font-weight: 600; }
+
+        /* --- Demo View (3D App) --- */
+        #demo-view {
+            display: flex;
+            background: var(--bg-body);
+        }
+
+        aside {
+            width: 300px;
+            background: var(--bg-sidebar);
+            border-right: 1px solid var(--border);
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            z-index: 5;
+            transition: var(--transition);
+        }
+
+        .filter-group label {
+            display: block;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: var(--bg-panel);
+            color: var(--text-primary);
+            font-family: inherit;
+        }
+
+        .product-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .product-card {
+            background: var(--bg-panel);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .product-card:hover, .product-card.selected {
+            border-color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        .product-thumb {
+            width: 48px;
+            height: 48px;
+            background: var(--border);
+            border-radius: 4px;
+        }
+
+        #canvas-container {
+            flex: 1;
+            position: relative;
+            background: radial-gradient(circle at center, var(--bg-panel) 0%, var(--bg-body) 100%);
+            overflow: hidden;
+        }
+
+        canvas { display: block; outline: none; }
+
+        /* --- UI Overlays in 3D --- */
+        .ui-overlay {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--bg-panel);
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 10;
+        }
+
+        .basket-count {
+            background: var(--accent);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        /* --- Modal/Dialog --- */
+        dialog {
+            margin: auto;
+            background: var(--bg-panel);
+            color: var(--text-primary);
+            padding: 2rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(2px);
+        }
+
+        .modal-header { display: flex; justify-content: space-between; margin-bottom: 1rem; }
+        .modal-video {
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .modal-actions { display: flex; gap: 1rem; justify-content: flex-end; }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white; /* Always white text on accent */
+            border: none;
+        }
+        [data-theme="light"] .btn-primary { color: white; }
+        [data-theme="dark"] .btn-primary { color: #000; } /* Black text on gold accent */
+
+        /* --- Responsive --- */
+        @media (max-width: 768px) {
+            aside { position: absolute; left: -300px; height: 100%; transition: left 0.3s; }
+            aside.open { left: 0; }
+            .mobile-toggle { display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>LUMINA SHOWROOM</h1>
+        <nav>
+            <button id="btn-proposal" class="active" onclick="switchTab('proposal')">Proposal</button>
+            <button id="btn-demo" onclick="switchTab('demo')">Live Demo</button>
+            <button id="btn-theme" onclick="toggleTheme()">🌙</button>
+        </nav>
+    </header>
+
+    <main>
+        <!-- PROPOSAL SECTION -->
+        <section id="proposal-view" class="view-section active">
+            <figure class="hero-banner">
+                <figcaption class="hero-overlay">
+                    <h2>The Future of Retail</h2>
+                    <p>Interactive. Immersive. Instant.</p>
+                </figcaption>
+            </figure>
+            
+            <article class="content-container">
+                <h2>Why 3D?</h2>
+                <p>Static images are a thing of the past. Our proposed solution transforms your catalog into an interactive experience where customers can explore every angle, understand every feature, and connect emotionally with your products before they even click "buy".</p>
+                
+                <h2>Key Features</h2>
+                <div class="roadmap-grid">
+                    <section class="roadmap-item">
+                        <span>Phase 1</span>
+                        <h3>Interactive Hotspots</h3>
+                        <p>Click to reveal specs, videos, and pricing directly on the 3D model.</p>
+                    </section>
+                    <section class="roadmap-item">
+                        <span>Phase 2</span>
+                        <h3>Smart Baskets</h3>
+                        <p>Allow users to create multiple project lists and compare configurations.</p>
+                    </section>
+                    <section class="roadmap-item">
+                        <span>Phase 3</span>
+                        <h3>Video Integration</h3>
+                        <p>Seamless playback of product demos within the 3D environment.</p>
+                    </section>
+                </div>
+            </article>
+        </section>
+
+        <!-- DEMO SECTION -->
+        <section id="demo-view" class="view-section">
+            <aside>
+                <section class="filter-group">
+                    <label for="search">Search Products</label>
+                    <input type="text" id="search" placeholder="e.g. Sheen Chair..." onkeyup="filterProducts()">
+                </section>
+                
+                <section class="filter-group">
+                    <label for="category">Category</label>
+                    <select id="category" onchange="filterProducts()">
+                        <option value="all">All Collections</option>
+                        <option value="seating">Seating</option>
+                        <option value="faucets">Faucets</option>
+                        <option value="showers">Showers</option>
+                        <option value="controls">Smart Controls</option>
+                    </select>
+                </section>
+
+                <nav class="product-list" id="product-list">
+                    <!-- Populated by JS -->
+                </nav>
+            </aside>
+
+            <article id="canvas-container">
+                <section class="ui-overlay">
+                    <span>Project Basket</span>
+                    <div class="basket-count" id="basket-count">0</div>
+                </section>
+            </article>
+        </section>
+    </main>
+
+    <!-- PRODUCT MODAL -->
+    <dialog id="product-modal">
+        <article>
+            <header class="modal-header">
+                <h3 id="modal-title">Product Name</h3>
+                <button onclick="closeModal()" style="border:none; font-size:1.5rem;">&times;</button>
+            </header>
+            <div class="modal-video">
+                <p>▶ Brand Video Placeholder</p>
+            </div>
+            <p id="modal-desc">Detailed specifications and features go here.</p>
+            <footer class="modal-actions">
+                <button onclick="closeModal()">Close</button>
+                <button class="btn-primary" onclick="addToBasket()">Add to Basket</button>
+            </footer>
+        </article>
+    </dialog>
+
+    <script>
+        // --- STATE MANAGEMENT ---
+        const state = {
+            theme: 'light',
+            currentTab: 'proposal',
+            basketCount: 0,
+            products: [
+                { id: 1, name: "Sheen Chair", category: "seating", color: 0x2563eb, model: "./action3d-viewer/assets/models/sheen-chair.glb" },
+                { id: 2, name: "Alira Range 02", category: "showers", color: 0xf59e0b, model: "./action3d-viewer/assets/models/alira-range-02.glb" },
+                { id: 3, name: "Aquaclick Thermostat", category: "controls", color: 0x14b8a6, model: "./action3d-viewer/assets/models/aquaclick-thermostat.glb" },
+                { id: 4, name: "KeroFit Neo Basin Faucet", category: "faucets", color: 0x64748b, model: "./action3d-viewer/assets/models/aquaclick-thermostat-duplicate.glb" },
+                { id: 5, name: "KeroFit Arc Wall Shower", category: "showers", color: 0x0891b2, model: "./action3d-viewer/assets/models/alira-range-02.glb" }
+            ]
+        };
+
+        // --- THREE.JS SETUP ---
+        let scene, camera, renderer, currentMesh, hotspots = [], gltfLoader, activeLoadToken = 0;
+        const container = document.getElementById('canvas-container');
+
+        function init3D() {
+            scene = new THREE.Scene();
+            // Add some fog for depth
+            scene.fog = new THREE.FogExp2(0xf4f4f5, 0.05);
+
+            camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(0, 0, 5);
+
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+
+            // Lighting
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            dirLight.position.set(5, 5, 5);
+            scene.add(dirLight);
+
+            gltfLoader = new THREE.GLTFLoader();
+
+            loadProduct(state.products[0]);
+
+            // Animation Loop
+            animate();
+        }
+
+        function loadProduct(product) {
+            activeLoadToken++;
+            const loadToken = activeLoadToken;
+
+            // Clear existing
+            if(currentMesh) scene.remove(currentMesh);
+            hotspots.forEach(h => scene.remove(h));
+            hotspots = [];
+
+            if (product.model) {
+                gltfLoader.load(
+                    product.model,
+                    (gltf) => {
+                        if (loadToken !== activeLoadToken) return;
+                        currentMesh = gltf.scene;
+                        currentMesh.traverse((child) => {
+                            if (child.isMesh) {
+                                child.castShadow = true;
+                                child.receiveShadow = true;
+                            }
+                        });
+
+                        const box = new THREE.Box3().setFromObject(currentMesh);
+                        const center = box.getCenter(new THREE.Vector3());
+                        const size = box.getSize(new THREE.Vector3());
+                        currentMesh.position.sub(center);
+                        const maxDim = Math.max(size.x, size.y, size.z) || 1;
+                        const scale = 2 / maxDim;
+                        currentMesh.scale.setScalar(scale);
+
+                        scene.add(currentMesh);
+                        addHotspots();
+                    },
+                    undefined,
+                    () => {
+                        if (loadToken !== activeLoadToken) return;
+                        loadFallbackProduct(product);
+                    }
+                );
+                return;
+            }
+
+            loadFallbackProduct(product);
+        }
+
+        function loadFallbackProduct(product) {
+            const geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 16);
+            const material = new THREE.MeshStandardMaterial({ 
+                color: product.color, 
+                roughness: 0.3, 
+                metalness: 0.7 
+            });
+            currentMesh = new THREE.Mesh(geometry, material);
+            scene.add(currentMesh);
+            addHotspots();
+        }
+
+        function addHotspots() {
+            const positions = [
+                { x: 1, y: 0.5, z: 0.5 },
+                { x: -1, y: -0.5, z: 0.2 },
+                { x: 0, y: 1, z: -0.8 }
+            ];
+
+            positions.forEach(pos => {
+                const spotGeo = new THREE.SphereGeometry(0.1, 16, 16);
+                const spotMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+                const spot = new THREE.Mesh(spotGeo, spotMat);
+                spot.position.set(pos.x, pos.y, pos.z);
+                
+                // Add pulsing animation data
+                spot.userData = { isHotspot: true, originalY: pos.y, speed: 0.05 };
+                
+                scene.add(spot);
+                hotspots.push(spot);
+            });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            if(currentMesh) {
+                currentMesh.rotation.x += 0.005;
+                currentMesh.rotation.y += 0.01;
+            }
+
+            // Animate Hotspots
+            const time = Date.now() * 0.002;
+            hotspots.forEach(spot => {
+                spot.position.y = spot.userData.originalY + Math.sin(time) * 0.1;
+                spot.scale.setScalar(1 + Math.sin(time * 2) * 0.2);
+            });
+
+            renderer.render(scene, camera);
+        }
+
+        // Raycasting for Interaction
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+
+        function onMouseClick(event) {
+            if(state.currentTab !== 'demo') return;
+
+            const rect = renderer.domElement.getBoundingClientRect();
+            mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(hotspots);
+
+            if(intersects.length > 0) {
+                openModal();
+            }
+        }
+
+        container.addEventListener('click', onMouseClick);
+
+        // --- UI LOGIC ---
+
+        function switchTab(tab) {
+            state.currentTab = tab;
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById(`${tab}-view`).classList.add('active');
+            
+            document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
+            document.getElementById(`btn-${tab}`).classList.add('active');
+
+            if(tab === 'demo' && !renderer) {
+                init3D();
+                renderProductList();
+                // Handle resize for canvas
+                window.addEventListener('resize', () => {
+                    if(renderer) {
+                        camera.aspect = container.clientWidth / container.clientHeight;
+                        camera.updateProjectionMatrix();
+                        renderer.setSize(container.clientWidth, container.clientHeight);
+                    }
+                });
+            }
+        }
+
+        function toggleTheme() {
+            state.theme = state.theme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', state.theme);
+            document.getElementById('btn-theme').textContent = state.theme === 'light' ? '🌙' : '☀️';
+            
+            // Update Three.js background/fog if needed
+            if(scene) {
+                const color = state.theme === 'light' ? 0xf4f4f5 : 0x09090b;
+                scene.fog.color.setHex(color);
+                // Update material colors to match theme contrast if needed
+            }
+        }
+
+        function renderProductList() {
+            const list = document.getElementById('product-list');
+            list.innerHTML = '';
+            const query = document.getElementById('search').value.toLowerCase().trim();
+            const selectedCategory = document.getElementById('category').value;
+            const filteredProducts = state.products.filter(p => {
+                const matchesSearch = p.name.toLowerCase().includes(query);
+                const matchesCategory = selectedCategory === 'all' || p.category === selectedCategory;
+                return matchesSearch && matchesCategory;
+            });
+
+            if (filteredProducts.length === 0) {
+                const empty = document.createElement('p');
+                empty.style.fontSize = '0.85rem';
+                empty.style.color = 'var(--text-secondary)';
+                empty.textContent = 'No KeroFit products match this filter.';
+                list.appendChild(empty);
+                return;
+            }
+
+            filteredProducts.forEach(p => {
+                const card = document.createElement('article');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="product-thumb" style="background: #${p.color.toString(16)}"></div>
+                    <div>
+                        <h4 style="font-size: 0.9rem">${p.name}</h4>
+                        <span style="font-size: 0.75rem; color: var(--text-secondary)">${p.category}</span>
+                    </div>
+                `;
+                card.onclick = () => loadProduct(p);
+                list.appendChild(card);
+            });
+        }
+
+        function filterProducts() {
+            renderProductList();
+        }
+
+        // Modal Logic
+        const modal = document.getElementById('product-modal');
+        
+        function openModal() {
+            modal.showModal();
+        }
+
+        function closeModal() {
+            modal.close();
+        }
+
+        function addToBasket() {
+            state.basketCount++;
+            document.getElementById('basket-count').textContent = state.basketCount;
+            closeModal();
+            
+            // Simple visual feedback
+            const btn = document.querySelector('.basket-count');
+            btn.style.transform = 'scale(1.5)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 200);
+        }
+
+        // Initialize
+        // Wait for DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pre-load logic if needed
+        });
+
+    </script>
+</body>
+</html>
