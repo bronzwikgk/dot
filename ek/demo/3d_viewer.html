@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3D Viewer</title>
+  <style>
+    :root {
+      color-scheme: light;
+    }
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: #f3f6fb;
+      color: #1b2430;
+    }
+    #ui {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      z-index: 20;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 10px;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #d8dfec;
+      border-radius: 10px;
+      box-shadow: 0 8px 25px rgba(25, 45, 80, 0.12);
+    }
+    select, .btn {
+      border-radius: 8px;
+      border: 1px solid #cfd7e6;
+      background: #ffffff;
+      color: #1b2430;
+      padding: 8px 10px;
+      font-size: 14px;
+    }
+    .btn {
+      background: #0f6fff;
+      border-color: #0f6fff;
+      color: #ffffff;
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+      display: inline-block;
+    }
+    #modelFileInput {
+      position: absolute;
+      left: -9999px;
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+      pointer-events: none;
+    }
+    #status {
+      position: fixed;
+      right: 12px;
+      top: 14px;
+      z-index: 20;
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid #d8dfec;
+      border-radius: 8px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #2a3b58;
+      max-width: 55vw;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    #renderCanvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+  <div id="ui">
+    <select id="engineSelect" aria-label="Engine">
+      <option value="three">Three.js</option>
+      <option value="babylon">Babylon.js</option>
+    </select>
+    <label id="loadFileBtn" class="btn" for="modelFileInput">Load Model</label>
+    <input id="modelFileInput" type="file" accept=".glb,.gltf,.obj,.fbx,.stl,.babylon,.ply,.3ds,.dae" />
+  </div>
+
+  <div id="status">Choose engine, then click Load Model</div>
+  <canvas id="renderCanvas"></canvas>
+
+  <script src="https://cdn.jsdelivr.net/npm/babylonjs@7.20.2/babylon.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/babylonjs-loaders@7.20.2/babylonjs.loaders.min.js"></script>
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.164.1/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.164.1/examples/jsm/"
+      }
+    }
+  </script>
+  <script type="module">
+    import * as THREE from "three";
+    import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+    import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+    import { OBJLoader } from "three/addons/loaders/OBJLoader.js";
+    import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
+    import { STLLoader } from "three/addons/loaders/STLLoader.js";
+
+    const BABYLON = window.BABYLON;
+    const canvas = document.getElementById("renderCanvas");
+    const engineSelect = document.getElementById("engineSelect");
+    const loadFileBtn = document.getElementById("loadFileBtn");
+    const modelFileInput = document.getElementById("modelFileInput");
+    const statusEl = document.getElementById("status");
+
+    let threeState = null;
+    let babylonState = null;
+    let activeEngine = null;
+
+    function setStatus(text, isError = false) {
+      statusEl.textContent = text;
+      statusEl.style.color = isError ? "#b42318" : "#2a3b58";
+    }
+
+    function clearCurrentEngine() {
+      if (activeEngine === "three" && threeState) {
+        window.removeEventListener("resize", threeState.onResize);
+        threeState.controls.dispose();
+        threeState.renderer.dispose();
+        threeState = null;
+      }
+      if (activeEngine === "babylon" && babylonState) {
+        window.removeEventListener("resize", babylonState.onResize);
+        babylonState.engine.stopRenderLoop();
+        babylonState.scene.dispose();
+        babylonState.engine.dispose();
+        babylonState = null;
+      }
+      activeEngine = null;
+    }
+
+    function fitThreeCameraToObject(camera, controls, object) {
+      const box = new THREE.Box3().setFromObject(object);
+      const center = box.getCenter(new THREE.Vector3());
+      const size = box.getSize(new THREE.Vector3());
+      const radius = Math.max(size.x, size.y, size.z) * 0.6 || 1;
+
+      controls.target.copy(center);
+      camera.near = Math.max(radius / 100, 0.01);
+      camera.far = Math.max(radius * 100, 2000);
+      camera.position.copy(center).add(new THREE.Vector3(radius * 1.7, radius * 1.2, radius * 1.9));
+      camera.updateProjectionMatrix();
+      controls.update();
+    }
+
+    async function loadWithThree(file) {
+      clearCurrentEngine();
+      setStatus(`Loading ${file.name} with Three.js...`);
+
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xf3f6fb);
+
+      const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.01, 5000);
+      camera.position.set(2.5, 2.0, 3.5);
+
+      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.enableDamping = true;
+
+      const hemi = new THREE.HemisphereLight(0xffffff, 0x9aa7c2, 1.1);
+      const dir = new THREE.DirectionalLight(0xffffff, 0.9);
+      dir.position.set(6, 10, 6);
+      scene.add(hemi, dir);
+
+      scene.add(new THREE.GridHelper(12, 24, 0xa7b6d5, 0xd8dfec));
+
+      const ext = file.name.toLowerCase().split(".").pop();
+      const objectUrl = URL.createObjectURL(file);
+
+      let modelRoot;
+      try {
+        if (ext === "glb" || ext === "gltf") {
+          const loader = new GLTFLoader();
+          const gltf = await loader.loadAsync(objectUrl);
+          modelRoot = gltf.scene;
+        } else if (ext === "obj") {
+          const loader = new OBJLoader();
+          modelRoot = await loader.loadAsync(objectUrl);
+        } else if (ext === "fbx") {
+          const loader = new FBXLoader();
+          modelRoot = await loader.loadAsync(objectUrl);
+        } else if (ext === "stl") {
+          const loader = new STLLoader();
+          const geometry = await loader.loadAsync(objectUrl);
+          const material = new THREE.MeshStandardMaterial({ color: 0x95a8cd, metalness: 0.15, roughness: 0.55 });
+          modelRoot = new THREE.Mesh(geometry, material);
+        } else {
+          throw new Error(`Three.js loader not configured for .${ext}`);
+        }
+      } finally {
+        URL.revokeObjectURL(objectUrl);
+      }
+
+      scene.add(modelRoot);
+      fitThreeCameraToObject(camera, controls, modelRoot);
+
+      const onResize = () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      };
+      window.addEventListener("resize", onResize);
+
+      const animate = () => {
+        if (activeEngine !== "three") return;
+        controls.update();
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+      };
+
+      threeState = { renderer, controls, onResize };
+      activeEngine = "three";
+      animate();
+      setStatus(`Loaded ${file.name} in Three.js`);
+    }
+
+    async function loadWithBabylon(file) {
+      clearCurrentEngine();
+      setStatus(`Loading ${file.name} with Babylon.js...`);
+
+      const engine = new BABYLON.Engine(canvas, true, { preserveDrawingBuffer: true, stencil: true });
+      const scene = new BABYLON.Scene(engine);
+      scene.clearColor = new BABYLON.Color4(0.95, 0.97, 0.99, 1);
+
+      const camera = new BABYLON.ArcRotateCamera("cam", -Math.PI / 2, Math.PI / 2.5, 10, BABYLON.Vector3.Zero(), scene);
+      camera.attachControl(canvas, true);
+      camera.wheelDeltaPercentage = 0.01;
+
+      const hemi = new BABYLON.HemisphericLight("hemi", new BABYLON.Vector3(0, 1, 0), scene);
+      hemi.intensity = 1.0;
+      const dir = new BABYLON.DirectionalLight("dir", new BABYLON.Vector3(-0.5, -1, -0.5), scene);
+      dir.intensity = 0.7;
+
+      const ground = BABYLON.MeshBuilder.CreateGround("ground", { width: 20, height: 20 }, scene);
+      const groundMat = new BABYLON.StandardMaterial("groundMat", scene);
+      groundMat.diffuseColor = new BABYLON.Color3(0.89, 0.92, 0.97);
+      groundMat.specularColor = BABYLON.Color3.Black();
+      ground.material = groundMat;
+      ground.position.y = -0.001;
+
+      const ext = file.name.toLowerCase().split(".").pop();
+      const objectUrl = URL.createObjectURL(file);
+      let result;
+      try {
+        result = await BABYLON.SceneLoader.ImportMeshAsync("", "", objectUrl, scene, undefined, `.${ext}`);
+      } finally {
+        URL.revokeObjectURL(objectUrl);
+      }
+
+      const meshes = result.meshes.filter((m) => m.getTotalVertices() > 0);
+      if (meshes.length > 0) {
+        const minMax = meshes.reduce((acc, mesh) => {
+          const box = mesh.getBoundingInfo().boundingBox;
+          acc.min = BABYLON.Vector3.Minimize(acc.min, box.minimumWorld);
+          acc.max = BABYLON.Vector3.Maximize(acc.max, box.maximumWorld);
+          return acc;
+        }, {
+          min: new BABYLON.Vector3(Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY, Number.POSITIVE_INFINITY),
+          max: new BABYLON.Vector3(Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY, Number.NEGATIVE_INFINITY)
+        });
+
+        const center = minMax.min.add(minMax.max).scale(0.5);
+        const radius = BABYLON.Vector3.Distance(minMax.min, minMax.max) * 0.5 || 1;
+        camera.setTarget(center);
+        camera.radius = radius * 2.1;
+        camera.lowerRadiusLimit = radius * 0.2;
+        camera.upperRadiusLimit = radius * 25;
+      }
+
+      const onResize = () => engine.resize();
+      window.addEventListener("resize", onResize);
+
+      engine.runRenderLoop(() => {
+        if (activeEngine === "babylon") {
+          scene.render();
+        }
+      });
+
+      babylonState = { engine, scene, onResize };
+      activeEngine = "babylon";
+      setStatus(`Loaded ${file.name} in Babylon.js`);
+    }
+
+    async function loadFile(file) {
+      if (!file) return;
+      try {
+        if (engineSelect.value === "three") {
+          await loadWithThree(file);
+        } else {
+          await loadWithBabylon(file);
+        }
+      } catch (error) {
+        console.error(error);
+        setStatus(`Failed: ${error.message || error}`, true);
+      }
+    }
+
+    modelFileInput.addEventListener("change", async () => {
+      const file = modelFileInput.files && modelFileInput.files[0];
+      modelFileInput.value = "";
+      await loadFile(file);
+    });
+  </script>
+</body>
+</html>
