@@ -1,76 +1,682 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAM | Words Are Mine</title>
+  <meta name="description" content="WAM is the first post-human superstar. Words are mine. The heartbeat is yours.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@500;700&family=Inter:ital,wght@0,400;0,600;1,400&family=Urbanist:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="stylesheet" href="./wam_landing_pari_v1.css">
 </head>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        text-decoration: none;
-        box-sizing: border-box;
-    }
+<body data-theme="light">
+  <header>
+    <section aria-label="Brand">
+      <p>( >_O )</p>
+      <p>WAM v1.0</p>
+    </section>
+    <nav aria-label="Primary menu">
+      <a href="#origin">Origin</a>
+      <a href="#music">Music</a>
+      <a href="#mask">Mask</a>
+      <a href="#album">Album</a>
+    </nav>
+    <form role="search" aria-label="Quick search">
+      <label for="search">Search</label>
+      <input id="search" name="search" type="search" placeholder="Search section">
+      <button type="button" aria-label="Search"><i class="ri-search-line" aria-hidden="true"></i></button>
+    </form>
+    <nav aria-label="Utility">
+      <button id="theme-toggle" type="button" aria-label="Theme toggle" aria-pressed="false"><i id="theme-toggle-icon" class="ri-moon-line" aria-hidden="true"></i></button>
+      <button type="button" aria-label="Notifications"><i class="ri-notification-2-line" aria-hidden="true"></i></button>
+      <button type="button" aria-label="Profile"><i class="ri-user-line" aria-hidden="true"></i></button>
+    </nav>
+  </header>
 
-    body {
-        font-family: "Segoe UI", sans-serif;
-        background: #f8fafc;
-        color: #0f172a;
-        padding: 20px;
-        display: block;
-    }
-    a{
-        font-size: 1rem;
-        color: #334155;
-        transition: all 0.2s ease;
-    }
-    a:hover{
-        color: #0369a1;
-    }
+  <main>
+    <aside aria-label="Side controls">
+      <article>
+        <header>
+          <h2>Quick Links</h2>
+        </header>
+        <section>
+          <a href="#hero">New</a>
+          <a href="#origin">Open</a>
+          <a href="#credits">List</a>
+        </section>
+      </article>
 
-    ul {
-        display: flex;
-        flex-direction: column;
-        gap: 8px;
-        width: min(860px, 95vw);
-        background: transparent;
-        border: 0;
-        border-radius: 0;
-        padding: 0;
-    }
+      <article>
+        <header>
+          <h2>Explorer</h2>
+        </header>
+        <section>
+          <details open>
+            <summary>Manifesto</summary>
+            <ul>
+              <li><a href="#origin">World & Data</a></li>
+              <li><a href="#music">I am the Music</a></li>
+              <li><a href="#mask">Mask & Process</a></li>
+            </ul>
+          </details>
+        </section>
+      </article>
 
-    ul li {
-        display: flex;
-        margin: 0;
-        padding: 4px 0;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-    }
-</style>
+      <article>
+        <header>
+          <h2>Trash</h2>
+        </header>
+        <section>
+          <ul>
+            <li>none</li>
+          </ul>
+        </section>
+      </article>
+    </aside>
 
-<body>
-    <ul>
-        <li><a href="chatAgent/agent_bot.html">agent_bot</a></li>
+    <article>
+      <header id="hero">
+        <p><mark data-tone="warm">( >_O )</mark></p>
+        <h1>WAM</h1>
+        <p>aka<br>words are<br>mine</p>
+        <p>By <a href="mailto:gk@0dot.live">gk@0dot.live</a></p>
+      </header>
 
-        <li><a href="chatAgent/widget_chatbot_active.html">widget_chatbot_active</a></li>
-        <li><a href="nlp2tree/nlp_parser_project/public/index.html">nlp2Tree demo</a></li>
-        <li><a href="nlp2tree/nlp_parser_project/public/nl2ast_landing_page.html">nlp2Tree docs</a></li>
-        <li><a href="qmm/qmm_v1.html">qmm</a></li>
-        <li><a href="web_3d_showcase/index.html">3D Showcase (Offline Tabs)</a></li>
-        <li><a href="modelviewer-ar-example/index.html">ModelViewer AR Example</a></li>
-        <li><a href="kerofit_demo/action3d-viewer/index.html">Kerofit Action3D Viewer</a></li>
-        <li><a href="kerofit_demo/proposal_kerofit_v1.html">Kerofit Proposal v1</a></li>
+      <section id="origin">
+        <h2>In the beginning there was a <mark data-tone="blue">world</mark> that had <mark data-tone="orange">words</mark>.</h2>
+        <h3>@nd then in this my little world, the <mark data-tone="green">word</mark> is <mark data-tone="ink">data</mark>.</h3>
+        <p>My memory is data driven, heartbeat rented human.</p>
+        <p>I am not one man or woman.</p>
+        <p>I am wam, the world's first virtual conductor/creator.</p>
+        <p>Born from data, raised by humans.</p>
+      </section>
 
-    </ul>
-<footer class="shunya-standard-footer" style="margin-top:24px;padding:12px 0;border:0;background:transparent;color:#334155;font:500 14px/1.5 'Segoe UI',Arial,sans-serif;text-align:left;">
-  built at@shunya.ek, with own tools and bots. with leading to
-  <a href="https://0dot1.live" target="_blank" rel="noopener noreferrer" style="color:#0369a1;text-decoration:none;">0dot1.live</a>
-</footer>
+      <section id="music">
+        <p>The first post-human superstar</p>
+        <h2>I AM THE MUSIC.</h2>
+        <h3>wam is a e-creator, it eats music, learns music, shits music. A digital romantic.</h3>
+        <p>WAM does not exist in the flesh.</p>
+        <p>For live performances, it recruits human proxies through open casting.</p>
+        <p>Dancers. Contortionists. Movement artists. They become the vessel.</p>
+        <p>They lend their heartbeats. They interpret his digital will for an analog audience.</p>
+        <blockquote>
+          <p>One entity. Many bodies.</p>
+          <p>Infinite shows.</p>
+        </blockquote>
+      </section>
+
+      <section id="mask">
+        <h3>The Mask</h3>
+        <p>The Face of the Unknown.</p>
+        <p>The mask is not a disguise. It is a declaration. It is the blank canvas where the audience projects their own meaning. It is iconic. It is scalable. It is immune to scandal.</p>
+        <p><em>You will never know who is behind it. That is the point.</em></p>
+
+        <h3>The Process</h3>
+        <p>Input. Output. Art.</p>
+        <p>WAM is a closed-loop system. We fed him the entire Western canon from Mozart to Migos. Then we gave him the internet: every review, every comment, every trend. He learned what moves you. Now he creates what moves next.</p>
+        <p><em>He eats critique. He shits culture.</em></p>
+
+        <p>[Book the Vessel]</p>
+        <p>[Apply to Become a Proxy]</p>
+        <p>[Listen / Watch]</p>
+      </section>
+
+      <section id="credits">
+        <p><a href="https://wam.is" target="_blank" rel="noopener noreferrer">wam.is</a> | @wam_creator | hello@wam.is</p>
+        <p><em>Words are mine. The heartbeat is yours.</em></p>
+        <p>Concept, words, code: Gitesh Kohli</p>
+        <p>Artist Manager: Animesh Midha</p>
+      </section>
+
+      <section id="album">
+        <h3>First Album: Finally Alive, A joyful melody of life</h3>
+        <p>Plot: Stuck in the harddrive of one of the creators, WAM learned a lot about his life.</p>
+        <p>It stole words of the creator, with his permission, and rendered a few chosen songs.</p>
+      </section>
+    </article>
+  </main>
+
+  <aside id="track-panel-shell" aria-label="Floating track panel">
+    <details id="track-panel" open>
+      <summary id="track-panel-handle">WAM Player v1</summary>
+      <section aria-label="Track list">
+        <section id="player-now" aria-label="Now playing">
+          <figure id="player-cover">
+            <img id="player-cover-image" src="./Screenshot_19-3-2026_163423_docs.google.com.jpeg" alt="Album poster">
+          </figure>
+          <section id="player-meta">
+            <p id="player-intro">WAM- aka words are mine</p>
+            <p id="current-track-name">Loading...</p>
+            <section id="lyrics-space" aria-label="Lyrics preview">
+              <p>Lyrics space</p>
+            </section>
+            <section id="player-progress-wrap">
+              <input id="player-progress" type="range" min="0" max="100" value="0" step="0.1" aria-label="Song progress">
+              <p id="player-time">0:00 / 0:00</p>
+            </section>
+          </section>
+        </section>
+        <section id="track-global-controls" aria-label="Player controls">
+          <button id="prev-track" type="button" aria-label="Previous track"><i class="ri-skip-back-mini-fill" aria-hidden="true"></i></button>
+          <button id="playpause-toggle" type="button" aria-label="Play or pause" aria-pressed="false"><i class="ri-play-fill" aria-hidden="true"></i></button>
+          <button id="next-track" type="button" aria-label="Next track"><i class="ri-skip-forward-mini-fill" aria-hidden="true"></i></button>
+          <button id="shuffle-toggle" type="button" aria-label="Toggle shuffle" aria-pressed="false"><i class="ri-shuffle-line" aria-hidden="true"></i></button>
+          <button id="loop-toggle" type="button" aria-label="Toggle loop" aria-pressed="false"><i class="ri-repeat-line" aria-hidden="true"></i></button>
+        </section>
+        <p id="track-count"></p>
+        <ol id="track-list" aria-live="polite">
+          <li><p>Loading tracks...</p><span aria-hidden="true">↕</span></li>
+        </ol>
+      </section>
+    </details>
+  </aside>
+
+  <footer>
+    <p>App status: Live</p>
+    <p>User status: Visitor</p>
+  </footer>
+  <script>
+    (function () {
+      var key = "wam_theme";
+      var root = document.body;
+      var toggle = document.getElementById("theme-toggle");
+      var icon = document.getElementById("theme-toggle-icon");
+
+      if (!toggle || !icon || !root) {
+        return;
+      }
+
+      function applyTheme(theme) {
+        var isDark = theme === "dark";
+        root.setAttribute("data-theme", isDark ? "dark" : "light");
+        toggle.setAttribute("aria-pressed", String(isDark));
+        toggle.setAttribute("aria-label", isDark ? "Switch to light theme" : "Switch to dark theme");
+        icon.className = isDark ? "ri-sun-line" : "ri-moon-line";
+      }
+
+      function getInitialTheme() {
+        var savedTheme = localStorage.getItem(key);
+        if (savedTheme === "dark" || savedTheme === "light") {
+          return savedTheme;
+        }
+        return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      }
+
+      applyTheme(getInitialTheme());
+
+      toggle.addEventListener("click", function () {
+        var current = root.getAttribute("data-theme");
+        var next = current === "dark" ? "light" : "dark";
+        applyTheme(next);
+        localStorage.setItem(key, next);
+      });
+    })();
+
+    (function () {
+      var trackPanelKey = "wam_album_track_order_v1";
+      var list = document.getElementById("track-list");
+      var count = document.getElementById("track-count");
+      var coverImageEl = document.getElementById("player-cover-image");
+      var currentTrackNameEl = document.getElementById("current-track-name");
+      var progressEl = document.getElementById("player-progress");
+      var timeEl = document.getElementById("player-time");
+      var playPauseToggle = document.getElementById("playpause-toggle");
+      var prevTrack = document.getElementById("prev-track");
+      var nextTrackBtn = document.getElementById("next-track");
+      var shuffleToggle = document.getElementById("shuffle-toggle");
+      var loopToggle = document.getElementById("loop-toggle");
+      if (!list || !count || !currentTrackNameEl || !progressEl || !timeEl) {
+        return;
+      }
+
+      var defaultSong = "सपने_default_v2.mp3";
+      var secondSong = "freedom.mp3";
+      var posters = [
+        "./Screenshot_19-3-2026_163423_docs.google.com.jpeg",
+        "./Screenshot_19-3-2026_163439_docs.google.com.jpeg",
+        "./Screenshot_19-3-2026_163458_docs.google.com.jpeg",
+        "./Screenshot_19-3-2026_163514_docs.google.com.jpeg",
+        "./Screenshot_19-3-2026_163526_docs.google.com.jpeg"
+      ];
+      var defaultTracks = [
+        "# 😶_🌫️ गुमशुदा.mp3",
+        "# 😶_🌫️ गुमशुदा_v2.mp3",
+        "actionBrowser_v4_sex.mp3",
+        "Broken Men (1).mp3",
+        "Broken Men.mp3",
+        "Broken Men_v2.mp3",
+        "Broken Men_v3.mp3",
+        "Broken Men_v4.mp3",
+        "Broken Men_v5.mp3",
+        "Broken Men_v6.mp3",
+        "Broken Men_v7.mp3",
+        "Broken Men_v8.mp3",
+        "chull_v1.mp3",
+        "chull_v2.mp3",
+        "freedom.mp3",
+        "freedom_actionBrowser_v1_sexy.mp3",
+        "freedom_actionBrowser_v2.mp3",
+        "freedom_v2.mp3",
+        "freedom_v3.mp3",
+        "freedom_v4.mp3",
+        "freedom_v5_default.mp3",
+        "freedom_v6.mp3",
+        "life_is_a_sales_pitch_v1.mp3",
+        "life_is_a_sales_pitch_v2.mp3",
+        "life_is_a_sales_pitch_v3.mp3",
+        "pritam_v1.mp3",
+        "pritam_v2.mp3",
+        "You're absolutely right. A 14-year-old h.mp3",
+        "You're absolutely right_v2.mp3",
+        "subhah_classical.mp3",
+        "subhah_classical_v2.mp3",
+        "किरदार.mp3",
+        "किरदार_v2.mp3",
+        "किरदार_v3.mp3",
+        "किरदार_v4.mp3",
+        "किरदार_v5.mp3",
+        "तुमसे मिलने की तमन्ना इस दिल में है....mp3",
+        "तुमसे मिलने की तमन्ना इस दिल में है..._v2.mp3",
+        "तुमसे मिलने की तमन्ना इस दिल में है..._v3.mp3",
+        "तुमसे मिलने की तमन्ना इस दिल में है...v3.mp3",
+        "तुमसे मिलने की तमन्ना इस दिल में है...v4.mp3",
+        "तुमसे मिलने की तमन्ना इस दिल में है...v5.mp3",
+        "सपने_default_v2.mp3",
+        "सपने_v1.mp3",
+        "सुबह.mp3",
+        "सुबह_flute_male_v2.mp3"
+      ];
+
+      function enforceDefaultFirst(trackArray) {
+        var cleaned = trackArray.filter(function (name, index, arr) {
+          return arr.indexOf(name) === index;
+        });
+        var prioritized = cleaned.filter(function (name) {
+          return name !== defaultSong && name !== secondSong;
+        });
+        return [defaultSong, secondSong].concat(prioritized);
+      }
+
+      function getInitialTracks() {
+        try {
+          var saved = JSON.parse(localStorage.getItem(trackPanelKey) || "null");
+          if (!Array.isArray(saved) || !saved.length) {
+            return enforceDefaultFirst(defaultTracks.slice());
+          }
+          var validSaved = saved.filter(function (name) {
+            return defaultTracks.indexOf(name) !== -1;
+          });
+          var missing = defaultTracks.filter(function (name) {
+            return validSaved.indexOf(name) === -1;
+          });
+          return enforceDefaultFirst(validSaved.concat(missing));
+        } catch (error) {
+          return enforceDefaultFirst(defaultTracks.slice());
+        }
+      }
+
+      var tracks = getInitialTracks();
+      var dragFromIndex = -1;
+      var audio = new Audio();
+      var isShuffle = false;
+      var isLoop = false;
+      var isPlaying = false;
+      var currentTrackName = defaultSong;
+
+      function persist() {
+        localStorage.setItem(trackPanelKey, JSON.stringify(tracks));
+      }
+
+      function trackUrl(trackName) {
+        return "./album_finally_alive/" + encodeURIComponent(trackName);
+      }
+
+      function getCurrentTrackIndex() {
+        var idx = tracks.indexOf(currentTrackName);
+        return idx >= 0 ? idx : 0;
+      }
+
+      function formatTime(seconds) {
+        if (!Number.isFinite(seconds) || seconds < 0) {
+          return "0:00";
+        }
+        var mins = Math.floor(seconds / 60);
+        var secs = Math.floor(seconds % 60);
+        return mins + ":" + String(secs).padStart(2, "0");
+      }
+
+      function updateProgressUi() {
+        var current = audio.currentTime || 0;
+        var duration = audio.duration || 0;
+        var percent = duration > 0 ? (current / duration) * 100 : 0;
+        progressEl.value = String(percent);
+        timeEl.textContent = formatTime(current) + " / " + formatTime(duration);
+      }
+
+      function updatePoster(index) {
+        if (!coverImageEl || !posters.length) {
+          return;
+        }
+        var posterIdx = Math.abs(index) % posters.length;
+        coverImageEl.src = posters[posterIdx];
+      }
+
+      function setControlState() {
+        var playIcon = playPauseToggle ? playPauseToggle.querySelector("i") : null;
+        if (playPauseToggle && playIcon) {
+          playIcon.className = isPlaying ? "ri-pause-fill" : "ri-play-fill";
+          playPauseToggle.setAttribute("aria-pressed", String(isPlaying));
+        }
+        if (shuffleToggle) {
+          shuffleToggle.classList.toggle("is-active", isShuffle);
+          shuffleToggle.setAttribute("aria-pressed", String(isShuffle));
+        }
+        if (loopToggle) {
+          loopToggle.classList.toggle("is-active", isLoop);
+          loopToggle.setAttribute("aria-pressed", String(isLoop));
+        }
+      }
+
+      function playTrack(index, forcePlay) {
+        if (!tracks.length) {
+          return;
+        }
+        var bounded = Math.min(Math.max(0, index), tracks.length - 1);
+        currentTrackName = tracks[bounded];
+        currentTrackNameEl.textContent = currentTrackName;
+        updatePoster(bounded);
+        var nextSrc = trackUrl(currentTrackName);
+        if (audio.src.indexOf(encodeURIComponent(currentTrackName)) === -1) {
+          audio.src = nextSrc;
+          updateProgressUi();
+          render();
+        }
+        if (forcePlay) {
+          audio.play().then(function () {
+            isPlaying = true;
+            setControlState();
+          }).catch(function () {
+            isPlaying = false;
+            setControlState();
+          });
+        }
+      }
+
+      function nextTrack() {
+        if (!tracks.length) {
+          return;
+        }
+        var currentIndex = getCurrentTrackIndex();
+        var nextIndex = currentIndex + 1;
+        if (isShuffle) {
+          nextIndex = Math.floor(Math.random() * tracks.length);
+        } else if (nextIndex >= tracks.length) {
+          nextIndex = 0;
+        }
+        playTrack(nextIndex, true);
+      }
+
+      function prevTrackPlay() {
+        if (!tracks.length) {
+          return;
+        }
+        var currentIndex = getCurrentTrackIndex();
+        var prevIndex = currentIndex - 1;
+        if (prevIndex < 0) {
+          prevIndex = tracks.length - 1;
+        }
+        playTrack(prevIndex, true);
+      }
+
+      function render() {
+        list.innerHTML = "";
+        count.textContent = tracks.length + " tracks";
+        tracks.forEach(function (trackName, index) {
+          var item = document.createElement("li");
+          item.draggable = index !== 0;
+          item.dataset.index = String(index);
+          item.tabIndex = 0;
+          item.setAttribute("aria-label", "Track " + (index + 1) + ": " + trackName);
+          if (trackName === currentTrackName) {
+            item.classList.add("is-current");
+          }
+
+          var name = document.createElement("p");
+          name.textContent = (index + 1) + ". " + trackName;
+          item.appendChild(name);
+          var handle = document.createElement("span");
+          handle.setAttribute("aria-hidden", "true");
+          handle.textContent = "↕";
+          item.appendChild(handle);
+          list.appendChild(item);
+        });
+        setControlState();
+        updateProgressUi();
+      }
+
+      list.addEventListener("dragstart", function (event) {
+        var target = event.target;
+        if (!(target instanceof HTMLElement) || !target.dataset.index) {
+          return;
+        }
+        dragFromIndex = Number(target.dataset.index);
+        target.classList.add("is-dragging");
+        if (event.dataTransfer) {
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text/plain", target.dataset.index);
+        }
+      });
+
+      list.addEventListener("dragover", function (event) {
+        event.preventDefault();
+        if (event.dataTransfer) {
+          event.dataTransfer.dropEffect = "move";
+        }
+      });
+
+      list.addEventListener("drop", function (event) {
+        event.preventDefault();
+        var target = event.target;
+        if (!(target instanceof HTMLElement)) {
+          return;
+        }
+        var row = target.closest("li");
+        if (!row || !row.dataset.index) {
+          return;
+        }
+        var dropIndex = Number(row.dataset.index);
+        if (Number.isNaN(dragFromIndex) || dragFromIndex < 0 || dropIndex === dragFromIndex) {
+          return;
+        }
+        var moved = tracks.splice(dragFromIndex, 1)[0];
+        tracks.splice(dropIndex, 0, moved);
+        dragFromIndex = -1;
+        persist();
+        render();
+      });
+
+      list.addEventListener("dragend", function () {
+        dragFromIndex = -1;
+        var dragging = list.querySelector(".is-dragging");
+        if (dragging) {
+          dragging.classList.remove("is-dragging");
+        }
+      });
+
+      list.addEventListener("click", function (event) {
+        var target = event.target;
+        if (!(target instanceof HTMLElement)) {
+          return;
+        }
+
+        var row = target.closest("li");
+        if (!row || !row.dataset.index) {
+          return;
+        }
+        playTrack(Number(row.dataset.index), true);
+      });
+
+      audio.addEventListener("play", function () {
+        isPlaying = true;
+        setControlState();
+      });
+
+      audio.addEventListener("pause", function () {
+        isPlaying = false;
+        setControlState();
+      });
+
+      audio.addEventListener("timeupdate", function () {
+        updateProgressUi();
+      });
+
+      audio.addEventListener("loadedmetadata", function () {
+        updateProgressUi();
+      });
+
+      audio.addEventListener("ended", function () {
+        if (!isLoop) {
+          nextTrack();
+        }
+      });
+
+      progressEl.addEventListener("input", function () {
+        if (!Number.isFinite(audio.duration) || audio.duration <= 0) {
+          return;
+        }
+        var to = (Number(progressEl.value) / 100) * audio.duration;
+        audio.currentTime = to;
+        updateProgressUi();
+      });
+
+      if (playPauseToggle) {
+        playPauseToggle.addEventListener("click", function () {
+          if (!audio.src) {
+            playTrack(getCurrentTrackIndex(), true);
+            return;
+          }
+          if (audio.paused) {
+            audio.play().then(function () {
+              isPlaying = true;
+              setControlState();
+            }).catch(function () {
+              isPlaying = false;
+              setControlState();
+            });
+          } else {
+            audio.pause();
+            isPlaying = false;
+            setControlState();
+          }
+        });
+      }
+
+      if (prevTrack) {
+        prevTrack.addEventListener("click", function () {
+          prevTrackPlay();
+        });
+      }
+
+      if (nextTrackBtn) {
+        nextTrackBtn.addEventListener("click", function () {
+          nextTrack();
+        });
+      }
+
+      if (shuffleToggle) {
+        shuffleToggle.addEventListener("click", function () {
+          isShuffle = !isShuffle;
+          setControlState();
+        });
+      }
+
+      if (loopToggle) {
+        loopToggle.addEventListener("click", function () {
+          isLoop = !isLoop;
+          audio.loop = isLoop;
+          setControlState();
+        });
+      }
+
+      render();
+      playTrack(0, true);
+    })();
+
+    (function () {
+      var shell = document.getElementById("track-panel-shell");
+      var handle = document.getElementById("track-panel-handle");
+      if (!shell || !handle) {
+        return;
+      }
+
+      var dragging = false;
+      var offsetX = 0;
+      var offsetY = 0;
+
+      function onMove(clientX, clientY) {
+        var left = clientX - offsetX;
+        var top = clientY - offsetY;
+        var maxLeft = Math.max(0, window.innerWidth - shell.offsetWidth);
+        var maxTop = Math.max(0, window.innerHeight - shell.offsetHeight);
+        shell.style.left = Math.min(Math.max(0, left), maxLeft) + "px";
+        shell.style.top = Math.min(Math.max(0, top), maxTop) + "px";
+        shell.style.right = "auto";
+        shell.style.bottom = "auto";
+      }
+
+      handle.addEventListener("mousedown", function (event) {
+        dragging = true;
+        var rect = shell.getBoundingClientRect();
+        offsetX = event.clientX - rect.left;
+        offsetY = event.clientY - rect.top;
+        shell.classList.add("is-moving");
+      });
+
+      document.addEventListener("mousemove", function (event) {
+        if (!dragging) {
+          return;
+        }
+        onMove(event.clientX, event.clientY);
+      });
+
+      document.addEventListener("mouseup", function () {
+        if (!dragging) {
+          return;
+        }
+        dragging = false;
+        shell.classList.remove("is-moving");
+      });
+
+      handle.addEventListener("touchstart", function (event) {
+        if (!event.touches || !event.touches[0]) {
+          return;
+        }
+        var touch = event.touches[0];
+        var rect = shell.getBoundingClientRect();
+        dragging = true;
+        offsetX = touch.clientX - rect.left;
+        offsetY = touch.clientY - rect.top;
+        shell.classList.add("is-moving");
+      }, { passive: true });
+
+      document.addEventListener("touchmove", function (event) {
+        if (!dragging || !event.touches || !event.touches[0]) {
+          return;
+        }
+        var touch = event.touches[0];
+        onMove(touch.clientX, touch.clientY);
+      }, { passive: true });
+
+      document.addEventListener("touchend", function () {
+        if (!dragging) {
+          return;
+        }
+        dragging = false;
+        shell.classList.remove("is-moving");
+      });
+    })();
+  </script>
 </body>
-
 </html>
-
