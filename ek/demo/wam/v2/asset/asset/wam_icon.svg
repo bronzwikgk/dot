@@ -1,0 +1,15 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" width="164" height="124" viewBox="0 0 164 124" role="img" aria-label="WAM icon">
+  <g transform="translate(0 2)">
+    <g aria-hidden="true">
+      <circle cx="130" cy="10" r="2.4" fill="#31353C"/>
+      <circle cx="138" cy="10" r="2.4" fill="#31353C"/>
+      <circle cx="146" cy="10" r="2.4" fill="#31353C"/>
+    </g>
+
+    <g>
+      <rect x="12" y="18" width="140" height="92" rx="22" fill="#FFA500"/>
+    </g>
+
+    <text x="82" y="78" text-anchor="middle" font-family="Urbanist, Inter, Arial, sans-serif" font-size="49" font-weight="500" fill="#FFFFFF">(&gt;_O)</text>
+  </g>
+</svg>

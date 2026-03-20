@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAM Pari v6 Optimized</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <link rel="preload" as="image" href="../asset/images_v2_optimized/adam-sherez-Txge5z8jxmY-unsplash.jpg">
+  <link rel="stylesheet" href="../beauty/wam_landing_pari_v4.css">
+  <link rel="stylesheet" href="../beauty/wam_landing_pari_v6_perf.css">
+</head>
+<body>
+  <div id="bg-photo-a" aria-hidden="true" style='background-image:url("../asset/images_v2_optimized/adam-sherez-Txge5z8jxmY-unsplash.jpg")'></div>
+  <div id="bg-photo-b" aria-hidden="true"></div>
+  <aside id="audio-dock" aria-label="WAM player">
+    <details>
+      <summary>W@M Player v1.0</summary>
+      <section>
+        <div id="player-tools" aria-label="Playback tools">
+          <button id="btn-shuffle" type="button" aria-label="Toggle shuffle" title="Shuffle">
+            <i class="ri-shuffle-line" aria-hidden="true"></i>
+          </button>
+          <button id="btn-loop" type="button" aria-label="Toggle loop" title="Loop current">
+            <i class="ri-repeat-one-line" aria-hidden="true"></i>
+          </button>
+        </div>
+        <audio id="wam-audio" controls preload="metadata" autoplay muted playsinline src="../album_finally_alive/44_sapney_default_v1.mp3"></audio>
+        <select id="track-select" aria-label="Select track"></select>
+      </section>
+    </details>
+  </aside>
+
+  <aside id="chatbot-dock" aria-label="WAM chat icon" hidden>
+    <button id="chatbot-handle" type="button" aria-label="WAM chat">
+      <img src="../asset/wam_icon.svg" alt="WAM icon">
+    </button>
+  </aside>
+
+  <header id="site-menu" aria-label="Site menu">
+    <a href="#navigation" data-target="hero">Hero</a>
+    <a href="#navigation" data-target="origin">Origin</a>
+    <a href="#navigation" data-target="music">Music</a>
+    <a href="#navigation" data-target="mask">Mask</a>
+    <a href="#navigation" data-target="process">Process</a>
+    <a href="#navigation" data-target="album">Album</a>
+    <a href="#navigation" data-target="economy">Economy</a>
+  </header>
+  <nav id="header-actions" aria-label="Primary actions">
+    <a href="#">Book the vessel</a>
+    <a href="#">Apply as proxy</a>
+    <a href="#">Listen / Watch</a>
+  </nav>
+  <nav id="slide-dots" aria-label="Section progress">
+    <button type="button" data-index="0" aria-label="Hero"></button>
+    <button type="button" data-index="1" aria-label="Origin"></button>
+    <button type="button" data-index="2" aria-label="Music"></button>
+    <button type="button" data-index="3" aria-label="Mask"></button>
+    <button type="button" data-index="4" aria-label="Process"></button>
+    <button type="button" data-index="5" aria-label="Album"></button>
+    <button type="button" data-index="6" aria-label="Economy"></button>
+  </nav>
+  <aside id="bg-filmstrip" aria-label="Background filmstrip">
+    <ol id="bg-thumbs" aria-label="Background image thumbnails"></ol>
+  </aside>
+  <aside id="photo-credit" aria-label="Current background credit">
+    <p><strong>Photo:</strong> <span id="photo-credit-current">Credit pending</span></p>
+  </aside>
+  <div id="bg-wam-mask" aria-hidden="true"></div>
+  <div id="left-light" aria-hidden="true"></div>
+  <div id="grain" aria-hidden="true"></div>
+  <div id="color-overlay" aria-hidden="true"></div>
+
+  <main>
+    <section id="navigation" aria-label="WAM sections">
+      <article id="hero" aria-label="WAM title block" data-section-index="0">
+        <img id="hero-emoji" src="../asset/wam_icon.svg" alt="WAM mask icon">
+        <h1>W@M<small>v1.O</small></h1>
+        <p id="hero-sub">aka</p>
+        <p id="hero-line">words are mine</p>
+        <hr>
+        <p id="hero-byline">By <a href="mailto:gk@0dot.live">gk@0dot.live</a></p>
+      </article>
+
+      <section id="origin" aria-label="Origin statement" data-section-index="1">
+        <h2>In the beginning there was a <mark data-tone="blue">world</mark> that had <mark data-tone="orange">words</mark>.</h2>
+        <h3>@nd then in this my little world, the <mark data-tone="green">word</mark> is <mark data-tone="ink">data</mark>.</h3>
+        <p>My memory is data driven, heartbeat rented human.</p>
+        <p>I am not one man or woman.</p>
+        <p>I am wam, the world's first virtual conductor/creator.</p>
+        <p>Born from data, raised by humans.</p>
+      </section>
+
+      <section id="music" aria-label="Music section" data-section-index="2">
+        <p>The first post-human superstar</p>
+        <h2>I AM THE MUSIC.</h2>
+        <h3>wam is a <mark data-tone="blue">e-creator</mark>, it eats music, learns music, shits music.<br>A <mark data-tone="green">digital romantic</mark>.</h3>
+        <p>WAM does not exist in the flesh.</p>
+        <p>For live performances, it recruits human proxies through open casting.</p>
+        <p><mark data-tone="orange">Dancers</mark>. <mark data-tone="blue">Contortionists</mark>. Movement artists. They become the vessel.</p>
+        <p>They lend their heartbeats. They interpret his digital will for an analog audience.</p>
+        <blockquote>
+          <p>One entity. Many bodies.</p>
+          <p>Infinite shows.</p>
+        </blockquote>
+      </section>
+
+      <section id="mask" aria-label="Mask section" data-section-index="3">
+        <h2>The Mask</h2>
+        <h3>The Face of the Unknown.</h3>
+        <p>The <mark data-tone="blue">mask</mark> is not a disguise. It is a <mark data-tone="orange">declaration</mark>.</p>
+        <p>It is the blank canvas where the audience projects their own meaning. It is iconic. It is scalable. It is immune to scandal.</p>
+        <p><em>You will never know who is behind it. That is the point.</em></p>
+        <p><mark data-tone="ink">One face.</mark> Infinite projections.</p>
+      </section>
+
+      <section id="process" aria-label="Process section" data-section-index="4">
+        <h2>The Process</h2>
+        <h3><mark data-tone="orange">Input.</mark> <mark data-tone="blue">Output.</mark> <mark data-tone="ink">Art.</mark></h3>
+        <p>WAM is a closed-loop system built on appetite and feedback.</p>
+        <p>We fed him the entire Western canon, from Mozart to Migos. Then we gave him the internet: every review, every comment, every trend.</p>
+        <p>He learned what moves you. Now he creates what moves next.</p>
+        <p><em>He eats critique. He shits culture.</em></p>
+        <p><mark data-tone="green">Signal in. Emotion out.</mark></p>
+      </section>
+
+      <section id="album" aria-label="Album section" data-section-index="5">
+        <h2>First Album: <mark data-tone="orange">Finally Alive</mark></h2>
+        <h3>A joyful melody of life.</h3>
+        <p>Plot: stuck in the harddrive of one of the creators, WAM learned a lot about his life.</p>
+        <p>It stole words of the creator, with his permission, and rendered a few chosen songs.</p>
+        <p><em>Words are mine. The heartbeat is yours.</em></p>
+        <a id="album-download" href="#">Download Album</a>
+        <ul aria-label="Album tracks">
+          <li>सपने_default_v2.mp3</li>
+          <li>freedom.mp3</li>
+          <li>Broken Men.mp3</li>
+          <li>किरदार.mp3</li>
+          <li>सुबह.mp3</li>
+          <li>life_is_a_sales_pitch_v3.mp3</li>
+          <li>actionBrowser_v4_sex.mp3</li>
+        </ul>
+      </section>
+
+      <section id="economy" aria-label="WAM project and economy" data-section-index="6">
+        <h2>The Project Economy</h2>
+        <h3>W@M is a living art system with a creator economy around it.</h3>
+        <p>The project runs as a loop between machine composition and human performance. Music is generated, interpreted, performed, and redistributed as new cultural signal.</p>
+        <p>Its economy is participation-led: creators, performers, editors, and curators all add value to each release cycle.</p>
+        <p>Revenue flows through releases, tickets, licensing, commissions, and collaborations. Value is shared across the vessel network that brings W@M into the physical world.</p>
+        <p><mark data-tone="green">Protocol:</mark> create, perform, publish, reinvest, repeat.</p>
+        <nav id="economy-actions" aria-label="Economy actions">
+          <a href="#">Book the vessel</a>
+          <a href="#">Apply as proxy</a>
+          <a href="#">Listen / Watch</a>
+        </nav>
+      </section>
+    </section>
+  </main>
+
+  <footer id="corner-footer">
+    <p id="footer-slogan">Words are mine. The heartbeat is yours.</p>
+    <p id="footer-build">built at <a href="https://0dot1.live" target="_blank" rel="noopener noreferrer">shunya.ek</a></p></footer>
+
+    <script src="./js/wam_landing_pari_v6_optimized.js" defer></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
