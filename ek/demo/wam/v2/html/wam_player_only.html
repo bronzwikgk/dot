@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAM Player Only</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.5.0/fonts/remixicon.css" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #f4f4f6;
+      --ink: #2f3646;
+      --accent: #2f5fc4;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      font-family: "Urbanist", sans-serif;
+      background: linear-gradient(145deg, #f5f7fb, #eef2f7);
+      color: var(--ink);
+    }
+
+    #audio-dock {
+      width: min(24rem, 100%);
+      position: fixed;
+      left: 1rem;
+      top: 1rem;
+      z-index: 50;
+    }
+
+    #audio-dock details {
+      border-radius: 0.9rem;
+      background: color-mix(in srgb, var(--paper) 92%, white);
+      box-shadow: 0 16px 36px rgba(22, 26, 35, 0.16);
+      overflow: hidden;
+      display: grid;
+      grid-template-rows: auto 0fr;
+      transition: grid-template-rows 280ms cubic-bezier(0.22, 1, 0.36, 1), box-shadow 220ms ease;
+    }
+
+    #audio-dock details[open] {
+      grid-template-rows: auto 1fr;
+      box-shadow: 0 20px 44px rgba(22, 26, 35, 0.2);
+    }
+
+    #audio-dock summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 0.72rem 0.88rem;
+      font-weight: 700;
+      user-select: none;
+    }
+
+    #audio-dock summary::-webkit-details-marker {
+      display: none;
+    }
+
+    #player-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+    }
+
+    #player-header-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #player-header-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      flex: 0 0 auto;
+    }
+
+    #player-header-actions button {
+      border: 0;
+      width: 1.8rem;
+      height: 1.8rem;
+      border-radius: 0.48rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(70, 71, 76, 0.12);
+      color: #3f4450;
+      cursor: pointer;
+    }
+
+    #player-header-actions button:hover {
+      background: rgba(79, 143, 247, 0.18);
+      color: var(--accent);
+    }
+
+    #audio-dock section {
+      overflow: hidden;
+      padding: 0.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.55rem;
+      opacity: 0;
+      transform: translateY(-0.3rem);
+      transition: opacity 220ms ease, transform 260ms ease;
+    }
+
+    #audio-dock details[open] section {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #player-tools {
+      display: flex;
+      align-items: center;
+      gap: 0.45rem;
+    }
+
+    #player-tools button {
+      border: 0;
+      width: 2rem;
+      height: 2rem;
+      border-radius: 0.58rem;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(70, 71, 76, 0.12);
+      color: #3f4450;
+      cursor: pointer;
+    }
+
+    #player-tools button[aria-pressed="true"] {
+      background: rgba(79, 143, 247, 0.2);
+      color: var(--accent);
+      box-shadow: inset 0 0 0 1px rgba(47, 95, 196, 0.28);
+    }
+
+    audio,
+    select {
+      width: 100%;
+    }
+
+    select {
+      appearance: none;
+      border: 0;
+      border-radius: 0.62rem;
+      background: linear-gradient(180deg, #ffffff, #f3f5fa);
+      color: #2e3138;
+      font-family: inherit;
+      font-size: 0.95rem;
+      padding: 0.55rem 2rem 0.55rem 0.68rem;
+      background-image: linear-gradient(45deg, transparent 50%, #697089 50%), linear-gradient(135deg, #697089 50%, transparent 50%);
+      background-position: calc(100% - 16px) calc(50% - 3px), calc(100% - 10px) calc(50% - 3px);
+      background-size: 6px 6px, 6px 6px;
+      background-repeat: no-repeat;
+    }
+  </style>
+</head>
+<body>
+  <aside id="audio-dock" aria-label="WAM player">
+    <details open>
+      <summary id="player-header">
+        <span id="player-header-title">W@M Player v1.0</span>
+        <span id="player-header-actions">
+          <button id="btn-about" type="button" aria-label="About player" title="About">
+            <i class="ri-information-line" aria-hidden="true"></i>
+          </button>
+          <button id="btn-download-current" type="button" aria-label="Download current track" title="Download current track">
+            <i class="ri-download-2-line" aria-hidden="true"></i>
+          </button>
+        </span>
+      </summary>
+      <section>
+        <div id="player-tools" aria-label="Playback tools">
+          <button id="btn-shuffle" type="button" aria-label="Toggle shuffle" title="Shuffle">
+            <i class="ri-shuffle-line" aria-hidden="true"></i>
+          </button>
+          <button id="btn-loop" type="button" aria-label="Toggle loop" title="Loop current">
+            <i class="ri-repeat-one-line" aria-hidden="true"></i>
+          </button>
+        </div>
+        <audio id="wam-audio" controls preload="metadata" autoplay muted playsinline src="../album_finally_alive/44_sapney_default_v1.mp3"></audio>
+        <select id="track-select" aria-label="Select track"></select>
+      </section>
+    </details>
+  </aside>
+
+  <script>
+    (function () {
+      var tracks = [
+        "01_actionBrowser_v4_sex.mp3",
+        "02_Broken_Men_1.mp3",
+        "03_Broken_Men.mp3",
+        "04_Broken_Men_v2.mp3",
+        "05_Broken_Men_v3.mp3",
+        "06_Broken_Men_v4.mp3",
+        "07_Broken_Men_v5.mp3",
+        "08_Broken_Men_v6.mp3",
+        "09_Broken_Men_v7.mp3",
+        "10_Broken_Men_v8.mp3",
+        "11_chull_v1.mp3",
+        "12_chull_v2.mp3",
+        "13_freedom.mp3",
+        "14_freedom_actionBrowser_v1_sexy.mp3",
+        "15_freedom_actionBrowser_v2.mp3",
+        "16_freedom_v2.mp3",
+        "17_freedom_v3.mp3",
+        "18_freedom_v4.mp3",
+        "19_freedom_v5_default.mp3",
+        "20_freedom_v6.mp3",
+        "21_life_is_a_sales_pitch_v1.mp3",
+        "22_life_is_a_sales_pitch_v2.mp3",
+        "23_life_is_a_sales_pitch_v3.mp3",
+        "24_pritam_v1.mp3",
+        "25_pritam_v2.mp3",
+        "26_subhah_classical.mp3",
+        "27_subhah_classical_v2.mp3",
+        "28_You_re_absolutely_right._A_14-year-old_h.mp3",
+        "29_You_re_absolutely_right_v2.mp3",
+        "30_kirdar_track.mp3",
+        "31_kirdar_v2.mp3",
+        "32_kirdar_v3.mp3",
+        "33_kirdar_v4.mp3",
+        "34_kirdar_v5.mp3",
+        "35_Gumshuda_v1.mp3",
+        "36_gumshuda_v2.mp3",
+        "37 tum_v1.mp3",
+        "38 tum_v2.mp3",
+        "39 tum_v3.mp3",
+        "40_tum_v4.mp3",
+        "41_tum_v5.mp3",
+        "42_tum_v5.mp3",
+        "43_sapney_v2.mp3",
+        "44_sapney_default_v1.mp3",
+        "45_subah_v1.mp3",
+        "46_subah_flute_male_v2.mp3"
+      ];
+
+      function toTrackLabel(name) {
+        return name
+          .replace(/\.mp3$/i, "")
+          .replace(/^\d+[\s_-]*/, "")
+          .replace(/[_-]+/g, " ")
+          .replace(/\s+/g, " ")
+          .trim();
+      }
+
+      function toTrackSrc(name) {
+        return "../album_finally_alive/" + encodeURIComponent(name);
+      }
+
+      var preferredDefaultIndex = tracks.findIndex(function (name) {
+        return /sapney.*default|default.*sapney/i.test(name);
+      });
+      if (preferredDefaultIndex < 0) {
+        preferredDefaultIndex = tracks.findIndex(function (name) {
+          return /default_v2|default_v1/i.test(name);
+        });
+      }
+      if (preferredDefaultIndex > 0) {
+        var preferredDefaultTrack = tracks.splice(preferredDefaultIndex, 1)[0];
+        tracks.unshift(preferredDefaultTrack);
+      }
+
+      var audio = document.getElementById("wam-audio");
+      var select = document.getElementById("track-select");
+      var shuffleBtn = document.getElementById("btn-shuffle");
+      var loopBtn = document.getElementById("btn-loop");
+      var aboutBtn = document.getElementById("btn-about");
+      var downloadCurrentBtn = document.getElementById("btn-download-current");
+      var audioDock = document.getElementById("audio-dock");
+      var dragHandle = document.getElementById("player-header");
+      var STORAGE_KEY = "wam_player_last_played_v1";
+      var lastSavedAt = 0;
+      var currentIndex = 0;
+      var isShuffle = true;
+      var isLoop = false;
+
+      if (!audio || !select) {
+        return;
+      }
+
+      tracks.forEach(function (name, i) {
+        var option = document.createElement("option");
+        option.value = String(i);
+        option.textContent = toTrackLabel(name);
+        select.appendChild(option);
+      });
+
+      function updateToolStateUi() {
+        shuffleBtn.setAttribute("aria-pressed", isShuffle ? "true" : "false");
+        loopBtn.setAttribute("aria-pressed", isLoop ? "true" : "false");
+      }
+
+      function findRandom(excludeIndex) {
+        if (tracks.length <= 1) {
+          return 0;
+        }
+        var next = excludeIndex;
+        while (next === excludeIndex) {
+          next = Math.floor(Math.random() * tracks.length);
+        }
+        return next;
+      }
+
+      function savePlaybackState() {
+        var safeTime = Number.isFinite(audio.currentTime) ? Math.max(0, audio.currentTime) : 0;
+        var payload = {
+          trackIndex: currentIndex,
+          currentTime: safeTime,
+          timestamp: Date.now()
+        };
+        try {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        } catch (error) {
+          // Ignore storage failures (private mode/quota/security).
+        }
+      }
+
+      function loadPlaybackState() {
+        try {
+          var raw = localStorage.getItem(STORAGE_KEY);
+          if (!raw) {
+            return null;
+          }
+          var parsed = JSON.parse(raw);
+          if (!parsed || !Number.isFinite(parsed.trackIndex)) {
+            return null;
+          }
+          if (parsed.trackIndex < 0 || parsed.trackIndex >= tracks.length) {
+            return null;
+          }
+          var savedTime = Number.isFinite(parsed.currentTime) ? Math.max(0, parsed.currentTime) : 0;
+          var savedAt = Number.isFinite(parsed.timestamp) ? parsed.timestamp : Date.now();
+          return {
+            trackIndex: parsed.trackIndex,
+            currentTime: savedTime,
+            timestamp: savedAt
+          };
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function playIndex(index, manual, resumeAtTime) {
+        if (!Number.isFinite(index) || index < 0 || index >= tracks.length) {
+          return;
+        }
+        currentIndex = index;
+        select.selectedIndex = index;
+        audio.pause();
+        audio.src = toTrackSrc(tracks[index]);
+        audio.loop = isLoop;
+        audio.load();
+        if (Number.isFinite(resumeAtTime) && resumeAtTime > 0) {
+          audio.addEventListener("loadedmetadata", function onLoadedMeta() {
+            audio.removeEventListener("loadedmetadata", onLoadedMeta);
+            var maxSeek = Number.isFinite(audio.duration) && audio.duration > 1 ? Math.max(0, audio.duration - 1) : resumeAtTime;
+            audio.currentTime = Math.min(resumeAtTime, maxSeek);
+          });
+        }
+        if (manual) {
+          audio.muted = false;
+        }
+        audio.play().catch(function () {
+          audio.muted = true;
+          audio.play().catch(function () {});
+        });
+        savePlaybackState();
+      }
+
+      function downloadCurrentTrack() {
+        var name = tracks[currentIndex];
+        if (!name) {
+          return;
+        }
+        var a = document.createElement("a");
+        a.href = toTrackSrc(name);
+        a.download = name;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      }
+
+      function makeDraggable(node, handle) {
+        if (!node || !handle) {
+          return;
+        }
+        var dragging = false;
+        var moved = false;
+        var offsetX = 0;
+        var offsetY = 0;
+        var activePointerId = null;
+
+        function clamp(value, min, max) {
+          return Math.min(Math.max(value, min), max);
+        }
+
+        function start(clientX, clientY) {
+          var rect = node.getBoundingClientRect();
+          dragging = true;
+          moved = false;
+          offsetX = clientX - rect.left;
+          offsetY = clientY - rect.top;
+        }
+
+        function move(clientX, clientY) {
+          if (!dragging) {
+            return;
+          }
+          var w = node.offsetWidth;
+          var h = node.offsetHeight;
+          var left = clamp(clientX - offsetX, 0, window.innerWidth - w);
+          var top = clamp(clientY - offsetY, 0, window.innerHeight - h);
+          node.style.left = left + "px";
+          node.style.top = top + "px";
+          moved = true;
+        }
+
+        function end() {
+          dragging = false;
+          window.setTimeout(function () {
+            moved = false;
+          }, 0);
+        }
+
+        handle.addEventListener("pointerdown", function (event) {
+          if (event.target instanceof Element && event.target.closest("#player-header-actions")) {
+            return;
+          }
+          start(event.clientX, event.clientY);
+          activePointerId = event.pointerId;
+        });
+
+        document.addEventListener("pointermove", function (event) {
+          if (!dragging) {
+            return;
+          }
+          if (activePointerId !== null && event.pointerId !== activePointerId) {
+            return;
+          }
+          move(event.clientX, event.clientY);
+        });
+
+        document.addEventListener("pointerup", function (event) {
+          if (activePointerId !== null && event.pointerId !== activePointerId) {
+            return;
+          }
+          activePointerId = null;
+          end();
+        });
+
+        document.addEventListener("pointercancel", function () {
+          activePointerId = null;
+          end();
+        });
+
+        handle.addEventListener("click", function (event) {
+          if (moved) {
+            event.preventDefault();
+          }
+        }, true);
+      }
+
+      select.addEventListener("change", function () {
+        playIndex(Number(select.value), true);
+      });
+
+      shuffleBtn.addEventListener("click", function () {
+        isShuffle = !isShuffle;
+        updateToolStateUi();
+      });
+
+      loopBtn.addEventListener("click", function () {
+        isLoop = !isLoop;
+        audio.loop = isLoop;
+        updateToolStateUi();
+      });
+
+      if (aboutBtn) {
+        aboutBtn.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          alert("W@M Player v1.0\\nShuffle + loop controls\\nSelect and play tracks from the dropdown.");
+        });
+      }
+
+      if (downloadCurrentBtn) {
+        downloadCurrentBtn.addEventListener("click", function (event) {
+          event.preventDefault();
+          event.stopPropagation();
+          downloadCurrentTrack();
+        });
+      }
+
+      audio.addEventListener("ended", function () {
+        if (isLoop) {
+          return;
+        }
+        var next = isShuffle ? findRandom(currentIndex) : (currentIndex + 1) % tracks.length;
+        playIndex(next, false, 0);
+      });
+
+      audio.addEventListener("timeupdate", function () {
+        var now = Date.now();
+        if (now - lastSavedAt < 2000) {
+          return;
+        }
+        lastSavedAt = now;
+        savePlaybackState();
+      });
+
+      audio.addEventListener("pause", savePlaybackState);
+      audio.addEventListener("seeking", savePlaybackState);
+      window.addEventListener("beforeunload", savePlaybackState);
+      window.addEventListener("pagehide", savePlaybackState);
+
+      document.addEventListener("pointerdown", function () {
+        if (audio.muted) {
+          audio.muted = false;
+        }
+      }, { passive: true });
+
+      updateToolStateUi();
+      var resumeState = loadPlaybackState();
+      if (resumeState) {
+        playIndex(resumeState.trackIndex, false, resumeState.currentTime);
+      } else {
+        playIndex(0, false, 0);
+      }
+      makeDraggable(audioDock, dragHandle);
+    })();
+  </script>
+</body>
+</html>

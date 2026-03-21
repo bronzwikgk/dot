@@ -804,25 +804,25 @@
       var thumbsHost = document.getElementById("bg-thumbs");
       var currentCredit = document.getElementById("photo-credit-current");
       var imageFiles = [
-        "adam-sherez-Txge5z8jxmY-unsplash.jpg",
+        "1_adam-sherez-Txge5z8jxmY-unsplash.jpg",
         "aiden-marples-Udu9NgiNFk8-unsplash.jpg",
         "alok-sharma-pzsz8e1IMvo-unsplash.jpg",
-        "ashwini-chaudhary-monty-59WyLiVmiCo-unsplash.jpg",
+        "3_ashwini-chaudhary-monty-59WyLiVmiCo-unsplash.jpg",
         "austin-neill-hgO1wFPXl3I-unsplash.jpg",
-        "chris-7WfcHibcR3Y-unsplash.jpg",
-        "debabrata-patra-QBdIEE_eU7g-unsplash.jpg",
-        "dibakar-roy-siaJVOP57dk-unsplash.jpg",
+        "7_chris-7WfcHibcR3Y-unsplash.jpg",
+        "8_debabrata-patra-QBdIEE_eU7g-unsplash.jpg",
+        "9_dibakar-roy-siaJVOP57dk-unsplash.jpg",
         "himanshu-FhmeUZKBx5s-unsplash.jpg",
         "karthikeyan-k-xXKnF0yYNNE-unsplash.jpg",
-        "pexels-brett-sayles-1277547.jpg",
-        "pexels-kevinbidwell-1427368.jpg",
+        "pexels-zamanisahudi-101764.jpg",
+        "pexels-reyna-1835656.jpg",
         "raja-a-qhrKRd5Td34-unsplash.jpg",
         "rashmi-bhatia-1jOzM7chGhE-unsplash.jpg",
         "sergey-vinogradov-HMcOR_nwyNA-unsplash.jpg",
-        "shrikant-ambawale-8kpjs_2xPN0-unsplash.jpg",
+        "13_shrikant-ambawale-8kpjs_2xPN0-unsplash.jpg",
         "sreekumar-pillai-SzVfJkiuVu0-unsplash.jpg",
         "swastik-arora-XNQtAngSjRg-unsplash.jpg",
-        "yogesh-pedamkar-MuFn69FbyzE-unsplash.jpg",
+        "12_yogesh-pedamkar-MuFn69FbyzE-unsplash.jpg",
       ];
 
       function toTitle(text) {
@@ -831,25 +831,27 @@
 
       function parsePhotographer(file) {
         var base = file.replace(/\.[^.]+$/, "");
-        if (base.indexOf("-unsplash") > -1) {
-          var raw = base.replace(/-unsplash$/, "").replace(/-[A-Za-z0-9_]{8,}$/, "");
+        var cleanBase = base.replace(/^\d+[_-]+/, "");
+        if (cleanBase.indexOf("-unsplash") > -1) {
+          var raw = cleanBase.replace(/-unsplash$/, "").replace(/-[A-Za-z0-9_]{8,}$/, "");
           return toTitle(raw.replace(/-/g, " "));
         }
-        if (base.indexOf("pexels-") === 0) {
-          var pexelsRaw = base.replace(/^pexels-/, "").replace(/-\d+(?:-\d+)*$/, "");
+        if (cleanBase.indexOf("pexels-") === 0) {
+          var pexelsRaw = cleanBase.replace(/^pexels-/, "").replace(/-\d+(?:-\d+)*$/, "");
           return toTitle(pexelsRaw.replace(/-/g, " "));
         }
-        if (base.indexOf("photo-") === 0) {
+        if (cleanBase.indexOf("photo-") === 0) {
           return "Unsplash Contributor";
         }
-        return toTitle(base.replace(/-\d+(?:-\d+)*$/, "").replace(/-/g, " "));
+        return toTitle(cleanBase.replace(/-\d+(?:-\d+)*$/, "").replace(/-/g, " "));
       }
 
       function parseSource(file) {
-        if (file.indexOf("-unsplash") > -1 || file.indexOf("photo-") === 0) {
+        var cleanFile = file.replace(/^\d+[_-]+/, "");
+        if (cleanFile.indexOf("-unsplash") > -1 || cleanFile.indexOf("photo-") === 0) {
           return "https://unsplash.com";
         }
-        if (file.indexOf("pexels-") === 0) {
+        if (cleanFile.indexOf("pexels-") === 0) {
           return "https://www.pexels.com";
         }
         return "#";
