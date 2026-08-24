@@ -54,7 +54,7 @@ class MemoryDriver {
     if (keys.length > 0) {
       records = records.filter(record => keys.every(key => record[key] === filter[key]));
     }
-    return { ok: true, data: records };
+    return { ok: true, data: records.map(record => ({ ...record })) };
   }
 }
 
@@ -163,6 +163,12 @@ export class ActionEntity {
       if (record && record[idField] !== undefined) {
         this._touchCache(record[idField], record);
       }
+    }
+    if (Array.isArray(result)) {
+      return records.map(record => this._cloneRecord(record));
+    }
+    if (result && result.data) {
+      return { ...result, data: records.map(record => this._cloneRecord(record)) };
     }
     return result;
   }
