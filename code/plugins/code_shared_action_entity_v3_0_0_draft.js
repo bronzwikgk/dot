@@ -67,10 +67,15 @@ export class ActionEntity {
     this.cacheLimit = options.cacheLimit || this.config.cacheLimit || 500;
   }
 
+  _cloneRecord(value) {
+    if (!value || typeof value !== 'object') return value;
+    return { ...value };
+  }
+
   _touchCache(key, value) {
     if (!key) return;
     if (this.cache.has(key)) this.cache.delete(key);
-    this.cache.set(key, value);
+    this.cache.set(key, this._cloneRecord(value));
     if (this.cache.size > this.cacheLimit) {
       const oldestKey = this.cache.keys().next().value;
       this.cache.delete(oldestKey);
@@ -124,12 +129,12 @@ export class ActionEntity {
     if (this.cache.has(id)) {
       const cached = this.cache.get(id);
       this._touchCache(id, cached);
-      return cached;
+      return this._cloneRecord(cached);
     }
     const result = await this.driver.read(id, options);
     if (!result) throw new Error(`${this.name} with id '${id}' not found.`);
     this._touchCache(id, result);
-    return result;
+    return this._cloneRecord(result);
   }
 
   async update(id, data, options = {}) {

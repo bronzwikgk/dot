@@ -31,16 +31,22 @@ export class Runner {
   }
 
   registerPlan(name, plan) {
-    const prepared = { ...plan };
-    if (!prepared.kind) {
-      prepared.kind = Array.isArray(prepared.steps) ? 'ast' : Array.isArray(prepared.tasks) ? 'dag' : 'unknown';
-    }
+    const prepared = this._preparePlan(plan);
     this.plans[name] = prepared;
     return prepared;
   }
 
+  _preparePlan(plan) {
+    if (!plan) return plan;
+    const prepared = { ...plan };
+    if (!prepared.kind) {
+      prepared.kind = Array.isArray(prepared.steps) ? 'ast' : Array.isArray(prepared.tasks) ? 'dag' : 'unknown';
+    }
+    return prepared;
+  }
+
   async run(planOrName, input = {}, parentSession = null) {
-    const plan = typeof planOrName === 'string' ? this.plans[planOrName] : planOrName;
+    const plan = typeof planOrName === 'string' ? this.plans[planOrName] : this._preparePlan(planOrName);
     if (!plan) {
       throw new Error(`${this.entityLabel} '${planOrName}' not found`);
     }
@@ -245,32 +251,45 @@ export class Runner {
       return [];
     }
     const sorted = [];
-    const visited = {};
+    const state = {};
     const taskMap = {};
     for (const task of tasks) {
+      if (!task.task_id) {
+        throw new Error('[SYS-06] DAG task is missing task_id');
+      }
+      if (taskMap[task.task_id]) {
+        throw new Error(`[SYS-06] Duplicate DAG task id '${task.task_id}'`);
+      }
       taskMap[task.task_id] = task;
     }
     for (const task of tasks) {
-      if (!visited[task.task_id]) {
-        this._visitTask(task.task_id, taskMap, visited, sorted);
+      if (!state[task.task_id]) {
+        this._visitTask(task.task_id, taskMap, state, sorted, []);
       }
     }
     return sorted;
   }
 
-  _visitTask(taskId, taskMap, visited, sorted) {
-    visited[taskId] = true;
+  _visitTask(taskId, taskMap, state, sorted, path) {
     const task = taskMap[taskId];
-    if (task && task.dependencies) {
+    if (!task) {
+      throw new Error(`[SYS-06] DAG dependency '${taskId}' not found`);
+    }
+    if (state[taskId] === 'visiting') {
+      throw new Error(`[SYS-06] DAG cycle detected: ${path.concat(taskId).join(' -> ')}`);
+    }
+    if (state[taskId] === 'visited') {
+      return;
+    }
+
+    state[taskId] = 'visiting';
+    if (task.dependencies) {
       for (const depId of task.dependencies) {
-        if (!visited[depId]) {
-          this._visitTask(depId, taskMap, visited, sorted);
-        }
+        this._visitTask(depId, taskMap, state, sorted, path.concat(taskId));
       }
     }
-    if (task) {
-      sorted.push(task);
-    }
+    state[taskId] = 'visited';
+    sorted.push(task);
   }
 
   getSessions() {

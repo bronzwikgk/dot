@@ -5,12 +5,12 @@
  * @changelog - 2026-08-24: 3.0.0: merged array_concatenation, array_slicing, filtering, train_test_split into one survivor
  */
 export class CollectionUtil {
-  constructor(config) {
+  constructor(config = {}) {
     this.config = config || {};
-    this.trainRatio = config.trainRatio || 0.8;
-    this.testRatio = config.testRatio || 0.2;
-    this.shuffle = config.shuffle || false;
-    this.seed = config.seed || null;
+    this.trainRatio = this.config.trainRatio ?? 0.8;
+    this.testRatio = this.config.testRatio ?? 0.2;
+    this.shuffle = this.config.shuffle || false;
+    this.seed = this.config.seed || null;
   }
 
   // from array_concatenation
