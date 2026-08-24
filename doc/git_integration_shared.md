@@ -33,6 +33,7 @@ Each major semantic version lives on its own long-lived branch containing the **
 | `v2` | Complete shared v2 code: plugins, utilities, pipelines | Lives until v2 is retired |
 | `v3` | Complete shared v3 code | Created on major bump |
 | `master` | Mirror of current latest stable version | Permanent |
+| `wip_dot` | Work in progress; validated work promotes into the active version branch | Long-lived rolling |
 
 ### 3.2 Rules
 
@@ -46,6 +47,7 @@ Each major semantic version lives on its own long-lived branch containing the **
 | B6 | No routine merges between version branches; port fixes deliberately via cherry-pick if needed |
 | B7 | `master` fast-forwards to a version branch head exactly at each release |
 | B8 | Every exact release is pinned with an annotated tag |
+| B9 | All new work commits land on `wip_dot`; promote into the active version branch only after validation |
 
 ### 3.3 Structure Snapshot per Branch
 
