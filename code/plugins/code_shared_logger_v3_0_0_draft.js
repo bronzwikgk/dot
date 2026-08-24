@@ -12,14 +12,14 @@
  * @changelog - 2026-08-24: 3.0.0: promoted code_shared_logger_v2_2_0_draft to class form; absorbs the metrics shim duty directly (plugin metrics deleted)
  */
 class Logger {
-  constructor(config) {
+  constructor(config = {}) {
     this.config = config || {};
-    this.ceiling = this.config.ceiling || 200;
+    this.ceiling = Number.isFinite(this.config.ceiling) && this.config.ceiling > 0 ? Math.floor(this.config.ceiling) : 200;
     this.lines = [];
   }
 
   push(level, message_text, details) {
-    this.lines.push({ at: new Date().toISOString(), level, message: message_text, details: details || null });
+    this.lines.push({ at: new Date().toISOString(), level, message: message_text, details: details ?? null });
     if (this.lines.length > this.ceiling) this.lines.shift();
   }
 
