@@ -151,15 +151,28 @@ export class CollectionUtil {
     var index = 0;
     var count = array.length;
     while (index < count) { result.push(array[index]); index = index + 1; }
+    var random = this.seed === null || this.seed === undefined ? Math.random : this._seededRandom(this.seed);
     var currentIndex = result.length - 1;
     while (currentIndex > 0) {
-      var randomIndex = Math.floor(Math.random() * (currentIndex + 1));
+      var randomIndex = Math.floor(random() * (currentIndex + 1));
       var temp = result[currentIndex];
       result[currentIndex] = result[randomIndex];
       result[randomIndex] = temp;
       currentIndex = currentIndex - 1;
     }
     return result;
+  }
+  _seededRandom(seed) {
+    var state = Number(seed);
+    if (!Number.isFinite(state)) {
+      state = String(seed).split('').reduce(function (total, ch) { return total + ch.charCodeAt(0); }, 0);
+    }
+    state = Math.abs(Math.floor(state)) % 2147483647;
+    if (state === 0) state = 1;
+    return function () {
+      state = (state * 16807) % 2147483647;
+      return (state - 1) / 2147483646;
+    };
   }
   splitWithLabels(data, labels) {
     if (!data || data.length === 0) return { train_data: [], test_data: [], train_labels: [], test_labels: [], train_indices: [], test_indices: [] };
