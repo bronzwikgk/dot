@@ -1,0 +1,51 @@
+<!-- ============================================================
+     File:     dataset_of_testing_edges_in_shared_v2.dataset
+     Project:  shared_v2
+     Category: testing / edges
+     Type:     dataset
+
+     PURPOSE
+     - Declares the edge case rule for each data type.
+     - Rule: every parameter is swept with every edge literal of its
+       declared type while remaining parameters stay at their mid range
+       sample value. One additional row applies the first edge of every
+       parameter simultaneously.
+     - Values may be any javascript literal; json unparseable literals
+       such as NaN and Infinity still embed correctly because the raw
+       text is used.
+
+     CONTENTS
+     - testing_edge_types : category list (D3)
+     - testing_edge_values  : type entries, pipe format
+         type:<name> || <literal> || <literal> || ...
+
+     RELATIONS
+     - Consumed by code_shared_test_generation (edge_bank_strings option)
+     - Falls back to first sample values when absent
+     - Used by pipeline system_validate_and_test_code_v2_2_0.md stage 5
+
+     CHANGELOG
+     - [2026-08-24] [agent_gate_g1_run] initial(7) edge case rule layer
+     - [2026-08-24] [agent_gate_g1_run] number edge 9007199254740991 replaced
+       with 65536; full max safe integer caused out of memory crashes in
+       allocation heavy functions (array_slicing, formula) during the full
+       sweep. Boundary intent kept via Infinity and NaN edges.
+============================================================ -->
+
+const testing_edge_types = [
+   "primitives",   // string, number, boolean, any
+   "collections",  // arrays and plain objects
+];
+
+const testing_edge_values_primitives = [
+   "type:string || \"\" || \" \" || \"\\t\" || \"0\" || \"null\"",
+   "type:number || 0 || -1 || NaN || Infinity || -Infinity || 65536",
+   "type:boolean || false || true",
+   "type:any || null || undefined",
+];
+
+const testing_edge_values_collections = [
+   "type:array<number> || [] || [null]",
+   "type:array<string> || [] || [\"\"]",
+   "type:object || {} || null",
+];
