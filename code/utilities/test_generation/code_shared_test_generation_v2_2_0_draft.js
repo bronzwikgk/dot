@@ -166,6 +166,19 @@
   }
 
   function generate_unit_plan(sig, templates, sample_entries, file_flags, edge_entries) {
+    if (sig.kind === "constructor") {
+      return {
+        name: sig.name,
+        container: sig.container,
+        kind: sig.kind,
+        archetype: "constructor",
+        confidence: sig.confidence,
+        param_types: param_types_of(sig),
+        return_type: sig.return_type,
+        async: !!(sig.traits && sig.traits.is_async),
+        cases: [{ kind: "constructor", args: build_arg_cases(sig, sample_entries)[0] || [], note: "construct" }]
+      };
+    }
     var template = select_template(templates, sig.archetype);
     var matrix_props = template.properties.filter(function (p) {
       return p !== "edge_safety" && allowed_properties(sig, file_flags).indexOf(p) !== -1;
@@ -191,8 +204,22 @@
       confidence: sig.confidence,
       param_types: param_types_of(sig),
       return_type: sig.return_type,
+      async: !!(sig.traits && sig.traits.is_async),
       cases: cases
     };
+  }
+
+  function summarize_plan(units) {
+    var summary = { units: units.length, cases: 0, by_kind: {}, by_archetype: {}, skipped: 0 };
+    for (var i = 0; i < units.length; i++) {
+      var unit = units[i];
+      summary.by_archetype[unit.archetype] = (summary.by_archetype[unit.archetype] || 0) + 1;
+      for (var c = 0; c < unit.cases.length; c++) {
+        summary.cases += 1;
+        summary.by_kind[unit.cases[c].kind] = (summary.by_kind[unit.cases[c].kind] || 0) + 1;
+      }
+    }
+    return summary;
   }
 
   function generate_test_plan(signatures, template_bank_strings, sample_bank_strings, options) {
@@ -213,6 +240,7 @@
       module_kind: opts.module_kind || "named_object",
       export_style: opts.export_style || "named_object",
       exported_names: opts.exported_names || [],
+      summary: summarize_plan(units),
       units: units
     };
   }
@@ -230,9 +258,9 @@
 
   function render_attempt_source() {
     return [
-      "function __attempt(name, args) {",
+      "async function __attempt(name, args) {",
       "  try {",
-      "    return { threw: false, value: __serialize(__call(name, args)) };",
+      "    return { threw: false, value: __serialize(await __call(name, args)) };",
       "  } catch (error) {",
       "    const label = error && error.constructor ? error.constructor.name : String(error);",
       "    return { threw: true, value: \"__threw__:\" + label + \":\" + ((error && error.message) || \"\") };",
@@ -243,8 +271,15 @@
 
   function render_case_body(unit, case_entry, case_index) {
     var call_args = case_entry.args.join(", ");
-    var attempt = "__attempt(\"" + unit.name + "\", __args)";
+    var attempt = "await __attempt(\"" + unit.name + "\", __args)";
     var setup = "  const __args = [" + call_args + "];";
+    if (case_entry.kind === "constructor") {
+      return [
+        setup,
+        "  const result = await __construct(__args);",
+        "  assert.strictEqual(result.threw, false, \"constructor rejected generated arguments: \" + result.value);"
+      ].join("\n");
+    }
     if (case_entry.kind === "determinism") {
       return [
         setup,
@@ -280,10 +315,9 @@
     }
     return [
       setup,
-      "  try {",
-      "    __call(\"" + unit.name + "\", __args);",
-      "  } catch (error) {",
-      "    assert.ok(error instanceof Error, \"threw non Error value: \" + String(error));",
+      "  const result = " + attempt + ";",
+      "  if (result.threw) {",
+      "    assert.ok(result.value.indexOf(\"__threw__:Error:\") === 0 || result.value.indexOf(\"__threw__:RangeError:\") === 0 || result.value.indexOf(\"__threw__:TypeError:\") === 0, \"edge case threw unexpected value: \" + result.value);",
       "  }"
     ].join("\n");
   }
@@ -333,21 +367,27 @@
       lines.push("const __ctor = " + ctor_expr + ";");
       lines.push("let __instance = null;");
       lines.push("try { __instance = new __ctor(); } catch (__e0) { try { __instance = new __ctor({}); } catch (__e1) {} }");
-      lines.push("function __call(name, args) {");
+      lines.push("async function __construct(args) {");
+      lines.push("  try { return { threw: false, value: __serialize(new __ctor(...args)) }; }");
+      lines.push("  catch (error) { const label = error && error.constructor ? error.constructor.name : String(error); return { threw: true, value: \"__threw__:\" + label + \":\" + ((error && error.message) || \"\") }; }");
+      lines.push("}");
+      lines.push("async function __call(name, args) {");
       lines.push("  if (__instance === null) throw new Error(\"target unavailable: constructor rejected no-arg and object-arg instantiation\");");
       lines.push("  if (typeof __instance[name] !== \"function\") throw new Error(\"missing method \" + name);");
-      lines.push("  return __instance[name].apply(__instance, args);");
+      lines.push("  return await __instance[name].apply(__instance, args);");
       lines.push("}");
     } else if (is_esm) {
-      lines.push("function __call(name, args) {");
+      lines.push("async function __construct(args) { return { threw: true, value: \"__threw__:Error:no constructor target\" }; }");
+      lines.push("async function __call(name, args) {");
       lines.push("  const fn = mod[name] || (mod.default && mod.default[name]);");
       lines.push("  if (typeof fn !== \"function\") throw new Error(\"missing export \" + name);");
-      lines.push("  return fn.apply(null, args);");
+      lines.push("  return await fn.apply(null, args);");
       lines.push("}");
     } else {
-      lines.push("function __call(name, args) {");
+      lines.push("async function __construct(args) { return { threw: true, value: \"__threw__:Error:no constructor target\" }; }");
+      lines.push("async function __call(name, args) {");
       lines.push("  if (typeof mod[name] !== \"function\") throw new Error(\"missing export \" + name);");
-      lines.push("  return mod[name].apply(null, args);");
+      lines.push("  return await mod[name].apply(null, args);");
       lines.push("}");
     }
     lines.push("");
@@ -359,7 +399,7 @@
       var unit = plan.units[u];
       for (var c = 0; c < unit.cases.length; c++) {
         var entry = unit.cases[c];
-        lines.push("test(\"" + unit.name + " [" + entry.kind + "] " + entry.note + "\", () => {");
+        lines.push("test(\"" + unit.name + " [" + entry.kind + "] " + entry.note + "\", async () => {");
         lines.push(render_case_body(unit, entry, c));
         lines.push("});");
         lines.push("");
@@ -372,6 +412,14 @@
     generate_test_plan: generate_test_plan,
     render_test_file: render_test_file,
     parse_template_entry: parse_template_entry,
-    parse_sample_entry: parse_sample_entry
+    parse_sample_entry: parse_sample_entry,
+    summarize_plan: summarize_plan
   };
 });
+
+export const generate_test_plan = globalThis.an_utility_test_generation.generate_test_plan;
+export const render_test_file = globalThis.an_utility_test_generation.render_test_file;
+export const parse_template_entry = globalThis.an_utility_test_generation.parse_template_entry;
+export const parse_sample_entry = globalThis.an_utility_test_generation.parse_sample_entry;
+export const summarize_plan = globalThis.an_utility_test_generation.summarize_plan;
+export default globalThis.an_utility_test_generation;

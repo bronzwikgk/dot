@@ -107,6 +107,20 @@
     return "unknown";
   }
 
+  function infer_return_from_source(fn_record) {
+    var source = fn_record.source || "";
+    if (/\breturn\s+(true|false)\s*;?/.test(source)) return "boolean";
+    if (/\breturn\s+[-+]?\d+(\.\d+)?\s*;?/.test(source)) return "number";
+    if (/\breturn\s+["'`]/.test(source)) return "string";
+    if (/\breturn\s+\[/.test(source)) return "array<any>";
+    if (/\breturn\s+\{/.test(source)) return "object";
+    if (/\breturn\s+.*\.(map|filter|slice|concat|split)\s*\(/.test(source)) return "array<any>";
+    if (/\breturn\s+.*\.(join|trim|replace|toLowerCase|toUpperCase)\s*\(/.test(source)) return "string";
+    if (/\breturn\s+.*\.(length|size)\b/.test(source)) return "number";
+    if (/\breturn\s+.*(===|!==|>=|<=|>|<|&&|\|\|)\s*/.test(source)) return "boolean";
+    return "unknown";
+  }
+
   function classify_archetype(name, param_types, return_type) {
     var has_callback = param_types.indexOf("function") !== -1;
     var first = param_types[0] || "none";
@@ -143,7 +157,8 @@
       }
     }
 
-    var return_type = jsdoc.returns || guess_return_type(fn_record.name);
+    var source_return = infer_return_from_source(fn_record);
+    var return_type = jsdoc.returns || (source_return !== "unknown" ? source_return : guess_return_type(fn_record.name));
     if (!jsdoc.returns && return_type === "unknown") confidence = "unknown";
 
     var enriched = {};
@@ -165,8 +180,8 @@
   }
 
   function infer_signatures(fn_records) {
-    return fn_records.filter(function (f) {
-      return f.kind === "function" || f.kind === "method";
+    return (fn_records || []).filter(function (f) {
+      return f.kind === "function" || f.kind === "method" || f.kind === "constructor";
     }).map(infer_signature);
   }
 
@@ -174,6 +189,14 @@
     infer_signature: infer_signature,
     infer_signatures: infer_signatures,
     classify_archetype: classify_archetype,
-    normalize_type_token: normalize_type_token
+    normalize_type_token: normalize_type_token,
+    infer_return_from_source: infer_return_from_source
   };
 });
+
+export const infer_signature = globalThis.an_utility_signature_inference.infer_signature;
+export const infer_signatures = globalThis.an_utility_signature_inference.infer_signatures;
+export const classify_archetype = globalThis.an_utility_signature_inference.classify_archetype;
+export const normalize_type_token = globalThis.an_utility_signature_inference.normalize_type_token;
+export const infer_return_from_source = globalThis.an_utility_signature_inference.infer_return_from_source;
+export default globalThis.an_utility_signature_inference;

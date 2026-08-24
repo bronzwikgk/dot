@@ -18,7 +18,7 @@
   root.an_utility_code_inspector = api;
 })(typeof self !== "undefined" ? self : globalThis, function () {
 
-  var METHOD_KEYWORDS = "constructor if for while switch catch function return".split(" ");
+  var METHOD_KEYWORDS = "if for while switch catch function return".split(" ");
 
   function count_char(text, ch) {
     var total = 0;
@@ -87,6 +87,7 @@
     var depth = 0;
     for (var i = start_line; i < lines.length; i++) {
       depth += count_char(lines[i], "{") - count_char(lines[i], "}");
+      if (i === start_line && depth <= 0 && lines[i].indexOf("{") !== -1) return i;
       if (i > start_line && depth <= 0) return i;
     }
     return lines.length - 1;
@@ -156,12 +157,14 @@
     var classes = [];
 
     var class_ranges = [];
+    var exported_classes = [];
     for (var i = 0; i < lines.length; i++) {
-      var class_match = lines[i].match(/^\s*(?:export\s+default\s+|export\s+)?class\s+([A-Za-z_$][\w$]*)/);
+      var class_match = lines[i].match(/^\s*((?:export\s+default\s+|export\s+)?)class\s+([A-Za-z_$][\w$]*)/);
       if (class_match && depths[i] === 0) {
         var end = find_slice_end(lines, i);
-        class_ranges.push({ name: class_match[1], start: i, end: end });
-        classes.push(class_match[1]);
+        class_ranges.push({ name: class_match[2], start: i, end: end });
+        classes.push(class_match[2]);
+        if (class_match[1]) exported_classes.push(class_match[2]);
       }
     }
 
@@ -176,7 +179,7 @@
 
     for (var i = 0; i < lines.length; i++) {
       var container = inside_class(i);
-      var fn_match = lines[i].match(/^\s*(?:async\s+)?function\s+([A-Za-z_$][\w$]*)\s*\(([^)]*)\)\s*\{?/);
+      var fn_match = lines[i].match(/^\s*(?:export\s+)?(?:async\s+)?function\s+([A-Za-z_$][\w$]*)\s*\(([^)]*)\)\s*\{?/);
       var method_match = null;
       if (container) {
         method_match = lines[i].match(/^(\s+)(?:static\s+)?(?:async\s+)?([A-Za-z_$][\w$]*)\s*\(([^)]*)\)\s*\{/);
@@ -222,6 +225,7 @@
 
     var export_style = "unknown";
     var exported_names = [];
+    if (!export_class && exported_classes.length > 0) export_class = exported_classes[0];
     if (export_class) {
       export_style = "class";
       exported_names = functions.filter(function (f) {
@@ -631,3 +635,10 @@
     split_top_level: split_top_level
   };
 });
+
+export const inspect_source = globalThis.an_utility_code_inspector.inspect_source;
+export const inspect_source_ast = globalThis.an_utility_code_inspector.inspect_source_ast;
+export const inspect_source_auto = globalThis.an_utility_code_inspector.inspect_source_auto;
+export const parse_params = globalThis.an_utility_code_inspector.parse_params;
+export const split_top_level = globalThis.an_utility_code_inspector.split_top_level;
+export default globalThis.an_utility_code_inspector;

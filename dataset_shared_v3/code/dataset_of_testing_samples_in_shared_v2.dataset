@@ -30,14 +30,16 @@ const testing_sample_types = [
 ];
 
 const testing_sample_values_primitives = [
-   "type:string || \"alpha\" || \"hello world\" || \"\" || \"  spaced  \" || \"Alpha42\"",
-   "type:number || 0 || -1 || 42 || 3.14",
+   "type:string || \"alpha\" || \"hello world\" || \"\" || \"  spaced  \" || \"Alpha42\" || \"<tag>&value</tag>\"",
+   "type:number || 0 || -1 || 1 || 42 || 3.14 || 65536",
    "type:boolean || false || true",
-   "type:any || \"seed_value\"",
+   "type:function || (function stub(value) { return value; })",
+   "type:any || \"seed_value\" || null || {\"value\": 1}",
 ];
 
 const testing_sample_values_collections = [
-   "type:array<number> || [] || [3, 1, 2] || [0]",
-   "type:array<string> || [] || [\"b\", \"a\", \"c\"]",
-   "type:object || {} || {\"a\": 1}",
+   "type:array<any> || [] || [1, \"two\", null] || [{\"value\": 1}]",
+   "type:array<number> || [] || [3, 1, 2] || [0] || [-1, 0, 1]",
+   "type:array<string> || [] || [\"b\", \"a\", \"c\"] || [\"\", \"alpha\"]",
+   "type:object || {} || {\"a\": 1} || {\"value\": 1, \"label\": \"alpha\"}",
 ];
