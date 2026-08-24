@@ -14,12 +14,12 @@ It does not execute the inspected code.
 
 The inspector exposes a class API:
 
-- `new CodeInspector(config)`
-- `inspector.inspectSource(source_text)`
-- `inspector.inspectSourceAst(source_text)`
-- `inspector.inspectSourceAuto(source_text)`
-- `inspector.parseParams(param_text)`
-- `inspector.splitTopLevel(text, separator)`
+- `new code_inspector(config)`
+- `inspector.inspect_source(source_text)`
+- `inspector.inspect_source_ast(source_text)`
+- `inspector.inspect_source_auto(source_text)`
+- `inspector.parse_params(param_text)`
+- `inspector.split_top_level(text, separator)`
 
 It also keeps the older compatibility functions:
 
@@ -65,7 +65,7 @@ Avoid using it as a security scanner or full parser for TypeScript/JSX.
 - Legacy parser recognizes `export function` and `export async function`.
 - Legacy parser recognizes ESM named export lists such as `export { Logger, create_logger }`.
 - One-line source slices are no longer extended into the following function/method.
-- Added `CodeInspector` class export with constructor/config style while preserving existing function exports.
+- Added `code_inspector` class export with constructor/config style while preserving existing function exports.
 
 ## How It Was Tested
 

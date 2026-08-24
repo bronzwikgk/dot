@@ -643,37 +643,37 @@
   };
 });
 
-export class CodeInspector {
+export class code_inspector {
   constructor(config = {}) {
     this.config = config || {};
   }
 
-  inspectSource(sourceText) {
+  inspect_source(sourceText) {
     return globalThis.an_utility_code_inspector.inspect_source(sourceText);
   }
 
-  inspectSourceAst(sourceText) {
+  inspect_source_ast(sourceText) {
     return globalThis.an_utility_code_inspector.inspect_source_ast(sourceText);
   }
 
-  inspectSourceAuto(sourceText) {
+  inspect_source_auto(sourceText) {
     return globalThis.an_utility_code_inspector.inspect_source_auto(sourceText);
   }
 
-  parseParams(paramText) {
+  parse_params(paramText) {
     return globalThis.an_utility_code_inspector.parse_params(paramText);
   }
 
-  splitTopLevel(text, separator) {
+  split_top_level(text, separator) {
     return globalThis.an_utility_code_inspector.split_top_level(text, separator);
   }
 }
 
-const defaultInspector = new CodeInspector();
+const default_inspector = new code_inspector();
 
-export function inspect_source(sourceText) { return defaultInspector.inspectSource(sourceText); }
-export function inspect_source_ast(sourceText) { return defaultInspector.inspectSourceAst(sourceText); }
-export function inspect_source_auto(sourceText) { return defaultInspector.inspectSourceAuto(sourceText); }
-export function parse_params(paramText) { return defaultInspector.parseParams(paramText); }
-export function split_top_level(text, separator) { return defaultInspector.splitTopLevel(text, separator); }
-export default CodeInspector;
+export function inspect_source(sourceText) { return default_inspector.inspect_source(sourceText); }
+export function inspect_source_ast(sourceText) { return default_inspector.inspect_source_ast(sourceText); }
+export function inspect_source_auto(sourceText) { return default_inspector.inspect_source_auto(sourceText); }
+export function parse_params(paramText) { return default_inspector.parse_params(paramText); }
+export function split_top_level(text, separator) { return default_inspector.split_top_level(text, separator); }
+export default code_inspector;

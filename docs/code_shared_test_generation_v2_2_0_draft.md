@@ -14,13 +14,13 @@ It generates safety, regression, and behavioral checks. Without a contract file,
 
 The utility exposes a class API:
 
-- `new TestGenerator(config)`
-- `generator.generateTestPlan(signatures, template_bank_strings, sample_bank_strings, options)`
-- `generator.renderTestFile(plan, require_path, snapshot_path, options)`
-- `generator.parseTemplateEntry(entry_text)`
-- `generator.parseSampleEntry(entry_text)`
-- `generator.summarizePlan(units)`
-- `generator.shouldIncludeSignature(signature, options)`
+- `new test_generator(config)`
+- `generator.generate_test_plan(signatures, template_bank_strings, sample_bank_strings, options)`
+- `generator.render_test_file(plan, require_path, snapshot_path, options)`
+- `generator.parse_template_entry(entry_text)`
+- `generator.parse_sample_entry(entry_text)`
+- `generator.summarize_plan(units)`
+- `generator.should_include_signature(signature, options)`
 
 It also keeps the older compatibility functions:
 
@@ -51,7 +51,7 @@ Generated tests can cover:
 - Public-target selection is stricter: private/internal methods are skipped, class methods are generated only for class-style targets, and constructors are generated only when the class is targetable.
 - Stateful method names such as `create`, `update`, `delete`, and `query` avoid determinism/snapshot properties.
 - Plan summaries avoid prototype-key collisions such as the `constructor` key.
-- Added `TestGenerator` class export with constructor/config style while preserving existing function exports.
+- Added `test_generator` class export with constructor/config style while preserving existing function exports.
 - Sample fallback selection now guards entries with missing `type` values.
 
 ## When To Use It

@@ -33,7 +33,7 @@ Improve shared test generation subsystem
 
 Updated signature inference to match the shared utility design pattern:
 
-- Added `SignatureInferencer` class with constructor/config shape.
+- Added `signature_inferencer` class with constructor/config shape.
 - Added camelCase instance methods.
 - Kept existing snake_case function exports for compatibility.
 
@@ -50,4 +50,17 @@ test_generation class API checks passed
 1300 generated shared-utility tests
 1300 pass
 0 fail
+```
+
+## 2026-08-24 Snake Case Naming Follow-Up
+
+Renamed the public class API and instance methods to follow the snake_case-only project convention.
+
+```text
+SignatureInferencer -> signature_inferencer
+inferSignature -> infer_signature
+inferSignatures -> infer_signatures
+classifyArchetype -> classify_archetype
+normalizeTypeToken -> normalize_type_token
+inferReturnFromSource -> infer_return_from_source
 ```

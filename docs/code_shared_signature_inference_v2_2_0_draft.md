@@ -14,12 +14,12 @@ It is heuristic. It helps generate useful tests, but it does not prove correctne
 
 The utility exposes a class API:
 
-- `new SignatureInferencer(config)`
-- `inferencer.inferSignature(fn_record)`
-- `inferencer.inferSignatures(fn_records)`
-- `inferencer.classifyArchetype(name, param_types, return_type)`
-- `inferencer.normalizeTypeToken(raw_type)`
-- `inferencer.inferReturnFromSource(fn_record)`
+- `new signature_inferencer(config)`
+- `inferencer.infer_signature(fn_record)`
+- `inferencer.infer_signatures(fn_records)`
+- `inferencer.classify_archetype(name, param_types, return_type)`
+- `inferencer.normalize_type_token(raw_type)`
+- `inferencer.infer_return_from_source(fn_record)`
 
 It also keeps the older compatibility functions:
 
@@ -43,7 +43,7 @@ It uses:
 - Constructor records are now preserved for generated constructor tests.
 - Added simple body-based return inference from return statements.
 - `infer_signatures(null)` safely returns an empty list.
-- Added `SignatureInferencer` class export with constructor/config style while preserving existing function exports.
+- Added `signature_inferencer` class export with constructor/config style while preserving existing function exports.
 
 ## When To Use It
 

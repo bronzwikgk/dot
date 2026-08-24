@@ -446,46 +446,46 @@
   };
 });
 
-export class TestGenerator {
+export class test_generator {
   constructor(config = {}) {
     this.config = config || {};
   }
 
-  generateTestPlan(signatures, templateBankStrings, sampleBankStrings, options = {}) {
+  generate_test_plan(signatures, templateBankStrings, sampleBankStrings, options = {}) {
     return globalThis.an_utility_test_generation.generate_test_plan(signatures, templateBankStrings, sampleBankStrings, { ...this.config, ...options });
   }
 
-  renderTestFile(plan, requirePath, snapshotPath, options = {}) {
+  render_test_file(plan, requirePath, snapshotPath, options = {}) {
     return globalThis.an_utility_test_generation.render_test_file(plan, requirePath, snapshotPath, { ...this.config, ...options });
   }
 
-  parseTemplateEntry(entryText) {
+  parse_template_entry(entryText) {
     return globalThis.an_utility_test_generation.parse_template_entry(entryText);
   }
 
-  parseSampleEntry(entryText) {
+  parse_sample_entry(entryText) {
     return globalThis.an_utility_test_generation.parse_sample_entry(entryText);
   }
 
-  summarizePlan(units) {
+  summarize_plan(units) {
     return globalThis.an_utility_test_generation.summarize_plan(units);
   }
 
-  shouldIncludeSignature(signature, options = {}) {
+  should_include_signature(signature, options = {}) {
     return globalThis.an_utility_test_generation.should_include_signature(signature, { ...this.config, ...options });
   }
 }
 
-const defaultGenerator = new TestGenerator();
+const default_generator = new test_generator();
 
 export function generate_test_plan(signatures, templateBankStrings, sampleBankStrings, options) {
-  return defaultGenerator.generateTestPlan(signatures, templateBankStrings, sampleBankStrings, options);
+  return default_generator.generate_test_plan(signatures, templateBankStrings, sampleBankStrings, options);
 }
 export function render_test_file(plan, requirePath, snapshotPath, options) {
-  return defaultGenerator.renderTestFile(plan, requirePath, snapshotPath, options);
+  return default_generator.render_test_file(plan, requirePath, snapshotPath, options);
 }
-export function parse_template_entry(entryText) { return defaultGenerator.parseTemplateEntry(entryText); }
-export function parse_sample_entry(entryText) { return defaultGenerator.parseSampleEntry(entryText); }
-export function summarize_plan(units) { return defaultGenerator.summarizePlan(units); }
-export function should_include_signature(signature, options) { return defaultGenerator.shouldIncludeSignature(signature, options); }
-export default TestGenerator;
+export function parse_template_entry(entryText) { return default_generator.parse_template_entry(entryText); }
+export function parse_sample_entry(entryText) { return default_generator.parse_sample_entry(entryText); }
+export function summarize_plan(units) { return default_generator.summarize_plan(units); }
+export function should_include_signature(signature, options) { return default_generator.should_include_signature(signature, options); }
+export default test_generator;

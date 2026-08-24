@@ -46,7 +46,7 @@ Improve shared test generation subsystem
 
 Updated test generation to match the shared utility design pattern:
 
-- Added `TestGenerator` class with constructor/config shape.
+- Added `test_generator` class with constructor/config shape.
 - Added camelCase instance methods.
 - Kept existing snake_case function exports for compatibility.
 - Guarded fallback sample entries that do not have a `type`.
@@ -64,4 +64,18 @@ test_generation class API checks passed
 1300 generated shared-utility tests
 1300 pass
 0 fail
+```
+
+## 2026-08-24 Snake Case Naming Follow-Up
+
+Renamed the public class API and instance methods to follow the snake_case-only project convention.
+
+```text
+TestGenerator -> test_generator
+generateTestPlan -> generate_test_plan
+renderTestFile -> render_test_file
+parseTemplateEntry -> parse_template_entry
+parseSampleEntry -> parse_sample_entry
+summarizePlan -> summarize_plan
+shouldIncludeSignature -> should_include_signature
 ```

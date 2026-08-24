@@ -194,37 +194,37 @@
   };
 });
 
-export class SignatureInferencer {
+export class signature_inferencer {
   constructor(config = {}) {
     this.config = config || {};
   }
 
-  inferSignature(fnRecord) {
+  infer_signature(fnRecord) {
     return globalThis.an_utility_signature_inference.infer_signature(fnRecord);
   }
 
-  inferSignatures(fnRecords) {
+  infer_signatures(fnRecords) {
     return globalThis.an_utility_signature_inference.infer_signatures(fnRecords);
   }
 
-  classifyArchetype(name, paramTypes, returnType) {
+  classify_archetype(name, paramTypes, returnType) {
     return globalThis.an_utility_signature_inference.classify_archetype(name, paramTypes, returnType);
   }
 
-  normalizeTypeToken(rawType) {
+  normalize_type_token(rawType) {
     return globalThis.an_utility_signature_inference.normalize_type_token(rawType);
   }
 
-  inferReturnFromSource(fnRecord) {
+  infer_return_from_source(fnRecord) {
     return globalThis.an_utility_signature_inference.infer_return_from_source(fnRecord);
   }
 }
 
-const defaultInferencer = new SignatureInferencer();
+const default_inferencer = new signature_inferencer();
 
-export function infer_signature(fnRecord) { return defaultInferencer.inferSignature(fnRecord); }
-export function infer_signatures(fnRecords) { return defaultInferencer.inferSignatures(fnRecords); }
-export function classify_archetype(name, paramTypes, returnType) { return defaultInferencer.classifyArchetype(name, paramTypes, returnType); }
-export function normalize_type_token(rawType) { return defaultInferencer.normalizeTypeToken(rawType); }
-export function infer_return_from_source(fnRecord) { return defaultInferencer.inferReturnFromSource(fnRecord); }
-export default SignatureInferencer;
+export function infer_signature(fnRecord) { return default_inferencer.infer_signature(fnRecord); }
+export function infer_signatures(fnRecords) { return default_inferencer.infer_signatures(fnRecords); }
+export function classify_archetype(name, paramTypes, returnType) { return default_inferencer.classify_archetype(name, paramTypes, returnType); }
+export function normalize_type_token(rawType) { return default_inferencer.normalize_type_token(rawType); }
+export function infer_return_from_source(fnRecord) { return default_inferencer.infer_return_from_source(fnRecord); }
+export default signature_inferencer;

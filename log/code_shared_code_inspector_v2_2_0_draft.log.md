@@ -43,7 +43,7 @@ Improve shared test generation subsystem
 
 Updated the inspector to match the shared utility design pattern:
 
-- Added `CodeInspector` class with constructor/config shape.
+- Added `code_inspector` class with constructor/config shape.
 - Added camelCase instance methods.
 - Kept existing snake_case function exports for compatibility.
 
@@ -60,4 +60,15 @@ test_generation class API checks passed
 1300 generated shared-utility tests
 1300 pass
 0 fail
+```
+
+## 2026-08-24 Snake Case Naming Follow-Up
+
+Renamed the public class API and instance methods to follow the snake_case-only project convention.
+
+```text
+CodeInspector -> code_inspector
+inspectSource* -> inspect_source*
+parseParams -> parse_params
+splitTopLevel -> split_top_level
 ```
