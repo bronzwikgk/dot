@@ -5,9 +5,9 @@
  * @changelog - 2026-08-24: 3.0.0: merged mean_calculation, standard_deviation, standard_error, confidence_interval, weighted_mean, z_score_normalization
  */
 export class StatsUtil {
-  constructor(config) {
+  constructor(config = {}) {
     this.config = config || {};
-    this.zCritical = (config && config.zCritical) || 1.96;
+    this.zCritical = this.config.zCritical ?? 1.96;
   }
   mean(values) {
     if (!values || values.length === 0) return 0;
@@ -44,6 +44,7 @@ export class StatsUtil {
     return (rawValue - mean) / stdDev;
   }
   zScoreBatch(values, mean, stdDev) {
+    if (!values || values.length === 0) return [];
     var result = []; var index = 0; var count = values.length;
     while (index < count) { result.push(this.zScore(values[index], mean, stdDev)); index = index + 1; }
     return result;
