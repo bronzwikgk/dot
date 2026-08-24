@@ -1,15 +1,16 @@
 /**
  * @entity test_generation_utility
  * @meta project: shared_v2 | file_name: shared_v2/code/utilities/code_shared_test_generation_v2_2_0_draft.js | version: 2.2.0 | status: draft | author: ox-alpha
- * @objective generate deterministic regression test plans and runnable node test files from inferred signatures using a template bank and a sample data bank.
+ * @objective generate deterministic regression test plans and runnable node test files from inferred signatures using a template bank, a sample data bank and an edge case rule bank.
  * @purpose_and_problem_statement writing tests by hand does not scale across the utility library; generated tests give every pure function a baseline of determinism, immutability, snapshot and edge safety checks without human effort.
- * @usage const plan = generate_test_plan(signatures, templates, samples, options); const file_text = render_test_file(plan, require_path, snapshot_path);
+ * @usage const plan = generate_test_plan(signatures, templates, samples, { edge_bank_strings: edges }); const file_text = render_test_file(plan, require_path, snapshot_path);
  * @timing third stage of the validate and test pipeline after signature inference.
- * @scope_boundaries in_scope: bank entry parsing, argument matrix construction, property selection by traits, node:test file rendering. out_of_scope: executing tests, mutating targets, mocking frameworks.
+ * @scope_boundaries in_scope: bank entry parsing, argument matrix construction, rule driven edge sweeps per parameter type, property selection by traits, node:test file rendering for cjs and esm targets. out_of_scope: executing tests, mutating targets, mocking frameworks.
  * @dependencies none.
- * @keywords test, generation, snapshot, regression, harness
+ * @keywords test, generation, snapshot, regression, harness, edge cases
  * @invariants generation never executes the target module; rendered files are self contained and rerunnable; identical inputs yield identical plans.
  * @changelog - 2026-08-24: 2.2.0: initial draft
+ * @changelog - 2026-08-24: 2.2.0: edge case rule layer with dedicated edge bank and single parameter sweep
  */
 (function (root, factory) {
   const api = factory();
@@ -94,9 +95,47 @@
     }
     var mixed = per_param.map(function (list) { return list[Math.floor(list.length / 2)]; });
     matrix.push(mixed);
-    var edges = per_param.map(function (list) { return list[0]; });
-    matrix.push(edges);
     return matrix;
+  }
+
+  function build_edge_cases(sig, edge_entries, sample_entries) {
+    var types = param_types_of(sig);
+    if (sig.params.length === 0) return [[]];
+    var middles = [];
+    var edge_lists = [];
+    for (var i = 0; i < sig.params.length; i++) {
+      var param_type = types[i] || "any";
+      if (param_type === "function") {
+        middles.push(FUNCTION_STUB_SOURCE);
+        edge_lists.push([FUNCTION_STUB_SOURCE]);
+        continue;
+      }
+      var sample_values = values_for_type(sample_entries, param_type);
+      var mid = sample_values[Math.floor(sample_values.length / 2)] || { raw: "undefined" };
+      middles.push(mid.raw);
+      var source_bank = edge_entries.length > 0 ? edge_entries : sample_values.map(function (v) { return { type: null, values: [v] }; });
+      var edge_values = values_for_type(source_bank, param_type);
+      edge_lists.push(edge_values.length > 0 ? edge_values.map(function (v) { return v.raw; }) : [mid.raw]);
+    }
+
+    var rows = [edge_lists.map(function (list) { return list[0]; })];
+    for (var p = 0; p < sig.params.length; p++) {
+      for (var e = 0; e < edge_lists[p].length; e++) {
+        var sweep = middles.slice();
+        sweep[p] = edge_lists[p][e];
+        rows.push(sweep);
+      }
+    }
+
+    var seen_keys = {};
+    var unique_rows = [];
+    for (var r = 0; r < rows.length; r++) {
+      var key = rows[r].join("\u0001");
+      if (seen_keys[key]) continue;
+      seen_keys[key] = true;
+      unique_rows.push(rows[r]);
+    }
+    return unique_rows;
   }
 
   function param_types_of(sig) {
@@ -126,16 +165,22 @@
     return { archetype: archetype, properties: ["determinism", "immutability", "snapshot", "edge_safety"] };
   }
 
-  function generate_unit_plan(sig, templates, sample_entries, file_flags) {
+  function generate_unit_plan(sig, templates, sample_entries, file_flags, edge_entries) {
     var template = select_template(templates, sig.archetype);
-    var properties = template.properties.filter(function (p) {
-      return allowed_properties(sig, file_flags).indexOf(p) !== -1;
+    var matrix_props = template.properties.filter(function (p) {
+      return p !== "edge_safety" && allowed_properties(sig, file_flags).indexOf(p) !== -1;
     });
     var arg_cases = build_arg_cases(sig, sample_entries);
     var cases = [];
     for (var i = 0; i < arg_cases.length; i++) {
-      for (var p = 0; p < properties.length; p++) {
-        cases.push({ kind: properties[p], args: arg_cases[i], note: "argset_" + i });
+      for (var p = 0; p < matrix_props.length; p++) {
+        cases.push({ kind: matrix_props[p], args: arg_cases[i], note: "argset_" + i });
+      }
+    }
+    if (template.properties.indexOf("edge_safety") !== -1) {
+      var edge_rows = build_edge_cases(sig, edge_entries || [], sample_entries);
+      for (var e = 0; e < edge_rows.length; e++) {
+        cases.push({ kind: "edge_safety", args: edge_rows[e], note: "edge_" + e });
       }
     }
     return {
@@ -154,12 +199,13 @@
     var opts = options || {};
     var templates = template_bank_strings.map(parse_template_entry);
     var samples = sample_bank_strings.map(parse_sample_entry);
+    var edges = (opts.edge_bank_strings || []).map(parse_sample_entry);
     var units = [];
     for (var i = 0; i < signatures.length; i++) {
       var sig = signatures[i];
       if (opts.exported_names && opts.exported_names.length > 0 && opts.exported_names.indexOf(sig.name) === -1) continue;
       if (opts.skip && opts.skip.indexOf(sig.name) !== -1) continue;
-      units.push(generate_unit_plan(sig, templates, samples, opts.file_flags));
+      units.push(generate_unit_plan(sig, templates, samples, opts.file_flags, edges));
     }
     return {
       target: opts.target || "unknown",

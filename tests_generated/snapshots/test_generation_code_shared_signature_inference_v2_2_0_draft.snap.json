@@ -1,33 +1,29 @@
 {
   "normalize_type_token": {
     "2": "{\"threw\":false,\"value\":\"\\\"alpha\\\"\"}",
-    "6": "{\"threw\":false,\"value\":\"\\\"hello world\\\"\"}",
-    "10": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
-    "14": "{\"threw\":false,\"value\":\"\\\"spaced\\\"\"}",
-    "18": "{\"threw\":false,\"value\":\"\\\"alpha42\\\"\"}",
-    "22": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
-    "26": "{\"threw\":false,\"value\":\"\\\"alpha\\\"\"}"
+    "5": "{\"threw\":false,\"value\":\"\\\"hello world\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
+    "11": "{\"threw\":false,\"value\":\"\\\"spaced\\\"\"}",
+    "14": "{\"threw\":false,\"value\":\"\\\"alpha42\\\"\"}",
+    "17": "{\"threw\":false,\"value\":\"\\\"\\\"\"}"
   },
   "classify_archetype": {
     "2": "{\"threw\":false,\"value\":\"\\\"nullary_producer\\\"\"}",
-    "6": "{\"threw\":true,\"value\":\"__threw__:TypeError:first.indexOf is not a function\"}",
-    "10": "{\"threw\":false,\"value\":\"\\\"nullary_producer\\\"\"}",
-    "14": "{\"threw\":false,\"value\":\"\\\"nullary_producer\\\"\"}",
-    "18": "{\"threw\":true,\"value\":\"__threw__:TypeError:first.indexOf is not a function\"}",
-    "22": "{\"threw\":true,\"value\":\"__threw__:TypeError:first.indexOf is not a function\"}",
-    "26": "{\"threw\":false,\"value\":\"\\\"nullary_producer\\\"\"}"
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:first.indexOf is not a function\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"nullary_producer\\\"\"}",
+    "11": "{\"threw\":false,\"value\":\"\\\"nullary_producer\\\"\"}",
+    "14": "{\"threw\":true,\"value\":\"__threw__:TypeError:first.indexOf is not a function\"}",
+    "17": "{\"threw\":true,\"value\":\"__threw__:TypeError:first.indexOf is not a function\"}"
   },
   "infer_signature": {
     "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}",
-    "6": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}",
-    "10": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}",
-    "14": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}"
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}"
   },
   "infer_signatures": {
     "2": "{\"threw\":false,\"value\":\"[]\"}",
-    "6": "{\"threw\":false,\"value\":\"[]\"}",
-    "10": "{\"threw\":false,\"value\":\"[]\"}",
-    "14": "{\"threw\":false,\"value\":\"[]\"}",
-    "18": "{\"threw\":false,\"value\":\"[]\"}"
+    "5": "{\"threw\":false,\"value\":\"[]\"}",
+    "8": "{\"threw\":false,\"value\":\"[]\"}",
+    "11": "{\"threw\":false,\"value\":\"[]\"}"
   }
 }

@@ -1,36 +1,32 @@
 {
   "escape_text": {
     "2": "{\"threw\":false,\"value\":\"\\\"alpha\\\"\"}",
-    "6": "{\"threw\":false,\"value\":\"\\\"hello world\\\"\"}",
-    "10": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
-    "14": "{\"threw\":false,\"value\":\"\\\"  spaced  \\\"\"}",
-    "18": "{\"threw\":false,\"value\":\"\\\"Alpha42\\\"\"}",
-    "22": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
-    "26": "{\"threw\":false,\"value\":\"\\\"alpha\\\"\"}"
+    "5": "{\"threw\":false,\"value\":\"\\\"hello world\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
+    "11": "{\"threw\":false,\"value\":\"\\\"  spaced  \\\"\"}",
+    "14": "{\"threw\":false,\"value\":\"\\\"Alpha42\\\"\"}",
+    "17": "{\"threw\":false,\"value\":\"\\\"\\\"\"}"
   },
   "join_mapped": {
     "2": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
-    "6": "{\"threw\":false,\"value\":\"\\\"312\\\"\"}",
-    "10": "{\"threw\":false,\"value\":\"\\\"0\\\"\"}",
-    "14": "{\"threw\":false,\"value\":\"\\\"312\\\"\"}",
-    "18": "{\"threw\":false,\"value\":\"\\\"\\\"\"}"
+    "5": "{\"threw\":false,\"value\":\"\\\"312\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"0\\\"\"}",
+    "11": "{\"threw\":false,\"value\":\"\\\"312\\\"\"}"
   },
   "tokenize": {
     "2": "{\"threw\":false,\"value\":\"[\\\"alpha\\\"]\"}",
-    "6": "{\"threw\":false,\"value\":\"[\\\"hello\\\",\\\"world\\\"]\"}",
-    "10": "{\"threw\":false,\"value\":\"[]\"}",
-    "14": "{\"threw\":false,\"value\":\"[\\\"spaced\\\"]\"}",
-    "18": "{\"threw\":false,\"value\":\"[\\\"alpha42\\\"]\"}",
-    "22": "{\"threw\":false,\"value\":\"[]\"}",
-    "26": "{\"threw\":false,\"value\":\"[\\\"alpha\\\"]\"}"
+    "5": "{\"threw\":false,\"value\":\"[\\\"hello\\\",\\\"world\\\"]\"}",
+    "8": "{\"threw\":false,\"value\":\"[]\"}",
+    "11": "{\"threw\":false,\"value\":\"[\\\"spaced\\\"]\"}",
+    "14": "{\"threw\":false,\"value\":\"[\\\"alpha42\\\"]\"}",
+    "17": "{\"threw\":false,\"value\":\"[]\"}"
   },
   "normalize_spaces": {
     "2": "{\"threw\":false,\"value\":\"\\\"alpha\\\"\"}",
-    "6": "{\"threw\":false,\"value\":\"\\\"hello world\\\"\"}",
-    "10": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
-    "14": "{\"threw\":false,\"value\":\"\\\"spaced\\\"\"}",
-    "18": "{\"threw\":false,\"value\":\"\\\"Alpha42\\\"\"}",
-    "22": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
-    "26": "{\"threw\":false,\"value\":\"\\\"alpha\\\"\"}"
+    "5": "{\"threw\":false,\"value\":\"\\\"hello world\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
+    "11": "{\"threw\":false,\"value\":\"\\\"spaced\\\"\"}",
+    "14": "{\"threw\":false,\"value\":\"\\\"Alpha42\\\"\"}",
+    "17": "{\"threw\":false,\"value\":\"\\\"\\\"\"}"
   }
 }

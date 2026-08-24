@@ -70,15 +70,6 @@ test("execute [snapshot] argset_0", () => {
   }
 });
 
-test("execute [edge_safety] argset_0", () => {
-  const __args = [0, 0];
-  try {
-    __call("execute", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
-  }
-});
-
 test("execute [determinism] argset_1", () => {
   const __args = [-1, -1];
   const first = __attempt("execute", __args);
@@ -99,22 +90,13 @@ test("execute [immutability] argset_1", () => {
 test("execute [snapshot] argset_1", () => {
   const __args = [-1, -1];
   const actual = JSON.stringify(__attempt("execute", __args));
-  const stored = __snapshots["execute"] && __snapshots["execute"][6];
+  const stored = __snapshots["execute"] && __snapshots["execute"][5];
   if (__capture || stored === undefined) {
     __snapshots["execute"] = __snapshots["execute"] || {};
-    __snapshots["execute"][6] = actual;
+    __snapshots["execute"][5] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 6");
-  }
-});
-
-test("execute [edge_safety] argset_1", () => {
-  const __args = [-1, -1];
-  try {
-    __call("execute", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 5");
   }
 });
 
@@ -138,22 +120,13 @@ test("execute [immutability] argset_2", () => {
 test("execute [snapshot] argset_2", () => {
   const __args = [42, 42];
   const actual = JSON.stringify(__attempt("execute", __args));
-  const stored = __snapshots["execute"] && __snapshots["execute"][10];
+  const stored = __snapshots["execute"] && __snapshots["execute"][8];
   if (__capture || stored === undefined) {
     __snapshots["execute"] = __snapshots["execute"] || {};
-    __snapshots["execute"][10] = actual;
+    __snapshots["execute"][8] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 10");
-  }
-});
-
-test("execute [edge_safety] argset_2", () => {
-  const __args = [42, 42];
-  try {
-    __call("execute", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 8");
   }
 });
 
@@ -177,22 +150,13 @@ test("execute [immutability] argset_3", () => {
 test("execute [snapshot] argset_3", () => {
   const __args = [3.14, 3.14];
   const actual = JSON.stringify(__attempt("execute", __args));
-  const stored = __snapshots["execute"] && __snapshots["execute"][14];
+  const stored = __snapshots["execute"] && __snapshots["execute"][11];
   if (__capture || stored === undefined) {
     __snapshots["execute"] = __snapshots["execute"] || {};
-    __snapshots["execute"][14] = actual;
+    __snapshots["execute"][11] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
-  }
-});
-
-test("execute [edge_safety] argset_3", () => {
-  const __args = [3.14, 3.14];
-  try {
-    __call("execute", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 11");
   }
 });
 
@@ -216,18 +180,18 @@ test("execute [immutability] argset_4", () => {
 test("execute [snapshot] argset_4", () => {
   const __args = [42, 42];
   const actual = JSON.stringify(__attempt("execute", __args));
-  const stored = __snapshots["execute"] && __snapshots["execute"][18];
+  const stored = __snapshots["execute"] && __snapshots["execute"][14];
   if (__capture || stored === undefined) {
     __snapshots["execute"] = __snapshots["execute"] || {};
-    __snapshots["execute"][18] = actual;
+    __snapshots["execute"][14] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 18");
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
   }
 });
 
-test("execute [edge_safety] argset_4", () => {
-  const __args = [42, 42];
+test("execute [edge_safety] edge_0", () => {
+  const __args = [0, 0];
   try {
     __call("execute", __args);
   } catch (error) {
@@ -235,38 +199,107 @@ test("execute [edge_safety] argset_4", () => {
   }
 });
 
-test("execute [determinism] argset_5", () => {
-  const __args = [0, 0];
-  const first = __attempt("execute", __args);
-  const second = __attempt("execute", __args);
-  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
-});
-
-test("execute [immutability] argset_5", () => {
-  const __args = [0, 0];
-  const before = JSON.stringify(__args);
-  const result = __attempt("execute", __args);
-  if (result.threw === false) {
-    const after = JSON.stringify(__args);
-    assert.strictEqual(after, before, "input arguments were mutated");
+test("execute [edge_safety] edge_1", () => {
+  const __args = [0, 42];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("execute [snapshot] argset_5", () => {
-  const __args = [0, 0];
-  const actual = JSON.stringify(__attempt("execute", __args));
-  const stored = __snapshots["execute"] && __snapshots["execute"][22];
-  if (__capture || stored === undefined) {
-    __snapshots["execute"] = __snapshots["execute"] || {};
-    __snapshots["execute"][22] = actual;
-    __dirty = true;
-  } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 22");
+test("execute [edge_safety] edge_2", () => {
+  const __args = [-1, 42];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("execute [edge_safety] argset_5", () => {
-  const __args = [0, 0];
+test("execute [edge_safety] edge_3", () => {
+  const __args = [NaN, 42];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_4", () => {
+  const __args = [Infinity, 42];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_5", () => {
+  const __args = [-Infinity, 42];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_6", () => {
+  const __args = [9007199254740991, 42];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_7", () => {
+  const __args = [42, 0];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_8", () => {
+  const __args = [42, -1];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_9", () => {
+  const __args = [42, NaN];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_10", () => {
+  const __args = [42, Infinity];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_11", () => {
+  const __args = [42, -Infinity];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_12", () => {
+  const __args = [42, 9007199254740991];
   try {
     __call("execute", __args);
   } catch (error) {

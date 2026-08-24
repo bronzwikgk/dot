@@ -1,33 +1,29 @@
 {
   "parse_template_entry": {
     "2": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}",
-    "6": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}",
-    "10": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}",
+    "5": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}",
+    "8": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}",
+    "11": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}",
     "14": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}",
-    "18": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}",
-    "22": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}",
-    "26": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}"
+    "17": "{\"threw\":false,\"value\":\"{\\\"archetype\\\":null,\\\"properties\\\":[]}\"}"
   },
   "parse_sample_entry": {
     "2": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[{\\\"raw\\\":\\\"alpha\\\",\\\"value\\\":\\\"alpha\\\"}]}\"}",
-    "6": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[{\\\"raw\\\":\\\"hello world\\\",\\\"value\\\":\\\"hello world\\\"}]}\"}",
-    "10": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[]}\"}",
-    "14": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[{\\\"raw\\\":\\\"spaced\\\",\\\"value\\\":\\\"spaced\\\"}]}\"}",
-    "18": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[{\\\"raw\\\":\\\"Alpha42\\\",\\\"value\\\":\\\"Alpha42\\\"}]}\"}",
-    "22": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[]}\"}",
-    "26": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[{\\\"raw\\\":\\\"alpha\\\",\\\"value\\\":\\\"alpha\\\"}]}\"}"
+    "5": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[{\\\"raw\\\":\\\"hello world\\\",\\\"value\\\":\\\"hello world\\\"}]}\"}",
+    "8": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[]}\"}",
+    "11": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[{\\\"raw\\\":\\\"spaced\\\",\\\"value\\\":\\\"spaced\\\"}]}\"}",
+    "14": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[{\\\"raw\\\":\\\"Alpha42\\\",\\\"value\\\":\\\"Alpha42\\\"}]}\"}",
+    "17": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[]}\"}"
   },
   "generate_test_plan": {
     "2": "{\"threw\":false,\"value\":\"{\\\"target\\\":\\\"unknown\\\",\\\"module_kind\\\":\\\"named_object\\\",\\\"export_style\\\":\\\"named_object\\\",\\\"units\\\":[]}\"}",
-    "6": "{\"threw\":true,\"value\":\"__threw__:TypeError:entry_text.split is not a function\"}",
-    "10": "{\"threw\":true,\"value\":\"__threw__:TypeError:entry_text.split is not a function\"}",
-    "14": "{\"threw\":true,\"value\":\"__threw__:TypeError:entry_text.split is not a function\"}",
-    "18": "{\"threw\":false,\"value\":\"{\\\"target\\\":\\\"unknown\\\",\\\"module_kind\\\":\\\"named_object\\\",\\\"export_style\\\":\\\"named_object\\\",\\\"units\\\":[]}\"}"
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:entry_text.split is not a function\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:entry_text.split is not a function\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:TypeError:entry_text.split is not a function\"}"
   },
   "render_test_file": {
     "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}",
-    "6": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}",
-    "10": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}",
-    "14": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}"
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'length')\"}"
   }
 }

@@ -51,6 +51,43 @@ Every generated test checks some mix of four properties:
 Properties are dropped automatically when traits say they would give false
 alarms (for example determinism is skipped for functions using Math.random).
 
+## Edge Case Rules
+
+Edge cases are not guesses - they are a rule layer backed by their own
+dataset (`dataset_of_testing_edges_in_shared_v2.dataset`).
+
+The rule, in plain words:
+
+1. For every parameter, look up the edge values of its type.
+2. Hit that parameter with each edge value one at a time while all other
+   parameters stay at their normal mid range value.
+3. One final row applies the first edge of every parameter together.
+
+Example for `execute(stdDev, sampleSize)` where both are numbers:
+
+| row | stdDev | sampleSize | what it checks |
+|:---|:---|:---|:---|
+| sweep 1 | 0 | 42 | zero stddev |
+| sweep 2 | NaN | 42 | not a number input |
+| sweep 3 | Infinity | 42 | infinite input |
+| ... | ... | ... | ... |
+| sweep n | 7 | 0 | zero sample size |
+| combined | 0 | 0 | everything empty at once |
+
+Built in edge sets per type (extend by editing the dataset):
+
+| type | edge literals |
+|:---|:---|
+| string | "" , " " , tab , "0" , "null" |
+| number | 0 , -1 , NaN , Infinity , -Infinity , MAX_SAFE_INTEGER |
+| boolean | false, true |
+| array | [] , [null] |
+| object | {} , null |
+| any | null , undefined |
+
+Edge rows run only the edge_safety property: the call must either return
+normally or throw a proper Error. Anything else fails.
+
 ## Running It Today
 
 Committed baselines exist under `tests_generated/`. Run them all:

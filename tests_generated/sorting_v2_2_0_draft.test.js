@@ -70,15 +70,6 @@ test("execute [snapshot] argset_0", () => {
   }
 });
 
-test("execute [edge_safety] argset_0", () => {
-  const __args = [[], "seed_value"];
-  try {
-    __call("execute", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
-  }
-});
-
 test("execute [determinism] argset_1", () => {
   const __args = [[3, 1, 2], "seed_value"];
   const first = __attempt("execute", __args);
@@ -99,22 +90,13 @@ test("execute [immutability] argset_1", () => {
 test("execute [snapshot] argset_1", () => {
   const __args = [[3, 1, 2], "seed_value"];
   const actual = JSON.stringify(__attempt("execute", __args));
-  const stored = __snapshots["execute"] && __snapshots["execute"][6];
+  const stored = __snapshots["execute"] && __snapshots["execute"][5];
   if (__capture || stored === undefined) {
     __snapshots["execute"] = __snapshots["execute"] || {};
-    __snapshots["execute"][6] = actual;
+    __snapshots["execute"][5] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 6");
-  }
-});
-
-test("execute [edge_safety] argset_1", () => {
-  const __args = [[3, 1, 2], "seed_value"];
-  try {
-    __call("execute", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 5");
   }
 });
 
@@ -138,22 +120,13 @@ test("execute [immutability] argset_2", () => {
 test("execute [snapshot] argset_2", () => {
   const __args = [[0], "seed_value"];
   const actual = JSON.stringify(__attempt("execute", __args));
-  const stored = __snapshots["execute"] && __snapshots["execute"][10];
+  const stored = __snapshots["execute"] && __snapshots["execute"][8];
   if (__capture || stored === undefined) {
     __snapshots["execute"] = __snapshots["execute"] || {};
-    __snapshots["execute"][10] = actual;
+    __snapshots["execute"][8] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 10");
-  }
-});
-
-test("execute [edge_safety] argset_2", () => {
-  const __args = [[0], "seed_value"];
-  try {
-    __call("execute", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 8");
   }
 });
 
@@ -177,18 +150,18 @@ test("execute [immutability] argset_3", () => {
 test("execute [snapshot] argset_3", () => {
   const __args = [[3, 1, 2], "seed_value"];
   const actual = JSON.stringify(__attempt("execute", __args));
-  const stored = __snapshots["execute"] && __snapshots["execute"][14];
+  const stored = __snapshots["execute"] && __snapshots["execute"][11];
   if (__capture || stored === undefined) {
     __snapshots["execute"] = __snapshots["execute"] || {};
-    __snapshots["execute"][14] = actual;
+    __snapshots["execute"][11] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 11");
   }
 });
 
-test("execute [edge_safety] argset_3", () => {
-  const __args = [[3, 1, 2], "seed_value"];
+test("execute [edge_safety] edge_0", () => {
+  const __args = [[], null];
   try {
     __call("execute", __args);
   } catch (error) {
@@ -196,38 +169,35 @@ test("execute [edge_safety] argset_3", () => {
   }
 });
 
-test("execute [determinism] argset_4", () => {
+test("execute [edge_safety] edge_1", () => {
   const __args = [[], "seed_value"];
-  const first = __attempt("execute", __args);
-  const second = __attempt("execute", __args);
-  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
-});
-
-test("execute [immutability] argset_4", () => {
-  const __args = [[], "seed_value"];
-  const before = JSON.stringify(__args);
-  const result = __attempt("execute", __args);
-  if (result.threw === false) {
-    const after = JSON.stringify(__args);
-    assert.strictEqual(after, before, "input arguments were mutated");
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("execute [snapshot] argset_4", () => {
-  const __args = [[], "seed_value"];
-  const actual = JSON.stringify(__attempt("execute", __args));
-  const stored = __snapshots["execute"] && __snapshots["execute"][18];
-  if (__capture || stored === undefined) {
-    __snapshots["execute"] = __snapshots["execute"] || {};
-    __snapshots["execute"][18] = actual;
-    __dirty = true;
-  } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 18");
+test("execute [edge_safety] edge_2", () => {
+  const __args = [[null], "seed_value"];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("execute [edge_safety] argset_4", () => {
-  const __args = [[], "seed_value"];
+test("execute [edge_safety] edge_3", () => {
+  const __args = [[3, 1, 2], null];
+  try {
+    __call("execute", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("execute [edge_safety] edge_4", () => {
+  const __args = [[3, 1, 2], undefined];
   try {
     __call("execute", __args);
   } catch (error) {
@@ -265,15 +235,6 @@ test("sortByKey [snapshot] argset_0", () => {
   }
 });
 
-test("sortByKey [edge_safety] argset_0", () => {
-  const __args = [[], "alpha", "seed_value"];
-  try {
-    __call("sortByKey", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
-  }
-});
-
 test("sortByKey [determinism] argset_1", () => {
   const __args = [[3, 1, 2], "hello world", "seed_value"];
   const first = __attempt("sortByKey", __args);
@@ -294,22 +255,13 @@ test("sortByKey [immutability] argset_1", () => {
 test("sortByKey [snapshot] argset_1", () => {
   const __args = [[3, 1, 2], "hello world", "seed_value"];
   const actual = JSON.stringify(__attempt("sortByKey", __args));
-  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][6];
+  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][5];
   if (__capture || stored === undefined) {
     __snapshots["sortByKey"] = __snapshots["sortByKey"] || {};
-    __snapshots["sortByKey"][6] = actual;
+    __snapshots["sortByKey"][5] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 6");
-  }
-});
-
-test("sortByKey [edge_safety] argset_1", () => {
-  const __args = [[3, 1, 2], "hello world", "seed_value"];
-  try {
-    __call("sortByKey", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 5");
   }
 });
 
@@ -333,22 +285,13 @@ test("sortByKey [immutability] argset_2", () => {
 test("sortByKey [snapshot] argset_2", () => {
   const __args = [[0], "", "seed_value"];
   const actual = JSON.stringify(__attempt("sortByKey", __args));
-  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][10];
+  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][8];
   if (__capture || stored === undefined) {
     __snapshots["sortByKey"] = __snapshots["sortByKey"] || {};
-    __snapshots["sortByKey"][10] = actual;
+    __snapshots["sortByKey"][8] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 10");
-  }
-});
-
-test("sortByKey [edge_safety] argset_2", () => {
-  const __args = [[0], "", "seed_value"];
-  try {
-    __call("sortByKey", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 8");
   }
 });
 
@@ -372,22 +315,13 @@ test("sortByKey [immutability] argset_3", () => {
 test("sortByKey [snapshot] argset_3", () => {
   const __args = [[], "  spaced  ", "seed_value"];
   const actual = JSON.stringify(__attempt("sortByKey", __args));
-  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][14];
+  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][11];
   if (__capture || stored === undefined) {
     __snapshots["sortByKey"] = __snapshots["sortByKey"] || {};
-    __snapshots["sortByKey"][14] = actual;
+    __snapshots["sortByKey"][11] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
-  }
-});
-
-test("sortByKey [edge_safety] argset_3", () => {
-  const __args = [[], "  spaced  ", "seed_value"];
-  try {
-    __call("sortByKey", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 11");
   }
 });
 
@@ -411,22 +345,13 @@ test("sortByKey [immutability] argset_4", () => {
 test("sortByKey [snapshot] argset_4", () => {
   const __args = [[3, 1, 2], "Alpha42", "seed_value"];
   const actual = JSON.stringify(__attempt("sortByKey", __args));
-  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][18];
+  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][14];
   if (__capture || stored === undefined) {
     __snapshots["sortByKey"] = __snapshots["sortByKey"] || {};
-    __snapshots["sortByKey"][18] = actual;
+    __snapshots["sortByKey"][14] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 18");
-  }
-});
-
-test("sortByKey [edge_safety] argset_4", () => {
-  const __args = [[3, 1, 2], "Alpha42", "seed_value"];
-  try {
-    __call("sortByKey", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
   }
 });
 
@@ -450,17 +375,44 @@ test("sortByKey [immutability] argset_5", () => {
 test("sortByKey [snapshot] argset_5", () => {
   const __args = [[3, 1, 2], "", "seed_value"];
   const actual = JSON.stringify(__attempt("sortByKey", __args));
-  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][22];
+  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][17];
   if (__capture || stored === undefined) {
     __snapshots["sortByKey"] = __snapshots["sortByKey"] || {};
-    __snapshots["sortByKey"][22] = actual;
+    __snapshots["sortByKey"][17] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 22");
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 17");
   }
 });
 
-test("sortByKey [edge_safety] argset_5", () => {
+test("sortByKey [edge_safety] edge_0", () => {
+  const __args = [[], "", null];
+  try {
+    __call("sortByKey", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("sortByKey [edge_safety] edge_1", () => {
+  const __args = [[], "", "seed_value"];
+  try {
+    __call("sortByKey", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("sortByKey [edge_safety] edge_2", () => {
+  const __args = [[null], "", "seed_value"];
+  try {
+    __call("sortByKey", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("sortByKey [edge_safety] edge_3", () => {
   const __args = [[3, 1, 2], "", "seed_value"];
   try {
     __call("sortByKey", __args);
@@ -469,38 +421,53 @@ test("sortByKey [edge_safety] argset_5", () => {
   }
 });
 
-test("sortByKey [determinism] argset_6", () => {
-  const __args = [[], "alpha", "seed_value"];
-  const first = __attempt("sortByKey", __args);
-  const second = __attempt("sortByKey", __args);
-  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
-});
-
-test("sortByKey [immutability] argset_6", () => {
-  const __args = [[], "alpha", "seed_value"];
-  const before = JSON.stringify(__args);
-  const result = __attempt("sortByKey", __args);
-  if (result.threw === false) {
-    const after = JSON.stringify(__args);
-    assert.strictEqual(after, before, "input arguments were mutated");
+test("sortByKey [edge_safety] edge_4", () => {
+  const __args = [[3, 1, 2], " ", "seed_value"];
+  try {
+    __call("sortByKey", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("sortByKey [snapshot] argset_6", () => {
-  const __args = [[], "alpha", "seed_value"];
-  const actual = JSON.stringify(__attempt("sortByKey", __args));
-  const stored = __snapshots["sortByKey"] && __snapshots["sortByKey"][26];
-  if (__capture || stored === undefined) {
-    __snapshots["sortByKey"] = __snapshots["sortByKey"] || {};
-    __snapshots["sortByKey"][26] = actual;
-    __dirty = true;
-  } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 26");
+test("sortByKey [edge_safety] edge_5", () => {
+  const __args = [[3, 1, 2], "\t", "seed_value"];
+  try {
+    __call("sortByKey", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("sortByKey [edge_safety] argset_6", () => {
-  const __args = [[], "alpha", "seed_value"];
+test("sortByKey [edge_safety] edge_6", () => {
+  const __args = [[3, 1, 2], "0", "seed_value"];
+  try {
+    __call("sortByKey", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("sortByKey [edge_safety] edge_7", () => {
+  const __args = [[3, 1, 2], "null", "seed_value"];
+  try {
+    __call("sortByKey", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("sortByKey [edge_safety] edge_8", () => {
+  const __args = [[3, 1, 2], "", null];
+  try {
+    __call("sortByKey", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("sortByKey [edge_safety] edge_9", () => {
+  const __args = [[3, 1, 2], "", undefined];
   try {
     __call("sortByKey", __args);
   } catch (error) {

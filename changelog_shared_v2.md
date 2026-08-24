@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - `code/utilities/test_generation/code_shared_test_generation_v2_2_0_draft.js` - test plans from template/sample banks + node:test harness renderer
   - `dataset_shared_v2/code/dataset_of_testing_templates_in_shared_v2.dataset` - archetype to property mapping bank
   - `dataset_shared_v2/code/dataset_of_testing_samples_in_shared_v2.dataset` - typed sample values bank (edge values first)
+  - `dataset_shared_v2/code/dataset_of_testing_edges_in_shared_v2.dataset` - edge case rule bank (per type edge literals incl NaN, Infinity, null)
   - `pipelines/system_validate_and_test_code_v2_2_0.md` - 7 stage pipeline: observe, inspect, validate_conventions, infer, generate, execute, report
 - Generated regression baselines under `tests_generated/` for standard_error, sorting, text and the three test_generation utilities themselves (self hosted; 440 tests green; snapshots in `tests_generated/snapshots/`)
 - Imported 18 math/statistics utilities from ohm_model legacy batch (SH-024..SH-041), renamed to convention:
@@ -34,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added VERSION file (2.0.0) and initial branch model (master, v2, wip_dot)
 
 ### Changed
+- edge case rule layer: dedicated edges bank + single parameter sweep in test_generation (each parameter hit with every typed edge literal while others stay mid range; combined all-edge row; edge rows run edge_safety only). Committed baselines regenerated: 435 tests green across six targets
 - code_inspector gained acorn backed `inspect_source_ast` and `inspect_source_auto`: universal syntax coverage (arrow exports, esm export statements, getters, rest and default params, destructuring) with identical inventory shape; vendored single file `test_generation/vendor/acorn.js` (8.14.0, MIT, 232 KB) keeps the zero install property; legacy line parser remains as fallback (FV7)
 - test_generation harness can render esm variants: import based preamble, top level await dynamic import, mjs output when target uses esm syntax
 - universality verified against hostile synthetic esm/cjs targets (84 + 76 tests green) and real legacy `inbox_code/utility_legacy/nlu.js` inventoried at 39 functions with exact line ranges

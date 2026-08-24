@@ -69,15 +69,6 @@ test("escape_text [snapshot] argset_0", () => {
   }
 });
 
-test("escape_text [edge_safety] argset_0", () => {
-  const __args = ["alpha"];
-  try {
-    __call("escape_text", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
-  }
-});
-
 test("escape_text [determinism] argset_1", () => {
   const __args = ["hello world"];
   const first = __attempt("escape_text", __args);
@@ -98,22 +89,13 @@ test("escape_text [immutability] argset_1", () => {
 test("escape_text [snapshot] argset_1", () => {
   const __args = ["hello world"];
   const actual = JSON.stringify(__attempt("escape_text", __args));
-  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][6];
+  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][5];
   if (__capture || stored === undefined) {
     __snapshots["escape_text"] = __snapshots["escape_text"] || {};
-    __snapshots["escape_text"][6] = actual;
+    __snapshots["escape_text"][5] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 6");
-  }
-});
-
-test("escape_text [edge_safety] argset_1", () => {
-  const __args = ["hello world"];
-  try {
-    __call("escape_text", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 5");
   }
 });
 
@@ -137,22 +119,13 @@ test("escape_text [immutability] argset_2", () => {
 test("escape_text [snapshot] argset_2", () => {
   const __args = [""];
   const actual = JSON.stringify(__attempt("escape_text", __args));
-  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][10];
+  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][8];
   if (__capture || stored === undefined) {
     __snapshots["escape_text"] = __snapshots["escape_text"] || {};
-    __snapshots["escape_text"][10] = actual;
+    __snapshots["escape_text"][8] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 10");
-  }
-});
-
-test("escape_text [edge_safety] argset_2", () => {
-  const __args = [""];
-  try {
-    __call("escape_text", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 8");
   }
 });
 
@@ -176,22 +149,13 @@ test("escape_text [immutability] argset_3", () => {
 test("escape_text [snapshot] argset_3", () => {
   const __args = ["  spaced  "];
   const actual = JSON.stringify(__attempt("escape_text", __args));
-  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][14];
+  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][11];
   if (__capture || stored === undefined) {
     __snapshots["escape_text"] = __snapshots["escape_text"] || {};
-    __snapshots["escape_text"][14] = actual;
+    __snapshots["escape_text"][11] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
-  }
-});
-
-test("escape_text [edge_safety] argset_3", () => {
-  const __args = ["  spaced  "];
-  try {
-    __call("escape_text", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 11");
   }
 });
 
@@ -215,22 +179,13 @@ test("escape_text [immutability] argset_4", () => {
 test("escape_text [snapshot] argset_4", () => {
   const __args = ["Alpha42"];
   const actual = JSON.stringify(__attempt("escape_text", __args));
-  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][18];
+  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][14];
   if (__capture || stored === undefined) {
     __snapshots["escape_text"] = __snapshots["escape_text"] || {};
-    __snapshots["escape_text"][18] = actual;
+    __snapshots["escape_text"][14] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 18");
-  }
-});
-
-test("escape_text [edge_safety] argset_4", () => {
-  const __args = ["Alpha42"];
-  try {
-    __call("escape_text", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
   }
 });
 
@@ -254,17 +209,17 @@ test("escape_text [immutability] argset_5", () => {
 test("escape_text [snapshot] argset_5", () => {
   const __args = [""];
   const actual = JSON.stringify(__attempt("escape_text", __args));
-  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][22];
+  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][17];
   if (__capture || stored === undefined) {
     __snapshots["escape_text"] = __snapshots["escape_text"] || {};
-    __snapshots["escape_text"][22] = actual;
+    __snapshots["escape_text"][17] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 22");
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 17");
   }
 });
 
-test("escape_text [edge_safety] argset_5", () => {
+test("escape_text [edge_safety] edge_0", () => {
   const __args = [""];
   try {
     __call("escape_text", __args);
@@ -273,38 +228,35 @@ test("escape_text [edge_safety] argset_5", () => {
   }
 });
 
-test("escape_text [determinism] argset_6", () => {
-  const __args = ["alpha"];
-  const first = __attempt("escape_text", __args);
-  const second = __attempt("escape_text", __args);
-  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
-});
-
-test("escape_text [immutability] argset_6", () => {
-  const __args = ["alpha"];
-  const before = JSON.stringify(__args);
-  const result = __attempt("escape_text", __args);
-  if (result.threw === false) {
-    const after = JSON.stringify(__args);
-    assert.strictEqual(after, before, "input arguments were mutated");
+test("escape_text [edge_safety] edge_1", () => {
+  const __args = [" "];
+  try {
+    __call("escape_text", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("escape_text [snapshot] argset_6", () => {
-  const __args = ["alpha"];
-  const actual = JSON.stringify(__attempt("escape_text", __args));
-  const stored = __snapshots["escape_text"] && __snapshots["escape_text"][26];
-  if (__capture || stored === undefined) {
-    __snapshots["escape_text"] = __snapshots["escape_text"] || {};
-    __snapshots["escape_text"][26] = actual;
-    __dirty = true;
-  } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 26");
+test("escape_text [edge_safety] edge_2", () => {
+  const __args = ["\t"];
+  try {
+    __call("escape_text", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("escape_text [edge_safety] argset_6", () => {
-  const __args = ["alpha"];
+test("escape_text [edge_safety] edge_3", () => {
+  const __args = ["0"];
+  try {
+    __call("escape_text", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("escape_text [edge_safety] edge_4", () => {
+  const __args = ["null"];
   try {
     __call("escape_text", __args);
   } catch (error) {
@@ -342,15 +294,6 @@ test("join_mapped [snapshot] argset_0", () => {
   }
 });
 
-test("join_mapped [edge_safety] argset_0", () => {
-  const __args = [[], (function stub(value) { return value; })];
-  try {
-    __call("join_mapped", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
-  }
-});
-
 test("join_mapped [determinism] argset_1", () => {
   const __args = [[3, 1, 2], (function stub(value) { return value; })];
   const first = __attempt("join_mapped", __args);
@@ -371,22 +314,13 @@ test("join_mapped [immutability] argset_1", () => {
 test("join_mapped [snapshot] argset_1", () => {
   const __args = [[3, 1, 2], (function stub(value) { return value; })];
   const actual = JSON.stringify(__attempt("join_mapped", __args));
-  const stored = __snapshots["join_mapped"] && __snapshots["join_mapped"][6];
+  const stored = __snapshots["join_mapped"] && __snapshots["join_mapped"][5];
   if (__capture || stored === undefined) {
     __snapshots["join_mapped"] = __snapshots["join_mapped"] || {};
-    __snapshots["join_mapped"][6] = actual;
+    __snapshots["join_mapped"][5] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 6");
-  }
-});
-
-test("join_mapped [edge_safety] argset_1", () => {
-  const __args = [[3, 1, 2], (function stub(value) { return value; })];
-  try {
-    __call("join_mapped", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 5");
   }
 });
 
@@ -410,22 +344,13 @@ test("join_mapped [immutability] argset_2", () => {
 test("join_mapped [snapshot] argset_2", () => {
   const __args = [[0], (function stub(value) { return value; })];
   const actual = JSON.stringify(__attempt("join_mapped", __args));
-  const stored = __snapshots["join_mapped"] && __snapshots["join_mapped"][10];
+  const stored = __snapshots["join_mapped"] && __snapshots["join_mapped"][8];
   if (__capture || stored === undefined) {
     __snapshots["join_mapped"] = __snapshots["join_mapped"] || {};
-    __snapshots["join_mapped"][10] = actual;
+    __snapshots["join_mapped"][8] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 10");
-  }
-});
-
-test("join_mapped [edge_safety] argset_2", () => {
-  const __args = [[0], (function stub(value) { return value; })];
-  try {
-    __call("join_mapped", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 8");
   }
 });
 
@@ -449,18 +374,18 @@ test("join_mapped [immutability] argset_3", () => {
 test("join_mapped [snapshot] argset_3", () => {
   const __args = [[3, 1, 2], (function stub(value) { return value; })];
   const actual = JSON.stringify(__attempt("join_mapped", __args));
-  const stored = __snapshots["join_mapped"] && __snapshots["join_mapped"][14];
+  const stored = __snapshots["join_mapped"] && __snapshots["join_mapped"][11];
   if (__capture || stored === undefined) {
     __snapshots["join_mapped"] = __snapshots["join_mapped"] || {};
-    __snapshots["join_mapped"][14] = actual;
+    __snapshots["join_mapped"][11] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 11");
   }
 });
 
-test("join_mapped [edge_safety] argset_3", () => {
-  const __args = [[3, 1, 2], (function stub(value) { return value; })];
+test("join_mapped [edge_safety] edge_0", () => {
+  const __args = [[], (function stub(value) { return value; })];
   try {
     __call("join_mapped", __args);
   } catch (error) {
@@ -468,38 +393,17 @@ test("join_mapped [edge_safety] argset_3", () => {
   }
 });
 
-test("join_mapped [determinism] argset_4", () => {
-  const __args = [[], (function stub(value) { return value; })];
-  const first = __attempt("join_mapped", __args);
-  const second = __attempt("join_mapped", __args);
-  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
-});
-
-test("join_mapped [immutability] argset_4", () => {
-  const __args = [[], (function stub(value) { return value; })];
-  const before = JSON.stringify(__args);
-  const result = __attempt("join_mapped", __args);
-  if (result.threw === false) {
-    const after = JSON.stringify(__args);
-    assert.strictEqual(after, before, "input arguments were mutated");
+test("join_mapped [edge_safety] edge_1", () => {
+  const __args = [[null], (function stub(value) { return value; })];
+  try {
+    __call("join_mapped", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("join_mapped [snapshot] argset_4", () => {
-  const __args = [[], (function stub(value) { return value; })];
-  const actual = JSON.stringify(__attempt("join_mapped", __args));
-  const stored = __snapshots["join_mapped"] && __snapshots["join_mapped"][18];
-  if (__capture || stored === undefined) {
-    __snapshots["join_mapped"] = __snapshots["join_mapped"] || {};
-    __snapshots["join_mapped"][18] = actual;
-    __dirty = true;
-  } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 18");
-  }
-});
-
-test("join_mapped [edge_safety] argset_4", () => {
-  const __args = [[], (function stub(value) { return value; })];
+test("join_mapped [edge_safety] edge_2", () => {
+  const __args = [[3, 1, 2], (function stub(value) { return value; })];
   try {
     __call("join_mapped", __args);
   } catch (error) {
@@ -537,15 +441,6 @@ test("tokenize [snapshot] argset_0", () => {
   }
 });
 
-test("tokenize [edge_safety] argset_0", () => {
-  const __args = ["alpha"];
-  try {
-    __call("tokenize", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
-  }
-});
-
 test("tokenize [determinism] argset_1", () => {
   const __args = ["hello world"];
   const first = __attempt("tokenize", __args);
@@ -566,22 +461,13 @@ test("tokenize [immutability] argset_1", () => {
 test("tokenize [snapshot] argset_1", () => {
   const __args = ["hello world"];
   const actual = JSON.stringify(__attempt("tokenize", __args));
-  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][6];
+  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][5];
   if (__capture || stored === undefined) {
     __snapshots["tokenize"] = __snapshots["tokenize"] || {};
-    __snapshots["tokenize"][6] = actual;
+    __snapshots["tokenize"][5] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 6");
-  }
-});
-
-test("tokenize [edge_safety] argset_1", () => {
-  const __args = ["hello world"];
-  try {
-    __call("tokenize", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 5");
   }
 });
 
@@ -605,22 +491,13 @@ test("tokenize [immutability] argset_2", () => {
 test("tokenize [snapshot] argset_2", () => {
   const __args = [""];
   const actual = JSON.stringify(__attempt("tokenize", __args));
-  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][10];
+  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][8];
   if (__capture || stored === undefined) {
     __snapshots["tokenize"] = __snapshots["tokenize"] || {};
-    __snapshots["tokenize"][10] = actual;
+    __snapshots["tokenize"][8] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 10");
-  }
-});
-
-test("tokenize [edge_safety] argset_2", () => {
-  const __args = [""];
-  try {
-    __call("tokenize", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 8");
   }
 });
 
@@ -644,22 +521,13 @@ test("tokenize [immutability] argset_3", () => {
 test("tokenize [snapshot] argset_3", () => {
   const __args = ["  spaced  "];
   const actual = JSON.stringify(__attempt("tokenize", __args));
-  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][14];
+  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][11];
   if (__capture || stored === undefined) {
     __snapshots["tokenize"] = __snapshots["tokenize"] || {};
-    __snapshots["tokenize"][14] = actual;
+    __snapshots["tokenize"][11] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
-  }
-});
-
-test("tokenize [edge_safety] argset_3", () => {
-  const __args = ["  spaced  "];
-  try {
-    __call("tokenize", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 11");
   }
 });
 
@@ -683,22 +551,13 @@ test("tokenize [immutability] argset_4", () => {
 test("tokenize [snapshot] argset_4", () => {
   const __args = ["Alpha42"];
   const actual = JSON.stringify(__attempt("tokenize", __args));
-  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][18];
+  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][14];
   if (__capture || stored === undefined) {
     __snapshots["tokenize"] = __snapshots["tokenize"] || {};
-    __snapshots["tokenize"][18] = actual;
+    __snapshots["tokenize"][14] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 18");
-  }
-});
-
-test("tokenize [edge_safety] argset_4", () => {
-  const __args = ["Alpha42"];
-  try {
-    __call("tokenize", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
   }
 });
 
@@ -722,17 +581,17 @@ test("tokenize [immutability] argset_5", () => {
 test("tokenize [snapshot] argset_5", () => {
   const __args = [""];
   const actual = JSON.stringify(__attempt("tokenize", __args));
-  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][22];
+  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][17];
   if (__capture || stored === undefined) {
     __snapshots["tokenize"] = __snapshots["tokenize"] || {};
-    __snapshots["tokenize"][22] = actual;
+    __snapshots["tokenize"][17] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 22");
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 17");
   }
 });
 
-test("tokenize [edge_safety] argset_5", () => {
+test("tokenize [edge_safety] edge_0", () => {
   const __args = [""];
   try {
     __call("tokenize", __args);
@@ -741,38 +600,35 @@ test("tokenize [edge_safety] argset_5", () => {
   }
 });
 
-test("tokenize [determinism] argset_6", () => {
-  const __args = ["alpha"];
-  const first = __attempt("tokenize", __args);
-  const second = __attempt("tokenize", __args);
-  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
-});
-
-test("tokenize [immutability] argset_6", () => {
-  const __args = ["alpha"];
-  const before = JSON.stringify(__args);
-  const result = __attempt("tokenize", __args);
-  if (result.threw === false) {
-    const after = JSON.stringify(__args);
-    assert.strictEqual(after, before, "input arguments were mutated");
+test("tokenize [edge_safety] edge_1", () => {
+  const __args = [" "];
+  try {
+    __call("tokenize", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("tokenize [snapshot] argset_6", () => {
-  const __args = ["alpha"];
-  const actual = JSON.stringify(__attempt("tokenize", __args));
-  const stored = __snapshots["tokenize"] && __snapshots["tokenize"][26];
-  if (__capture || stored === undefined) {
-    __snapshots["tokenize"] = __snapshots["tokenize"] || {};
-    __snapshots["tokenize"][26] = actual;
-    __dirty = true;
-  } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 26");
+test("tokenize [edge_safety] edge_2", () => {
+  const __args = ["\t"];
+  try {
+    __call("tokenize", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("tokenize [edge_safety] argset_6", () => {
-  const __args = ["alpha"];
+test("tokenize [edge_safety] edge_3", () => {
+  const __args = ["0"];
+  try {
+    __call("tokenize", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("tokenize [edge_safety] edge_4", () => {
+  const __args = ["null"];
   try {
     __call("tokenize", __args);
   } catch (error) {
@@ -810,15 +666,6 @@ test("normalize_spaces [snapshot] argset_0", () => {
   }
 });
 
-test("normalize_spaces [edge_safety] argset_0", () => {
-  const __args = ["alpha"];
-  try {
-    __call("normalize_spaces", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
-  }
-});
-
 test("normalize_spaces [determinism] argset_1", () => {
   const __args = ["hello world"];
   const first = __attempt("normalize_spaces", __args);
@@ -839,22 +686,13 @@ test("normalize_spaces [immutability] argset_1", () => {
 test("normalize_spaces [snapshot] argset_1", () => {
   const __args = ["hello world"];
   const actual = JSON.stringify(__attempt("normalize_spaces", __args));
-  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][6];
+  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][5];
   if (__capture || stored === undefined) {
     __snapshots["normalize_spaces"] = __snapshots["normalize_spaces"] || {};
-    __snapshots["normalize_spaces"][6] = actual;
+    __snapshots["normalize_spaces"][5] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 6");
-  }
-});
-
-test("normalize_spaces [edge_safety] argset_1", () => {
-  const __args = ["hello world"];
-  try {
-    __call("normalize_spaces", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 5");
   }
 });
 
@@ -878,22 +716,13 @@ test("normalize_spaces [immutability] argset_2", () => {
 test("normalize_spaces [snapshot] argset_2", () => {
   const __args = [""];
   const actual = JSON.stringify(__attempt("normalize_spaces", __args));
-  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][10];
+  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][8];
   if (__capture || stored === undefined) {
     __snapshots["normalize_spaces"] = __snapshots["normalize_spaces"] || {};
-    __snapshots["normalize_spaces"][10] = actual;
+    __snapshots["normalize_spaces"][8] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 10");
-  }
-});
-
-test("normalize_spaces [edge_safety] argset_2", () => {
-  const __args = [""];
-  try {
-    __call("normalize_spaces", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 8");
   }
 });
 
@@ -917,22 +746,13 @@ test("normalize_spaces [immutability] argset_3", () => {
 test("normalize_spaces [snapshot] argset_3", () => {
   const __args = ["  spaced  "];
   const actual = JSON.stringify(__attempt("normalize_spaces", __args));
-  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][14];
+  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][11];
   if (__capture || stored === undefined) {
     __snapshots["normalize_spaces"] = __snapshots["normalize_spaces"] || {};
-    __snapshots["normalize_spaces"][14] = actual;
+    __snapshots["normalize_spaces"][11] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
-  }
-});
-
-test("normalize_spaces [edge_safety] argset_3", () => {
-  const __args = ["  spaced  "];
-  try {
-    __call("normalize_spaces", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 11");
   }
 });
 
@@ -956,22 +776,13 @@ test("normalize_spaces [immutability] argset_4", () => {
 test("normalize_spaces [snapshot] argset_4", () => {
   const __args = ["Alpha42"];
   const actual = JSON.stringify(__attempt("normalize_spaces", __args));
-  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][18];
+  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][14];
   if (__capture || stored === undefined) {
     __snapshots["normalize_spaces"] = __snapshots["normalize_spaces"] || {};
-    __snapshots["normalize_spaces"][18] = actual;
+    __snapshots["normalize_spaces"][14] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 18");
-  }
-});
-
-test("normalize_spaces [edge_safety] argset_4", () => {
-  const __args = ["Alpha42"];
-  try {
-    __call("normalize_spaces", __args);
-  } catch (error) {
-    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
   }
 });
 
@@ -995,17 +806,17 @@ test("normalize_spaces [immutability] argset_5", () => {
 test("normalize_spaces [snapshot] argset_5", () => {
   const __args = [""];
   const actual = JSON.stringify(__attempt("normalize_spaces", __args));
-  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][22];
+  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][17];
   if (__capture || stored === undefined) {
     __snapshots["normalize_spaces"] = __snapshots["normalize_spaces"] || {};
-    __snapshots["normalize_spaces"][22] = actual;
+    __snapshots["normalize_spaces"][17] = actual;
     __dirty = true;
   } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 22");
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 17");
   }
 });
 
-test("normalize_spaces [edge_safety] argset_5", () => {
+test("normalize_spaces [edge_safety] edge_0", () => {
   const __args = [""];
   try {
     __call("normalize_spaces", __args);
@@ -1014,38 +825,35 @@ test("normalize_spaces [edge_safety] argset_5", () => {
   }
 });
 
-test("normalize_spaces [determinism] argset_6", () => {
-  const __args = ["alpha"];
-  const first = __attempt("normalize_spaces", __args);
-  const second = __attempt("normalize_spaces", __args);
-  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
-});
-
-test("normalize_spaces [immutability] argset_6", () => {
-  const __args = ["alpha"];
-  const before = JSON.stringify(__args);
-  const result = __attempt("normalize_spaces", __args);
-  if (result.threw === false) {
-    const after = JSON.stringify(__args);
-    assert.strictEqual(after, before, "input arguments were mutated");
+test("normalize_spaces [edge_safety] edge_1", () => {
+  const __args = [" "];
+  try {
+    __call("normalize_spaces", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("normalize_spaces [snapshot] argset_6", () => {
-  const __args = ["alpha"];
-  const actual = JSON.stringify(__attempt("normalize_spaces", __args));
-  const stored = __snapshots["normalize_spaces"] && __snapshots["normalize_spaces"][26];
-  if (__capture || stored === undefined) {
-    __snapshots["normalize_spaces"] = __snapshots["normalize_spaces"] || {};
-    __snapshots["normalize_spaces"][26] = actual;
-    __dirty = true;
-  } else {
-    assert.strictEqual(actual, stored, "snapshot mismatch for case 26");
+test("normalize_spaces [edge_safety] edge_2", () => {
+  const __args = ["\t"];
+  try {
+    __call("normalize_spaces", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }
 });
 
-test("normalize_spaces [edge_safety] argset_6", () => {
-  const __args = ["alpha"];
+test("normalize_spaces [edge_safety] edge_3", () => {
+  const __args = ["0"];
+  try {
+    __call("normalize_spaces", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("normalize_spaces [edge_safety] edge_4", () => {
+  const __args = ["null"];
   try {
     __call("normalize_spaces", __args);
   } catch (error) {

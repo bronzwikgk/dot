@@ -75,6 +75,7 @@ Rules:
 |:---|:---|:---|:---|
 | dataset_load | testing templates bank | template strings | plugin schema_registry |
 | dataset_load | testing samples bank | sample strings | plugin schema_registry |
+| dataset_load | testing edges bank | edge rule strings | plugin schema_registry |
 | generate_test_plan | signatures + banks + options | plan record | utility test_generation |
 | render_test_file | plan + require path + snapshot path | test file text | utility test_generation |
 | fs_write | text | tests_generated/<target>.test.js + snapshots/<target>.snap.json | plugin file_storage |
@@ -83,6 +84,13 @@ Options passed to plan:
 - exported_names from inventory
 - module_kind and export_style from inventory
 - file_flags.has_module_state from inventory
+- edge_bank_strings from the edges bank
+
+Edge case rule (stage 5 semantics):
+- every parameter is swept with every edge literal of its declared type while remaining parameters stay at their mid range sample value
+- one extra row applies the first edge of every parameter simultaneously
+- edge rows run the edge_safety property only; normal matrix rows run the remaining properties
+- when the edges bank has no entry for a type the first sample value of that type is used as the single edge
 
 ### Stage 6: execute
 
