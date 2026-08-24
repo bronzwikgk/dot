@@ -12,7 +12,16 @@ It is heuristic. It helps generate useful tests, but it does not prove correctne
 
 ## What It Does
 
-The utility exposes:
+The utility exposes a class API:
+
+- `new SignatureInferencer(config)`
+- `inferencer.inferSignature(fn_record)`
+- `inferencer.inferSignatures(fn_records)`
+- `inferencer.classifyArchetype(name, param_types, return_type)`
+- `inferencer.normalizeTypeToken(raw_type)`
+- `inferencer.inferReturnFromSource(fn_record)`
+
+It also keeps the older compatibility functions:
 
 - `infer_signature(fn_record)`
 - `infer_signatures(fn_records)`
@@ -34,6 +43,7 @@ It uses:
 - Constructor records are now preserved for generated constructor tests.
 - Added simple body-based return inference from return statements.
 - `infer_signatures(null)` safely returns an empty list.
+- Added `SignatureInferencer` class export with constructor/config style while preserving existing function exports.
 
 ## When To Use It
 
@@ -61,6 +71,17 @@ Expected output:
 
 ```text
 test_generation checks passed
+```
+
+After the class API update, the test-generation utility was run on itself and on the shared utilities:
+
+```text
+474 self-tests
+474 pass
+
+1300 generated shared-utility tests
+1300 pass
+0 fail
 ```
 
 ## How To Update It

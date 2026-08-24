@@ -643,9 +643,37 @@
   };
 });
 
-export const inspect_source = globalThis.an_utility_code_inspector.inspect_source;
-export const inspect_source_ast = globalThis.an_utility_code_inspector.inspect_source_ast;
-export const inspect_source_auto = globalThis.an_utility_code_inspector.inspect_source_auto;
-export const parse_params = globalThis.an_utility_code_inspector.parse_params;
-export const split_top_level = globalThis.an_utility_code_inspector.split_top_level;
-export default globalThis.an_utility_code_inspector;
+export class CodeInspector {
+  constructor(config = {}) {
+    this.config = config || {};
+  }
+
+  inspectSource(sourceText) {
+    return globalThis.an_utility_code_inspector.inspect_source(sourceText);
+  }
+
+  inspectSourceAst(sourceText) {
+    return globalThis.an_utility_code_inspector.inspect_source_ast(sourceText);
+  }
+
+  inspectSourceAuto(sourceText) {
+    return globalThis.an_utility_code_inspector.inspect_source_auto(sourceText);
+  }
+
+  parseParams(paramText) {
+    return globalThis.an_utility_code_inspector.parse_params(paramText);
+  }
+
+  splitTopLevel(text, separator) {
+    return globalThis.an_utility_code_inspector.split_top_level(text, separator);
+  }
+}
+
+const defaultInspector = new CodeInspector();
+
+export function inspect_source(sourceText) { return defaultInspector.inspectSource(sourceText); }
+export function inspect_source_ast(sourceText) { return defaultInspector.inspectSourceAst(sourceText); }
+export function inspect_source_auto(sourceText) { return defaultInspector.inspectSourceAuto(sourceText); }
+export function parse_params(paramText) { return defaultInspector.parseParams(paramText); }
+export function split_top_level(text, separator) { return defaultInspector.splitTopLevel(text, separator); }
+export default CodeInspector;

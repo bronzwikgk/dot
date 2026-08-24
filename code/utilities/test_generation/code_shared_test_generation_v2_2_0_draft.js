@@ -62,7 +62,7 @@
     var exact = sample_entries.filter(function (e) { return e.type === wanted_type; });
     if (exact.length > 0) return exact[0].values;
     if (wanted_type && wanted_type.indexOf("array<") === 0) {
-      var arrays = sample_entries.filter(function (e) { return e.type.indexOf("array<") === 0; });
+      var arrays = sample_entries.filter(function (e) { return e.type && e.type.indexOf("array<") === 0; });
       if (arrays.length > 0) return arrays[0].values;
     }
     var any = sample_entries.filter(function (e) { return e.type === "any"; });
@@ -446,10 +446,46 @@
   };
 });
 
-export const generate_test_plan = globalThis.an_utility_test_generation.generate_test_plan;
-export const render_test_file = globalThis.an_utility_test_generation.render_test_file;
-export const parse_template_entry = globalThis.an_utility_test_generation.parse_template_entry;
-export const parse_sample_entry = globalThis.an_utility_test_generation.parse_sample_entry;
-export const summarize_plan = globalThis.an_utility_test_generation.summarize_plan;
-export const should_include_signature = globalThis.an_utility_test_generation.should_include_signature;
-export default globalThis.an_utility_test_generation;
+export class TestGenerator {
+  constructor(config = {}) {
+    this.config = config || {};
+  }
+
+  generateTestPlan(signatures, templateBankStrings, sampleBankStrings, options = {}) {
+    return globalThis.an_utility_test_generation.generate_test_plan(signatures, templateBankStrings, sampleBankStrings, { ...this.config, ...options });
+  }
+
+  renderTestFile(plan, requirePath, snapshotPath, options = {}) {
+    return globalThis.an_utility_test_generation.render_test_file(plan, requirePath, snapshotPath, { ...this.config, ...options });
+  }
+
+  parseTemplateEntry(entryText) {
+    return globalThis.an_utility_test_generation.parse_template_entry(entryText);
+  }
+
+  parseSampleEntry(entryText) {
+    return globalThis.an_utility_test_generation.parse_sample_entry(entryText);
+  }
+
+  summarizePlan(units) {
+    return globalThis.an_utility_test_generation.summarize_plan(units);
+  }
+
+  shouldIncludeSignature(signature, options = {}) {
+    return globalThis.an_utility_test_generation.should_include_signature(signature, { ...this.config, ...options });
+  }
+}
+
+const defaultGenerator = new TestGenerator();
+
+export function generate_test_plan(signatures, templateBankStrings, sampleBankStrings, options) {
+  return defaultGenerator.generateTestPlan(signatures, templateBankStrings, sampleBankStrings, options);
+}
+export function render_test_file(plan, requirePath, snapshotPath, options) {
+  return defaultGenerator.renderTestFile(plan, requirePath, snapshotPath, options);
+}
+export function parse_template_entry(entryText) { return defaultGenerator.parseTemplateEntry(entryText); }
+export function parse_sample_entry(entryText) { return defaultGenerator.parseSampleEntry(entryText); }
+export function summarize_plan(units) { return defaultGenerator.summarizePlan(units); }
+export function should_include_signature(signature, options) { return defaultGenerator.shouldIncludeSignature(signature, options); }
+export default TestGenerator;

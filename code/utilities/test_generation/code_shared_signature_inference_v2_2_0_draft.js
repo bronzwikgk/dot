@@ -194,9 +194,37 @@
   };
 });
 
-export const infer_signature = globalThis.an_utility_signature_inference.infer_signature;
-export const infer_signatures = globalThis.an_utility_signature_inference.infer_signatures;
-export const classify_archetype = globalThis.an_utility_signature_inference.classify_archetype;
-export const normalize_type_token = globalThis.an_utility_signature_inference.normalize_type_token;
-export const infer_return_from_source = globalThis.an_utility_signature_inference.infer_return_from_source;
-export default globalThis.an_utility_signature_inference;
+export class SignatureInferencer {
+  constructor(config = {}) {
+    this.config = config || {};
+  }
+
+  inferSignature(fnRecord) {
+    return globalThis.an_utility_signature_inference.infer_signature(fnRecord);
+  }
+
+  inferSignatures(fnRecords) {
+    return globalThis.an_utility_signature_inference.infer_signatures(fnRecords);
+  }
+
+  classifyArchetype(name, paramTypes, returnType) {
+    return globalThis.an_utility_signature_inference.classify_archetype(name, paramTypes, returnType);
+  }
+
+  normalizeTypeToken(rawType) {
+    return globalThis.an_utility_signature_inference.normalize_type_token(rawType);
+  }
+
+  inferReturnFromSource(fnRecord) {
+    return globalThis.an_utility_signature_inference.infer_return_from_source(fnRecord);
+  }
+}
+
+const defaultInferencer = new SignatureInferencer();
+
+export function infer_signature(fnRecord) { return defaultInferencer.inferSignature(fnRecord); }
+export function infer_signatures(fnRecords) { return defaultInferencer.inferSignatures(fnRecords); }
+export function classify_archetype(name, paramTypes, returnType) { return defaultInferencer.classifyArchetype(name, paramTypes, returnType); }
+export function normalize_type_token(rawType) { return defaultInferencer.normalizeTypeToken(rawType); }
+export function infer_return_from_source(fnRecord) { return defaultInferencer.inferReturnFromSource(fnRecord); }
+export default SignatureInferencer;

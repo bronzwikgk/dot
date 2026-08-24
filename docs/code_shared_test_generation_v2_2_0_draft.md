@@ -12,13 +12,24 @@ It generates safety, regression, and behavioral checks. Without a contract file,
 
 ## What It Does
 
-The utility exposes:
+The utility exposes a class API:
+
+- `new TestGenerator(config)`
+- `generator.generateTestPlan(signatures, template_bank_strings, sample_bank_strings, options)`
+- `generator.renderTestFile(plan, require_path, snapshot_path, options)`
+- `generator.parseTemplateEntry(entry_text)`
+- `generator.parseSampleEntry(entry_text)`
+- `generator.summarizePlan(units)`
+- `generator.shouldIncludeSignature(signature, options)`
+
+It also keeps the older compatibility functions:
 
 - `generate_test_plan(signatures, template_bank_strings, sample_bank_strings, options)`
 - `render_test_file(plan, require_path, snapshot_path, options)`
 - `parse_template_entry(entry_text)`
 - `parse_sample_entry(entry_text)`
 - `summarize_plan(units)`
+- `should_include_signature(signature, options)`
 
 Generated tests can cover:
 
@@ -40,6 +51,8 @@ Generated tests can cover:
 - Public-target selection is stricter: private/internal methods are skipped, class methods are generated only for class-style targets, and constructors are generated only when the class is targetable.
 - Stateful method names such as `create`, `update`, `delete`, and `query` avoid determinism/snapshot properties.
 - Plan summaries avoid prototype-key collisions such as the `constructor` key.
+- Added `TestGenerator` class export with constructor/config style while preserving existing function exports.
+- Sample fallback selection now guards entries with missing `type` values.
 
 ## When To Use It
 
@@ -78,11 +91,14 @@ Expected output:
 test_generation checks passed
 ```
 
-The generator was then run against the updated shared utilities and the rendered `node:test` suite passed:
+After the class API update, the test-generation utility was run on itself and on the shared utilities:
 
 ```text
-826 tests
-826 pass
+474 self-tests
+474 pass
+
+1300 generated shared-utility tests
+1300 pass
 0 fail
 ```
 
