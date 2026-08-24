@@ -19,7 +19,6 @@
 
   var PARAM_TYPE_RULES = [
     { pattern: /^(items?|entries|rows|values|tokens|words|collection|records|list|array|arr|args)$/, type: "array<any>" },
-    { pattern: /(s)$/, type: "array<any>" },
     { pattern: /^(n|count|total|index|i|j|k|size|limit|length|decimals?|precision|seed|depth|position|offset)$/, type: "number" },
     { pattern: /^(value|text|string|str|word|input|raw|content|name|key|label|message|sentence|source|target)$/, type: "string" },
     { pattern: /^(options|config|opts|settings|params|record|entity|item|data|obj|object)$/, type: "object" },
