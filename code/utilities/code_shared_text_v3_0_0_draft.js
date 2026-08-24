@@ -4,11 +4,14 @@
  * @changelog - 2026-08-24: 3.0.0: promoted from v2 text utility to class form
  */
 export class TextUtil {
-  constructor(config) { this.config = config || {}; }
+  constructor(config = {}) { this.config = config || {}; }
   escape_text(value) {
     return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
   }
-  join_mapped(items, map_function) { return items.map(map_function).join(""); }
+  join_mapped(items, map_function) {
+    if (!items || items.length === 0) return "";
+    return items.map(map_function).join("");
+  }
   tokenize(text_value) {
     return String(text_value || "").toLowerCase().split(/[^a-z0-9]+/).filter(word => word.length > 1);
   }
