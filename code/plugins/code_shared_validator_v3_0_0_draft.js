@@ -27,10 +27,11 @@ export class Validator {
   validate(data, schema) {
     const errors = [];
     if (!schema || typeof schema !== 'object') return { valid: true, errors: [] };
+    const payload = data || {};
 
     if (schema.required && Array.isArray(schema.required)) {
       for (const field of schema.required) {
-        if (data[field] === undefined || data[field] === null || data[field] === '') {
+        if (payload[field] === undefined || payload[field] === null || payload[field] === '') {
           errors.push({ field, message: `Field '${field}' is required` });
         }
       }
@@ -38,9 +39,9 @@ export class Validator {
 
     if (schema.properties) {
       for (const key in schema.properties) {
-        if (data[key] !== undefined) {
+        if (payload[key] !== undefined) {
           const propSchema = schema.properties[key];
-          const value = data[key];
+          const value = payload[key];
 
           if (propSchema.type) {
             const actualType = Array.isArray(value) ? 'array' : typeof value;
@@ -63,12 +64,22 @@ export class Validator {
   evaluateRule(rule, context) {
     if (!rule) return true;
 
+    if (Array.isArray(rule.conditions)) {
+      if (rule.type === 'or') {
+        return rule.conditions.some(condition => this.evaluateRule(condition, context));
+      }
+      if (rule.type === 'not') {
+        return !this.evaluateRule(rule.conditions[0], context);
+      }
+      return rule.conditions.every(condition => this.evaluateRule(condition, context));
+    }
+
     if (rule.condition && typeof rule.condition === 'string') {
       try {
-        const code = rule.condition.includes('=') ? rule.condition : `result = (${rule.condition})`;
+        const code = `result = (${rule.condition})`;
         const sandbox = { ...context, result: false };
         vm.createContext(sandbox);
-        vm.runInContext(code, sandbox);
+        vm.runInContext(code, sandbox, { timeout: this.config.conditionTimeoutMs || 100 });
         return sandbox.result;
       } catch (err) {
         console.error('[Validator] VM Error:', err.message);
@@ -83,8 +94,12 @@ export class Validator {
     switch (op) {
       case '==': return left == right;
       case '===': return left === right;
+      case '!=': return left != right;
+      case '!==': return left !== right;
       case '>': return left > right;
       case '<': return left < right;
+      case '>=': return left >= right;
+      case '<=': return left <= right;
       case 'contains': return Array.isArray(left) && left.includes(right);
       default: return false;
     }
