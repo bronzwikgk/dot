@@ -203,7 +203,8 @@
     var units = [];
     for (var i = 0; i < signatures.length; i++) {
       var sig = signatures[i];
-      if (opts.exported_names && opts.exported_names.length > 0 && opts.exported_names.indexOf(sig.name) === -1) continue;
+      var is_class_style = opts.export_style === "class";
+      if (!is_class_style && opts.exported_names && opts.exported_names.length > 0 && opts.exported_names.indexOf(sig.name) === -1) continue;
       if (opts.skip && opts.skip.indexOf(sig.name) !== -1) continue;
       units.push(generate_unit_plan(sig, templates, samples, opts.file_flags, edges));
     }
@@ -211,6 +212,7 @@
       target: opts.target || "unknown",
       module_kind: opts.module_kind || "named_object",
       export_style: opts.export_style || "named_object",
+      exported_names: opts.exported_names || [],
       units: units
     };
   }
@@ -321,15 +323,20 @@
     lines.push(render_attempt_source());
     lines.push("");
     if (plan.export_style === "class") {
+      var ctor_expr;
       if (is_esm) {
-        lines.push("const Ctor = mod.default || mod;");
-        lines.push("const instance = new Ctor();");
+        var primary = (plan.exported_names && plan.exported_names[0]) || "default";
+        ctor_expr = "mod.default || mod[" + JSON.stringify(primary) + "] || mod";
       } else {
-        lines.push("const instance = new mod();");
+        ctor_expr = "mod";
       }
+      lines.push("const __ctor = " + ctor_expr + ";");
+      lines.push("let __instance = null;");
+      lines.push("try { __instance = new __ctor(); } catch (__e0) { try { __instance = new __ctor({}); } catch (__e1) {} }");
       lines.push("function __call(name, args) {");
-      lines.push("  if (typeof instance[name] !== \"function\") throw new Error(\"missing method \" + name);");
-      lines.push("  return instance[name].apply(instance, args);");
+      lines.push("  if (__instance === null) throw new Error(\"target unavailable: constructor rejected no-arg and object-arg instantiation\");");
+      lines.push("  if (typeof __instance[name] !== \"function\") throw new Error(\"missing method \" + name);");
+      lines.push("  return __instance[name].apply(__instance, args);");
       lines.push("}");
     } else if (is_esm) {
       lines.push("function __call(name, args) {");

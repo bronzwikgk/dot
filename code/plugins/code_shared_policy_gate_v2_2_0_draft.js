@@ -1,4 +1,4 @@
-import { inferEntityFromCommand } from "./CLI_ourActionLang_v2_2_0_ready_Gem.js";
+import { inferEntityFromCommand } from "./code_shared_cli_v2_2_0_draft.js";
 
 export function evaluatePlanPolicy(plan, options = {}) {
   const actor = options.actor ?? "system";

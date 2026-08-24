@@ -1,11 +1,11 @@
 ﻿import crypto from "node:crypto";
 import path from "node:path";
-import { ourActionLang_Tokenizer_v2_2_0_ready_Gem } from "../utility/Tokenizer_ourActionLang_v2_2_0_ready_Gem.js";
-import { ourActionLang_Parser_v2_2_0_ready_Gem } from "../utility/Parser_ourActionLang_v2_2_0_ready_Gem.js";
-import { ourActionLang_Compiler_v2_2_0_ready_Gem } from "../utility/Compiler_ourActionLang_v2_2_0_ready_Gem.js";
-import { ourActionLang_Resolver_v2_2_0_ready_Gem } from "../utility/Resolver_ourActionLang_v2_2_0_ready_Gem.js";
+import { ourActionLang_Tokenizer_v2_2_0_ready_Gem } from "../utilities/code_shared_tokenizer_v2_2_0_draft.js";
+import { ourActionLang_Parser_v2_2_0_ready_Gem } from "../utilities/code_shared_parser_v2_2_0_draft.js";
+import { ourActionLang_Compiler_v2_2_0_ready_Gem } from "../utilities/code_shared_compiler_v2_2_0_draft.js";
+import { ourActionLang_Resolver_v2_2_0_ready_Gem } from "../utilities/code_shared_resolver_v2_2_0_draft.js";
 import { ourActionLang_ValidationPipeline_v2_2_0_ready_Gem } from "../utility/ValidationPipeline_ourActionLang_v2_2_0_ready_Gem.js";
-import { ourActionLang_Transformer_v2_2_0_ready_Gem } from "../utility/Transformer_ourActionLang_v2_2_0_ready_Gem.js";
+import { ourActionLang_Transformer_v2_2_0_ready_Gem } from "../utilities/code_shared_transformer_v2_2_0_draft.js";
 import { ourActionLang_Config_v2_2_0_ready_Gem } from "../../config/Config_ourActionLang_v2_2_0_ready_Gem.js";
 
 export class ourActionLang_Runtime_v2_2_0_ready_Gem {

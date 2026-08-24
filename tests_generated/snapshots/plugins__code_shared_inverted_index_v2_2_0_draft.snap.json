@@ -1,0 +1,12 @@
+{
+  "activate": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.register_operation is not a function\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.register_operation is not a function\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.register_operation is not a function\"}"
+  },
+  "deactivate": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.unregister_operations is not a function\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.unregister_operations is not a function\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.unregister_operations is not a function\"}"
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "transform": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}"
+  }
+}

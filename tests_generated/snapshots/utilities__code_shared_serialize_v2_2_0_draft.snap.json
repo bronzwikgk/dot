@@ -1,0 +1,26 @@
+{
+  "to_json": {
+    "2": "{\"threw\":false,\"value\":\"\\\"{}\\\"\"}",
+    "5": "{\"threw\":false,\"value\":\"\\\"{\\\\n  \\\\\\\"a\\\\\\\": 1\\\\n}\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"{\\\\n  \\\\\\\"a\\\\\\\": 1\\\\n}\\\"\"}"
+  },
+  "from_json": {
+    "2": "{\"threw\":false,\"value\":\"{\\\"errors\\\":[{\\\"code\\\":\\\"parse_error\\\",\\\"message\\\":\\\"Unexpected token 'a', \\\\\\\"alpha\\\\\\\" is not valid JSON\\\"}]}\"}",
+    "5": "{\"threw\":false,\"value\":\"{\\\"errors\\\":[{\\\"code\\\":\\\"parse_error\\\",\\\"message\\\":\\\"Unexpected token 'h', \\\\\\\"hello world\\\\\\\" is not valid JSON\\\"}]}\"}",
+    "8": "{\"threw\":false,\"value\":\"{\\\"errors\\\":[{\\\"code\\\":\\\"parse_error\\\",\\\"message\\\":\\\"Unexpected end of JSON input\\\"}]}\"}",
+    "11": "{\"threw\":false,\"value\":\"{\\\"errors\\\":[{\\\"code\\\":\\\"parse_error\\\",\\\"message\\\":\\\"Unexpected token 's', \\\\\\\"  spaced  \\\\\\\" is not valid JSON\\\"}]}\"}",
+    "14": "{\"threw\":false,\"value\":\"{\\\"errors\\\":[{\\\"code\\\":\\\"parse_error\\\",\\\"message\\\":\\\"Unexpected token 'A', \\\\\\\"Alpha42\\\\\\\" is not valid JSON\\\"}]}\"}",
+    "17": "{\"threw\":false,\"value\":\"{\\\"errors\\\":[{\\\"code\\\":\\\"parse_error\\\",\\\"message\\\":\\\"Unexpected end of JSON input\\\"}]}\"}"
+  },
+  "to_markdown_table": {
+    "2": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
+    "5": "{\"threw\":false,\"value\":\"\\\"| 3 | 1 | 2 |\\\\n| :--- | :--- | :--- |\\\\n|  |  |  |\\\\n|  |  |  |\\\\n|  |  |  |\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"| 0 |\\\\n| :--- |\\\\n|  |\\\"\"}",
+    "11": "{\"threw\":false,\"value\":\"\\\"| 3 | 1 | 2 |\\\\n| :--- | :--- | :--- |\\\\n|  |  |  |\\\\n|  |  |  |\\\\n|  |  |  |\\\"\"}"
+  },
+  "to_plain_text": {
+    "2": "{\"threw\":false,\"value\":\"\\\"{}\\\"\"}",
+    "5": "{\"threw\":false,\"value\":\"\\\"{\\\\\\\"a\\\\\\\":1}\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"{\\\\\\\"a\\\\\\\":1}\\\"\"}"
+  }
+}

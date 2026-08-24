@@ -545,6 +545,14 @@
         continue;
       }
       if (stmt.type === "ExportNamedDeclaration") {
+        if (stmt.declaration && (stmt.declaration.type === "ClassDeclaration" || stmt.declaration.type === "ClassExpression")) {
+          style = "class";
+          if (stmt.declaration.id) {
+            names.push(stmt.declaration.id.name);
+            export_target = stmt.declaration.id.name;
+          }
+          continue;
+        }
         style = names.length === 0 ? "named_object" : style;
         if (stmt.declaration) {
           if (stmt.declaration.id) names.push(stmt.declaration.id.name);

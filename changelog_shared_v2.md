@@ -35,7 +35,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added VERSION file (2.0.0) and initial branch model (master, v2, wip_dot)
 
 ### Changed
-- edge case rule layer: dedicated edges bank + single parameter sweep in test_generation (each parameter hit with every typed edge literal while others stay mid range; combined all-edge row; edge rows run edge_safety only). Committed baselines regenerated: 435 tests green across six targets
+- full repo sweep: all 56 code files inventoried and tested; 53 files / 2370 cases green committed as baselines in tests_generated (sweep naming, sweep_report.json included)
+
+### Fixed
+- formula.index_to_column hung forever on Infinity input - now throws RangeError
+- array_slicing.slidingWindows with negative infinite window size allocated until out of memory - now throws RangeError
+- metric_calculation and standard_deviation required pre rename sibling module names - requires repointed
+- policy_gate imported old CLI file name - repointed to code_shared_cli
+- runtime imported five legacy utility paths - repointed; ValidationPipeline and Config modules do not exist anywhere (open finding)
+- inspector: export class declarations were classified named_object - now class style with export_target
+- test_generation: class harness falls back to object arg instantiation when no-arg construction throws; esm class ctor resolves by exported name
 - code_inspector gained acorn backed `inspect_source_ast` and `inspect_source_auto`: universal syntax coverage (arrow exports, esm export statements, getters, rest and default params, destructuring) with identical inventory shape; vendored single file `test_generation/vendor/acorn.js` (8.14.0, MIT, 232 KB) keeps the zero install property; legacy line parser remains as fallback (FV7)
 - test_generation harness can render esm variants: import based preamble, top level await dynamic import, mjs output when target uses esm syntax
 - universality verified against hostile synthetic esm/cjs targets (84 + 76 tests green) and real legacy `inbox_code/utility_legacy/nlu.js` inventoried at 39 functions with exact line ranges

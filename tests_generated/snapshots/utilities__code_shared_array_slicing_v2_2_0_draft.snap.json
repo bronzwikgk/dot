@@ -1,0 +1,22 @@
+{
+  "execute": {
+    "2": "{\"threw\":false,\"value\":\"[]\"}",
+    "5": "{\"threw\":false,\"value\":\"[]\"}",
+    "8": "{\"threw\":false,\"value\":\"[]\"}",
+    "11": "{\"threw\":false,\"value\":\"[]\"}"
+  },
+  "extractWindow": {
+    "2": "{\"threw\":false,\"value\":\"[]\"}",
+    "5": "{\"threw\":false,\"value\":\"[]\"}",
+    "8": "{\"threw\":false,\"value\":\"[]\"}",
+    "11": "{\"threw\":false,\"value\":\"[]\"}",
+    "14": "{\"threw\":false,\"value\":\"[]\"}"
+  },
+  "slidingWindows": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:RangeError:slidingWindows requires a finite positive windowSize, got 0\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:RangeError:slidingWindows requires a finite positive windowSize, got -1\"}",
+    "8": "{\"threw\":false,\"value\":\"[]\"}",
+    "11": "{\"threw\":false,\"value\":\"[]\"}",
+    "14": "{\"threw\":false,\"value\":\"[]\"}"
+  }
+}

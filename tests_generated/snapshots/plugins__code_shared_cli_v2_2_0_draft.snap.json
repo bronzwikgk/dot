@@ -1,0 +1,46 @@
+{
+  "parseCliRequest": {
+    "2": "{\"threw\":false,\"value\":\"{\\\"command\\\":\\\"\\\",\\\"input\\\":\\\"\\\",\\\"file\\\":\\\"\\\",\\\"execute\\\":false,\\\"backend\\\":\\\"\\\",\\\"continueOnError\\\":false,\\\"storage\\\":\\\"\\\",\\\"mode\\\":\\\"tolerant\\\",\\\"actor\\\":\\\"system\\\",\\\"activate\\\":false,\\\"to\\\":\\\"\\\",\\\"project\\\":\\\"ourActionLang\\\",\\\"template\\\":\\\"\\\",\\\"help\\\":false,\\\"menu\\\":false,\\\"menuFile\\\":\\\"\\\",\\\"menuPath\\\":\\\"\\\",\\\"select\\\":\\\"\\\"}\"}",
+    "5": "{\"threw\":false,\"value\":\"{\\\"command\\\":\\\"\\\",\\\"input\\\":\\\"\\\",\\\"file\\\":\\\"\\\",\\\"execute\\\":false,\\\"backend\\\":\\\"\\\",\\\"continueOnError\\\":false,\\\"storage\\\":\\\"\\\",\\\"mode\\\":\\\"tolerant\\\",\\\"actor\\\":\\\"system\\\",\\\"activate\\\":false,\\\"to\\\":\\\"\\\",\\\"project\\\":\\\"ourActionLang\\\",\\\"template\\\":\\\"\\\",\\\"help\\\":false,\\\"menu\\\":false,\\\"menuFile\\\":\\\"\\\",\\\"menuPath\\\":\\\"\\\",\\\"select\\\":\\\"\\\"}\"}",
+    "8": "{\"threw\":false,\"value\":\"{\\\"command\\\":\\\"\\\",\\\"input\\\":\\\"\\\",\\\"file\\\":\\\"\\\",\\\"execute\\\":false,\\\"backend\\\":\\\"\\\",\\\"continueOnError\\\":false,\\\"storage\\\":\\\"\\\",\\\"mode\\\":\\\"tolerant\\\",\\\"actor\\\":\\\"system\\\",\\\"activate\\\":false,\\\"to\\\":\\\"\\\",\\\"project\\\":\\\"ourActionLang\\\",\\\"template\\\":\\\"\\\",\\\"help\\\":false,\\\"menu\\\":false,\\\"menuFile\\\":\\\"\\\",\\\"menuPath\\\":\\\"\\\",\\\"select\\\":\\\"\\\"}\"}",
+    "11": "{\"threw\":false,\"value\":\"{\\\"command\\\":\\\"\\\",\\\"input\\\":\\\"\\\",\\\"file\\\":\\\"\\\",\\\"execute\\\":false,\\\"backend\\\":\\\"\\\",\\\"continueOnError\\\":false,\\\"storage\\\":\\\"\\\",\\\"mode\\\":\\\"tolerant\\\",\\\"actor\\\":\\\"system\\\",\\\"activate\\\":false,\\\"to\\\":\\\"\\\",\\\"project\\\":\\\"ourActionLang\\\",\\\"template\\\":\\\"\\\",\\\"help\\\":false,\\\"menu\\\":false,\\\"menuFile\\\":\\\"\\\",\\\"menuPath\\\":\\\"\\\",\\\"select\\\":\\\"\\\"}\"}"
+  },
+  "loadInputFromArgs": {
+    "2": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
+    "5": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
+    "11": "{\"threw\":false,\"value\":\"\\\"\\\"\"}"
+  },
+  "inferEntityFromCommand": {
+    "2": "{\"threw\":false,\"value\":\"\\\"value\\\"\"}",
+    "5": "{\"threw\":false,\"value\":\"\\\"value\\\"\"}"
+  },
+  "parseSimpleCommand": {
+    "2": "{\"threw\":false,\"value\":\"[\\\"alpha\\\"]\"}",
+    "5": "{\"threw\":false,\"value\":\"[\\\"hello\\\",\\\"world\\\"]\"}",
+    "8": "{\"threw\":false,\"value\":\"[]\"}",
+    "11": "{\"threw\":false,\"value\":\"[\\\"spaced\\\"]\"}",
+    "14": "{\"threw\":false,\"value\":\"[\\\"Alpha42\\\"]\"}",
+    "17": "{\"threw\":false,\"value\":\"[]\"}"
+  },
+  "parseMenuDefinitions": {
+    "2": "{\"threw\":false,\"value\":\"{\\\"root_menu_id\\\":\\\"\\\",\\\"menus\\\":{}}\"}",
+    "5": "{\"threw\":false,\"value\":\"{\\\"root_menu_id\\\":\\\"\\\",\\\"menus\\\":{}}\"}",
+    "8": "{\"threw\":false,\"value\":\"{\\\"root_menu_id\\\":\\\"\\\",\\\"menus\\\":{}}\"}",
+    "11": "{\"threw\":false,\"value\":\"{\\\"root_menu_id\\\":\\\"\\\",\\\"menus\\\":{}}\"}",
+    "14": "{\"threw\":false,\"value\":\"{\\\"root_menu_id\\\":\\\"\\\",\\\"menus\\\":{}}\"}",
+    "17": "{\"threw\":false,\"value\":\"{\\\"root_menu_id\\\":\\\"\\\",\\\"menus\\\":{}}\"}"
+  },
+  "resolveMenuByPath": {
+    "2": "{\"threw\":false,\"value\":\"null\"}",
+    "5": "{\"threw\":false,\"value\":\"null\"}",
+    "8": "{\"threw\":false,\"value\":\"null\"}",
+    "11": "{\"threw\":false,\"value\":\"null\"}",
+    "14": "{\"threw\":false,\"value\":\"null\"}",
+    "17": "{\"threw\":false,\"value\":\"null\"}"
+  },
+  "renderMenu": {
+    "2": "{\"threw\":false,\"value\":\"[\\\"Menu: undefined\\\",\\\"(no items)\\\"]\"}",
+    "5": "{\"threw\":false,\"value\":\"[\\\"Menu: undefined\\\",\\\"(no items)\\\"]\"}"
+  }
+}

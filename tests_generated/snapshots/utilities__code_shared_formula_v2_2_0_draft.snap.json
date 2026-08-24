@@ -1,0 +1,54 @@
+{
+  "column_to_index": {
+    "2": "{\"threw\":false,\"value\":\"104246478339774\"}",
+    "5": "{\"threw\":false,\"value\":\"104246478339774\"}"
+  },
+  "index_to_column": {
+    "2": "{\"threw\":false,\"value\":\"\\\"A\\\"\"}",
+    "5": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"AQ\\\"\"}",
+    "11": "{\"threw\":false,\"value\":\"\\\"D\\\"\"}",
+    "14": "{\"threw\":false,\"value\":\"\\\"AQ\\\"\"}"
+  },
+  "expand_range": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'match')\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'match')\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'match')\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'match')\"}",
+    "14": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'match')\"}",
+    "17": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'match')\"}"
+  },
+  "tokenize": {
+    "2": "{\"threw\":false,\"value\":\"[{\\\"type\\\":\\\"IDENTIFIER\\\",\\\"value\\\":\\\"SEED_VALUE\\\"},{\\\"type\\\":\\\"EOF\\\",\\\"value\\\":null}]\"}",
+    "5": "{\"threw\":false,\"value\":\"[{\\\"type\\\":\\\"IDENTIFIER\\\",\\\"value\\\":\\\"SEED_VALUE\\\"},{\\\"type\\\":\\\"EOF\\\",\\\"value\\\":null}]\"}"
+  },
+  "evaluate": {
+    "2": "{\"threw\":false,\"value\":\"null\"}",
+    "5": "{\"threw\":false,\"value\":\"null\"}",
+    "8": "{\"threw\":false,\"value\":\"null\"}"
+  },
+  "parse_formula": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:Expected LPAREN but got EOF\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:Expected LPAREN but got IDENTIFIER\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:Error:Unexpected token: null\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:Error:Expected LPAREN but got EOF\"}",
+    "14": "{\"threw\":false,\"value\":\"{\\\"type\\\":\\\"cell\\\",\\\"value\\\":\\\"ALPHA42\\\"}\"}",
+    "17": "{\"threw\":true,\"value\":\"__threw__:Error:Unexpected token: null\"}"
+  },
+  "evaluate_formula": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:Expected LPAREN but got EOF\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:Expected LPAREN but got IDENTIFIER\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:Error:Unexpected token: null\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:Error:Expected LPAREN but got EOF\"}",
+    "14": "{\"threw\":false,\"value\":\"0\"}",
+    "17": "{\"threw\":true,\"value\":\"__threw__:Error:Unexpected token: null\"}"
+  },
+  "format_result": {
+    "2": "{\"threw\":false,\"value\":\"\\\"alpha\\\"\"}",
+    "5": "{\"threw\":false,\"value\":\"\\\"hello world\\\"\"}",
+    "8": "{\"threw\":false,\"value\":\"\\\"\\\"\"}",
+    "11": "{\"threw\":false,\"value\":\"\\\"  spaced  \\\"\"}",
+    "14": "{\"threw\":false,\"value\":\"\\\"Alpha42\\\"\"}",
+    "17": "{\"threw\":false,\"value\":\"\\\"\\\"\"}"
+  }
+}

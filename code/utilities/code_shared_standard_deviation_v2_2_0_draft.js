@@ -1,4 +1,5 @@
-var MeanCalculationUtil = require('./mean_calculation_util');
+var MeanCalculationUtil =
+require('./code_shared_mean_calculation_v2_2_0_draft.js');
 
 class StandardDeviationUtil {
   constructor(config) {

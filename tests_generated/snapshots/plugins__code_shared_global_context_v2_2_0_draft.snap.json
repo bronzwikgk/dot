@@ -1,0 +1,8 @@
+{
+  "build_global_context": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'permissions')\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'permissions')\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'permissions')\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading 'permissions')\"}"
+  }
+}

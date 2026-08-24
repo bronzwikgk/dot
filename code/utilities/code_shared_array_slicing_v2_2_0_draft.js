@@ -25,6 +25,12 @@ class ArraySlicingUtil {
   }
 
   slidingWindows(array, windowSize) {
+    if (!array) {
+      return [];
+    }
+    if (typeof windowSize !== 'number' || !Number.isFinite(windowSize) || windowSize <= 0) {
+      throw new RangeError('slidingWindows requires a finite positive windowSize, got ' + String(windowSize));
+    }
     var windows = [];
     var index = 0;
     var maxStart = array.length - windowSize;

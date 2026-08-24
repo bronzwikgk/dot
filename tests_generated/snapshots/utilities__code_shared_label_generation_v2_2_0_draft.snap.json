@@ -1,0 +1,14 @@
+{
+  "execute": {
+    "2": "{\"threw\":false,\"value\":\"[]\"}",
+    "5": "{\"threw\":false,\"value\":\"[]\"}",
+    "8": "{\"threw\":false,\"value\":\"[]\"}"
+  },
+  "calculateFutureReturn": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading '4')\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading '4')\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading '4')\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading '4')\"}",
+    "14": "{\"threw\":true,\"value\":\"__threw__:TypeError:Cannot read properties of undefined (reading '4')\"}"
+  }
+}

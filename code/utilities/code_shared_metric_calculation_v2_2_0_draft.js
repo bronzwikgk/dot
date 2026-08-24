@@ -1,5 +1,5 @@
-var MeanCalculationUtil = require('./mean_calculation_util');
-var StandardDeviationUtil = require('./standard_deviation_util');
+var MeanCalculationUtil = require('./code_shared_mean_calculation_v2_2_0_draft.js');
+var StandardDeviationUtil = require('./code_shared_standard_deviation_v2_2_0_draft.js');
 
 class MetricCalculationUtil {
   constructor(config) {

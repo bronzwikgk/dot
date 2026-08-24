@@ -90,6 +90,40 @@ normally or throw a proper Error. Anything else fails.
 
 ## Running It Today
 
+The committed baseline covers the full code tree: 53 of 56 files,
+2370 test cases, all green.
+
+```
+node --test --test-force-exit "tests_generated/*.test.js"
+```
+
+`--test-force-exit` is required because some plugins start fire and forget
+async work that outlives the tests.
+
+Per file results live in `tests_generated/sweep_report.json`.
+
+## Full Sweep Findings
+
+The sweep over all 56 code files surfaced real defects, all fixed:
+
+| finding | fix |
+|:---|:---|
+| `formula.index_to_column(Infinity)` looped forever | RangeError guard for non finite index |
+| `array_slicing.slidingWindows(arr, -Infinity)` allocated until heap death | RangeError guard for non positive window size |
+| `metric_calculation`, `standard_deviation` required pre rename sibling names | requires repointed to convention files |
+| `policy_gate` imported the old CLI file name | import repointed to `code_shared_cli_v2_2_0_draft.js` |
+| `runtime` imported five legacy utility paths | five imports repointed; two remain broken (see below) |
+| `export class X` classified as named_object | inspector now classifies it as class style |
+
+Known open items (missing dependencies, not stale paths):
+
+- `runner` requires `../task/tasks` - no such module exists in the repo
+- `runtime` needs `ValidationPipeline_ourActionLang_v2_2_0_ready_Gem.js`
+  and `Config_ourActionLang_v2_2_0_ready_Gem.js` - neither exists
+- `metrics` generates no units by design: it is a pure re-export shim
+
+## Running It Today (single target)
+
 Committed baselines exist under `tests_generated/`. Run them all:
 
 ```

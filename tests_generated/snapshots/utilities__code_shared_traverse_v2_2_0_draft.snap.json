@@ -1,0 +1,34 @@
+{
+  "flatten_tree": {
+    "2": "{\"threw\":false,\"value\":\"[]\"}",
+    "5": "{\"threw\":false,\"value\":\"[3,1,2]\"}",
+    "8": "{\"threw\":false,\"value\":\"[0]\"}",
+    "11": "{\"threw\":false,\"value\":\"[]\"}",
+    "14": "{\"threw\":false,\"value\":\"[3,1,2]\"}",
+    "17": "{\"threw\":false,\"value\":\"[3,1,2]\"}"
+  },
+  "get_depth": {
+    "2": "{\"threw\":false,\"value\":\"0\"}",
+    "5": "{\"threw\":false,\"value\":\"0\"}",
+    "8": "{\"threw\":false,\"value\":\"0\"}",
+    "11": "{\"threw\":false,\"value\":\"0\"}",
+    "14": "{\"threw\":false,\"value\":\"0\"}",
+    "17": "{\"threw\":false,\"value\":\"0\"}"
+  },
+  "walk_tree": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:visitor is not a function\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:visitor is not a function\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:visitor is not a function\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:TypeError:visitor is not a function\"}",
+    "14": "{\"threw\":true,\"value\":\"__threw__:TypeError:visitor is not a function\"}",
+    "17": "{\"threw\":true,\"value\":\"__threw__:TypeError:visitor is not a function\"}"
+  },
+  "filter_tree": {
+    "2": "{\"threw\":false,\"value\":\"[]\"}",
+    "5": "{\"threw\":false,\"value\":\"[3,1,2]\"}",
+    "8": "{\"threw\":false,\"value\":\"[]\"}",
+    "11": "{\"threw\":false,\"value\":\"[]\"}",
+    "14": "{\"threw\":false,\"value\":\"[3,1,2]\"}",
+    "17": "{\"threw\":false,\"value\":\"[3,1,2]\"}"
+  }
+}

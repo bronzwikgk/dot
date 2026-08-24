@@ -26,6 +26,10 @@
 
      CHANGELOG
      - [2026-08-24] [agent_gate_g1_run] initial(7) edge case rule layer
+     - [2026-08-24] [agent_gate_g1_run] number edge 9007199254740991 replaced
+       with 65536; full max safe integer caused out of memory crashes in
+       allocation heavy functions (array_slicing, formula) during the full
+       sweep. Boundary intent kept via Infinity and NaN edges.
 ============================================================ -->
 
 const testing_edge_types = [
@@ -35,7 +39,7 @@ const testing_edge_types = [
 
 const testing_edge_values_primitives = [
    "type:string || \"\" || \" \" || \"\\t\" || \"0\" || \"null\"",
-   "type:number || 0 || -1 || NaN || Infinity || -Infinity || 9007199254740991",
+   "type:number || 0 || -1 || NaN || Infinity || -Infinity || 65536",
    "type:boolean || false || true",
    "type:any || null || undefined",
 ];

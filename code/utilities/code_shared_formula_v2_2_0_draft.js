@@ -156,6 +156,9 @@
    * Convert index to column letter
    */
   function index_to_column(index) {
+    if (!Number.isFinite(index)) {
+      throw new RangeError('index_to_column requires a finite index, got ' + String(index));
+    }
     var col = '';
     index += 1;
     while (index > 0) {

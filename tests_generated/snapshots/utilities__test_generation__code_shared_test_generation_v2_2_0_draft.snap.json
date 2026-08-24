@@ -16,7 +16,7 @@
     "17": "{\"threw\":false,\"value\":\"{\\\"type\\\":null,\\\"values\\\":[]}\"}"
   },
   "generate_test_plan": {
-    "2": "{\"threw\":false,\"value\":\"{\\\"target\\\":\\\"unknown\\\",\\\"module_kind\\\":\\\"named_object\\\",\\\"export_style\\\":\\\"named_object\\\",\\\"units\\\":[]}\"}",
+    "2": "{\"threw\":false,\"value\":\"{\\\"target\\\":\\\"unknown\\\",\\\"module_kind\\\":\\\"named_object\\\",\\\"export_style\\\":\\\"named_object\\\",\\\"exported_names\\\":[],\\\"units\\\":[]}\"}",
     "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:entry_text.split is not a function\"}",
     "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:entry_text.split is not a function\"}",
     "11": "{\"threw\":true,\"value\":\"__threw__:TypeError:entry_text.split is not a function\"}"

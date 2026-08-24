@@ -1,0 +1,394 @@
+[
+  {
+    "file": "utilities\\code_shared_array_concatenation_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 22,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_array_slicing_v2_2_0_draft.js",
+    "units": 3,
+    "cases": 73,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_collection_v2_2_0_draft.js",
+    "units": 4,
+    "cases": 106,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_compiler_v2_2_0_draft.js",
+    "units": 3,
+    "cases": 47,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_confidence_interval_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 24,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_cosine_similarity_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 36,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_entropy_v2_2_0_draft.js",
+    "units": 3,
+    "cases": 42,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_euclidean_distance_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 36,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_filtering_v2_2_0_draft.js",
+    "units": 3,
+    "cases": 51,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_formula_v2_2_0_draft.js",
+    "units": 8,
+    "cases": 145,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_id_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 1,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_label_generation_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 35,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_mean_calculation_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 14,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_metric_calculation_v2_2_0_draft.js",
+    "units": 7,
+    "cases": 93,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_parser_v2_2_0_draft.js",
+    "units": 4,
+    "cases": 73,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_pmi_v2_2_0_draft.js",
+    "units": 3,
+    "cases": 66,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_pool_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 49,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_resolver_v2_2_0_draft.js",
+    "units": 3,
+    "cases": 49,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_schema_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 25,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_serialize_v2_2_0_draft.js",
+    "units": 4,
+    "cases": 65,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_sorting_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 45,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_standard_deviation_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 10,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_standard_error_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 28,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_text_v2_2_0_draft.js",
+    "units": 4,
+    "cases": 84,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_time_v2_2_0_draft.js",
+    "units": 4,
+    "cases": 30,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_tokenizer_v2_2_0_draft.js",
+    "units": 8,
+    "cases": 110,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_topo_sort_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 34,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_train_test_split_v2_2_0_draft.js",
+    "units": 3,
+    "cases": 34,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_transformer_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 8,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_traverse_v2_2_0_draft.js",
+    "units": 4,
+    "cases": 103,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_weighted_mean_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 24,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_weighted_vote_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 24,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\code_shared_z_score_normalization_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 66,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\test_generation\\code_shared_code_inspector_v2_2_0_draft.js",
+    "units": 5,
+    "cases": 117,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\test_generation\\code_shared_signature_inference_v2_2_0_draft.js",
+    "units": 4,
+    "cases": 76,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "utilities\\test_generation\\code_shared_test_generation_v2_2_0_draft.js",
+    "units": 4,
+    "cases": 85,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_cli_v2_2_0_draft.js",
+    "units": 9,
+    "cases": 130,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_entity_index_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 8,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_entity_store_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 8,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_file_storage_v2_2_0_draft.js",
+    "units": 3,
+    "cases": 45,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_global_context_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 14,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_index_builder_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 5,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_intent_dispatcher_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 28,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_intent_registry_v2_2_0_draft.js",
+    "units": 4,
+    "cases": 23,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_inverted_index_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 22,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_logger_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 12,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_memory_storage_v2_2_0_draft.js",
+    "units": 3,
+    "cases": 24,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_message_bus_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 2,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_metrics_v2_2_0_draft.js",
+    "units": 0,
+    "cases": 0,
+    "status": "NO_UNITS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_plugin_host_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 4,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_policy_gate_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 14,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_runner_v2_2_0_draft.js",
+    "units": 9,
+    "cases": 85,
+    "status": "CRASH",
+    "detail": "Error: Cannot find module '../task/tasks' | ✖ C:\\Users\\0dot1\\AppData\\Local\\Temp\\opencode\\dof_testgen\\sweep\\plugins__code_shared_runner_v2_2_0_draft.test.js (56."
+  },
+  {
+    "file": "plugins\\code_shared_runtime_v2_2_0_draft.js",
+    "units": 9,
+    "cases": 142,
+    "status": "CRASH",
+    "detail": "Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'E:\\root_0dot1_wip\\shared_v2\\code\\utility\\ValidationPipeline_ourActionLang_v2_2_0_ready_Gem.js' imported from E"
+  },
+  {
+    "file": "plugins\\code_shared_schema_registry_v2_2_0_draft.js",
+    "units": 1,
+    "cases": 2,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_terminal_renderer_v2_2_0_draft.js",
+    "units": 2,
+    "cases": 22,
+    "status": "PASS",
+    "detail": ""
+  },
+  {
+    "file": "plugins\\code_shared_validator_v2_2_0_draft.js",
+    "units": 6,
+    "cases": 77,
+    "status": "PASS",
+    "detail": ""
+  }
+]

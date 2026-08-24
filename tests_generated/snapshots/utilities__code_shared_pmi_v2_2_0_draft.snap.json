@@ -1,0 +1,17 @@
+{
+  "execute": {
+    "2": "{\"threw\":false,\"value\":\"__NaN__\"}",
+    "5": "{\"threw\":false,\"value\":\"__NaN__\"}"
+  },
+  "executeFromCounts": {
+    "2": "{\"threw\":false,\"value\":\"0\"}",
+    "5": "{\"threw\":false,\"value\":\"0\"}",
+    "8": "{\"threw\":false,\"value\":\"0\"}",
+    "11": "{\"threw\":false,\"value\":\"0\"}",
+    "14": "{\"threw\":false,\"value\":\"0\"}"
+  },
+  "executeNormalized": {
+    "2": "{\"threw\":false,\"value\":\"__NaN__\"}",
+    "5": "{\"threw\":false,\"value\":\"__NaN__\"}"
+  }
+}

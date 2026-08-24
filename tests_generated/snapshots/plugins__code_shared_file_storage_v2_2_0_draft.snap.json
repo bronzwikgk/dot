@@ -1,0 +1,20 @@
+{
+  "activate": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.register_operation is not a function\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.register_operation is not a function\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.register_operation is not a function\"}"
+  },
+  "create_provider": {
+    "2": "{\"threw\":false,\"value\":\"{}\"}",
+    "5": "{\"threw\":false,\"value\":\"{}\"}",
+    "8": "{\"threw\":false,\"value\":\"{}\"}",
+    "11": "{\"threw\":false,\"value\":\"{}\"}",
+    "14": "{\"threw\":false,\"value\":\"{}\"}",
+    "17": "{\"threw\":false,\"value\":\"{}\"}"
+  },
+  "deactivate": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.unregister_operations is not a function\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.unregister_operations is not a function\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:ctx.unregister_operations is not a function\"}"
+  }
+}

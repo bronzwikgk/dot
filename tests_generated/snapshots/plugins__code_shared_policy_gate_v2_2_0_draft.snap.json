@@ -1,0 +1,7 @@
+{
+  "evaluatePlanPolicy": {
+    "2": "{\"threw\":false,\"value\":\"{\\\"pass\\\":true,\\\"decisions\\\":[],\\\"denied\\\":[]}\"}",
+    "5": "{\"threw\":false,\"value\":\"{\\\"pass\\\":true,\\\"decisions\\\":[],\\\"denied\\\":[]}\"}",
+    "8": "{\"threw\":false,\"value\":\"{\\\"pass\\\":true,\\\"decisions\\\":[],\\\"denied\\\":[]}\"}"
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "tokenize": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "14": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "17": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}"
+  },
+  "scanTokens": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "14": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "17": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}"
+  },
+  "normalizeToken": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}"
+  },
+  "isQuoted": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}"
+  },
+  "isPathLike": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}"
+  },
+  "isKeyValue": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}"
+  },
+  "resolve": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}"
+  },
+  "buildLookup": {
+    "2": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:Error:target unavailable: constructor rejected no-arg and object-arg instantiation\"}"
+  }
+}

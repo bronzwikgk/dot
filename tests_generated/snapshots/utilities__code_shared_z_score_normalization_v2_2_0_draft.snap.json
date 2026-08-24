@@ -1,0 +1,17 @@
+{
+  "execute": {
+    "2": "{\"threw\":false,\"value\":\"0\"}",
+    "5": "{\"threw\":false,\"value\":\"__NaN__\"}",
+    "8": "{\"threw\":false,\"value\":\"-1\"}",
+    "11": "{\"threw\":false,\"value\":\"__NaN__\"}",
+    "14": "{\"threw\":false,\"value\":\"0\"}",
+    "17": "{\"threw\":false,\"value\":\"-1\"}"
+  },
+  "executeBatch": {
+    "2": "{\"threw\":false,\"value\":\"[]\"}",
+    "5": "{\"threw\":false,\"value\":\"[-4,-2,-3]\"}",
+    "8": "{\"threw\":false,\"value\":\"[-1]\"}",
+    "11": "{\"threw\":false,\"value\":\"[]\"}",
+    "14": "{\"threw\":false,\"value\":\"[-0.9285714285714286,-0.9761904761904762,-0.9523809523809523]\"}"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "topological_sort": {
+    "2": "{\"threw\":false,\"value\":\"[]\"}",
+    "5": "{\"threw\":true,\"value\":\"__threw__:TypeError:get_deps is not a function\"}",
+    "8": "{\"threw\":true,\"value\":\"__threw__:TypeError:get_deps is not a function\"}",
+    "11": "{\"threw\":true,\"value\":\"__threw__:TypeError:get_deps is not a function\"}"
+  },
+  "detect_cycle": {
+    "2": "{\"threw\":false,\"value\":\"false\"}",
+    "5": "{\"threw\":false,\"value\":\"false\"}",
+    "8": "{\"threw\":false,\"value\":\"false\"}",
+    "11": "{\"threw\":false,\"value\":\"false\"}"
+  }
+}
