@@ -1,28 +1,8 @@
-var tasks = require('../task/tasks');
-
 class PipelineRunner {
   constructor(config) {
     this.config = config || {};
-    this.taskRegistry = this.initializeTaskRegistry();
+    this.taskRegistry = this.config.taskRegistry || {};
     this.results = {};
-  }
-
-  initializeTaskRegistry() {
-    return {
-      similarity_matching: tasks.SimilarityMatchingTask,
-      sequential_pattern_matching: tasks.SequentialPatternMatchingTask,
-      probability_estimation: tasks.ProbabilityEstimationTask,
-      ranking: tasks.RankingTask,
-      feature_extraction: tasks.FeatureExtractionTask,
-      dimensionality_reduction: tasks.DimensionalityReductionTask,
-      clustering_grouping: tasks.ClusteringGroupingTask,
-      cold_start: tasks.ColdStartTask,
-      scoring_rating_prediction: tasks.ScoringRatingPredictionTask,
-      experiment_comparison: tasks.ExperimentComparisonTask,
-      fast_retrieval: tasks.FastRetrievalTask,
-      model_training: tasks.ModelTrainingTask,
-      model_inference: tasks.ModelInferenceTask
-    };
   }
 
   execute(pipelineConfig, inputData) {

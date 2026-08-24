@@ -4,13 +4,11 @@ import { ourActionLang_Tokenizer_v2_2_0_ready_Gem } from "../utilities/code_shar
 import { ourActionLang_Parser_v2_2_0_ready_Gem } from "../utilities/code_shared_parser_v2_2_0_draft.js";
 import { ourActionLang_Compiler_v2_2_0_ready_Gem } from "../utilities/code_shared_compiler_v2_2_0_draft.js";
 import { ourActionLang_Resolver_v2_2_0_ready_Gem } from "../utilities/code_shared_resolver_v2_2_0_draft.js";
-import { ourActionLang_ValidationPipeline_v2_2_0_ready_Gem } from "../utility/ValidationPipeline_ourActionLang_v2_2_0_ready_Gem.js";
 import { ourActionLang_Transformer_v2_2_0_ready_Gem } from "../utilities/code_shared_transformer_v2_2_0_draft.js";
-import { ourActionLang_Config_v2_2_0_ready_Gem } from "../../config/Config_ourActionLang_v2_2_0_ready_Gem.js";
 
 export class ourActionLang_Runtime_v2_2_0_ready_Gem {
   constructor(options = {}) {
-    this.config = options.config ?? ourActionLang_Config_v2_2_0_ready_Gem;
+    this.config = options.config ?? {};
     this.tokenizer =
       options.tokenizer ?? new ourActionLang_Tokenizer_v2_2_0_ready_Gem(this.config);
     this.parser =
@@ -20,8 +18,7 @@ export class ourActionLang_Runtime_v2_2_0_ready_Gem {
     this.resolver =
       options.resolver ?? new ourActionLang_Resolver_v2_2_0_ready_Gem(this.config);
     this.validationPipeline =
-      options.validationPipeline ??
-      new ourActionLang_ValidationPipeline_v2_2_0_ready_Gem(this.config);
+      options.validationPipeline ?? null;
     this.transformer =
       options.transformer ?? new ourActionLang_Transformer_v2_2_0_ready_Gem(this.config);
     this.backend = options.backend ?? null;
@@ -153,7 +150,9 @@ export class ourActionLang_Runtime_v2_2_0_ready_Gem {
     stageDurationsMs.compile = Date.now() - compileStartedAt;
 
     const validateStartedAt = Date.now();
-    const validation = this.validationPipeline.validate(ast, plan);
+    const validation = this.validationPipeline
+      ? this.validationPipeline.validate(ast, plan)
+      : { stages: {}, errors: [], warnings: [], pass: true, skipped: true };
     stageDurationsMs.validate = Date.now() - validateStartedAt;
 
     const result = {

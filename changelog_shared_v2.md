@@ -35,9 +35,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added VERSION file (2.0.0) and initial branch model (master, v2, wip_dot)
 
 ### Changed
-- full repo sweep: all 56 code files inventoried and tested; 53 files / 2370 cases green committed as baselines in tests_generated (sweep naming, sweep_report.json included)
+- full repo sweep final: 55 of 56 files pass, 2618 cases green (only metrics skipped by design). runner task registry and runtime config/validationPipeline externalized to injection instead of adopting museum files; originals documented in doc for future rebuild
 
 ### Fixed
+- runner: static require of missing ../task/tasks removed; registry injectable via config.taskRegistry
 - formula.index_to_column hung forever on Infinity input - now throws RangeError
 - array_slicing.slidingWindows with negative infinite window size allocated until out of memory - now throws RangeError
 - metric_calculation and standard_deviation required pre rename sibling module names - requires repointed

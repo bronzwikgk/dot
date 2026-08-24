@@ -90,8 +90,9 @@ normally or throw a proper Error. Anything else fails.
 
 ## Running It Today
 
-The committed baseline covers the full code tree: 53 of 56 files,
-2370 test cases, all green.
+The committed baseline covers the full code tree: 55 of 56 files,
+2618 test cases, all green. The one exception is `metrics`, a pure
+re-export shim with nothing to test.
 
 ```
 node --test --test-force-exit "tests_generated/*.test.js"
@@ -115,11 +116,18 @@ The sweep over all 56 code files surfaced real defects, all fixed:
 | `runtime` imported five legacy utility paths | five imports repointed; two remain broken (see below) |
 | `export class X` classified as named_object | inspector now classifies it as class style |
 
-Known open items (missing dependencies, not stale paths):
+Known open items (externalized by decision, not blockers):
 
-- `runner` requires `../task/tasks` - no such module exists in the repo
-- `runtime` needs `ValidationPipeline_ourActionLang_v2_2_0_ready_Gem.js`
-  and `Config_ourActionLang_v2_2_0_ready_Gem.js` - neither exists
+- `runner` task registry is now injectable via `config.taskRegistry`
+  (empty default). The original 14 task classes live in the museum at
+  `shared/inbox/ohm_model/code/task/tasks.js`; rebuild into a proper
+  task category when the ML pipeline use case is needed.
+- `runtime` takes config and validationPipeline as constructor options
+  (defaults `{}` / null; validate stage reports skipped when absent).
+  The museum copy lives at
+  `shared/inbox/assorted/code/utility/ValidationPipeline_ourActionLang_v2_2_0_ready_Gem.js`.
+  No Config class exists anywhere; every consumer optional-chains, so
+  `{}` is behavior-identical.
 - `metrics` generates no units by design: it is a pure re-export shim
 
 ## Running It Today (single target)

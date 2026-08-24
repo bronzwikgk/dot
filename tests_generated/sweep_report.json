@@ -358,17 +358,17 @@
   },
   {
     "file": "plugins\\code_shared_runner_v2_2_0_draft.js",
-    "units": 9,
-    "cases": 85,
-    "status": "CRASH",
-    "detail": "Error: Cannot find module '../task/tasks' | ✖ C:\\Users\\0dot1\\AppData\\Local\\Temp\\opencode\\dof_testgen\\sweep\\plugins__code_shared_runner_v2_2_0_draft.test.js (56."
+    "units": 8,
+    "cases": 106,
+    "status": "PASS",
+    "detail": ""
   },
   {
     "file": "plugins\\code_shared_runtime_v2_2_0_draft.js",
     "units": 9,
     "cases": 142,
-    "status": "CRASH",
-    "detail": "Error [ERR_MODULE_NOT_FOUND]: Cannot find module 'E:\\root_0dot1_wip\\shared_v2\\code\\utility\\ValidationPipeline_ourActionLang_v2_2_0_ready_Gem.js' imported from E"
+    "status": "PASS",
+    "detail": ""
   },
   {
     "file": "plugins\\code_shared_schema_registry_v2_2_0_draft.js",
