@@ -12,7 +12,7 @@
  * @changelog - 2026-08-24: 3.0.0: merged code_shared_euclidean_distance_v2_2_0_draft + code_shared_cosine_similarity_v2_2_0_draft into one survivor; behavior preserved exactly
  */
 export class VectorMathUtil {
-  constructor(config) {
+  constructor(config = {}) {
     this.config = config || {};
   }
 
@@ -61,6 +61,9 @@ export class VectorMathUtil {
   }
 
   distanceBatch(targetVector, candidateVectors) {
+    if (!candidateVectors || candidateVectors.length === 0) {
+      return [];
+    }
     var distances = [];
     var index = 0;
     var count = candidateVectors.length;
@@ -72,6 +75,9 @@ export class VectorMathUtil {
   }
 
   similarityBatch(targetVector, candidateVectors) {
+    if (!candidateVectors || candidateVectors.length === 0) {
+      return [];
+    }
     var similarities = [];
     var index = 0;
     var count = candidateVectors.length;
