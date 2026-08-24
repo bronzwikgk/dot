@@ -145,14 +145,18 @@
   function allowed_properties(sig, file_flags) {
     var flags = file_flags || {};
     var allowed = ["edge_safety"];
-    if (!sig.traits || !sig.traits.maybe_nondeterministic) {
+    if (!is_stateful_signature(sig) && (!sig.traits || !sig.traits.maybe_nondeterministic)) {
       allowed.push("determinism");
-      if (!(sig.traits && sig.traits.has_module_state) && !flags.has_module_state) {
+      if (!(sig.traits && sig.traits.has_module_state) && !flags.has_module_state && !(sig.traits && sig.traits.uses_this)) {
         allowed.push("snapshot");
       }
     }
     allowed.push("immutability");
     return allowed;
+  }
+
+  function is_stateful_signature(sig) {
+    return /^(create|update|delete|remove|insert|save|write|push|pop|shift|unshift|set|clear|query)$/i.test(sig.name || "");
   }
 
   function select_template(templates, archetype) {
@@ -168,7 +172,7 @@
   function generate_unit_plan(sig, templates, sample_entries, file_flags, edge_entries) {
     if (sig.kind === "constructor") {
       return {
-        name: sig.name,
+        name: sig.container || sig.name,
         container: sig.container,
         kind: sig.kind,
         archetype: "constructor",
@@ -210,7 +214,7 @@
   }
 
   function summarize_plan(units) {
-    var summary = { units: units.length, cases: 0, by_kind: {}, by_archetype: {}, skipped: 0 };
+    var summary = { units: units.length, cases: 0, by_kind: Object.create(null), by_archetype: Object.create(null), skipped: 0 };
     for (var i = 0; i < units.length; i++) {
       var unit = units[i];
       summary.by_archetype[unit.archetype] = (summary.by_archetype[unit.archetype] || 0) + 1;
@@ -230,8 +234,7 @@
     var units = [];
     for (var i = 0; i < signatures.length; i++) {
       var sig = signatures[i];
-      var is_class_style = opts.export_style === "class";
-      if (!is_class_style && opts.exported_names && opts.exported_names.length > 0 && opts.exported_names.indexOf(sig.name) === -1) continue;
+      if (!should_include_signature(sig, opts)) continue;
       if (opts.skip && opts.skip.indexOf(sig.name) !== -1) continue;
       units.push(generate_unit_plan(sig, templates, samples, opts.file_flags, edges));
     }
@@ -243,6 +246,21 @@
       summary: summarize_plan(units),
       units: units
     };
+  }
+
+  function should_include_signature(sig, opts) {
+    var exported = opts.exported_names || [];
+    var is_class_style = opts.export_style === "class";
+    if (sig.name && sig.name.indexOf("_") === 0) return false;
+    if (is_class_style) {
+      if (sig.kind === "constructor") return true;
+      return sig.kind === "method" && (exported.length === 0 || exported.indexOf(sig.name) !== -1);
+    }
+    if (sig.kind === "constructor") {
+      return exported.indexOf(sig.container) !== -1;
+    }
+    if (sig.kind !== "function") return false;
+    return exported.length === 0 || exported.indexOf(sig.name) !== -1;
   }
 
   function serialize_result_source() {
@@ -276,7 +294,7 @@
     if (case_entry.kind === "constructor") {
       return [
         setup,
-        "  const result = await __construct(__args);",
+        "  const result = await __construct(\"" + unit.name + "\", __args);",
         "  assert.strictEqual(result.threw, false, \"constructor rejected generated arguments: \" + result.value);"
       ].join("\n");
     }
@@ -367,7 +385,7 @@
       lines.push("const __ctor = " + ctor_expr + ";");
       lines.push("let __instance = null;");
       lines.push("try { __instance = new __ctor(); } catch (__e0) { try { __instance = new __ctor({}); } catch (__e1) {} }");
-      lines.push("async function __construct(args) {");
+      lines.push("async function __construct(name, args) {");
       lines.push("  try { return { threw: false, value: __serialize(new __ctor(...args)) }; }");
       lines.push("  catch (error) { const label = error && error.constructor ? error.constructor.name : String(error); return { threw: true, value: \"__threw__:\" + label + \":\" + ((error && error.message) || \"\") }; }");
       lines.push("}");
@@ -377,14 +395,24 @@
       lines.push("  return await __instance[name].apply(__instance, args);");
       lines.push("}");
     } else if (is_esm) {
-      lines.push("async function __construct(args) { return { threw: true, value: \"__threw__:Error:no constructor target\" }; }");
+      lines.push("async function __construct(name, args) {");
+      lines.push("  const Ctor = mod[name] || (mod.default && mod.default[name]);");
+      lines.push("  if (typeof Ctor !== \"function\") return { threw: true, value: \"__threw__:Error:no constructor target\" };");
+      lines.push("  try { return { threw: false, value: __serialize(new Ctor(...args)) }; }");
+      lines.push("  catch (error) { const label = error && error.constructor ? error.constructor.name : String(error); return { threw: true, value: \"__threw__:\" + label + \":\" + ((error && error.message) || \"\") }; }");
+      lines.push("}");
       lines.push("async function __call(name, args) {");
       lines.push("  const fn = mod[name] || (mod.default && mod.default[name]);");
       lines.push("  if (typeof fn !== \"function\") throw new Error(\"missing export \" + name);");
       lines.push("  return await fn.apply(null, args);");
       lines.push("}");
     } else {
-      lines.push("async function __construct(args) { return { threw: true, value: \"__threw__:Error:no constructor target\" }; }");
+      lines.push("async function __construct(name, args) {");
+      lines.push("  const Ctor = mod[name];");
+      lines.push("  if (typeof Ctor !== \"function\") return { threw: true, value: \"__threw__:Error:no constructor target\" };");
+      lines.push("  try { return { threw: false, value: __serialize(new Ctor(...args)) }; }");
+      lines.push("  catch (error) { const label = error && error.constructor ? error.constructor.name : String(error); return { threw: true, value: \"__threw__:\" + label + \":\" + ((error && error.message) || \"\") }; }");
+      lines.push("}");
       lines.push("async function __call(name, args) {");
       lines.push("  if (typeof mod[name] !== \"function\") throw new Error(\"missing export \" + name);");
       lines.push("  return await mod[name].apply(null, args);");
@@ -413,7 +441,8 @@
     render_test_file: render_test_file,
     parse_template_entry: parse_template_entry,
     parse_sample_entry: parse_sample_entry,
-    summarize_plan: summarize_plan
+    summarize_plan: summarize_plan,
+    should_include_signature: should_include_signature
   };
 });
 
@@ -422,4 +451,5 @@ export const render_test_file = globalThis.an_utility_test_generation.render_tes
 export const parse_template_entry = globalThis.an_utility_test_generation.parse_template_entry;
 export const parse_sample_entry = globalThis.an_utility_test_generation.parse_sample_entry;
 export const summarize_plan = globalThis.an_utility_test_generation.summarize_plan;
+export const should_include_signature = globalThis.an_utility_test_generation.should_include_signature;
 export default globalThis.an_utility_test_generation;

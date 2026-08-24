@@ -37,6 +37,9 @@ Generated tests can cover:
 - Edge-safety tests now report unexpected thrown values more clearly.
 - Generated plans include a `summary` with unit/case counts.
 - Sample bank was expanded with richer values, function samples, mixed arrays, and objects.
+- Public-target selection is stricter: private/internal methods are skipped, class methods are generated only for class-style targets, and constructors are generated only when the class is targetable.
+- Stateful method names such as `create`, `update`, `delete`, and `query` avoid determinism/snapshot properties.
+- Plan summaries avoid prototype-key collisions such as the `constructor` key.
 
 ## When To Use It
 
@@ -75,6 +78,14 @@ Expected output:
 test_generation checks passed
 ```
 
+The generator was then run against the updated shared utilities and the rendered `node:test` suite passed:
+
+```text
+826 tests
+826 pass
+0 fail
+```
+
 ## How To Update It
 
 When updating:
@@ -93,3 +104,4 @@ When updating:
 - Constructor tests use generated sample arguments.
 - Edge-safety tests allow normal `Error`, `TypeError`, and `RangeError`.
 - Generated tests do not mock filesystem, network, process, or global side effects.
+- Stateful method detection is name-based and conservative.

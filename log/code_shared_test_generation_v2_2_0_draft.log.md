@@ -12,6 +12,9 @@ Completed focused pass as part of the test-generation subsystem.
 - Plans lacked a summary report.
 - Edge-safety failure messages were too vague.
 - Sample bank was too thin for realistic generated inputs.
+- Public-target selection generated false positives for internal/private methods and duplicate class/module wrapper names.
+- Stateful methods were receiving determinism and snapshot tests.
+- Plan summary keys collided with `Object.prototype.constructor`.
 
 ### Verification
 
@@ -21,6 +24,14 @@ Result:
 
 ```text
 test_generation checks passed
+```
+
+Generated tests were then rendered for the updated shared utilities and executed with Node:
+
+```text
+826 tests
+826 pass
+0 fail
 ```
 
 ### Commit

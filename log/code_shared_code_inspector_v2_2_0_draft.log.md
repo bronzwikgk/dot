@@ -10,6 +10,7 @@ Completed focused pass as part of the test-generation subsystem.
 - Legacy parser skipped constructors.
 - Legacy parser missed `export function` and `export async function`.
 - Legacy parser did not mark `export class` as a class-style export.
+- Legacy parser missed ESM named export lists.
 - One-line function/method slices could include following lines.
 
 ### Verification
@@ -20,6 +21,14 @@ Result:
 
 ```text
 test_generation checks passed
+```
+
+Generated tests were then rendered for the updated shared utilities and executed with Node:
+
+```text
+826 tests
+826 pass
+0 fail
 ```
 
 ### Commit

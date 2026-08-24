@@ -222,6 +222,7 @@
     var export_class = detect_class_exports(lines);
     var factory_names = detect_factory_return_names(lines);
     var direct_object_match = source_text.match(/module\.exports\s*=\s*\{([^}]*)\}/);
+    var esm_named_export_match = source_text.match(/export\s*\{([^}]*)\}/);
 
     var export_style = "unknown";
     var exported_names = [];
@@ -238,6 +239,12 @@
       export_style = "named_object";
       exported_names = factory_names.length > 0 ? factory_names : split_top_level(direct_object_match[1], ",").map(function (p) {
         return p.trim().split(":")[0].trim();
+      });
+    } else if (esm_named_export_match) {
+      export_style = "named_object";
+      exported_names = split_top_level(esm_named_export_match[1], ",").map(function (p) {
+        var parts = p.trim().split(/\s+as\s+/);
+        return (parts[1] || parts[0]).trim();
       });
     }
 

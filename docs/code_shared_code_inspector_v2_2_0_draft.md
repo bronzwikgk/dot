@@ -54,6 +54,7 @@ Avoid using it as a security scanner or full parser for TypeScript/JSX.
 - Legacy parser now includes constructors.
 - Legacy parser detects `export class` as class-style exports.
 - Legacy parser recognizes `export function` and `export async function`.
+- Legacy parser recognizes ESM named export lists such as `export { Logger, create_logger }`.
 - One-line source slices are no longer extended into the following function/method.
 
 ## How It Was Tested
@@ -70,6 +71,14 @@ Expected output:
 
 ```text
 test_generation checks passed
+```
+
+The updated inspector was also used in a generated-test sweep over the shared utilities:
+
+```text
+826 tests
+826 pass
+0 fail
 ```
 
 ## How To Update It
