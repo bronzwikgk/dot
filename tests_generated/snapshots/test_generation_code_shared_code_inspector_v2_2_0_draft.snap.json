@@ -25,5 +25,23 @@
     "18": "{\"threw\":false,\"value\":\"{\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
     "22": "{\"threw\":false,\"value\":\"{\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
     "26": "{\"threw\":false,\"value\":\"{\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}"
+  },
+  "inspect_source_ast": {
+    "2": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "6": "{\"threw\":false,\"value\":\"null\"}",
+    "10": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "14": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "18": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "22": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "26": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}"
+  },
+  "inspect_source_auto": {
+    "2": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "6": "{\"threw\":false,\"value\":\"{\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[],\\\"backend\\\":\\\"legacy\\\"}\"}",
+    "10": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "14": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "18": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "22": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}",
+    "26": "{\"threw\":false,\"value\":\"{\\\"backend\\\":\\\"acorn\\\",\\\"classes\\\":[],\\\"export_style\\\":\\\"unknown\\\",\\\"exported_names\\\":[],\\\"has_module_state\\\":false,\\\"functions\\\":[]}\"}"
   }
 }

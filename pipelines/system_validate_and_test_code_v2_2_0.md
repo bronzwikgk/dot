@@ -38,10 +38,11 @@ Rules:
 | op | input | output | performed by |
 |:---|:---|:---|:---|
 | fs_read | each candidate path | source_text string | plugin file_storage |
-| inspect_source | source_text | inventory record | utility code_inspector |
+| inspect_source_auto | source_text | inventory record | utility code_inspector |
 
 Rules:
 - never execute the candidate during inspection
+- auto backend uses the vendored acorn ast parser when present, legacy line parser otherwise; both emit the identical inventory shape
 - inventory carries functions, params, jsdoc, traits, export style, module state
 
 ### Stage 3: validate_conventions
@@ -115,3 +116,5 @@ Emitted as one line per target so terminal_renderer can print a table.
 | FV3 | module level state detected | snapshot property dropped, reported |
 | FV4 | generated test crashes at require time | syntax error reported against target file |
 | FV5 | snapshot mismatch | test fails; human decides fix or recapture |
+| FV6 | esm syntax inside .js target | inventory works; execution needs the target reachable as module (mjs extension or package type) or harness rerendered as mjs |
+| FV7 | acorn vendor missing | stage 2 silently falls back to legacy parser; report notes backend used |

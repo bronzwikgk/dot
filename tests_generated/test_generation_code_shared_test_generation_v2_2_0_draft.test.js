@@ -5,7 +5,8 @@ const assert = require("node:assert");
 const fs = require("node:fs");
 const path = require("node:path");
 const mod = require("E:\\root_0dot1_wip\\shared_v2\\code\\utilities\\test_generation\\code_shared_test_generation_v2_2_0_draft.js");
-const SNAPSHOT_PATH = path.resolve(__dirname, "snapshots/test_generation_code_shared_test_generation_v2_2_0_draft.snap.json");
+const SNAPSHOT_DIR = __dirname;
+const SNAPSHOT_PATH = path.join(SNAPSHOT_DIR, "snapshots/test_generation_code_shared_test_generation_v2_2_0_draft.snap.json");
 const __capture = process.env.TESTGEN_CAPTURE === "1";
 let __snapshots = {};
 if (fs.existsSync(SNAPSHOT_PATH)) {
@@ -780,14 +781,14 @@ test("generate_test_plan [edge_safety] argset_4", () => {
 });
 
 test("render_test_file [determinism] argset_0", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {}];
   const first = __attempt("render_test_file", __args);
   const second = __attempt("render_test_file", __args);
   assert.deepStrictEqual(second, first, "nondeterministic behaviour");
 });
 
 test("render_test_file [immutability] argset_0", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {}];
   const before = JSON.stringify(__args);
   const result = __attempt("render_test_file", __args);
   if (result.threw === false) {
@@ -797,7 +798,7 @@ test("render_test_file [immutability] argset_0", () => {
 });
 
 test("render_test_file [snapshot] argset_0", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {}];
   const actual = JSON.stringify(__attempt("render_test_file", __args));
   const stored = __snapshots["render_test_file"] && __snapshots["render_test_file"][2];
   if (__capture || stored === undefined) {
@@ -810,7 +811,7 @@ test("render_test_file [snapshot] argset_0", () => {
 });
 
 test("render_test_file [edge_safety] argset_0", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {}];
   try {
     __call("render_test_file", __args);
   } catch (error) {
@@ -819,14 +820,14 @@ test("render_test_file [edge_safety] argset_0", () => {
 });
 
 test("render_test_file [determinism] argset_1", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {"a": 1}];
   const first = __attempt("render_test_file", __args);
   const second = __attempt("render_test_file", __args);
   assert.deepStrictEqual(second, first, "nondeterministic behaviour");
 });
 
 test("render_test_file [immutability] argset_1", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {"a": 1}];
   const before = JSON.stringify(__args);
   const result = __attempt("render_test_file", __args);
   if (result.threw === false) {
@@ -836,7 +837,7 @@ test("render_test_file [immutability] argset_1", () => {
 });
 
 test("render_test_file [snapshot] argset_1", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {"a": 1}];
   const actual = JSON.stringify(__attempt("render_test_file", __args));
   const stored = __snapshots["render_test_file"] && __snapshots["render_test_file"][6];
   if (__capture || stored === undefined) {
@@ -849,7 +850,7 @@ test("render_test_file [snapshot] argset_1", () => {
 });
 
 test("render_test_file [edge_safety] argset_1", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {"a": 1}];
   try {
     __call("render_test_file", __args);
   } catch (error) {
@@ -858,14 +859,14 @@ test("render_test_file [edge_safety] argset_1", () => {
 });
 
 test("render_test_file [determinism] argset_2", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {"a": 1}];
   const first = __attempt("render_test_file", __args);
   const second = __attempt("render_test_file", __args);
   assert.deepStrictEqual(second, first, "nondeterministic behaviour");
 });
 
 test("render_test_file [immutability] argset_2", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {"a": 1}];
   const before = JSON.stringify(__args);
   const result = __attempt("render_test_file", __args);
   if (result.threw === false) {
@@ -875,7 +876,7 @@ test("render_test_file [immutability] argset_2", () => {
 });
 
 test("render_test_file [snapshot] argset_2", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {"a": 1}];
   const actual = JSON.stringify(__attempt("render_test_file", __args));
   const stored = __snapshots["render_test_file"] && __snapshots["render_test_file"][10];
   if (__capture || stored === undefined) {
@@ -888,7 +889,46 @@ test("render_test_file [snapshot] argset_2", () => {
 });
 
 test("render_test_file [edge_safety] argset_2", () => {
-  const __args = ["seed_value", "seed_value", "seed_value"];
+  const __args = ["seed_value", "seed_value", "seed_value", {"a": 1}];
+  try {
+    __call("render_test_file", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("render_test_file [determinism] argset_3", () => {
+  const __args = ["seed_value", "seed_value", "seed_value", {}];
+  const first = __attempt("render_test_file", __args);
+  const second = __attempt("render_test_file", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("render_test_file [immutability] argset_3", () => {
+  const __args = ["seed_value", "seed_value", "seed_value", {}];
+  const before = JSON.stringify(__args);
+  const result = __attempt("render_test_file", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("render_test_file [snapshot] argset_3", () => {
+  const __args = ["seed_value", "seed_value", "seed_value", {}];
+  const actual = JSON.stringify(__attempt("render_test_file", __args));
+  const stored = __snapshots["render_test_file"] && __snapshots["render_test_file"][14];
+  if (__capture || stored === undefined) {
+    __snapshots["render_test_file"] = __snapshots["render_test_file"] || {};
+    __snapshots["render_test_file"][14] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
+  }
+});
+
+test("render_test_file [edge_safety] argset_3", () => {
+  const __args = ["seed_value", "seed_value", "seed_value", {}];
   try {
     __call("render_test_file", __args);
   } catch (error) {

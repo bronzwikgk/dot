@@ -5,7 +5,8 @@ const assert = require("node:assert");
 const fs = require("node:fs");
 const path = require("node:path");
 const mod = require("E:\\root_0dot1_wip\\shared_v2\\code\\utilities\\code_shared_text_v2_2_0_draft.js");
-const SNAPSHOT_PATH = path.resolve(__dirname, "snapshots/text_v2_2_0_draft.snap.json");
+const SNAPSHOT_DIR = __dirname;
+const SNAPSHOT_PATH = path.join(SNAPSHOT_DIR, "snapshots/text_v2_2_0_draft.snap.json");
 const __capture = process.env.TESTGEN_CAPTURE === "1";
 let __snapshots = {};
 if (fs.existsSync(SNAPSHOT_PATH)) {

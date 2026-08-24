@@ -5,7 +5,8 @@ const assert = require("node:assert");
 const fs = require("node:fs");
 const path = require("node:path");
 const mod = require("E:\\root_0dot1_wip\\shared_v2\\code\\utilities\\test_generation\\code_shared_code_inspector_v2_2_0_draft.js");
-const SNAPSHOT_PATH = path.resolve(__dirname, "snapshots/test_generation_code_shared_code_inspector_v2_2_0_draft.snap.json");
+const SNAPSHOT_DIR = __dirname;
+const SNAPSHOT_PATH = path.join(SNAPSHOT_DIR, "snapshots/test_generation_code_shared_code_inspector_v2_2_0_draft.snap.json");
 const __capture = process.env.TESTGEN_CAPTURE === "1";
 let __snapshots = {};
 if (fs.existsSync(SNAPSHOT_PATH)) {
@@ -852,6 +853,552 @@ test("inspect_source [edge_safety] argset_6", () => {
   const __args = ["alpha"];
   try {
     __call("inspect_source", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_ast [determinism] argset_0", () => {
+  const __args = ["alpha"];
+  const first = __attempt("inspect_source_ast", __args);
+  const second = __attempt("inspect_source_ast", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_ast [immutability] argset_0", () => {
+  const __args = ["alpha"];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_ast", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_ast [snapshot] argset_0", () => {
+  const __args = ["alpha"];
+  const actual = JSON.stringify(__attempt("inspect_source_ast", __args));
+  const stored = __snapshots["inspect_source_ast"] && __snapshots["inspect_source_ast"][2];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_ast"] = __snapshots["inspect_source_ast"] || {};
+    __snapshots["inspect_source_ast"][2] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 2");
+  }
+});
+
+test("inspect_source_ast [edge_safety] argset_0", () => {
+  const __args = ["alpha"];
+  try {
+    __call("inspect_source_ast", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_ast [determinism] argset_1", () => {
+  const __args = ["hello world"];
+  const first = __attempt("inspect_source_ast", __args);
+  const second = __attempt("inspect_source_ast", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_ast [immutability] argset_1", () => {
+  const __args = ["hello world"];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_ast", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_ast [snapshot] argset_1", () => {
+  const __args = ["hello world"];
+  const actual = JSON.stringify(__attempt("inspect_source_ast", __args));
+  const stored = __snapshots["inspect_source_ast"] && __snapshots["inspect_source_ast"][6];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_ast"] = __snapshots["inspect_source_ast"] || {};
+    __snapshots["inspect_source_ast"][6] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 6");
+  }
+});
+
+test("inspect_source_ast [edge_safety] argset_1", () => {
+  const __args = ["hello world"];
+  try {
+    __call("inspect_source_ast", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_ast [determinism] argset_2", () => {
+  const __args = [""];
+  const first = __attempt("inspect_source_ast", __args);
+  const second = __attempt("inspect_source_ast", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_ast [immutability] argset_2", () => {
+  const __args = [""];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_ast", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_ast [snapshot] argset_2", () => {
+  const __args = [""];
+  const actual = JSON.stringify(__attempt("inspect_source_ast", __args));
+  const stored = __snapshots["inspect_source_ast"] && __snapshots["inspect_source_ast"][10];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_ast"] = __snapshots["inspect_source_ast"] || {};
+    __snapshots["inspect_source_ast"][10] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 10");
+  }
+});
+
+test("inspect_source_ast [edge_safety] argset_2", () => {
+  const __args = [""];
+  try {
+    __call("inspect_source_ast", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_ast [determinism] argset_3", () => {
+  const __args = ["  spaced  "];
+  const first = __attempt("inspect_source_ast", __args);
+  const second = __attempt("inspect_source_ast", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_ast [immutability] argset_3", () => {
+  const __args = ["  spaced  "];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_ast", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_ast [snapshot] argset_3", () => {
+  const __args = ["  spaced  "];
+  const actual = JSON.stringify(__attempt("inspect_source_ast", __args));
+  const stored = __snapshots["inspect_source_ast"] && __snapshots["inspect_source_ast"][14];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_ast"] = __snapshots["inspect_source_ast"] || {};
+    __snapshots["inspect_source_ast"][14] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
+  }
+});
+
+test("inspect_source_ast [edge_safety] argset_3", () => {
+  const __args = ["  spaced  "];
+  try {
+    __call("inspect_source_ast", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_ast [determinism] argset_4", () => {
+  const __args = ["Alpha42"];
+  const first = __attempt("inspect_source_ast", __args);
+  const second = __attempt("inspect_source_ast", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_ast [immutability] argset_4", () => {
+  const __args = ["Alpha42"];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_ast", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_ast [snapshot] argset_4", () => {
+  const __args = ["Alpha42"];
+  const actual = JSON.stringify(__attempt("inspect_source_ast", __args));
+  const stored = __snapshots["inspect_source_ast"] && __snapshots["inspect_source_ast"][18];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_ast"] = __snapshots["inspect_source_ast"] || {};
+    __snapshots["inspect_source_ast"][18] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 18");
+  }
+});
+
+test("inspect_source_ast [edge_safety] argset_4", () => {
+  const __args = ["Alpha42"];
+  try {
+    __call("inspect_source_ast", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_ast [determinism] argset_5", () => {
+  const __args = [""];
+  const first = __attempt("inspect_source_ast", __args);
+  const second = __attempt("inspect_source_ast", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_ast [immutability] argset_5", () => {
+  const __args = [""];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_ast", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_ast [snapshot] argset_5", () => {
+  const __args = [""];
+  const actual = JSON.stringify(__attempt("inspect_source_ast", __args));
+  const stored = __snapshots["inspect_source_ast"] && __snapshots["inspect_source_ast"][22];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_ast"] = __snapshots["inspect_source_ast"] || {};
+    __snapshots["inspect_source_ast"][22] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 22");
+  }
+});
+
+test("inspect_source_ast [edge_safety] argset_5", () => {
+  const __args = [""];
+  try {
+    __call("inspect_source_ast", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_ast [determinism] argset_6", () => {
+  const __args = ["alpha"];
+  const first = __attempt("inspect_source_ast", __args);
+  const second = __attempt("inspect_source_ast", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_ast [immutability] argset_6", () => {
+  const __args = ["alpha"];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_ast", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_ast [snapshot] argset_6", () => {
+  const __args = ["alpha"];
+  const actual = JSON.stringify(__attempt("inspect_source_ast", __args));
+  const stored = __snapshots["inspect_source_ast"] && __snapshots["inspect_source_ast"][26];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_ast"] = __snapshots["inspect_source_ast"] || {};
+    __snapshots["inspect_source_ast"][26] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 26");
+  }
+});
+
+test("inspect_source_ast [edge_safety] argset_6", () => {
+  const __args = ["alpha"];
+  try {
+    __call("inspect_source_ast", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_auto [determinism] argset_0", () => {
+  const __args = ["alpha"];
+  const first = __attempt("inspect_source_auto", __args);
+  const second = __attempt("inspect_source_auto", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_auto [immutability] argset_0", () => {
+  const __args = ["alpha"];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_auto", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_auto [snapshot] argset_0", () => {
+  const __args = ["alpha"];
+  const actual = JSON.stringify(__attempt("inspect_source_auto", __args));
+  const stored = __snapshots["inspect_source_auto"] && __snapshots["inspect_source_auto"][2];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_auto"] = __snapshots["inspect_source_auto"] || {};
+    __snapshots["inspect_source_auto"][2] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 2");
+  }
+});
+
+test("inspect_source_auto [edge_safety] argset_0", () => {
+  const __args = ["alpha"];
+  try {
+    __call("inspect_source_auto", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_auto [determinism] argset_1", () => {
+  const __args = ["hello world"];
+  const first = __attempt("inspect_source_auto", __args);
+  const second = __attempt("inspect_source_auto", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_auto [immutability] argset_1", () => {
+  const __args = ["hello world"];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_auto", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_auto [snapshot] argset_1", () => {
+  const __args = ["hello world"];
+  const actual = JSON.stringify(__attempt("inspect_source_auto", __args));
+  const stored = __snapshots["inspect_source_auto"] && __snapshots["inspect_source_auto"][6];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_auto"] = __snapshots["inspect_source_auto"] || {};
+    __snapshots["inspect_source_auto"][6] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 6");
+  }
+});
+
+test("inspect_source_auto [edge_safety] argset_1", () => {
+  const __args = ["hello world"];
+  try {
+    __call("inspect_source_auto", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_auto [determinism] argset_2", () => {
+  const __args = [""];
+  const first = __attempt("inspect_source_auto", __args);
+  const second = __attempt("inspect_source_auto", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_auto [immutability] argset_2", () => {
+  const __args = [""];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_auto", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_auto [snapshot] argset_2", () => {
+  const __args = [""];
+  const actual = JSON.stringify(__attempt("inspect_source_auto", __args));
+  const stored = __snapshots["inspect_source_auto"] && __snapshots["inspect_source_auto"][10];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_auto"] = __snapshots["inspect_source_auto"] || {};
+    __snapshots["inspect_source_auto"][10] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 10");
+  }
+});
+
+test("inspect_source_auto [edge_safety] argset_2", () => {
+  const __args = [""];
+  try {
+    __call("inspect_source_auto", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_auto [determinism] argset_3", () => {
+  const __args = ["  spaced  "];
+  const first = __attempt("inspect_source_auto", __args);
+  const second = __attempt("inspect_source_auto", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_auto [immutability] argset_3", () => {
+  const __args = ["  spaced  "];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_auto", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_auto [snapshot] argset_3", () => {
+  const __args = ["  spaced  "];
+  const actual = JSON.stringify(__attempt("inspect_source_auto", __args));
+  const stored = __snapshots["inspect_source_auto"] && __snapshots["inspect_source_auto"][14];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_auto"] = __snapshots["inspect_source_auto"] || {};
+    __snapshots["inspect_source_auto"][14] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 14");
+  }
+});
+
+test("inspect_source_auto [edge_safety] argset_3", () => {
+  const __args = ["  spaced  "];
+  try {
+    __call("inspect_source_auto", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_auto [determinism] argset_4", () => {
+  const __args = ["Alpha42"];
+  const first = __attempt("inspect_source_auto", __args);
+  const second = __attempt("inspect_source_auto", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_auto [immutability] argset_4", () => {
+  const __args = ["Alpha42"];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_auto", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_auto [snapshot] argset_4", () => {
+  const __args = ["Alpha42"];
+  const actual = JSON.stringify(__attempt("inspect_source_auto", __args));
+  const stored = __snapshots["inspect_source_auto"] && __snapshots["inspect_source_auto"][18];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_auto"] = __snapshots["inspect_source_auto"] || {};
+    __snapshots["inspect_source_auto"][18] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 18");
+  }
+});
+
+test("inspect_source_auto [edge_safety] argset_4", () => {
+  const __args = ["Alpha42"];
+  try {
+    __call("inspect_source_auto", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_auto [determinism] argset_5", () => {
+  const __args = [""];
+  const first = __attempt("inspect_source_auto", __args);
+  const second = __attempt("inspect_source_auto", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_auto [immutability] argset_5", () => {
+  const __args = [""];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_auto", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_auto [snapshot] argset_5", () => {
+  const __args = [""];
+  const actual = JSON.stringify(__attempt("inspect_source_auto", __args));
+  const stored = __snapshots["inspect_source_auto"] && __snapshots["inspect_source_auto"][22];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_auto"] = __snapshots["inspect_source_auto"] || {};
+    __snapshots["inspect_source_auto"][22] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 22");
+  }
+});
+
+test("inspect_source_auto [edge_safety] argset_5", () => {
+  const __args = [""];
+  try {
+    __call("inspect_source_auto", __args);
+  } catch (error) {
+    assert.ok(error instanceof Error, "threw non Error value: " + String(error));
+  }
+});
+
+test("inspect_source_auto [determinism] argset_6", () => {
+  const __args = ["alpha"];
+  const first = __attempt("inspect_source_auto", __args);
+  const second = __attempt("inspect_source_auto", __args);
+  assert.deepStrictEqual(second, first, "nondeterministic behaviour");
+});
+
+test("inspect_source_auto [immutability] argset_6", () => {
+  const __args = ["alpha"];
+  const before = JSON.stringify(__args);
+  const result = __attempt("inspect_source_auto", __args);
+  if (result.threw === false) {
+    const after = JSON.stringify(__args);
+    assert.strictEqual(after, before, "input arguments were mutated");
+  }
+});
+
+test("inspect_source_auto [snapshot] argset_6", () => {
+  const __args = ["alpha"];
+  const actual = JSON.stringify(__attempt("inspect_source_auto", __args));
+  const stored = __snapshots["inspect_source_auto"] && __snapshots["inspect_source_auto"][26];
+  if (__capture || stored === undefined) {
+    __snapshots["inspect_source_auto"] = __snapshots["inspect_source_auto"] || {};
+    __snapshots["inspect_source_auto"][26] = actual;
+    __dirty = true;
+  } else {
+    assert.strictEqual(actual, stored, "snapshot mismatch for case 26");
+  }
+});
+
+test("inspect_source_auto [edge_safety] argset_6", () => {
+  const __args = ["alpha"];
+  try {
+    __call("inspect_source_auto", __args);
   } catch (error) {
     assert.ok(error instanceof Error, "threw non Error value: " + String(error));
   }

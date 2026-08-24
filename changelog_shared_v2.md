@@ -34,7 +34,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added VERSION file (2.0.0) and initial branch model (master, v2, wip_dot)
 
 ### Changed
-- None
+- code_inspector gained acorn backed `inspect_source_ast` and `inspect_source_auto`: universal syntax coverage (arrow exports, esm export statements, getters, rest and default params, destructuring) with identical inventory shape; vendored single file `test_generation/vendor/acorn.js` (8.14.0, MIT, 232 KB) keeps the zero install property; legacy line parser remains as fallback (FV7)
+- test_generation harness can render esm variants: import based preamble, top level await dynamic import, mjs output when target uses esm syntax
+- universality verified against hostile synthetic esm/cjs targets (84 + 76 tests green) and real legacy `inbox_code/utility_legacy/nlu.js` inventoried at 39 functions with exact line ranges
+- committed baselines regenerated on acorn backend: 500 tests green across six targets
 
 ### Findings From First Dogfood Run
 - `sorting.bubbleSort` and `sorting.bubbleSortByKey` mutate their input arrays; generated immutability tests caught it. Both excluded from baseline via skip list pending refactor decision (`execute` and `sortByKey` copy inputs and are safe)
