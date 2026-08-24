@@ -10,6 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Imported 18 math/statistics utilities from ohm_model legacy batch (SH-024..SH-041), renamed to convention:
+  - cosine_similarity, euclidean_distance, entropy, pmi, z_score_normalization
+  - standard_deviation, standard_error, mean_calculation, weighted_mean, weighted_vote
+  - confidence_interval, metric_calculation, sorting, filtering
+  - array_concatenation, array_slicing, label_generation, train_test_split
 - Imported 10 utilities from an_app legacy (`an_app_stale/src/utility`, `src/core/formula`), renamed to convention:
   - collection, id, text, serialize, schema, topo_sort, traverse, time, pool, formula
 - Imported 14 plugins from an_app legacy kernel, boot and provider layers, renamed to convention:
