@@ -10,6 +10,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Test generation system (first build, zero dependencies):
+  - `code/utilities/code_shared_code_inspector_v2_2_0_draft.js` - static source inventory (functions, params, jsdoc, traits, export style)
+  - `code/utilities/code_shared_signature_inference_v2_2_0_draft.js` - param/return types + archetype classification with confidence
+  - `code/utilities/code_shared_test_generation_v2_2_0_draft.js` - test plans from template/sample banks + node:test harness renderer
+  - `dataset_shared_v2/code/dataset_of_testing_templates_in_shared_v2.dataset` - archetype to property mapping bank
+  - `dataset_shared_v2/code/dataset_of_testing_samples_in_shared_v2.dataset` - typed sample values bank (edge values first)
+  - `pipelines/system_validate_and_test_code_v2_2_0.md` - 7 stage pipeline: observe, inspect, validate_conventions, infer, generate, execute, report
+- Generated regression baselines under `tests_generated/` for standard_error, sorting, text (176 tests green; snapshots in `tests_generated/snapshots/`)
 - Imported 18 math/statistics utilities from ohm_model legacy batch (SH-024..SH-041), renamed to convention:
   - cosine_similarity, euclidean_distance, entropy, pmi, z_score_normalization
   - standard_deviation, standard_error, mean_calculation, weighted_mean, weighted_vote
@@ -27,6 +35,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - None
+
+### Findings From First Dogfood Run
+- `sorting.bubbleSort` and `sorting.bubbleSortByKey` mutate their input arrays; generated immutability tests caught it. Both excluded from baseline via skip list pending refactor decision (`execute` and `sortByKey` copy inputs and are safe)
+- legacy class-style imports carry no jsdoc so confidence is reported as unknown; acceptable, surfaces in review queue
+- generated test files embed absolute require paths to targets; regenerate per machine until pipeline stage 5 relativizes paths
 
 ### Deprecated
 - `code_shared_entity_index_v2_2_0_draft.js` is staged for merge into `code_shared_index_builder_v2_2_0_draft.js` pending review; do not build new dependencies against it

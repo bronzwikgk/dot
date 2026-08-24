@@ -1,0 +1,43 @@
+<!-- ============================================================
+     File:     dataset_of_testing_samples_in_shared_v2.dataset
+     Project:  shared_v2
+     Category: testing / samples
+     Type:     dataset
+
+     PURPOSE
+     - Declares reusable sample values per data type for generated tests.
+     - Every value is a valid JSON literal so it embeds directly into
+       rendered test files.
+
+     CONTENTS
+     - testing_sample_types : category list (D3)
+     - testing_sample_values  : type entries, pipe format
+         type:<name> || <literal> || <literal> || ...
+     - Value order matters: the first value is the edge value used by
+       the edge_safety property (emptiest or smallest first).
+
+     RELATIONS
+     - Paired with dataset_of_testing_templates_in_shared_v2.dataset
+     - Used by pipeline system_validate_and_test_code_shared_v2.md
+
+     CHANGELOG
+     - [2026-08-24] [agent_gate_g1_run] initial(8) created for test generation stage
+============================================================ -->
+
+const testing_sample_types = [
+   "primitives",   // string, number, boolean, any
+   "collections",  // arrays of primitives, plain objects
+];
+
+const testing_sample_values_primitives = [
+   "type:string || \"alpha\" || \"hello world\" || \"\" || \"  spaced  \" || \"Alpha42\"",
+   "type:number || 0 || -1 || 42 || 3.14",
+   "type:boolean || false || true",
+   "type:any || \"seed_value\"",
+];
+
+const testing_sample_values_collections = [
+   "type:array<number> || [] || [3, 1, 2] || [0]",
+   "type:array<string> || [] || [\"b\", \"a\", \"c\"]",
+   "type:object || {} || {\"a\": 1}",
+];
