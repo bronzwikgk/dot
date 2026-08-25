@@ -185,7 +185,7 @@ test("knowledge_base_record has status", () => {
 
 test("failure_record tracks failure_type", () => {
   const session = brain.start_session("s19");
-  const record = brain.create_failure_record(session, "src", "boundary", "test failure");
+  const record = brain.create_failure_record(session, "source_ref", "boundary", "test failure");
   assert.equal(record.record_type, "failure_record");
   assert.equal(record.failure_type, "boundary");
   assert.equal(record.reason, "test failure");
@@ -193,7 +193,7 @@ test("failure_record tracks failure_type", () => {
 
 test("pattern_record tracks frequency", () => {
   const session = brain.start_session("s20");
-  const record = brain.create_pattern_record(session, "src", "recurring_behavior", "test pattern", 5);
+  const record = brain.create_pattern_record(session, "source_ref", "recurring_behavior", "test pattern", 5);
   assert.equal(record.record_type, "pattern_record");
   assert.equal(record.frequency, 5);
 });
