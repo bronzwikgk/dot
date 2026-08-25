@@ -24,6 +24,7 @@ Agent 3 uses this handover structure:
 ```text
 dot/proposal/production_application_contracts/parent_contracts/
   agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md
+  agent_3_agent_lang_and_memory_work_an_app_brain_correction_and_test_plan_v1_0_0_proposed.md
   agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md
   agent_3_agent_lang_and_memory_parent_005_an_app_lang_implementation_contract_v1_0_0_proposed.md
   agent_3_agent_lang_and_memory_parent_006_bot_agent_runtime_contract_v1_0_0_proposed.md
@@ -66,6 +67,7 @@ Do this first.
 | agent_ui_application | layout projection rules | approved render profiles and layout projection boundaries |
 | agent_lang_and_memory | name governance scan | banned/controlled name reconciliation report |
 | agent_lang_and_memory | An App Brain schema needs | v1.4 record schema list and boundaries |
+| agent_lang_and_memory | An App Brain correction and tests | runtime-load fix, schema/code alignment, and language_and_knowledge tests |
 | agent_lang_and_memory | parser records | language input/output record contract |
 
 ## P1: Production Build

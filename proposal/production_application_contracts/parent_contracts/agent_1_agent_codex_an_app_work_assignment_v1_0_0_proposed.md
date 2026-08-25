@@ -151,6 +151,7 @@ Assigned parent contracts:
 - agent_3_agent_lang_and_memory_parent_005_an_app_lang_implementation_contract_v1_0_0_proposed.md
 - agent_3_agent_lang_and_memory_parent_006_bot_agent_runtime_contract_v1_0_0_proposed.md
 - agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract_v1_0_0_proposed.md
+- agent_3_agent_lang_and_memory_work_an_app_brain_correction_and_test_plan_v1_0_0_proposed.md
 
 Reason:
 
@@ -185,6 +186,7 @@ Priority backlog:
 | --- | --- | --- | --- | --- |
 | p0 | finish name governance scan | support all parents | contract_001, contract_002, contract_004 | banned/controlled name reconciliation report |
 | p0 | define An App Brain v1.4 schema needs | parent_005, parent_006, parent_007 | contract_010, contract_011, contract_012, contract_019 | schema-first brain work report |
+| p0 | correct An App Brain implementation/proposal mismatch | agent_3_agent_lang_and_memory_work_an_app_brain_correction_and_test_plan_v1_0_0_proposed.md | contract_004, contract_010, contract_011, contract_012, contract_014, contract_019 | ESM load, class/config/method style, schema alignment, and tests |
 | p0 | define parser input/output records | parent_005 | contract_004, contract_010 | language_request, parsing_record, intent/entity extraction schema |
 | p1 | implement An App Lang plan | parent_005 | contract_001, contract_002, contract_010, contract_014 | parser implementation plan and sample tests |
 | p1 | define bot/agent runtime lifecycle | parent_006 | contract_007, contract_011, contract_012, contract_017 | bot_session, agent_task, approval gate lifecycle |
@@ -207,7 +209,7 @@ Priority backlog:
 | --- | --- | --- |
 | agent_codex_an_app | agent_1_agent_codex_an_app_parent_001_production_app_shell_contract_v1_0_0_partial_implemented.md | agent_1_agent_codex_an_app_parent_003_version_system_implementation_contract_v1_0_0_partial_implemented.md, agent_1_agent_codex_an_app_parent_004_repository_operations_implementation_contract_v1_0_0_partial_implemented.md, agent_1_agent_codex_an_app_parent_009_real_app_e2e_validation_contract_v1_0_0_partial_implemented.md, contract_004, contract_005, contract_006, contract_014 |
 | agent_ui_application | agent_2_agent_ui_application_parent_002_gui_application_builder_contract_v1_0_0_proposed.md | agent_2_agent_ui_application_parent_008_production_templates_contract_v1_0_0_proposed.md, contract_009, contract_013, active master docs |
-| agent_lang_and_memory | agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md | agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_005_an_app_lang_implementation_contract_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_006_bot_agent_runtime_contract_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract_v1_0_0_proposed.md, contract_010, contract_011, contract_012, contract_017, contract_018, contract_019 |
+| agent_lang_and_memory | agent_3_agent_lang_and_memory_work_an_app_brain_correction_and_test_plan_v1_0_0_proposed.md | agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md, agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_005_an_app_lang_implementation_contract_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_006_bot_agent_runtime_contract_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract_v1_0_0_proposed.md, contract_010, contract_011, contract_012, contract_017, contract_018, contract_019 |
 
 ## Shared Agent Rules
 
