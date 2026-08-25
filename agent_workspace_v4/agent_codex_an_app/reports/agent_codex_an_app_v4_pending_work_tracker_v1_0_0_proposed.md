@@ -18,11 +18,11 @@ Branch: `dot_agent_codex_an_app_v4`
 | Item ID | Priority | Status | Work |
 |---|---|---|---|
 | v4_lock_001 | p0 | validated | V4 single-owner proposal update |
-| v4_lock_002 | p0 | pending | V4 inventory report |
-| v4_lock_003 | p0 | pending | V4 contract coverage report |
-| v4_lock_004 | p0 | pending | V4 doc/log coverage report |
-| v4_lock_005 | p0 | pending | V4 app_data validation report |
-| v4_lock_006 | p0 | pending | V4 convention scan classification report |
+| v4_lock_002 | p0 | validated | V4 inventory report |
+| v4_lock_003 | p0 | validated | V4 contract coverage report |
+| v4_lock_004 | p0 | validated | V4 doc/log coverage report |
+| v4_lock_005 | p0 | validated | V4 app_data validation report |
+| v4_lock_006 | p0 | validated | V4 convention scan classification report |
 
 ## P0 Implementation
 
