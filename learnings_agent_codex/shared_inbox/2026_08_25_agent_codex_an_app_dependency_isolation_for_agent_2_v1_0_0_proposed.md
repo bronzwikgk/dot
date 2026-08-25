@@ -21,8 +21,8 @@ rg --files dot\proposal | rg "agent_2_agent_ui_application"
 
 Primary files:
 
-- `dot/proposal/production_application_contracts/parent_contracts/agent_2_agent_ui_application_parent_002_gui_application_builder_contract_v1_0_0_proposed.md`
-- `dot/proposal/production_application_contracts/parent_contracts/agent_2_agent_ui_application_parent_008_production_templates_contract_v1_0_0_proposed.md`
+- `dot/proposal/production_application_contracts/parent_contracts/agent_2_agent_ui_application_parent_002_gui_application_builder_contract_v1_0_0_partial_implemented.md`
+- `dot/proposal/production_application_contracts/parent_contracts/agent_2_agent_ui_application_parent_008_production_templates_contract_v1_0_0_partial_implemented.md`
 - `dot/user_data/product_surface/agent_2_product_surface_mock_ports_fixture_v1_0_0_proposed.md`
 - `dot/reports/product_surface/agent_2_dependency_isolation_report_v1_0_0_proposed.md`
 

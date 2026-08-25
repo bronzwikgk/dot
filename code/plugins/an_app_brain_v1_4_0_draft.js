@@ -389,7 +389,7 @@ class an_app_brain {
   _recursive_split(node, policy, record, visited) {
     const result = { entities: [], relationships: [], actions: [], node_count: 0, depth: 0, stopped: false, stop_reason: null, cycle_detected: false, repeated_state_detected: false, timeout_reached: false };
 
-    const split = (n, depth) => {
+    function split(n, depth) {
       if (result.stopped) return;
       if (depth >= policy.max_depth) { result.stopped = true; result.stop_reason = "max_depth"; return; }
       if (result.node_count >= (policy.max_nodes || this.config.max_nodes)) { result.stopped = true; result.stop_reason = "max_nodes"; return; }
