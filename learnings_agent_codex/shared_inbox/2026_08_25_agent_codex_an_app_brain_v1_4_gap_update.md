@@ -18,8 +18,8 @@ contract records, boundary policy, and an agent work packet.
 - dot/docs/an_app_master_project/an_app_master_project_document.md
 - dot/docs/an_app_master_project/an_app_requirements_and_spec.md
 - dot/docs/policy_and_convention_for_dot.md
-- dot/proposal/production_application_contracts/contract_019_an_app_brain_domain_contract.md
-- dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract.md
+- dot/proposal/production_application_contracts/shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md
+- dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract_v1_0_0_proposed.md
 - dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md
 
 ## Evidence

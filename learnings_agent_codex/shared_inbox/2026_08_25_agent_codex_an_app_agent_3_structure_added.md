@@ -15,7 +15,7 @@ for schema and batch approval.
 ## Files Touched
 
 - dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md
-- dot/proposal/production_application_contracts/parent_contracts/three_agent_priority_backlog_v1_0_0_proposed.md
+- dot/proposal/production_application_contracts/parent_contracts/agent_1_agent_codex_an_app_three_agent_priority_backlog_v1_0_0_proposed.md
 
 ## Recommended Next Action
 

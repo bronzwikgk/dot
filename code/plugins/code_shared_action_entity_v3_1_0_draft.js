@@ -76,6 +76,7 @@ class action_entity {
       name: input.name || input.id || "unnamed_entity",
       version: input.version || "0.1.0",
       status: input.status || "draft",
+      data: clone_value(input.data || {}),
       config: clone_plain_object(input.config),
       attributes: clone_plain_object(input.attributes),
       parameters: clone_plain_object(input.parameters),

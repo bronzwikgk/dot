@@ -12,12 +12,12 @@ Lock naming governance before production implementation. The agent must ensure n
 
 ## Related Contracts
 
-- ../contract_001_dataset_registry_contract.md
-- ../contract_002_vocabulary_and_name_reconciliation_contract.md
-- ../contract_004_validation_utility_contract.md
-- ../contract_010_an_app_lang_contract.md
-- ../contract_017_agent_improvement_cycle_contract.md
-- ../contract_019_an_app_brain_domain_contract.md
+- ../shared_detail_contract_001_dataset_registry_v1_0_0_proposed.md
+- ../shared_detail_contract_002_vocabulary_and_name_reconciliation_v1_0_0_proposed.md
+- ../shared_detail_contract_004_validation_utility_v1_0_0_proposed.md
+- ../shared_detail_contract_010_an_app_lang_v1_0_0_proposed.md
+- ../shared_detail_contract_017_agent_improvement_cycle_v1_0_0_proposed.md
+- ../shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md
 
 ## Immediate Work
 

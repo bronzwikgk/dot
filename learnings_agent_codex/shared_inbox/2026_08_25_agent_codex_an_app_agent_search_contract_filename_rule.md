@@ -13,9 +13,9 @@ starting work.
 ## Agent Search Commands
 
 ```powershell
-rg -n "agent_1_agent_codex_an_app" dot\proposal
-rg -n "agent_2_agent_ui_application" dot\proposal
-rg -n "agent_3_agent_lang_and_memory" dot\proposal
+rg --files dot\proposal | rg "agent_1_agent_codex_an_app"
+rg --files dot\proposal | rg "agent_2_agent_ui_application"
+rg --files dot\proposal | rg "agent_3_agent_lang_and_memory"
 ```
 
 ## Rule

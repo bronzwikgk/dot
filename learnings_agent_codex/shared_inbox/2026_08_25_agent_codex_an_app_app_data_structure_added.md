@@ -38,9 +38,9 @@ parameters for dataset items, built from the schema for that group or type.
 - `dot/docs/policy_and_convention_for_dot.md`
 - `dot/docs/an_app_master_project/an_app_master_project_document.md`
 - `dot/docs/an_app_master_project/an_app_requirements_and_spec.md`
-- `dot/proposal/production_application_contracts/contract_001_dataset_registry_contract.md`
+- `dot/proposal/production_application_contracts/shared_detail_contract_001_dataset_registry_v1_0_0_proposed.md`
 - `dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md`
-- `dot/proposal/production_application_contracts/parent_contracts/three_agent_priority_backlog_v1_0_0_proposed.md`
+- `dot/proposal/production_application_contracts/parent_contracts/agent_1_agent_codex_an_app_three_agent_priority_backlog_v1_0_0_proposed.md`
 
 ## Agent Rule
 

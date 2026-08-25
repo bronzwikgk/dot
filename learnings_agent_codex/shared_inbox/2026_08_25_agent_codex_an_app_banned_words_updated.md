@@ -15,9 +15,9 @@ Updated the active banned vocabulary and related docs/contracts. Follow-up user 
 - dot/docs/code_shared_validation_word_datasets_v3_0_0_draft.md
 - dot/docs/policy_and_convention_for_dot.md
 - dot/learnings_agent_codex/AGENT_HANDBOOK.md
-- dot/proposal/production_application_contracts/contract_002_vocabulary_and_name_reconciliation_contract.md
-- dot/proposal/production_application_contracts/contract_017_agent_improvement_cycle_contract.md
-- dot/proposal/production_application_contracts/contract_019_an_app_brain_domain_contract.md
+- dot/proposal/production_application_contracts/shared_detail_contract_002_vocabulary_and_name_reconciliation_v1_0_0_proposed.md
+- dot/proposal/production_application_contracts/shared_detail_contract_017_agent_improvement_cycle_v1_0_0_proposed.md
+- dot/proposal/production_application_contracts/shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md
 - dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md
 
 ## Evidence

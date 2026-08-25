@@ -12,8 +12,8 @@ three agents.
 
 ## Files Touched
 
-- dot/proposal/production_application_contracts/parent_contracts/agent_work_assignment_v1_0_0_proposed.md
-- dot/proposal/production_application_contracts/parent_contracts/three_agent_priority_backlog_v1_0_0_proposed.md
+- dot/proposal/production_application_contracts/parent_contracts/agent_1_agent_codex_an_app_work_assignment_v1_0_0_proposed.md
+- dot/proposal/production_application_contracts/parent_contracts/agent_1_agent_codex_an_app_three_agent_priority_backlog_v1_0_0_proposed.md
 
 ## Evidence
 
@@ -37,7 +37,7 @@ dependency to be clear.
 ## Recommended Next Action
 
 Hand each agent the relevant p0 work from
-`proposal/production_application_contracts/parent_contracts/three_agent_priority_backlog_v1_0_0_proposed.md`.
+`proposal/production_application_contracts/parent_contracts/agent_1_agent_codex_an_app_three_agent_priority_backlog_v1_0_0_proposed.md`.
 
 ## Resolution
 

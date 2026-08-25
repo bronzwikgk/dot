@@ -28,9 +28,9 @@ notes related to that agent.
 Examples:
 
 ```powershell
-rg -n "agent_1_agent_codex_an_app" dot\proposal
-rg -n "agent_2_agent_ui_application" dot\proposal
-rg -n "agent_3_agent_lang_and_memory" dot\proposal
+rg --files dot\proposal | rg "agent_1_agent_codex_an_app"
+rg --files dot\proposal | rg "agent_2_agent_ui_application"
+rg --files dot\proposal | rg "agent_3_agent_lang_and_memory"
 ```
 
 The agent must report any convention violation, name conflict, missing
@@ -59,6 +59,24 @@ Use app data folders by shape:
 
 Use `user_data` for user-created or imported working data that is not promoted
 yet.
+
+## Cross-Agent Dependency Rules
+
+Agents must avoid hard dependency chains during planning and first-pass
+implementation. When another agent owns a future capability, depend on a named
+port, fixture, schema, or contract instead of concrete code.
+
+Allowed dependency states:
+
+- `contract_time`: the consumer relies on an approved contract or schema
+- `fixture_time`: the consumer uses sample records or a mock port
+- `integration_time`: the consumer binds to real provider code after both sides
+  have tests and handoff notes
+
+Do not create a compile-time dependency across agent lanes unless the user
+approves it. Agent 2 product_surface work must continue with mock ports for
+entity storage, workflow preview, command intent, templates, and version labels
+until Agent 1 and Agent 3 publish compatible ports.
 
 ## File Naming For Agent Work
 

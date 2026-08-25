@@ -65,6 +65,8 @@ entity doctrine fields.
   vocabulary.
 - Entity status must be approved.
 - Inline `schemas` are normalized as entity data.
+- The `data` field is preserved during normalization so version records,
+  repository records, and application records can store payloads.
 - Optional `schema_records` config validates every entity before persistence.
 - Relationship types must be approved unless explicitly allowed by config.
 - Legacy dependency input is disabled unless explicitly enabled for migration.
@@ -91,6 +93,7 @@ All documented methods are implemented:
 - **Diffing**: `diff_entities(before, after)` - returns array of field changes
 - **Versioning**: `bump_version(entity, level)` - returns new version string (major/minor/patch)
 - **Import/Export**: `export_entity(entity)`, `import_entity(text)`
+- **Payload**: `normalize_entity(input)` preserves `data`
 
 ## Known Limits
 
@@ -103,3 +106,6 @@ All documented methods are implemented:
 Smoke checks imported the promoted module, created entities, read them, validated
 a correct relationship graph, verified missing relationship targets fail, and
 tested diff_entities, bump_version, export_entity, and import_entity.
+
+Agent 1 foundation runtime tests also verify that version snapshots persist the
+entity payload through the `data` field.

@@ -52,3 +52,9 @@ and focused migration checks are complete.
 - Added method signatures and usage examples to documentation.
 - Fixed `import_entity()` to strip derived `dependencies` field before normalizing.
 - Verified with smoke check: `v3.1.0 checks passed`.
+
+## 2026-08-25 Agent 1 Foundation Runtime Pass
+
+- `normalize_entity()` now preserves the `data` field.
+- This supports app shell records, repository records, and version snapshots.
+- Verified with `node --test test/foundation_and_runtime/agent_1_agent_codex_an_app_foundation_runtime_v1_0_0_test.mjs`.

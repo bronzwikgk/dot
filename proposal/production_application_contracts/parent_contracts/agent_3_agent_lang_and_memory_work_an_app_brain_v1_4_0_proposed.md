@@ -15,7 +15,7 @@ runner, or source-adoption code.
 ## Source
 
 - `proposal/an_brain_domain_proposal.md`
-- `dot/proposal/production_application_contracts/contract_019_an_app_brain_domain_contract.md`
+- `dot/proposal/production_application_contracts/shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md`
 - `dot/docs/code_shared_an_app_brain_v1_4_0_draft.md`
 
 ## Work Items
@@ -47,7 +47,7 @@ corrections.
 Agent search command:
 
 ```powershell
-rg -n "agent_3_agent_lang_and_memory" dot\proposal
+rg --files dot\proposal | rg "agent_3_agent_lang_and_memory"
 ```
 
 Planning and contracts:
@@ -56,9 +56,9 @@ Planning and contracts:
 dot/proposal/production_application_contracts/parent_contracts/
   agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md
   agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md
-  agent_3_agent_lang_and_memory_parent_005_an_app_lang_implementation_contract.md
-  agent_3_agent_lang_and_memory_parent_006_bot_agent_runtime_contract.md
-  agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract.md
+  agent_3_agent_lang_and_memory_parent_005_an_app_lang_implementation_contract_v1_0_0_proposed.md
+  agent_3_agent_lang_and_memory_parent_006_bot_agent_runtime_contract_v1_0_0_proposed.md
+  agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract_v1_0_0_proposed.md
 ```
 
 Subdomain docs:
@@ -99,16 +99,16 @@ Expected future schema contracts:
 
 ```text
 dot/proposal/production_application_contracts/schema_contracts/
-  schema_an_app_brain_session_v1_0_0_draft.md
-  schema_an_app_brain_context_record_v1_0_0_draft.md
-  schema_an_app_brain_reasoning_trace_v1_0_0_draft.md
-  schema_an_app_brain_resolution_record_v1_0_0_draft.md
-  schema_an_app_brain_boundary_record_v1_0_0_draft.md
-  schema_an_app_brain_recursion_trace_v1_0_0_draft.md
-  schema_an_app_lang_parse_record_v1_0_0_draft.md
-  schema_an_bot_session_v1_0_0_draft.md
-  schema_an_memory_evidence_record_v1_0_0_draft.md
-  schema_knowledge_tree_node_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_an_app_brain_session_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_an_app_brain_context_record_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_an_app_brain_reasoning_trace_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_an_app_brain_resolution_record_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_an_app_brain_boundary_record_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_an_app_brain_recursion_trace_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_an_app_lang_parse_record_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_an_bot_session_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_an_memory_evidence_record_v1_0_0_draft.md
+  agent_3_agent_lang_and_memory_schema_knowledge_tree_node_v1_0_0_draft.md
 ```
 
 Expected future code locations, only after approval:
