@@ -119,6 +119,65 @@ class action_entity {
     return results;
   }
 
+  // ===== RESOLVE =====
+  resolve_reference(ref) {
+    if (!ref) return null;
+    if (ref.id) return this.read(ref.id);
+    if (ref.name) {
+      const results = this.search(ref.name, ref.type);
+      return results.length > 0 ? results[0] : null;
+    }
+    return null;
+  }
+
+  resolve_expression(expr, context = {}) {
+    if (!expr) return null;
+    if (expr.type === "entity_ref") return this.resolve_reference(expr);
+    if (expr.type === "literal") return expr.value;
+    if (expr.type === "variable") return context[expr.name] || null;
+    return expr;
+  }
+
+  resolve_path(path, context = {}) {
+    if (!path) return null;
+    const parts = path.split(".");
+    let current = context;
+    for (const part of parts) {
+      if (current && current[part] !== undefined) {
+        current = current[part];
+      } else {
+        return null;
+      }
+    }
+    return current;
+  }
+
+  resolve_slot(slot, context = {}) {
+    if (!slot) return null;
+    if (slot.type === "entity") return this.resolve_reference(slot);
+    if (slot.type === "expression") return this.resolve_expression(slot, context);
+    if (slot.type === "path") return this.resolve_path(slot.path, context);
+    if (slot.type === "literal") return slot.value;
+    return null;
+  }
+
+  resolve_route(route, context = {}) {
+    if (!route) return null;
+    if (route.path) return this.resolve_path(route.path, context);
+    if (route.entity_id) return this.read(route.entity_id);
+    return null;
+  }
+
+  resolve_provider(provider, context = {}) {
+    if (!provider) return null;
+    if (provider.id) return this.read(provider.id);
+    if (provider.name) {
+      const results = this.search(provider.name, "provider");
+      return results.length > 0 ? results[0] : null;
+    }
+    return null;
+  }
+
   // ===== PERSISTENCE =====
   save(key, data) {
     this.entities.set(`persist_${key}`, { key, data, saved_at: new Date().toISOString() });
