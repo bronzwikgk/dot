@@ -69,6 +69,35 @@ Controlled but allowed operation names:
   boundary, rollback, and validation are explicit
 - avoid using these words as vague product, plugin, utility, or domain names
 
+### Boundary And Recursion Policy
+
+Any domain that reasons, resolves context, learns, or proposes changes must
+define boundary behavior before implementation.
+
+Boundary behavior must cover:
+
+- missing evidence
+- ambiguous references
+- stale context
+- low confidence
+- conflicting memory
+- unsafe action
+- approval required
+- recursion limit reached
+
+Recursive decomposition or reasoning must define:
+
+- max depth
+- max node count
+- cycle detection
+- repeated-state detection
+- timeout
+- audit trail
+- stop reason
+
+When a boundary check fails, the system must return a clarification, blocked
+result, or explicit assumption. It must not silently produce executable action.
+
 ---
 
 ## 2. Coding Policy

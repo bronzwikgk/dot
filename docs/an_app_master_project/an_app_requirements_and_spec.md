@@ -32,6 +32,7 @@
 | req_app_026 | samples | Include sample inputs, outputs, templates, and validation reports for each major domain. | should | proposed | quality_audit | missing | test_sample_pack | source adoption logs |
 | req_app_027 | version | Support entity-level version management inspired by Git concepts: snapshot, diff, branch, merge, conflict resolution, restore, tag, history, and field-level provenance. | must | adopted | version_system | planned | test_version_contract | Git concept model |
 | req_app_028 | brain | Support An App Brain as a coordination subdomain for context, reasoning, decisions, response composition, scoring, and improvement proposals. | should | proposed | an_app_brain | planned | test_brain_session | an_brain_domain_proposal, AnGitAgent inbox |
+| req_app_029 | brain | Support An App Brain v1.4 scope: ingestion, decomposition, parsing, knowledge base records, reasoning, resolution, composition, learning, understanding, validation, recursion, multi-session context, and boundary checks. | should | proposed | an_app_brain | planned | test_brain_pipeline | an_brain_domain_proposal v1.4.0 |
 
 ## Functional Spec
 
@@ -152,8 +153,19 @@ Core entity types that must be represented before production development:
 | bot_session | an_bot | Conversation/session state. |
 | agent | agent_system | Autonomous or assisted work actor. |
 | brain_session | an_app_brain | Context-bearing coordination session across language, memory, reasoning, decision, composition, scoring, and audit records. |
+| ingestion_record | an_app_brain | Intake record for source, request, conversation, file, or event input before decomposition. |
+| decomposition_record | an_app_brain | Recursive split result with source refs, node ids, depth, and stop reason. |
+| parsing_record | an_app_brain | Parse result linked to An App Lang output, source refs, confidence, and diagnostics. |
+| knowledge_base_record | an_app_brain | Governed set of knowledge facts, formulas, provenance, and validation state. |
+| knowledge_fact | an_app_brain | Atomic source-backed fact with owner domain, confidence, and provenance. |
+| knowledge_formula | an_app_brain | Derived or learned rule/formula with proof, validation, and source refs. |
+| knowledge_provenance | an_app_brain | Source trace for facts, formulas, summaries, and decisions. |
 | decision_record | an_app_brain | Structured record of selected next action, alternatives, reason, evidence refs, and approval needs. |
 | composition_record | an_app_brain | Structured response/artifact assembly record linked to reasoning, decision, and evidence refs. |
+| resolution_record | an_app_brain | Record of resolved reference, temporal phrase, placeholder, route, provider, or entity ref. |
+| understanding_record | an_app_brain | Intent, implication, missing-context, and gap analysis record. |
+| recursion_trace | an_app_brain | Recursive reasoning/decomposition trace with limits, cycle checks, timeout, and stop reason. |
+| boundary_record | an_app_brain | Boundary check result for ambiguity, missing evidence, stale context, low confidence, unsafe action, or approval need. |
 | memory_record | an_memory | Evidence, recall, or consolidation record. |
 | fintech_organization | fintech_organization_management | Fintech business workspace root. |
 | trading_workspace | algo_stock_trading | Trading research workspace root. |

@@ -27,6 +27,9 @@ Build the memory and knowledge-tree system that turns sources into indexed nodes
 - source node schema
 - knowledge node schema
 - evidence record schema
+- knowledge base record schema
+- boundary record schema
+- recursion trace schema
 - relationship extraction path
 - source coverage report
 - adoption decision list
@@ -40,6 +43,8 @@ Build the memory and knowledge-tree system that turns sources into indexed nodes
 - skipped large folders are logged with reason and count
 - summaries map back to source nodes
 - knowledge tree output can feed docs, datasets, and planning
+- boundary checks block unclear source adoption before active changes
+- recursion limits prevent runaway source decomposition
 
 ## Do Not
 
