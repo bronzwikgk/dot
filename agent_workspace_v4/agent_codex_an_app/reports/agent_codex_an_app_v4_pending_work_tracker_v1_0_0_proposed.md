@@ -69,10 +69,10 @@ Branch: `dot_agent_codex_an_app_v4`
 | Item ID | Priority | Status | Work |
 |---|---|---|---|
 | v4_missing_006 | p1 | pending | template store/composer/tree renderer boundary decision |
-| v4_missing_007 | p1 | pending | manifest/inventory stale entry validation |
-| v4_missing_008 | p1 | pending | docs route links to module paths |
+| v4_missing_007 | p1 | validated | manifest/inventory stale entry validation |
+| v4_missing_008 | p1 | validated | docs route links to module paths |
 | v4_missing_009 | p1 | validated | offline icon/package asset policy |
-| v4_missing_010 | p1 | pending | relative config path anchoring |
+| v4_missing_010 | p1 | validated | relative config path anchoring |
 | v4_missing_014 | p1 | validated | storage selftest and storage key validation |
 | v4_missing_015 | p1 | validated | storage errors surfaced in status bar |
 | v4_missing_016 | p1 | validated | local static server hardening |
