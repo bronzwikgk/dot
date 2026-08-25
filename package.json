@@ -1,0 +1,9 @@
+{
+  "name": "v3_workshop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "devDependencies": {
+    "acorn": "^8.18.0"
+  }
+}

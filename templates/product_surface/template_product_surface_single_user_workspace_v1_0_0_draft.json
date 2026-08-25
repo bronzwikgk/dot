@@ -1,0 +1,26 @@
+{
+  "id": "template_single_user_workspace_v1",
+  "type": "template",
+  "name": "single_user_workspace_template",
+  "domain": "single_user_workspace",
+  "application": {
+    "id": "app_single_user_workspace_demo",
+    "type": "application",
+    "name": "single_user_workspace_application"
+  },
+  "routes": [
+    { "id": "route_workspace_home", "name": "workspace_home", "path": "/" }
+  ],
+  "views": [
+    { "id": "view_workspace_notebook", "name": "workspace_notebook", "layout": "notebook", "render_profile": "json_as_document" },
+    { "id": "view_workspace_tree", "name": "workspace_tree", "layout": "collapsible_tree", "render_profile": "json_as_tree" }
+  ],
+  "workflows": [
+    { "id": "workflow_workspace_daily_review", "name": "daily_review" }
+  ],
+  "policies": ["local_user_owned"],
+  "sample_data": {
+    "book_count": 1,
+    "cell_count": 4
+  }
+}

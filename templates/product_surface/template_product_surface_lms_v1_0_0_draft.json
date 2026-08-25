@@ -1,0 +1,27 @@
+{
+  "id": "template_lms_v1",
+  "type": "template",
+  "name": "lms_template",
+  "domain": "lms",
+  "application": {
+    "id": "app_lms_demo",
+    "type": "application",
+    "name": "lms_application"
+  },
+  "routes": [
+    { "id": "route_lms_home", "name": "lms_home", "path": "/" },
+    { "id": "route_lms_course", "name": "course_view", "path": "/course" }
+  ],
+  "views": [
+    { "id": "view_lms_dashboard", "name": "learner_dashboard", "layout": "dashboard", "render_profile": "json_as_cards" },
+    { "id": "view_lms_course", "name": "course_document", "layout": "block_editor", "render_profile": "json_as_document" }
+  ],
+  "workflows": [
+    { "id": "workflow_lms_progress", "name": "track_progress" }
+  ],
+  "policies": ["approval_required_for_certificate"],
+  "sample_data": {
+    "course_count": 3,
+    "learner_count": 12
+  }
+}

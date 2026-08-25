@@ -1,0 +1,24 @@
+{
+  "belongs_to": [
+    ["book", "application"],
+    ["cell", "book"],
+    ["view", "application"],
+    ["route", "application"],
+    ["layout_node", "view"],
+    ["state", "application"],
+    ["workflow", "application"],
+    ["command", "application"]
+  ],
+  "renders": [
+    ["view", "render_profile"],
+    ["layout_node", "view"]
+  ],
+  "uses": [
+    ["application", "template"],
+    ["command", "command_intent_port"],
+    ["workflow", "runner_port"],
+    ["template", "template_port"],
+    ["application", "version_port"],
+    ["application", "entity_store_port"]
+  ]
+}

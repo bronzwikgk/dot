@@ -1,0 +1,45 @@
+<!-- ============================================================
+     File:     dataset_of_testing_templates_in_shared_v2.dataset
+     Project:  shared_v2
+     Category: testing / templates
+     Type:     dataset
+
+     PURPOSE
+     - Declares which test properties apply to each signature archetype.
+     - Consumed by code_shared_test_generation to build test plans.
+
+     CONTENTS
+     - testing_template_types    : category list (D3)
+     - testing_template_archetypes : archetype entries, pipe format
+         archetype:<name> || properties:<comma separated properties>
+
+     PROPERTIES VOCABULARY
+     - determinism   : same input twice gives same output
+     - immutability  : input arguments are not mutated
+     - snapshot      : output frozen as regression baseline on first run
+     - edge_safety   : edge inputs either return or throw a proper Error
+
+     RELATIONS
+     - Paired with dataset_of_testing_samples_in_shared_v2.dataset
+     - Used by pipeline system_validate_and_test_code_shared_v2.md
+
+     CHANGELOG
+     - [2026-08-24] [agent_gate_g1_run] initial(10) created for test generation stage
+============================================================ -->
+
+const testing_template_types = [
+   "archetypes",   // behavioural classes keyed by inferred signature shape
+];
+
+const testing_template_archetypes = [
+   "archetype:numeric_unary || properties:determinism,immutability,snapshot,edge_safety",
+   "archetype:numeric_nary || properties:determinism,immutability,snapshot,edge_safety",
+   "archetype:string_transform || properties:determinism,immutability,snapshot,edge_safety",
+   "archetype:string_tokenize || properties:determinism,immutability,snapshot,edge_safety",
+   "archetype:array_transform || properties:determinism,immutability,snapshot,edge_safety",
+   "archetype:aggregation || properties:determinism,immutability,snapshot,edge_safety",
+   "archetype:record_transform || properties:determinism,immutability,snapshot,edge_safety",
+   "archetype:predicate || properties:determinism,immutability,snapshot,edge_safety",
+   "archetype:callback_pipeline || properties:determinism,immutability,snapshot,edge_safety",
+   "archetype:nullary_producer || properties:determinism,edge_safety",
+];

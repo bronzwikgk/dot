@@ -1,0 +1,27 @@
+{
+  "id": "template_research_workflow_v1",
+  "type": "template",
+  "name": "research_workflow_template",
+  "domain": "research_workflow",
+  "application": {
+    "id": "app_research_workflow_demo",
+    "type": "application",
+    "name": "research_workflow_application"
+  },
+  "routes": [
+    { "id": "route_research_home", "name": "research_home", "path": "/" },
+    { "id": "route_research_sources", "name": "source_review", "path": "/sources" }
+  ],
+  "views": [
+    { "id": "view_research_sources", "name": "source_table", "layout": "table_view", "render_profile": "json_as_table" },
+    { "id": "view_research_mindmap", "name": "idea_map", "layout": "mindmap_view", "render_profile": "json_as_mindmap" }
+  ],
+  "workflows": [
+    { "id": "workflow_research_extract", "name": "extract_evidence" }
+  ],
+  "policies": ["source_evidence_required"],
+  "sample_data": {
+    "source_count": 5,
+    "note_count": 14
+  }
+}

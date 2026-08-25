@@ -1,0 +1,26 @@
+{
+  "id": "template_automation_workflow_v1",
+  "type": "template",
+  "name": "automation_workflow_template",
+  "domain": "automation_workflow",
+  "application": {
+    "id": "app_automation_workflow_demo",
+    "type": "application",
+    "name": "automation_workflow_application"
+  },
+  "routes": [
+    { "id": "route_automation_home", "name": "automation_home", "path": "/" }
+  ],
+  "views": [
+    { "id": "view_automation_flow", "name": "workflow_canvas", "layout": "flowchart_view", "render_profile": "json_as_flowchart" },
+    { "id": "view_automation_status", "name": "run_status", "layout": "dashboard", "render_profile": "json_as_cards" }
+  ],
+  "workflows": [
+    { "id": "workflow_automation_schedule", "name": "scheduled_run" }
+  ],
+  "policies": ["approval_required_for_external_action"],
+  "sample_data": {
+    "scheduled_job_count": 2,
+    "run_count": 7
+  }
+}
