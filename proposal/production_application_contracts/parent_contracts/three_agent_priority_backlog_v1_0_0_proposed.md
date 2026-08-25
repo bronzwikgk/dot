@@ -30,6 +30,12 @@ dot/proposal/production_application_contracts/parent_contracts/
   agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract.md
 ```
 
+Agent 3 search command:
+
+```powershell
+rg -n "agent_3_agent_lang_and_memory" dot\proposal
+```
+
 Agent 3 should place new schema/contract planning files under:
 
 ```text
@@ -96,6 +102,11 @@ Start after the related p1 item works or has an explicit blocked note.
 ## Shared Rules
 
 - Every contract and handoff must name the assigned agent.
+- Every agent must search `dot\proposal` for its agent number and agent name
+  before starting work.
+- Agent-owned proposal filenames must include agent number and agent name.
+- Planning, proposal, report, template, and handoff filenames should preserve
+  status and version where practical.
 - Everything durable or governable is an entity.
 - No new or similar active names without authorization.
 - Keep public names snake_case.

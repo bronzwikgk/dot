@@ -26,6 +26,10 @@ Reference success sources:
 ## Mandatory Agent Rules
 
 - Every contract must name the assigned `Owner agent`.
+- Agent-owned proposal contract filenames must include agent number and agent
+  name so each agent can find work by searching `dot/proposal`.
+- Each agent must search `dot/proposal` for its own agent name before starting
+  work.
 - Everything durable or governable is an entity.
 - Do not add a new or similar name without user authorization.
 - Reuse approved names before proposing new names.
@@ -39,15 +43,25 @@ Reference success sources:
 - Organize templates, docs, proposals, tests, reports, and logs by subdomain.
 - Store entity definition documents in `app_data/definition`.
 - Store user-created or imported working data in `user_data` until promoted.
+- Maintain version and status in planning, proposal, report, template, and
+  handoff filenames where practical.
 
 ## Contract Index
 
 This folder now has two contract layers:
 
 - parent contracts: 9 product delivery contracts in `parent_contracts`
-- detail contracts: 18 rigid subcontracts in this folder
+- detail contracts: 19 rigid subcontracts in this folder
 
 Parent contracts define what must be built for the production application. Detail contracts define the rules, utilities, plugin boundaries, datasets, validation, and audit behavior that each parent contract must obey.
+
+Agent search commands:
+
+```powershell
+rg -n "agent_1_agent_codex_an_app" dot\proposal
+rg -n "agent_2_agent_ui_application" dot\proposal
+rg -n "agent_3_agent_lang_and_memory" dot\proposal
+```
 
 ## Parent Contract Index
 

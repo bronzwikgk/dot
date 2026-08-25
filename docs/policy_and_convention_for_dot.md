@@ -32,6 +32,31 @@ All dataset files, schemas, concepts, code, folders, and files.
 | N8 | Folder naming | `<type>_<project>_v<version>` | `ls -la` and pattern match | Error: Rename folder |
 | N9 | No generic names | No `README.md`, `CHANGELOG.md` - use project-specific names | Manual review | Error: Rename to project-specific name |
 | N10 | Config naming | config + project_name + own_name + version + status + author + extension | Manual review | Error: Rename config file |
+| N11 | Agent proposal names | Agent-owned proposal contracts must include agent number and agent name in the filename | `rg -n "agent_[123]_agent_" proposal/production_application_contracts/parent_contracts` | Error: Rename proposal contract |
+| N12 | File status and version | Planning, proposal, doc, report, template, and handoff files must include version and status in the filename unless legacy or source-only | Manual review | Warning: Rename before promotion |
+
+### Agent-Owned Proposal Filename Pattern
+
+Agent-owned proposal contract files must be searchable by agent number and
+agent name:
+
+```text
+agent_<number>_<agent_name>_<contract_or_work_name>_v<version>_<status>.md
+```
+
+For parent contracts that already carry parent ids, use:
+
+```text
+agent_<number>_<agent_name>_parent_<id>_<scope>_contract.md
+```
+
+Every agent must search the proposal folder for its own agent name before
+starting work. Example:
+
+```powershell
+rg -n "agent_2_agent_ui_application" dot\proposal
+rg -n "agent_3_agent_lang_and_memory" dot\proposal
+```
 
 ### Banned Or Avoidable Active Names
 

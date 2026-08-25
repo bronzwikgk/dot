@@ -21,6 +21,18 @@ Before changing files, the acting agent must cross-check:
 - shared inbox notes
 - approved names and banned names
 
+Every assigned agent must first search `dot/proposal` for its own agent name
+and agent number. This finds the parent contracts, work packets, and handoff
+notes related to that agent.
+
+Examples:
+
+```powershell
+rg -n "agent_1_agent_codex_an_app" dot\proposal
+rg -n "agent_2_agent_ui_application" dot\proposal
+rg -n "agent_3_agent_lang_and_memory" dot\proposal
+```
+
 The agent must report any convention violation, name conflict, missing
 authorization, or pending decision before claiming readiness.
 
@@ -47,6 +59,25 @@ Use app data folders by shape:
 
 Use `user_data` for user-created or imported working data that is not promoted
 yet.
+
+## File Naming For Agent Work
+
+Agent-owned proposal contracts must include:
+
+- agent number
+- agent name
+- contract or work name
+- version where practical
+- status where practical
+
+Use this pattern for new files:
+
+```text
+agent_<number>_<agent_name>_<artifact_name>_v<version>_<status>.md
+```
+
+Existing parent contract filenames may keep their parent id, but must include
+agent number and agent name.
 
 ## Development Order
 
@@ -75,6 +106,8 @@ should stay in utilities unless a plugin is coordinating a governed workflow.
 - put entity definitions under `app_data/definition`
 - group docs, templates, proposals, tests, reports, and logs by subdomain
 - include acting agent name and assigned owner agent in handoffs
+- search `dot/proposal` for your agent name before starting work
+- keep version and status in planning/proposal/report/template filenames
 - include tests run, skipped tests, source refs, and known limits
 - use shared inbox for conflicts, proposed names, blocked decisions, and
   agent-to-agent communication

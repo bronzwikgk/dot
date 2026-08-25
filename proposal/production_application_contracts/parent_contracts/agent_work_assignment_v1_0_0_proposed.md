@@ -27,6 +27,7 @@ test or an explicit blocked note.
 
 Lane: foundation_and_runtime
 Priority ownership: p0 primary, p1 support, p2 audit
+Proposal search command: `rg -n "agent_1_agent_codex_an_app" dot\proposal`
 
 Assigned parent contracts:
 
@@ -78,6 +79,7 @@ Priority backlog:
 
 Lane: product_surface
 Priority ownership: p1 primary, p0 dependency review, p2 polish
+Proposal search command: `rg -n "agent_2_agent_ui_application" dot\proposal`
 
 Assigned parent contracts:
 
@@ -123,6 +125,7 @@ Priority backlog:
 
 Lane: language_and_knowledge
 Priority ownership: p1 primary, p0 schema/name support, p2 learning
+Proposal search command: `rg -n "agent_3_agent_lang_and_memory" dot\proposal`
 
 Assigned parent contracts:
 
@@ -183,13 +186,18 @@ Priority backlog:
 
 | Agent | Give This First | Also Give |
 | --- | --- | --- |
-| agent_codex_an_app | agent_1_agent_codex_an_app_parent_001_production_app_shell_contract.md | parent_003, parent_004, parent_009, contract_004, contract_005, contract_006, contract_014 |
-| agent_ui_application | agent_2_agent_ui_application_parent_002_gui_application_builder_contract.md | parent_008, contract_009, contract_013, active master docs |
-| agent_lang_and_memory | agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md | agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md, parent_005, parent_006, parent_007, contract_010, contract_011, contract_012, contract_017, contract_018, contract_019 |
+| agent_codex_an_app | agent_1_agent_codex_an_app_parent_001_production_app_shell_contract.md | agent_1_agent_codex_an_app_parent_003_version_system_implementation_contract.md, agent_1_agent_codex_an_app_parent_004_repository_operations_implementation_contract.md, agent_1_agent_codex_an_app_parent_009_real_app_e2e_validation_contract.md, contract_004, contract_005, contract_006, contract_014 |
+| agent_ui_application | agent_2_agent_ui_application_parent_002_gui_application_builder_contract.md | agent_2_agent_ui_application_parent_008_production_templates_contract.md, contract_009, contract_013, active master docs |
+| agent_lang_and_memory | agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md | agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_005_an_app_lang_implementation_contract.md, agent_3_agent_lang_and_memory_parent_006_bot_agent_runtime_contract.md, agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract.md, contract_010, contract_011, contract_012, contract_017, contract_018, contract_019 |
 
 ## Shared Agent Rules
 
 - Every contract and handoff must name the assigned agent.
+- Every agent must search `dot\proposal` for its agent number and agent name
+  before starting work.
+- Agent-owned proposal filenames must include agent number and agent name.
+- Planning, proposal, report, template, and handoff filenames should preserve
+  status and version where practical.
 - Everything durable or governable is an entity.
 - No new or similar active names without user authorization.
 - Reuse approved names before proposing a new name.

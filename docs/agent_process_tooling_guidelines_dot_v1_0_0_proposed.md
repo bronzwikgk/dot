@@ -28,10 +28,11 @@ Use this process before implementation:
 4. read the active master docs
 5. read the related parent contract and detail contracts
 6. check shared inbox for conflicts or handoffs
-7. identify owner agent, domain, subdomain, app data shape, and file location
-8. write or update the smallest needed scope, contract, schema, or report
-9. validate names, banned words, folder placement, and requirement mappings
-10. only then implement code or app data
+7. search `dot/proposal` for your assigned agent number and agent name
+8. identify owner agent, domain, subdomain, app data shape, and file location
+9. write or update the smallest needed scope, contract, schema, or report
+10. validate names, banned words, folder placement, and requirement mappings
+11. only then implement code or app data
 
 ## When To Use Multi-Agent Work
 

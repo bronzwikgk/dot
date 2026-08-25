@@ -44,6 +44,12 @@ master docs, policy docs, parent contracts, detail contracts, and shared inbox
 for convention violations, banned names, pending decisions, and user
 corrections.
 
+Agent search command:
+
+```powershell
+rg -n "agent_3_agent_lang_and_memory" dot\proposal
+```
+
 Planning and contracts:
 
 ```text
