@@ -20,7 +20,7 @@ It is intentionally lightweight and dependency-free.
 
 ## What It Does
 
-`StatsUtil` exposes:
+`stats_util` exposes:
 
 - `mean(values)`
 - `standardDeviation(values)`
@@ -59,7 +59,7 @@ Avoid using it for:
 Create with defaults:
 
 ```js
-const stats = new StatsUtil();
+const stats = new stats_util();
 ```
 
 Default:
@@ -71,13 +71,13 @@ zCritical: 1.96
 Custom z-critical:
 
 ```js
-const stats = new StatsUtil({ zCritical: 1.645 });
+const stats = new stats_util({ zCritical: 1.645 });
 ```
 
 Explicit `0` is preserved:
 
 ```js
-const stats = new StatsUtil({ zCritical: 0 });
+const stats = new stats_util({ zCritical: 0 });
 ```
 
 ## Examples
@@ -135,7 +135,7 @@ stats.zScoreBatch([8, 10, 12], 10, 2);
 
 Maintainers and agents should preserve these guarantees:
 
-- `new StatsUtil()` must work with no config.
+- `new stats_util()` must work with no config.
 - `zCritical` should use `1.96` only when missing, not when explicitly set to `0`.
 - `mean(null)` and `mean([])` return `0`.
 - `standardDeviation()` returns population standard deviation, dividing by `n`.
@@ -151,7 +151,7 @@ Maintainers and agents should preserve these guarantees:
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {StatsUtil} from './code/utilities/code_shared_stats_v3_0_0_draft.js'; const s=new StatsUtil(); assert.equal(s.mean([1,2,3]),2); assert.equal(s.mean([]),0); assert.equal(s.execute([2,4]),3); assert.equal(s.standardDeviation([2,4]),1); assert.equal(s.standardDeviation([1]),0); assert.equal(s.standardError(4,16),1); assert.equal(s.standardError(4,0),0); assert.deepEqual(s.confidenceInterval(10,2),{lower:6.08,upper:13.92,midpoint:10,width:7.84}); assert.equal(s.weightedMean([10,20],[1,3]),17.5); assert.equal(s.weightedMean([10],[1,2]),0); assert.equal(s.weightedMean([10,20],[0,0]),0); assert.equal(s.zScore(12,10,2),1); assert.equal(s.zScore(12,10,0),0); assert.deepEqual(s.zScoreBatch([8,10,12],10,2),[-1,0,1]); assert.deepEqual(s.zScoreBatch(null,10,2),[]); const zero=new StatsUtil({zCritical:0}); assert.equal(zero.confidenceInterval(10,2).width,0); console.log('stats checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {stats_util} from './code/utilities/code_shared_stats_v3_0_0_draft.js'; const s=new stats_util(); assert.equal(s.mean([1,2,3]),2); assert.equal(s.mean([]),0); assert.equal(s.execute([2,4]),3); assert.equal(s.standardDeviation([2,4]),1); assert.equal(s.standardDeviation([1]),0); assert.equal(s.standardError(4,16),1); assert.equal(s.standardError(4,0),0); assert.deepEqual(s.confidenceInterval(10,2),{lower:6.08,upper:13.92,midpoint:10,width:7.84}); assert.equal(s.weightedMean([10,20],[1,3]),17.5); assert.equal(s.weightedMean([10],[1,2]),0); assert.equal(s.weightedMean([10,20],[0,0]),0); assert.equal(s.zScore(12,10,2),1); assert.equal(s.zScore(12,10,0),0); assert.deepEqual(s.zScoreBatch([8,10,12],10,2),[-1,0,1]); assert.deepEqual(s.zScoreBatch(null,10,2),[]); const zero=new stats_util({zCritical:0}); assert.equal(zero.confidenceInterval(10,2).width,0); console.log('stats checks passed');"
 ```
 
 Expected output:

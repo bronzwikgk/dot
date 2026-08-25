@@ -1,4 +1,4 @@
-# Shared Runner Boundary
+# Shared runner boundary
 
 ## Purpose
 
@@ -13,7 +13,7 @@ Keep both runners for now.
 `code_shared_entity_runner_v3_0_0_draft.js` remains a lightweight stage runner
 for entity-system pipelines.
 
-## Existing Shared Runner
+## Existing shared runner
 
 Use `code_shared_runner_v3_0_0_draft.js` for:
 
@@ -29,14 +29,14 @@ Use `code_shared_runner_v3_0_0_draft.js` for:
 - task dependency sorting
 - session tracking
 
-## Entity Runner
+## entity_runner
 
 Use `code_shared_entity_runner_v3_0_0_draft.js` for:
 
 - small ordered stages
 - parse and validate passes
 - conversion passes
-- materialization previews
+- artifact creation previews
 - diagnostics and timing collection
 
 ## Why Not Merge Now

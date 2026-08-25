@@ -159,12 +159,13 @@
     var class_ranges = [];
     var exported_classes = [];
     for (var i = 0; i < lines.length; i++) {
-      var class_match = lines[i].match(/^\s*((?:export\s+default\s+|export\s+)?)class\s+([A-Za-z_$][\w$]*)/);
+      var class_match = lines[i].match(/^\s*((?:export\s+default\s+|export\s+)?)class(?:\s+([A-Za-z_$][\w$]*))?/);
       if (class_match && depths[i] === 0) {
+        var class_name = class_match[2] || "(default)";
         var end = find_slice_end(lines, i);
-        class_ranges.push({ name: class_match[2], start: i, end: end });
-        classes.push(class_match[2]);
-        if (class_match[1]) exported_classes.push(class_match[2]);
+        class_ranges.push({ name: class_name, start: i, end: end });
+        classes.push(class_name);
+        if (class_match[1]) exported_classes.push(class_name);
       }
     }
 
@@ -550,7 +551,10 @@
 
       if (stmt.type === "ExportDefaultDeclaration") {
         var decl = stmt.declaration;
-        if (decl.type === "ClassDeclaration" || decl.type === "ClassExpression") style = "class";
+        if (decl.type === "ClassDeclaration" || decl.type === "ClassExpression") {
+          style = "class";
+          export_target = decl.id ? decl.id.name : "(anonymous)";
+        }
         else if (decl.type === "FunctionDeclaration" || decl.type === "ArrowFunctionExpression") style = "single_function";
         if (decl.id) names.push(decl.id.name);
         continue;

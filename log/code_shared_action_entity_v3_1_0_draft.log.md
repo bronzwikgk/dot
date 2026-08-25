@@ -25,3 +25,7 @@ and focused migration checks are complete.
 - Create/read smoke check passed.
 - Valid relationship graph passed.
 - Missing relationship target failed as expected.
+
+## 2026-08-25
+
+- Added driver compatibility for older `generateId`/`getTimestamp` hooks, added relationship wrapper methods, and allowed relationship targets to be checked during graph validation instead of link time.

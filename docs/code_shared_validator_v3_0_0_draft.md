@@ -1,4 +1,4 @@
-# Shared Validator Utility
+# Shared validator Utility
 
 ## File
 
@@ -16,13 +16,13 @@ It is used by the runner before workflow steps and DAG tasks, and can also be us
 
 ## What It Does
 
-`Validator.validate(data, schema)` checks simple schema constraints:
+`validator.validate(data, schema)` checks simple schema constraints:
 
 - Required fields.
 - Basic property types.
 - String `minLength` and `maxLength`.
 
-`Validator.evaluateRule(rule, context)` evaluates rules in two forms:
+`validator.evaluateRule(rule, context)` evaluates rules in two forms:
 
 - Structured rules, such as `{ left, operator, right }`.
 - String conditions, such as `{ condition: "input.score >= 10" }`.
@@ -33,7 +33,7 @@ It also supports compound rules:
 - `or`
 - `not`
 
-`Validator.resolveValue(path, context)` resolves wrapped paths against a context object. For example, `{{input.name}}` reads `context.input.name`.
+`validator.resolveValue(path, context)` resolves wrapped paths against a context object. For example, `{{input.name}}` reads `context.input.name`.
 
 ## When To Use It
 
@@ -71,7 +71,7 @@ or:
 Structured rules compare resolved left and right values:
 
 ```js
-const validator = new Validator();
+const validator = new validator();
 
 validator.evaluateRule(
   { left: "{{input.count}}", operator: ">=", right: 3 },
@@ -136,7 +136,7 @@ Maintainers and agents should preserve these guarantees:
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {Validator} from './code/plugins/code_shared_validator_v3_0_0_draft.js'; const v=new Validator(); assert.equal(v.validate(null,{required:['name']}).valid,false); assert.equal(v.evaluateRule({type:'and',conditions:[{left:'{{input.x}}',operator:'>=',right:2},{condition:'input.y <= 3'}]},{input:{x:2,y:3}}),true); assert.equal(v.evaluateRule({type:'or',conditions:[{left:'{{input.x}}',operator:'<',right:1},{left:'{{input.x}}',operator:'===',right:2}]},{input:{x:2}}),true); assert.equal(v.evaluateRule({type:'not',conditions:[{left:'{{input.x}}',operator:'<',right:1}]},{input:{x:2}}),true); assert.equal(v.evaluateRule({left:'{{input.name}}',operator:'!==',right:'b'},{input:{name:'a'}}),true); console.log('validator checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {validator} from './code/plugins/code_shared_validator_v3_0_0_draft.js'; const v=new validator(); assert.equal(v.validate(null,{required:['name']}).valid,false); assert.equal(v.evaluateRule({type:'and',conditions:[{left:'{{input.x}}',operator:'>=',right:2},{condition:'input.y <= 3'}]},{input:{x:2,y:3}}),true); assert.equal(v.evaluateRule({type:'or',conditions:[{left:'{{input.x}}',operator:'<',right:1},{left:'{{input.x}}',operator:'===',right:2}]},{input:{x:2}}),true); assert.equal(v.evaluateRule({type:'not',conditions:[{left:'{{input.x}}',operator:'<',right:1}]},{input:{x:2}}),true); assert.equal(v.evaluateRule({left:'{{input.name}}',operator:'!==',right:'b'},{input:{name:'a'}}),true); console.log('validator checks passed');"
 ```
 
 Expected output:

@@ -48,7 +48,7 @@ class action_entity {
   constructor(name = "entities", config = {}, driver = null, options = {}) {
     this.name = name;
     this.config = normalize_config(config);
-    this.driver = driver || new memory_driver(name);
+    this.driver = normalize_driver(driver || new memory_driver(name), name);
     this.registry = options.registry || new entity_registry(this.config.registry || {});
     this.validator = options.validator || new entity_validator({
       allow_unknown_types: this.config.allow_unknown_types,
@@ -188,13 +188,16 @@ class action_entity {
   async link_entities(from_id, to_id, type, attributes = {}) {
     this.validator.assert_relationship_type(type);
     const source = await this.read(from_id);
-    await this.read(to_id);
     const relationship = { type, to: to_id, attributes: clone_plain_object(attributes) };
     const relationship_result = this.validator.validate_relationship(relationship);
     if (!relationship_result.ok) throw new Error(relationship_result.errors.join("; "));
     const relationships = source.relationships.filter((item) => !(item.type === type && item.to === to_id));
     relationships.push(relationship);
     return this.update(from_id, { relationships });
+  }
+
+  async add_relationship(id, relationship = {}) {
+    return this.link_entities(id, relationship.to, relationship.type, relationship.attributes || {});
   }
 
   async unlink_entities(from_id, to_id, type = null) {
@@ -205,6 +208,10 @@ class action_entity {
       return false;
     });
     return this.update(from_id, { relationships });
+  }
+
+  async remove_relationship(id, relationship = {}) {
+    return this.unlink_entities(id, relationship.to, relationship.type || null);
   }
 
   async get_relationships(id, type = null) {
@@ -308,6 +315,17 @@ const normalize_config = (config = {}) => {
     allow_unknown_relationship_types: Boolean(config.allow_unknown_relationship_types),
     allow_legacy_dependencies: Boolean(config.allow_legacy_dependencies)
   };
+};
+
+const normalize_driver = (driver, name) => {
+  if (!driver) return new memory_driver(name);
+  if (typeof driver.generate_id !== "function" && typeof driver.generateId === "function") {
+    driver.generate_id = (prefix = name) => driver.generateId(prefix);
+  }
+  if (typeof driver.get_timestamp !== "function" && typeof driver.getTimestamp === "function") {
+    driver.get_timestamp = () => driver.getTimestamp();
+  }
+  return driver;
 };
 
 const normalize_update_patch = (data) => {

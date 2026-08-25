@@ -22,10 +22,10 @@ as formatted JSON.
 
 ## When To Use It
 
-Use it when a validated app entity needs a first materialization plan.
+Use it when a validated app entity needs a first app manifest plan.
 
 Avoid using it as the final app builder. It does not yet create files, run
-tests, resolve templates, or enforce full materialization policy.
+tests, resolve templates, or enforce full artifact creation policy.
 
 ## Runtime Contract
 

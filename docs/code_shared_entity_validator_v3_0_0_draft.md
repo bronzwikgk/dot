@@ -1,4 +1,4 @@
-# Shared Entity Validator Utility
+# Shared entity_validator utility
 
 ## File
 

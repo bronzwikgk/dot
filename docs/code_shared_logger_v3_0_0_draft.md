@@ -1,4 +1,4 @@
-# Shared Logger And Metrics Utility
+# Shared logger And metrics Utility
 
 ## File
 
@@ -17,7 +17,7 @@ It is dependency-free and intended for runtime inspection, diagnostics, and ligh
 
 ## What It Does
 
-`Logger` exposes:
+`logger` exposes:
 
 - `debug(message_text, details)`
 - `info(message_text, details)`
@@ -25,7 +25,7 @@ It is dependency-free and intended for runtime inspection, diagnostics, and ligh
 - `error(message_text, details)`
 - `get_logs(level_filter)`
 
-`Metrics` exposes:
+`metrics` exposes:
 
 - `counter(name_value)`
 - `timer(name_value)`
@@ -57,12 +57,12 @@ Avoid using it for:
 - High-cardinality production metrics.
 - Security audit logs.
 
-## Logger Behavior
+## logger Behavior
 
 Create a logger:
 
 ```js
-const logger = new Logger({ ceiling: 200 });
+const logger = new logger({ ceiling: 200 });
 ```
 
 Add lines:
@@ -94,7 +94,7 @@ The ring buffer keeps only the newest `ceiling` lines. Invalid or non-positive c
 
 Falsy details such as `0` and `false` are preserved. Missing details become `null`.
 
-## Metrics Behavior
+## metrics Behavior
 
 Counters increment by name:
 
@@ -130,24 +130,24 @@ metrics.snapshot();
 
 Maintainers and agents should preserve these guarantees:
 
-- `new Logger()` must work with no config.
-- Logger ceiling should be a positive integer, falling back to `200` otherwise.
-- Logger buffer should never exceed `ceiling`.
+- `new logger()` must work with no config.
+- logger ceiling should be a positive integer, falling back to `200` otherwise.
+- logger buffer should never exceed `ceiling`.
 - `get_logs()` should return a shallow copy of the line array.
 - `get_logs(level)` should filter by exact level.
 - Log details should preserve falsy values except missing details, which become `null`.
-- Counter values should be monotonic per key within one `Metrics` instance.
+- Counter values should be monotonic per key within one `metrics` instance.
 - Gauges should return the numeric value passed in.
 - Timer stop functions should return `{ name, duration_ms }`.
-- `create_logger()` should return a `Logger`.
-- `create_metrics()` should return a `Metrics`.
+- `create_logger()` should return a `logger`.
+- `create_metrics()` should return a `metrics`.
 
 ## How It Was Tested
 
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {Logger, Metrics, create_logger, create_metrics} from './code/plugins/code_shared_logger_v3_0_0_draft.js'; const log=new Logger({ceiling:2}); log.info('one'); log.warn('two',{x:1}); log.error('three'); assert.equal(log.get_logs().length,2); assert.deepEqual(log.get_logs().map(l=>l.message),['two','three']); assert.equal(log.get_logs('warn').length,1); assert.deepEqual(log.get_logs('warn')[0].details,{x:1}); const copy=log.get_logs(); copy.push({}); assert.equal(log.get_logs().length,2); const falsy=new Logger({ceiling:3}); falsy.info('zero',0); falsy.info('false',false); assert.equal(falsy.get_logs()[0].details,0); assert.equal(falsy.get_logs()[1].details,false); const made=create_logger(1); made.debug('a'); made.debug('b'); assert.equal(made.get_logs().length,1); const zero=new Logger({ceiling:0}); zero.info('still usable'); assert.equal(zero.ceiling,200); assert.equal(zero.get_logs().length,1); const metrics=new Metrics(); assert.equal(metrics.counter('hits'),1); assert.equal(metrics.counter('hits'),2); assert.equal(metrics.gauge('load',7),7); assert.deepEqual(metrics.snapshot(),[['hits',2],['gauge:load',7]]); const stop=metrics.timer('stage'); const timing=stop(); assert.equal(timing.name,'stage'); assert.ok(timing.duration_ms>=0); assert.ok(create_metrics() instanceof Metrics); console.log('logger checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {logger, metrics, create_logger, create_metrics} from './code/plugins/code_shared_logger_v3_0_0_draft.js'; const log=new logger({ceiling:2}); log.info('one'); log.warn('two',{x:1}); log.error('three'); assert.equal(log.get_logs().length,2); assert.deepEqual(log.get_logs().map(l=>l.message),['two','three']); assert.equal(log.get_logs('warn').length,1); assert.deepEqual(log.get_logs('warn')[0].details,{x:1}); const copy=log.get_logs(); copy.push({}); assert.equal(log.get_logs().length,2); const falsy=new logger({ceiling:3}); falsy.info('zero',0); falsy.info('false',false); assert.equal(falsy.get_logs()[0].details,0); assert.equal(falsy.get_logs()[1].details,false); const made=create_logger(1); made.debug('a'); made.debug('b'); assert.equal(made.get_logs().length,1); const zero=new logger({ceiling:0}); zero.info('still usable'); assert.equal(zero.ceiling,200); assert.equal(zero.get_logs().length,1); const metrics=new metrics(); assert.equal(metrics.counter('hits'),1); assert.equal(metrics.counter('hits'),2); assert.equal(metrics.gauge('load',7),7); assert.deepEqual(metrics.snapshot(),[['hits',2],['gauge:load',7]]); const stop=metrics.timer('stage'); const timing=stop(); assert.equal(timing.name,'stage'); assert.ok(timing.duration_ms>=0); assert.ok(create_metrics() instanceof metrics); console.log('logger checks passed');"
 ```
 
 Expected output:
@@ -171,7 +171,7 @@ When updating this utility:
 ## Known Limits
 
 - Logs are in-memory only.
-- Metrics are in-memory only.
+- metrics are in-memory only.
 - Timer uses `Date.now()`.
 - Snapshot returns map entries, not an object.
 - There is no transport to disk or remote telemetry.

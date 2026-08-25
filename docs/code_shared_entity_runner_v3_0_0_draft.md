@@ -1,4 +1,4 @@
-# Shared Entity Runner Plugin
+# Shared entity_runner plugin
 
 ## File
 
@@ -6,8 +6,9 @@
 
 ## What It Is
 
-The shared entity runner plugin is a lightweight stage runner. It executes a
-configured list of named stages and records timing plus diagnostics.
+The shared entity runner plugin is a lightweight stage runner. It executes
+registered stages or an explicit requested stage list and records timing plus
+diagnostics.
 
 ## What It Does
 
@@ -18,7 +19,7 @@ It exposes:
 
 ## When To Use It
 
-Use it for small validation, parsing, conversion, or materialization pipelines
+Use it for small validation, parsing, conversion, or artifact creation pipelines
 where each stage receives a value and returns the next value.
 
 Use `code_shared_runner_v3_0_0_draft.js` for declared workflows, DAG tasks,
@@ -26,8 +27,9 @@ conditions, nested plans, action budgets, and task dependency sorting.
 
 ## Runtime Contract
 
-- Stage names must be present in the configured stage order.
+- Stage names must be present in the allowed stage list.
 - Stage handlers must be callable.
+- `run(input)` executes registered stages when no explicit stage list is given.
 - Missing stages create diagnostics.
 - Failed stages create diagnostics and stop when configured to stop on error.
 - Successful runs return final value, context, diagnostics, and timings.

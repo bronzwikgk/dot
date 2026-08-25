@@ -1,4 +1,4 @@
-# Shared Runner Utility
+# Shared runner Utility
 
 ## File
 
@@ -22,6 +22,7 @@ The runner can:
 - Infer plan kind from `steps` or `tasks`.
 - Execute AST steps in sequence.
 - Execute DAG tasks in dependency order.
+- Fail when a DAG task has no matching task type or executable action.
 - Skip steps/tasks when validator-backed conditions fail.
 - Route AST execution with `nextMap`.
 - Stop AST execution with `TERMINATE`.
@@ -54,7 +55,7 @@ Avoid using it for:
 AST plans use a `steps` array:
 
 ```js
-const runner = new Runner({ actions, validator });
+const runner = new runner({ actions, validator });
 
 await runner.run({
   steps: [
@@ -170,7 +171,7 @@ Maintainers and agents should preserve these guarantees:
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {Runner} from './code/plugins/code_shared_runner_v3_0_0_draft.js'; import {Validator} from './code/plugins/code_shared_validator_v3_0_0_draft.js'; const calls=[]; const validator=new Validator(); const runner=new Runner({validator, actions:{executeAction:async (action, inputs)=>{calls.push({action, inputs}); return action==='CHOOSE'?'yes':inputs;}}, limits:{actions:10, depth:3}}); const inline=await runner.run({steps:[{stepId:'s1', action:'ECHO', conditions:[{left:'{{input.ok}}', operator:'===', right:true}], inputs:{value:'{{input.value}}'}}]}, {ok:true,value:42}); assert.deepEqual(inline.s1,{value:42}); runner.registerPlan('jump',{steps:[{stepId:'choose', action:'CHOOSE', nextMap:{yes:'done'}},{stepId:'skip', action:'SKIP'},{stepId:'done', action:'DONE', inputs:{ok:true}}]}); const jumped=await runner.run('jump'); assert.deepEqual(jumped.done,{ok:true}); assert.throws(()=>runner.topologicalSort([{task_id:'a', dependencies:['b']},{task_id:'b', dependencies:['a']}]),/cycle/); assert.throws(()=>runner.topologicalSort([{task_id:'a', dependencies:['z']}]),/dependency/); assert.throws(()=>runner.topologicalSort([{task_id:'a'},{task_id:'a'}]),/Duplicate/); assert.throws(()=>runner.topologicalSort([{dependencies:[]}]),/missing task_id/); const order=runner.topologicalSort([{task_id:'b',dependencies:['a']},{task_id:'a'}]).map(t=>t.task_id); assert.deepEqual(order,['a','b']); const dag=await runner.run({tasks:[{task_id:'first', action:'ECHO', inputs:{v:{source_type:'config', value:1}}},{task_id:'second', action:'ECHO', dependencies:['first'], inputs:{prev:{source_type:'task_output', task_id:'first'}}}]}); assert.deepEqual(dag.second,{prev:{v:1}}); console.log('runner checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {runner} from './code/plugins/code_shared_runner_v3_0_0_draft.js'; import {validator} from './code/plugins/code_shared_validator_v3_0_0_draft.js'; const calls=[]; const validator=new validator(); const runner=new runner({validator, actions:{executeAction:async (action, inputs)=>{calls.push({action, inputs}); return action==='CHOOSE'?'yes':inputs;}}, limits:{actions:10, depth:3}}); const inline=await runner.run({steps:[{stepId:'s1', action:'ECHO', conditions:[{left:'{{input.ok}}', operator:'===', right:true}], inputs:{value:'{{input.value}}'}}]}, {ok:true,value:42}); assert.deepEqual(inline.s1,{value:42}); runner.registerPlan('jump',{steps:[{stepId:'choose', action:'CHOOSE', nextMap:{yes:'done'}},{stepId:'skip', action:'SKIP'},{stepId:'done', action:'DONE', inputs:{ok:true}}]}); const jumped=await runner.run('jump'); assert.deepEqual(jumped.done,{ok:true}); assert.throws(()=>runner.topologicalSort([{task_id:'a', dependencies:['b']},{task_id:'b', dependencies:['a']}]),/cycle/); assert.throws(()=>runner.topologicalSort([{task_id:'a', dependencies:['z']}]),/dependency/); assert.throws(()=>runner.topologicalSort([{task_id:'a'},{task_id:'a'}]),/Duplicate/); assert.throws(()=>runner.topologicalSort([{dependencies:[]}]),/missing task_id/); const order=runner.topologicalSort([{task_id:'b',dependencies:['a']},{task_id:'a'}]).map(t=>t.task_id); assert.deepEqual(order,['a','b']); const dag=await runner.run({tasks:[{task_id:'first', action:'ECHO', inputs:{v:{source_type:'config', value:1}}},{task_id:'second', action:'ECHO', dependencies:['first'], inputs:{prev:{source_type:'task_output', task_id:'first'}}}]}); assert.deepEqual(dag.second,{prev:{v:1}}); console.log('runner checks passed');"
 ```
 
 Expected output:

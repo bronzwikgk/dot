@@ -3,7 +3,7 @@
  * @meta project: shared | file_name: code_shared_logger_v3_0_0_draft.js | version: 3.0.0 | status: draft | author: ox-alpha
  * @objective provide leveled logging with a ring buffer plus counters, timers, and gauges for metrics.
  * @purpose_and_problem_statement inspect_system intent needs bounded history and numbers; unbounded logs leak memory and missing timings hide slow stages.
- * @usage const log_api = new Logger(); log_api.info("boot complete"); metrics.timer("compose")();
+ * @usage const log_api = new logger(); log_api.info("boot complete"); metrics.timer("compose")();
  * @timing created at boot step three alongside singletons.
  * @scope_boundaries in_scope: ring buffer logs, counters, timers, gauges. out_of_scope: transport to disk.
  * @dependencies none.
@@ -11,7 +11,7 @@
  * @invariants ring buffer never exceeds its ceiling; counters are monotonic within a run.
  * @changelog - 2026-08-24: 3.0.0: promoted code_shared_logger_v2_2_0_draft to class form; absorbs the metrics shim duty directly (plugin metrics deleted)
  */
-class Logger {
+class logger {
   constructor(config = {}) {
     this.config = config || {};
     this.ceiling = Number.isFinite(this.config.ceiling) && this.config.ceiling > 0 ? Math.floor(this.config.ceiling) : 200;
@@ -34,7 +34,7 @@ class Logger {
   }
 }
 
-class Metrics {
+class metrics {
   constructor() {
     this.counters = new Map();
   }
@@ -61,11 +61,11 @@ class Metrics {
 }
 
 function create_logger(ceiling = 200) {
-  return new Logger({ ceiling });
+  return new logger({ ceiling });
 }
 
 function create_metrics() {
-  return new Metrics();
+  return new metrics();
 }
 
-export { Logger, Metrics, create_logger, create_metrics };
+export { logger, metrics, create_logger, create_metrics };

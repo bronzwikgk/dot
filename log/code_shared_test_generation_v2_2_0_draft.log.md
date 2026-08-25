@@ -79,3 +79,11 @@ parseSampleEntry -> parse_sample_entry
 summarizePlan -> summarize_plan
 shouldIncludeSignature -> should_include_signature
 ```
+
+## 2026-08-25
+
+- Renamed class references to snake_case naming standard where applicable.
+
+## 2026-08-25
+
+- Confirmed constructor generation now works for default class inspection when the inspector reports class export style.

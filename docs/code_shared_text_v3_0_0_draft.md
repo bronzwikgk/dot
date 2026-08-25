@@ -12,7 +12,7 @@ It is dependency-free and intended for shared runtime code that needs predictabl
 
 ## What It Does
 
-`TextUtil` exposes:
+`text_util` exposes:
 
 - `escape_text(value)`
 - `join_mapped(items, map_function)`
@@ -50,7 +50,7 @@ Avoid using it for:
 Escape text:
 
 ```js
-const text = new TextUtil();
+const text = new text_util();
 
 text.escape_text("<b>Ann's & Bob</b>");
 // "&lt;b&gt;Ann&#39;s &amp; Bob&lt;/b&gt;"
@@ -118,7 +118,7 @@ tokenize("A bb 123");
 
 Maintainers and agents should preserve these guarantees:
 
-- `new TextUtil()` must work with no config.
+- `new text_util()` must work with no config.
 - `escape_text()` should escape ampersand before other entities.
 - `tokenize(null)` returns `[]`.
 - `normalize_spaces(null)` returns `""`.
@@ -133,8 +133,8 @@ Focused checks were run with Node ESM import:
 ```powershell
 @'
 import assert from 'node:assert/strict';
-import TextUtil, { escape_text, tokenize, normalize_spaces, join_mapped } from './code/utilities/code_shared_text_v3_0_0_draft.js';
-const t = new TextUtil();
+import text_util, { escape_text, tokenize, normalize_spaces, join_mapped } from './code/utilities/code_shared_text_v3_0_0_draft.js';
+const t = new text_util();
 assert.equal(t.escape_text('<a href="x">Bob & Ann\\'s</a>'), '&lt;a href=&quot;x&quot;&gt;Bob &amp; Ann&#39;s&lt;/a&gt;');
 assert.equal(escape_text('&<>"\\''), '&amp;&lt;&gt;&quot;&#39;');
 assert.deepEqual(t.tokenize('Hello, AI-2026! a B cde'), ['hello', 'ai', '2026', 'cde']);

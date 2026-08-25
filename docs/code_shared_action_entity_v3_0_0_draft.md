@@ -19,7 +19,7 @@ It is intended to stop plugins from hand-rolling the same persistence wrapper re
 
 ## What It Does
 
-`ActionEntity` exposes:
+`action_entity` exposes:
 
 - `create(data, options)`
 - `read(id, options)`
@@ -63,7 +63,7 @@ Avoid using it for:
 Create an entity:
 
 ```js
-const tasks = new ActionEntity("tasks", {
+const tasks = new action_entity("tasks", {
   schema: {
     title: { required: true },
     status: { enum: ["open", "closed"] },
@@ -117,7 +117,7 @@ The built-in schema supports:
 Example:
 
 ```js
-const users = new ActionEntity("users", {
+const users = new action_entity("users", {
   idField: "userId",
   schema: {
     userId: { required: true },
@@ -142,7 +142,7 @@ The cache:
 Default cache limit is `500`.
 
 ```js
-const users = new ActionEntity("users", {}, null, { cacheLimit: 100 });
+const users = new action_entity("users", {}, null, { cacheLimit: 100 });
 ```
 
 ## Runtime Contract
@@ -165,7 +165,7 @@ Maintainers and agents should preserve these guarantees:
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {ActionEntity} from './code/plugins/code_shared_action_entity_v3_0_0_draft.js'; const entity=new ActionEntity('items',{schema:{name:{required:true}, status:{enum:['open','closed']}, due:{type:'date'}}},null,{cacheLimit:2}); await assert.rejects(()=>entity.create({status:'open'}),/name/); await assert.rejects(()=>entity.create({name:'bad',status:'nope'}),/status/); await assert.rejects(()=>entity.create({name:'bad',status:'open',due:'not-a-date'}),/valid date/); const created=await entity.create({name:'alpha',status:'open',due:'2026-08-24'}); assert.equal(created.ok,true); assert.match(created.data.id,/^items_/); const read1=await entity.read(created.data.id); assert.equal(read1.name,'alpha'); read1.name='mutated'; const read2=await entity.read(created.data.id); assert.equal(read2.name,'alpha'); const updated=await entity.update(created.data.id,{status:'closed'}); assert.equal(updated.data.status,'closed'); assert.notEqual(updated.data.updatedAt,undefined); const custom=new ActionEntity('users',{idField:'userId'}); const customCreated=await custom.create({userId:'u1',name:'Ada'}); assert.equal(customCreated.data.userId,'u1'); await entity.create({name:'beta',status:'open'}); await entity.create({name:'gamma',status:'open'}); assert.equal(entity.cache.size,2); const queried=await entity.query({status:'open'}); assert.equal(queried.ok,true); assert.ok(queried.data.length >= 2); queried.data[0].name='query-mutated'; const reread=await entity.read(queried.data[0].id); assert.notEqual(reread.name,'query-mutated'); const deleted=await entity.delete(created.data.id); assert.equal(deleted.ok,true); await assert.rejects(()=>entity.read(created.data.id),/not found/); console.log('action_entity checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {action_entity} from './code/plugins/code_shared_action_entity_v3_0_0_draft.js'; const entity=new action_entity('items',{schema:{name:{required:true}, status:{enum:['open','closed']}, due:{type:'date'}}},null,{cacheLimit:2}); await assert.rejects(()=>entity.create({status:'open'}),/name/); await assert.rejects(()=>entity.create({name:'bad',status:'nope'}),/status/); await assert.rejects(()=>entity.create({name:'bad',status:'open',due:'not-a-date'}),/valid date/); const created=await entity.create({name:'alpha',status:'open',due:'2026-08-24'}); assert.equal(created.ok,true); assert.match(created.data.id,/^items_/); const read1=await entity.read(created.data.id); assert.equal(read1.name,'alpha'); read1.name='mutated'; const read2=await entity.read(created.data.id); assert.equal(read2.name,'alpha'); const updated=await entity.update(created.data.id,{status:'closed'}); assert.equal(updated.data.status,'closed'); assert.notEqual(updated.data.updatedAt,undefined); const custom=new action_entity('users',{idField:'userId'}); const customCreated=await custom.create({userId:'u1',name:'Ada'}); assert.equal(customCreated.data.userId,'u1'); await entity.create({name:'beta',status:'open'}); await entity.create({name:'gamma',status:'open'}); assert.equal(entity.cache.size,2); const queried=await entity.query({status:'open'}); assert.equal(queried.ok,true); assert.ok(queried.data.length >= 2); queried.data[0].name='query-mutated'; const reread=await entity.read(queried.data[0].id); assert.notEqual(reread.name,'query-mutated'); const deleted=await entity.delete(created.data.id); assert.equal(deleted.ok,true); await assert.rejects(()=>entity.read(created.data.id),/not found/); console.log('action_entity checks passed');"
 ```
 
 Expected output:

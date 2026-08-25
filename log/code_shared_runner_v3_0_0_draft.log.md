@@ -1,4 +1,4 @@
-# Shared Runner Utility Log
+# Shared runner Utility Log
 
 ## 2026-08-24
 
@@ -17,7 +17,7 @@ Completed focused utility pass for `code/plugins/code_shared_runner_v3_0_0_draft
 Ran focused Node checks for:
 
 - Inline AST plan execution.
-- Validator-backed AST conditions.
+- validator-backed AST conditions.
 - Registered AST plan execution.
 - `nextMap` routing.
 - DAG cycle rejection.
@@ -44,3 +44,11 @@ Document shared runner utility
 ```
 
 Push is handled by the user through GitHub Desktop.
+
+## 2026-08-25
+
+- Renamed class references to snake_case naming standard where applicable.
+
+## 2026-08-25
+
+- Fixed DAG execution so unknown task types or actions throw `[SYS-06]` instead of returning an error object as a successful result.

@@ -1,4 +1,4 @@
-# Shared Validator Utility Log
+# Shared validator Utility Log
 
 ## 2026-08-24
 
@@ -36,3 +36,7 @@ Fix shared validator rule evaluation
 ```
 
 Push is handled by the user through GitHub Desktop.
+
+## 2026-08-25
+
+- Renamed class references to snake_case naming standard where applicable.

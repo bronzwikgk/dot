@@ -6,7 +6,7 @@ Completed focused utility pass for `code/utilities/code_shared_collection_v3_0_0
 
 ### Issues Fixed
 
-- `new CollectionUtil()` could crash because constructor defaults did not normalize `config` before reading fields.
+- `new collection_util()` could crash because constructor defaults did not normalize `config` before reading fields.
 - `seed` was stored but not used, so shuffled train/test splits could not be reproduced.
 
 ### Verification
@@ -43,3 +43,11 @@ Complete shared collection utility
 ```
 
 Push is handled by the user through GitHub Desktop.
+
+## 2026-08-25
+
+- Renamed class references to snake_case naming standard where applicable.
+
+## 2026-08-25
+
+- Fixed deterministic split config so seed `0` is preserved instead of being treated as missing.

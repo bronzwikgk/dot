@@ -64,3 +64,7 @@ classifyArchetype -> classify_archetype
 normalizeTypeToken -> normalize_type_token
 inferReturnFromSource -> infer_return_from_source
 ```
+
+## 2026-08-25
+
+- Renamed class references to snake_case naming standard where applicable.

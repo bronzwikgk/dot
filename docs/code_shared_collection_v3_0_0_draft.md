@@ -23,7 +23,7 @@ It is intended for shared runtime code and test/data preparation code that needs
 
 ## What It Does
 
-`CollectionUtil` exposes:
+`collection_util` exposes:
 
 - `concat(arrays)`
 - `flattenToVector(matrix)`
@@ -67,7 +67,7 @@ Avoid using it for:
 Create a utility with defaults:
 
 ```js
-const collections = new CollectionUtil();
+const collections = new collection_util();
 ```
 
 Defaults:
@@ -80,7 +80,7 @@ Defaults:
 Custom configuration:
 
 ```js
-const collections = new CollectionUtil({
+const collections = new collection_util({
   trainRatio: 0.7,
   shuffle: true,
   seed: 123
@@ -137,8 +137,8 @@ collections.split(["a", "b", "c", "d"]);
 Seeded shuffled split:
 
 ```js
-const splitA = new CollectionUtil({ shuffle: true, seed: 123 }).split(data);
-const splitB = new CollectionUtil({ shuffle: true, seed: 123 }).split(data);
+const splitA = new collection_util({ shuffle: true, seed: 123 }).split(data);
+const splitB = new collection_util({ shuffle: true, seed: 123 }).split(data);
 // splitA and splitB are identical
 ```
 
@@ -161,7 +161,9 @@ Unknown operators return `false`.
 
 Maintainers and agents should preserve these guarantees:
 
-- `new CollectionUtil()` must work with no config.
+- `new collection_util()` must work with no config.
+- A configured seed of `0` is a valid deterministic seed and must not be treated
+  as missing.
 - `concat(null)` returns `[]`.
 - `slice(null, start, end)` returns `[]`.
 - `slice()` clamps the start and end to valid array bounds.
@@ -178,7 +180,7 @@ Maintainers and agents should preserve these guarantees:
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {CollectionUtil} from './code/utilities/code_shared_collection_v3_0_0_draft.js'; const c=new CollectionUtil(); assert.equal(c.trainRatio,0.8); assert.equal(c.testRatio,0.2); assert.deepEqual(c.concat([[1,2],[3],[]]),[1,2,3]); assert.deepEqual(c.flattenToVector([[1,2],[3,4]]),[1,2,3,4]); assert.deepEqual(c.slice([1,2,3,4],-2,3),[1,2,3]); assert.deepEqual(c.extractWindow([1,2,3,4],2,1),[2,3]); assert.deepEqual(c.slidingWindows([1,2,3],2),[[1,2],[2,3]]); assert.throws(()=>c.slidingWindows([1,2],0),/positive windowSize/); const rows=[{x:-2,kind:'a'},{x:0,kind:'b'},{x:3,kind:'a'}]; assert.deepEqual(c.filter(rows,{field:'kind',operator:'eq',value:'a'}),[rows[0],rows[2]]); assert.deepEqual(c.filterByRange(rows,'x',-1,3),[rows[1],rows[2]]); assert.deepEqual(c.split(['a','b','c','d']),{train:['a','b','c'],test:['d'],train_indices:[0,1,2],test_indices:[3]}); const c2=new CollectionUtil({trainRatio:0.5}); assert.deepEqual(c2.splitWithLabels(['a','b','c','d'],['A','B','C','D']),{train_data:['a','b'],test_data:['c','d'],train_labels:['A','B'],test_labels:['C','D'],train_indices:[0,1],test_indices:[2,3]}); const s1=new CollectionUtil({shuffle:true,seed:123,trainRatio:0.5}).split(['a','b','c','d','e','f']); const s2=new CollectionUtil({shuffle:true,seed:123,trainRatio:0.5}).split(['a','b','c','d','e','f']); assert.deepEqual(s1,s2); assert.notDeepEqual(s1.train_indices,[0,1,2]); console.log('collection checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {collection_util} from './code/utilities/code_shared_collection_v3_0_0_draft.js'; const c=new collection_util(); assert.equal(c.trainRatio,0.8); assert.equal(c.testRatio,0.2); assert.deepEqual(c.concat([[1,2],[3],[]]),[1,2,3]); assert.deepEqual(c.flattenToVector([[1,2],[3,4]]),[1,2,3,4]); assert.deepEqual(c.slice([1,2,3,4],-2,3),[1,2,3]); assert.deepEqual(c.extractWindow([1,2,3,4],2,1),[2,3]); assert.deepEqual(c.slidingWindows([1,2,3],2),[[1,2],[2,3]]); assert.throws(()=>c.slidingWindows([1,2],0),/positive windowSize/); const rows=[{x:-2,kind:'a'},{x:0,kind:'b'},{x:3,kind:'a'}]; assert.deepEqual(c.filter(rows,{field:'kind',operator:'eq',value:'a'}),[rows[0],rows[2]]); assert.deepEqual(c.filterByRange(rows,'x',-1,3),[rows[1],rows[2]]); assert.deepEqual(c.split(['a','b','c','d']),{train:['a','b','c'],test:['d'],train_indices:[0,1,2],test_indices:[3]}); const c2=new collection_util({trainRatio:0.5}); assert.deepEqual(c2.splitWithLabels(['a','b','c','d'],['A','B','C','D']),{train_data:['a','b'],test_data:['c','d'],train_labels:['A','B'],test_labels:['C','D'],train_indices:[0,1],test_indices:[2,3]}); const s1=new collection_util({shuffle:true,seed:123,trainRatio:0.5}).split(['a','b','c','d','e','f']); const s2=new collection_util({shuffle:true,seed:123,trainRatio:0.5}).split(['a','b','c','d','e','f']); assert.deepEqual(s1,s2); assert.notDeepEqual(s1.train_indices,[0,1,2]); console.log('collection checks passed');"
 ```
 
 Expected output:

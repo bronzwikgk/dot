@@ -1,4 +1,4 @@
-# Shared Entity Validator Log
+# Shared Entity validator Log
 
 ## 2026-08-25
 

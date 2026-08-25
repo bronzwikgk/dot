@@ -63,7 +63,9 @@ Avoid using it as a security scanner or full parser for TypeScript/JSX.
 - Legacy parser now includes constructors.
 - Legacy parser detects `export class` as class-style exports.
 - Legacy parser recognizes `export function` and `export async function`.
-- Legacy parser recognizes ESM named export lists such as `export { Logger, create_logger }`.
+- Legacy parser recognizes ESM named export lists such as `export { logger, create_logger }`.
+- Legacy parser recognizes `export default class` declarations, including
+  anonymous default classes.
 - One-line source slices are no longer extended into the following function/method.
 - Added `code_inspector` class export with constructor/config style while preserving existing function exports.
 

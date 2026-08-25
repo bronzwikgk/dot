@@ -1,4 +1,4 @@
-# Shared Logger And Metrics Utility Log
+# Shared logger And metrics Utility Log
 
 ## 2026-08-24
 
@@ -6,8 +6,8 @@ Completed focused utility pass for `code/plugins/code_shared_logger_v3_0_0_draft
 
 ### Issues Fixed
 
-- `Logger` constructor did not declare a default config parameter.
-- Logger ceiling relied on `||`, which made config handling implicit instead of validating the intended positive integer contract.
+- `logger` constructor did not declare a default config parameter.
+- logger ceiling relied on `||`, which made config handling implicit instead of validating the intended positive integer contract.
 - Log `details` used `details || null`, which replaced meaningful falsy values such as `0` and `false` with `null`.
 
 ### Verification
@@ -25,7 +25,7 @@ Ran focused Node checks for:
 - Gauge storage and return value.
 - Snapshot entries.
 - Timer return shape.
-- Metrics factory behavior.
+- metrics factory behavior.
 
 Result:
 
@@ -42,3 +42,7 @@ Complete shared logger utility
 ```
 
 Push is handled by the user through GitHub Desktop.
+
+## 2026-08-25
+
+- Renamed class references to snake_case naming standard where applicable.

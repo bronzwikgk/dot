@@ -4,12 +4,19 @@ const callable_type = typeof (() => {});
 
 class entity_runner {
   constructor(config = {}) {
-    this.config = { stage_order: default_stage_order, stop_on_error: true, strict_stages: true, ...config };
+    this.config = {
+      allowed_stage_names: default_stage_order,
+      default_stages: config.default_stages || config.stage_order || [],
+      stop_on_error: true,
+      strict_stages: true,
+      ...config
+    };
+    if (!this.config.stage_order) this.config.stage_order = this.config.allowed_stage_names;
     this.stages = new Map();
   }
 
   register_stage(name, handler) {
-    if (!this.config.stage_order.includes(name)) throw new Error(`unknown stage '${name}'`);
+    if (!this.config.allowed_stage_names.includes(name)) throw new Error(`unknown stage '${name}'`);
     if (typeof handler !== callable_type) throw new Error("handler must be callable");
     this.stages.set(name, handler);
     return { ok: true, name };
@@ -24,7 +31,7 @@ class entity_runner {
       timings: [],
       options
     };
-    const requested = options.stages || this.config.stage_order;
+    const requested = options.stages || (this.config.default_stages.length > 0 ? this.config.default_stages : Array.from(this.stages.keys()));
     for (const stage of requested) {
       if (!this.stages.has(stage)) {
         context.diagnostics.push({ stage, level: "error", message: `stage '${stage}' is not registered` });

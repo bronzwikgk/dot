@@ -3,17 +3,17 @@
  * @meta project: shared | file_name: code_shared_validator_v3_0_0_draft.js | version: 3.0.0 | status: draft | author: ox-alpha
  * @objective provide schema validation, rule evaluation with sandboxed conditions, and path value resolution.
  * @purpose_and_problem_statement execute_workflow needs one gate that validates payloads and evaluates flow conditions; scattered validators drifted apart.
- * @usage const v = new Validator(); v.validate(data, schema); v.evaluateRule(rule, context); v.resolveValue("{{input.x}}", context);
+ * @usage const v = new validator(); v.validate(data, schema); v.evaluateRule(rule, context); v.resolveValue("{{input.x}}", context);
  * @timing used by the flow engine before each step and at activation.
  * @scope_boundaries in_scope: schema validation, rule operators, vm-sandboxed condition strings, mustache-style path resolution. out_of_scope: storage schemas, dsl artifact gating (separate concern).
  * @dependencies none (node:vm for sandboxed conditions).
  * @keywords validate, rule, condition, resolve, schema
  * @invariants validation never throws on malformed data; vm failures evaluate to false, never propagate.
- * @changelog - 2026-08-24: 3.0.0: promoted actionValidator_v1_1_0 to shared class form; resolveValue made public for flow engine use
+ * @changelog - 2026-08-24: 3.0.0: promoted actionvalidator_v1_1_0 to shared class form; resolveValue made public for flow engine use
  */
 import vm from 'node:vm';
 
-export class Validator {
+export class validator {
   constructor(config) {
     this.config = config || {};
     this.version = '3.0.0';
@@ -82,7 +82,7 @@ export class Validator {
         vm.runInContext(code, sandbox, { timeout: this.config.conditionTimeoutMs || 100 });
         return sandbox.result;
       } catch (err) {
-        console.error('[Validator] VM Error:', err.message);
+        console.error('[validator] VM Error:', err.message);
         return false;
       }
     }
@@ -119,4 +119,4 @@ export class Validator {
   }
 }
 
-export default Validator;
+export default validator;

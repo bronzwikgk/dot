@@ -6,7 +6,7 @@ Completed focused utility pass for `code/utilities/code_shared_stats_v3_0_0_draf
 
 ### Issues Fixed
 
-- `new StatsUtil({ zCritical: 0 })` incorrectly fell back to `1.96` because config used `||`.
+- `new stats_util({ zCritical: 0 })` incorrectly fell back to `1.96` because config used `||`.
 - Constructor did not declare a default config parameter.
 - `zScoreBatch(null, mean, stdDev)` could throw because it read `values.length`.
 
@@ -43,3 +43,7 @@ Complete shared stats utility
 ```
 
 Push is handled by the user through GitHub Desktop.
+
+## 2026-08-25
+
+- Renamed class references to snake_case naming standard where applicable.

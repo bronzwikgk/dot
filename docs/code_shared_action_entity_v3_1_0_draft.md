@@ -24,8 +24,12 @@ It exposes:
 - `update_batch(items)`
 - `query_batch(filters)`
 - `set_status(id, status)`
+- `draft(id)`
 - `activate(id)`
+- `deprecate(id)`
 - `archive(id)`
+- `link_entities(from_id, to_id, type, attributes)`
+- `unlink_entities(from_id, to_id, type)`
 - `add_relationship(id, relationship)`
 - `remove_relationship(id, relationship)`
 - `get_relationships(id, type)`
@@ -55,9 +59,12 @@ entity doctrine fields.
 - Entity status must be approved.
 - Relationship types must be approved unless explicitly allowed by config.
 - Legacy dependency input is disabled unless explicitly enabled for migration.
+- Relationship targets do not need to exist at link time.
 - Relationship targets must resolve during graph validation.
 - Cycles are reported during graph validation.
 - Cache entries should reflect the latest stored record.
+- Injected drivers may expose either `generate_id`/`get_timestamp` or the older
+  `generateId`/`getTimestamp` names.
 
 ## Known Limits
 

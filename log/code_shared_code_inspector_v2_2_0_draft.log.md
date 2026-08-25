@@ -72,3 +72,11 @@ inspectSource* -> inspect_source*
 parseParams -> parse_params
 splitTopLevel -> split_top_level
 ```
+
+## 2026-08-25
+
+- Renamed class references to snake_case naming standard where applicable.
+
+## 2026-08-25
+
+- Fixed legacy inspection for `export default class`, including anonymous default classes, so constructor test plans can be generated.

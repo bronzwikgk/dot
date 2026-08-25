@@ -3,7 +3,7 @@
  * @meta project: shared | file_name: code_shared_text_v3_0_0_draft.js | version: 3.0.0 | status: draft | author: ox-alpha
  * @changelog - 2026-08-24: 3.0.0: promoted from v2 text utility to class form
  */
-export class TextUtil {
+export class text_util {
   constructor(config = {}) { this.config = config || {}; }
   escape_text(value) {
     return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
@@ -17,8 +17,8 @@ export class TextUtil {
   }
   normalize_spaces(value) { return String(value || "").replace(/\s+/g, " ").trim(); }
 }
-export function escape_text(v) { return new TextUtil().escape_text(v); }
-export function tokenize(v) { return new TextUtil().tokenize(v); }
-export function normalize_spaces(v) { return new TextUtil().normalize_spaces(v); }
-export function join_mapped(items, fn) { return new TextUtil().join_mapped(items, fn); }
-export default TextUtil;
+export function escape_text(v) { return new text_util().escape_text(v); }
+export function tokenize(v) { return new text_util().tokenize(v); }
+export function normalize_spaces(v) { return new text_util().normalize_spaces(v); }
+export function join_mapped(items, fn) { return new text_util().join_mapped(items, fn); }
+export default text_util;

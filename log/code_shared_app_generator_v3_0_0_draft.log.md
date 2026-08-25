@@ -14,7 +14,7 @@ Promoted app manifest planner from `scratchpad_entity_system/code`.
 
 ### Decision
 
-Keep as a plugin because it materializes app structure from entity records.
+Keep as a plugin because it creates app manifest structure from entity records.
 
 ### Verification
 

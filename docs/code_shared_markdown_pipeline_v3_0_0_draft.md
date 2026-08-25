@@ -27,7 +27,8 @@ early document-tree work.
 
 - Markdown is split into line blocks.
 - Heading lines become heading blocks with level.
-- Non-heading lines become text blocks.
+- Bullet lines become `list_item` blocks.
+- Other non-empty lines become `paragraph` blocks.
 - Compose joins block text back into markdown.
 
 ## Known Limits

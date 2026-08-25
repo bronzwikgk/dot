@@ -3,7 +3,7 @@
  * @meta project: shared | file_name: code_shared_vector_math_v3_0_0_draft.js | version: 3.0.0 | status: draft | author: ox-alpha
  * @objective provide euclidean distance and cosine similarity for equal-length numeric vectors, single and batch.
  * @purpose_and_problem_statement find_information and manage_entities intents need one coherent vector comparison surface; two sibling files duplicated guards and batch loops.
- * @usage const vm_util = new VectorMathUtil(); vm_util.distance([1,2],[2,3]); vm_util.similarityBatch(t, candidates);
+ * @usage const vm_util = new vector_math_util(); vm_util.distance([1,2],[2,3]); vm_util.similarityBatch(t, candidates);
  * @timing used by search ranking and dedup passes.
  * @scope_boundaries in_scope: distance, similarity, batch variants. out_of_scope: sparse vectors, weighted metrics.
  * @dependencies none.
@@ -11,7 +11,7 @@
  * @invariants returns 0 for null, mismatched length, or zero-magnitude inputs; never mutates its arguments.
  * @changelog - 2026-08-24: 3.0.0: merged code_shared_euclidean_distance_v2_2_0_draft + code_shared_cosine_similarity_v2_2_0_draft into one survivor; behavior preserved exactly
  */
-export class VectorMathUtil {
+export class vector_math_util {
   constructor(config = {}) {
     this.config = config || {};
   }
@@ -97,4 +97,4 @@ export class VectorMathUtil {
   }
 }
 
-export default VectorMathUtil;
+export default vector_math_util;

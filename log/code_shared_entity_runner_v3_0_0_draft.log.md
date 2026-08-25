@@ -1,4 +1,4 @@
-# Shared Entity Runner Log
+# Shared Entity runner Log
 
 ## 2026-08-25
 
@@ -23,3 +23,7 @@ budgets, and sessions.
 
 - Module import from promoted path passed.
 - Two-stage smoke check passed during scratchpad evaluation.
+
+## 2026-08-25
+
+- Fixed default run behavior so registered stages execute when no explicit stage list is provided. Separated allowed stage names from default requested stages.

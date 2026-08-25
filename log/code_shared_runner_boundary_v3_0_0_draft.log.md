@@ -1,4 +1,4 @@
-# Shared Runner Boundary Log
+# Shared runner Boundary Log
 
 ## 2026-08-25
 

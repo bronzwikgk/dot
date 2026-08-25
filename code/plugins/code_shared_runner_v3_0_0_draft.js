@@ -3,7 +3,7 @@
  * @meta project: shared | file_name: code_shared_runner_v3_0_0_draft.js | version: 3.0.0 | status: draft | author: ox-alpha
  * @objective execute declared workflows in two modes: ast plans (sequential steps with conditions, jumps, termination) and dag plans (dependency-ordered tasks), nestable in both directions under one shared safety kernel.
  * @purpose_and_problem_statement execute_workflow needs one engine for both imperative flows and declarative pipelines; two separate runners could not compose and duplicated dispatch and budget logic.
- * @usage const r = new Runner({ actions, validator, taskRegistry }); r.registerPlan("main", { steps: [...] }); r.registerPlan("graph", { tasks: [...] }); await r.run("main", input);
+ * @usage const r = new runner({ actions, validator, taskRegistry }); r.registerPlan("main", { steps: [...] }); r.registerPlan("graph", { tasks: [...] }); await r.run("main", input);
  * @timing invoked by the execute_workflow stage and by pipeline tasks that embed flows.
  * @scope_boundaries in_scope: plan registration, ast walking (conditions, next_map, terminate, decompose), dag walking (topological order, input sources, conditional skips), cross-mode nesting, shared action budget and depth cap. out_of_scope: worker implementations (registry/actions injected), parallel scheduling.
  * @dependencies validator (optional; rule gating and input resolution), actions host (optional), task registry (optional).
@@ -15,7 +15,7 @@
 const DEFAULT_ACTION_LIMIT = 50;
 const DEFAULT_DEPTH_LIMIT = 16;
 
-export class Runner {
+export class runner {
   constructor(deps = {}) {
     this.actions = deps.actions || null;
     this.validator = deps.validator || null;
@@ -188,7 +188,7 @@ export class Runner {
       const inputs = this._resolveDagInputs(taskConfig, results);
       return await this.actions.executeAction(taskConfig.action, inputs);
     }
-    return { error: 'Unknown task type: ' + (taskConfig.task_type || taskConfig.action) };
+    throw new Error('[SYS-06] Unknown DAG task type or action: ' + (taskConfig.task_type || taskConfig.action || '<missing>'));
   }
 
   _resolveDagPositional(taskConfig, inputData, results) {
@@ -297,4 +297,4 @@ export class Runner {
   }
 }
 
-export default Runner;
+export default runner;

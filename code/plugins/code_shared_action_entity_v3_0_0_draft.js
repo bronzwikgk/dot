@@ -3,15 +3,15 @@
  * @meta project: shared | file_name: code_shared_action_entity_v3_0_0_draft.js | version: 3.0.0 | status: draft | author: ox-alpha
  * @objective provide the storable entity surface: create, read, update, delete, query with an lru cache and schema validation.
  * @purpose_and_problem_statement every ontology type inherits storable; entities need one driver-backed crud surface so plugins never hand-roll persistence.
- * @usage const users = new ActionEntity("users", { schema }, new MemoryDriver()); await users.create({ name: "x" });
+ * @usage const users = new action_entity("users", { schema }, new memory_driver()); await users.create({ name: "x" });
  * @timing instantiated by plugins at activation for their own collections.
  * @scope_boundaries in_scope: crud, query passthrough, lru cache, schema field validation. out_of_scope: link traversal, trait gating, transport drivers other than the built-in memory driver.
- * @dependencies none (driver injected; MemoryDriver included for standalone use).
+ * @dependencies none (driver injected; memory_driver included for standalone use).
  * @keywords entity, crud, cache, storage
  * @invariants cached entries are always the latest written payload; cache never exceeds its limit; updatedAt is refreshed on every write.
- * @changelog - 2026-08-24: 3.0.0: promoted ActionEntity_v4.0.0 to shared class form; global driver injection hack removed in favor of constructor injection; built-in MemoryDriver added so the entity is self-sufficient without a storage plugin
+ * @changelog - 2026-08-24: 3.0.0: promoted action_entity_v4.0.0 to shared class form; global driver injection hack removed in favor of constructor injection; built-in memory_driver added so the entity is self-sufficient without a storage plugin
  */
-class MemoryDriver {
+class memory_driver {
   constructor(name) {
     this.name = name || 'memory';
     this.records = new Map();
@@ -58,7 +58,7 @@ class MemoryDriver {
   }
 }
 
-export class ActionEntity {
+export class action_entity {
   constructor(name, config = {}, driver = null, options = {}) {
     this.name = name;
     this.config = config || {};
@@ -106,7 +106,7 @@ export class ActionEntity {
   }
 
   async create(data, options = {}) {
-    if (!this.driver) this.driver = new MemoryDriver(this.name);
+    if (!this.driver) this.driver = new memory_driver(this.name);
     const idField = this._idField();
     const timestamp = this.driver.getTimestamp();
     const payload = { ...(data || {}) };
@@ -125,7 +125,7 @@ export class ActionEntity {
   }
 
   async read(id, options = {}) {
-    if (!this.driver) this.driver = new MemoryDriver(this.name);
+    if (!this.driver) this.driver = new memory_driver(this.name);
     if (this.cache.has(id)) {
       const cached = this.cache.get(id);
       this._touchCache(id, cached);
@@ -138,7 +138,7 @@ export class ActionEntity {
   }
 
   async update(id, data, options = {}) {
-    if (!this.driver) this.driver = new MemoryDriver(this.name);
+    if (!this.driver) this.driver = new memory_driver(this.name);
     const existing = await this.read(id, options);
     const merged = { ...existing, ...(data || {}) };
     merged.updatedAt = this.driver.getTimestamp();
@@ -149,13 +149,13 @@ export class ActionEntity {
   }
 
   async delete(id, options = {}) {
-    if (!this.driver) this.driver = new MemoryDriver(this.name);
+    if (!this.driver) this.driver = new memory_driver(this.name);
     this.cache.delete(id);
     return this.driver.delete(id, options);
   }
 
   async query(filter = {}, options = {}) {
-    if (!this.driver) this.driver = new MemoryDriver(this.name);
+    if (!this.driver) this.driver = new memory_driver(this.name);
     const result = await this.driver.query(filter, options);
     const records = Array.isArray(result) ? result : (result && result.data ? result.data : []);
     const idField = this._idField();
@@ -174,4 +174,5 @@ export class ActionEntity {
   }
 }
 
-export default ActionEntity;
+export { memory_driver };
+export default action_entity;

@@ -4,7 +4,7 @@
  * @objective provide statistical calculations: mean, standard deviation, standard error, confidence interval, weighted mean, z-score.
  * @changelog - 2026-08-24: 3.0.0: merged mean_calculation, standard_deviation, standard_error, confidence_interval, weighted_mean, z_score_normalization
  */
-export class StatsUtil {
+export class stats_util {
   constructor(config = {}) {
     this.config = config || {};
     this.zCritical = this.config.zCritical ?? 1.96;
@@ -51,4 +51,4 @@ export class StatsUtil {
   }
   executeBatch(values, mean, stdDev) { return this.zScoreBatch(values, mean, stdDev); }
 }
-export default StatsUtil;
+export default stats_util;

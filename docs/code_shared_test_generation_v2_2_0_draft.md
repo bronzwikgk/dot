@@ -45,6 +45,8 @@ Generated tests can cover:
 - Generated tests are async-aware.
 - Calls are awaited, so async target functions are handled.
 - Class constructors get explicit constructor test units.
+- Constructor test generation now works when the inspector detects anonymous
+  `export default class` declarations as class-style targets.
 - Edge-safety tests now report unexpected thrown values more clearly.
 - Generated plans include a `summary` with unit/case counts.
 - Sample bank was expanded with richer values, function samples, mixed arrays, and objects.
