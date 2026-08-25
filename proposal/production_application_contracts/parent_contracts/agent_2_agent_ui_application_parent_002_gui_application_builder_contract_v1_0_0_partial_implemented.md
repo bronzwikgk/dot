@@ -72,6 +72,10 @@ compatible methods and tests.
 - `docs/product_surface/code_shared_product_surface_v3_0_0_draft_doc.md`
 - `test/product_surface/agent_codex_an_app_agent_2_product_surface_v1_0_0_test.mjs`
 - `reports/product_surface/agent_codex_an_app_agent_2_product_surface_implementation_report_v1_0_0_proposed.md`
+- `html/product_surface/an_app_product_surface_v1_0_0_draft.html`
+- `html/product_surface/an_app_product_surface_v1_0_0_draft.css`
+- `html/product_surface/an_app_product_surface_v1_0_0_draft.js`
+- `test/integrated_application/agent_codex_an_app_visible_product_surface_v1_0_0_test.mjs`
 
 ## Completed Scope
 
@@ -82,12 +86,14 @@ compatible methods and tests.
 - app preview path
 - ui e2e checklist
 - mock-port-only product_surface validation
+- static rendered browser GUI for template selection, command selection, layout
+  projection, preview path, and audit display
 
 ## Pending Integration Scope
 
-- rendered browser GUI
 - desktop and mobile visual validation
-- real Agent 1 and Agent 3 port binding
+- persisted browser edit state
+- final real Agent 1 and Agent 3 port binding release report
 
 ## Do Not
 

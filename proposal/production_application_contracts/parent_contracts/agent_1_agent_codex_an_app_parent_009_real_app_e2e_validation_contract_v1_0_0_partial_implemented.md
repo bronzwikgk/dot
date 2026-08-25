@@ -54,9 +54,18 @@ Define and run production-grade validation for the real An App build across shel
 
 - `reports/foundation_and_runtime/agent_1_agent_codex_an_app_e2e_catalog_v1_0_0_draft.md`
 - `test/foundation_and_runtime/agent_1_agent_codex_an_app_foundation_runtime_v1_0_0_test.mjs`
+- `code/plugins/code_shared_integrated_application_v3_0_0_draft.js`
+- `test/integrated_application/agent_codex_an_app_integrated_application_v1_0_0_test.mjs`
+- `test/integrated_application/agent_codex_an_app_visible_product_surface_v1_0_0_test.mjs`
+- `reports/integrated_application/agent_codex_an_app_integrated_application_implementation_report_v1_0_0_proposed.md`
 
 Validation passed on 2026-08-25 for 7 automated tests covering 11 foundation
 scenarios in the first Agent 1 foundation catalog.
+
+Integrated validation added on 2026-08-25 for command parsing, template
+selection, application creation, shell boot, version snapshot, preview creation,
+layout projection, release gate reporting, unsafe command boundary, and static
+visible surface hooks.
 
 ## Completed Scope
 
@@ -70,11 +79,9 @@ scenarios in the first Agent 1 foundation catalog.
 
 ## Pending Integration Scope
 
-- Agent 2 product_surface fixture tests
 - Agent 2 desktop/mobile visual validation
-- Agent 3 language_and_knowledge correction tests
-- real app e2e flow from command input through builder, workflow, version, and
-  repository handoff
+- real app e2e flow from browser command input through persisted edit, workflow,
+  version, and repository handoff
 - release readiness report after all three agent lanes publish handoff notes
 
 ## Required Validation Commands
@@ -82,10 +89,9 @@ scenarios in the first Agent 1 foundation catalog.
 ```powershell
 node --test test\foundation_and_runtime\agent_1_agent_codex_an_app_foundation_runtime_v1_0_0_test.mjs
 node --test test\language_and_knowledge\agent_3_agent_lang_and_memory_an_app_brain_*_test.mjs
+node --test test\integrated_application\agent_codex_an_app_integrated_application_v1_0_0_test.mjs
+node --test test\integrated_application\agent_codex_an_app_visible_product_surface_v1_0_0_test.mjs
 ```
-
-The Agent 3 command is expected to fail or be skipped until Agent 3 completes
-the correction contract.
 
 ## Handoff Status
 
