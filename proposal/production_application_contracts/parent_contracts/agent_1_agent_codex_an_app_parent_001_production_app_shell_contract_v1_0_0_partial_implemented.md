@@ -50,6 +50,37 @@ Validation passed on 2026-08-25 for valid boot, invalid config rejection,
 duplicate child rejection, route path validation, and invalid workflow plan
 rejection.
 
+## Completed Scope
+
+- application entity boot validation
+- config shape validation
+- child id uniqueness validation
+- route path validation
+- workflow plan boundary validation
+- boot audit record creation
+- entity-first state boundary documented
+
+## Pending Integration Scope
+
+- bind real Agent 2 product_surface routes, views, layout projections, and
+  template entities after Agent 2 fixture tests pass
+- bind real Agent 3 command intent, language, memory, and brain ports after
+  Agent 3 correction tests pass
+- run full real app e2e validation after both integration lanes publish handoff
+  notes
+
+## Required Validation Command
+
+```powershell
+node --test test\foundation_and_runtime\agent_1_agent_codex_an_app_foundation_runtime_v1_0_0_test.mjs
+```
+
+## Handoff Status
+
+Agent 1 foundation shell contract is ready for commit as partial implementation.
+It must not be described as full product readiness until Agent 2 and Agent 3
+ports are integrated and parent_009 real app e2e passes.
+
 ## Do Not
 
 - do not add a separate state manager when state can be an entity

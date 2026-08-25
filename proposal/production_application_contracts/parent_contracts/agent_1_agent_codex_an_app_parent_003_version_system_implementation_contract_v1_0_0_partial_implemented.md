@@ -47,6 +47,35 @@ Implement entity-level version behavior so every durable entity can be saved, co
 Validation passed on 2026-08-25 for snapshot, diff, restore, invalid restore
 rejection, and three-way merge conflict detection.
 
+## Completed Scope
+
+- version record creation
+- entity snapshot behavior
+- structured diff behavior
+- restore validation
+- invalid restore rejection
+- branch record schema
+- three-way merge conflict detection
+- conflict record reporting
+
+## Pending Integration Scope
+
+- bind version labels into Agent 2 product_surface views through `version_port`
+- bind version/conflict records into Agent 1 e2e release report
+- define provider-backed persistence only after storage/provider contract approval
+
+## Required Validation Command
+
+```powershell
+node --test test\foundation_and_runtime\agent_1_agent_codex_an_app_foundation_runtime_v1_0_0_test.mjs
+```
+
+## Handoff Status
+
+Agent 1 version contract is ready for commit as partial implementation. It is
+stable for fixture consumers through `version_port`, but final product readiness
+requires real app integration evidence.
+
 ## Do Not
 
 - do not limit versioning to files

@@ -47,6 +47,35 @@ Implement governed repository inspection and automation support for status, diff
 Validation passed on 2026-08-25 for read-only status inspection, commit
 proposal validation, and mutating Git command rejection.
 
+## Completed Scope
+
+- repository operation record definition
+- read-only repository status inspection boundary
+- read-only diff operation boundary
+- commit proposal record validation
+- mutating Git command rejection
+- secret persistence prohibition documented
+- provider policy boundary documented
+
+## Pending Integration Scope
+
+- workflow run, artifact, and log entities need implementation in a later
+  operations batch
+- commit proposal may be wired to GitHub Desktop handoff after user approval
+- provider-backed remote operations remain blocked until explicit approval
+
+## Required Validation Command
+
+```powershell
+node --test test\foundation_and_runtime\agent_1_agent_codex_an_app_foundation_runtime_v1_0_0_test.mjs
+```
+
+## Handoff Status
+
+Agent 1 repository operation contract is ready for commit as partial
+implementation. Current implementation is intentionally read-only except commit
+proposal creation.
+
 ## Do Not
 
 - do not push, merge, delete, deploy, or rotate secrets without approval

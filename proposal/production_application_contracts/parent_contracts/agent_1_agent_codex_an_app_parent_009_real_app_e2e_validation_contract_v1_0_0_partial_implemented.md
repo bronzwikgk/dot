@@ -58,6 +58,40 @@ Define and run production-grade validation for the real An App build across shel
 Validation passed on 2026-08-25 for 7 automated tests covering 11 foundation
 scenarios in the first Agent 1 foundation catalog.
 
+## Completed Scope
+
+- foundation e2e scenario catalog created
+- shell boot scenarios covered
+- version system scenarios covered
+- repository operation boundary scenarios covered
+- negative validation scenarios covered
+- skipped product_surface and language_and_knowledge scopes called out by
+  dependency owner
+
+## Pending Integration Scope
+
+- Agent 2 product_surface fixture tests
+- Agent 2 desktop/mobile visual validation
+- Agent 3 language_and_knowledge correction tests
+- real app e2e flow from command input through builder, workflow, version, and
+  repository handoff
+- release readiness report after all three agent lanes publish handoff notes
+
+## Required Validation Commands
+
+```powershell
+node --test test\foundation_and_runtime\agent_1_agent_codex_an_app_foundation_runtime_v1_0_0_test.mjs
+node --test test\language_and_knowledge\agent_3_agent_lang_and_memory_an_app_brain_*_test.mjs
+```
+
+The Agent 3 command is expected to fail or be skipped until Agent 3 completes
+the correction contract.
+
+## Handoff Status
+
+Agent 1 foundation e2e contract is ready for commit as a partial implementation
+and real app e2e planning gate. It is not a full production readiness claim.
+
 ## Do Not
 
 - do not claim production readiness from unit tests alone
