@@ -18,14 +18,14 @@ const DEFAULT_ACTION_LIMIT = 50;
 const DEFAULT_DEPTH_LIMIT = 16;
 
 export class runner {
-  constructor(deps = {}) {
-    this.actions = deps.actions || null;
-    this.validator = deps.validator || null;
-    this.task_registry = deps.task_registry || {};
-    this.entity_label = deps.entity_label || 'Plan';
+  constructor(config = {}) {
+    this.actions = config.actions || null;
+    this.validator = config.validator || null;
+    this.task_registry = config.task_registry || {};
+    this.entity_label = config.entity_label || 'Plan';
     this.limits = {
-      actions: (deps.limits && deps.limits.actions) || DEFAULT_ACTION_LIMIT,
-      depth: (deps.limits && deps.limits.depth) || DEFAULT_DEPTH_LIMIT
+      actions: (config.limits && config.limits.actions) || DEFAULT_ACTION_LIMIT,
+      depth: (config.limits && config.limits.depth) || DEFAULT_DEPTH_LIMIT
     };
     this.plans = {};
     this.active_sessions = {};

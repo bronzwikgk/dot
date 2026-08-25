@@ -79,3 +79,9 @@ Push is handled by the user through GitHub Desktop.
 - Added error codes documentation: `[SYS-04]` (action limit), `[SYS-05]` (depth limit), `[SYS-06]` (validation errors).
 - Updated runtime contract to include `[SYS-04]` and `[SYS-05]` guarantees.
 - Verified with smoke check: `runner checks passed`.
+
+## 2026-08-25 - Agent Codex An App Naming Follow-Up
+
+- Renamed the constructor input to `config` so the runner code follows the current banned-word and snake_case naming policy.
+- No execution behavior or public object shape changed.
+- Re-ran generated tests after the update: `1296` passed, `0` failed.

@@ -233,3 +233,9 @@ When updating this utility:
 - The runner does not validate action names beyond dispatch availability.
 - Plan contracts are snake_case: `step_id`, `next_map`, `step_outputs`,
   `execute_action`, `task_id`, `task_type`, and `input_sources`.
+
+## Agent Codex An App Convention Follow-Up - 2026-08-25
+
+- Renamed the constructor input to `config` to keep the runner aligned with the current project naming policy.
+- Public behavior remains unchanged: callers still pass one configuration object with `actions`, `validator`, `task_registry`, `entity_label`, and `limits`.
+- Re-ran generated tests after the update: `1296` passed, `0` failed.
