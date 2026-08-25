@@ -1,7 +1,7 @@
 # V4 Contract 012: Entry, Mount, and View Frame
 
 Date: 2026-08-25
-Status: proposed
+Status: active
 Owner agent: agent_codex_an_app
 Priority: p1
 Domain: foundation_and_runtime

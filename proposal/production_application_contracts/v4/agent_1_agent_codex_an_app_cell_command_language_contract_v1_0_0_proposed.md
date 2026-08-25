@@ -1,7 +1,7 @@
 # V4 Contract 009: Cell Command Language
 
 Date: 2026-08-25
-Status: proposed
+Status: active
 Owner agent: agent_codex_an_app
 Priority: p0
 Domain: language_and_knowledge

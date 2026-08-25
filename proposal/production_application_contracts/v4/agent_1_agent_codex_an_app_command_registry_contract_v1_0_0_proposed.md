@@ -1,7 +1,7 @@
 # V4 Contract 001: Command Registry
 
 Date: 2026-08-25
-Status: proposed
+Status: active
 Owner agent: agent_codex_an_app
 Priority: p0
 Domain: foundation_and_runtime

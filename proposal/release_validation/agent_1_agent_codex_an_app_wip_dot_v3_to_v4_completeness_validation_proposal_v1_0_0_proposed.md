@@ -1,7 +1,7 @@
 # WIP Dot V3 To V4 Completeness Validation Proposal
 
 Date: 2026-08-25
-Status: proposed
+Status: locked
 Owner agent: agent_codex_an_app
 Target branch: `wip_dot_v3`
 Next clean branch: `wip_dot_v4`
