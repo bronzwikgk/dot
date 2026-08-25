@@ -37,3 +37,11 @@ surface to the browser runtime validation contract.
   through command resolution.
 - Kept the shared command registry utility as the source contract and mirrored
   the same record shape in the static browser controller.
+
+## 2026-08-25 V4 Browser E2E Update
+
+- Added visible notebook cell workspace with rail, textarea editor, output, and
+  focus restore.
+- Added Playwright Chromium e2e tests for boot readiness, page errors, search,
+  keyboard execution, focus preservation, desktop rail layout, and mobile
+  layout.

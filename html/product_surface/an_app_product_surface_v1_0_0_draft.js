@@ -72,6 +72,9 @@ class an_app_product_surface_controller {
     this.nodes.search_input = document.getElementById("search_input");
     this.nodes.clear_search_button = document.getElementById("clear_search_button");
     this.nodes.search_count = document.getElementById("search_count");
+    this.nodes.cell_editor = document.getElementById("cell_editor");
+    this.nodes.cell_output = document.getElementById("cell_output");
+    this.nodes.run_cell_button = document.getElementById("run_cell_button");
     this.nodes.app_name = document.getElementById("app_name");
     this.nodes.preview_path = document.getElementById("preview_path");
     this.nodes.summary_grid = document.getElementById("summary_grid");
@@ -85,6 +88,9 @@ class an_app_product_surface_controller {
     this.nodes.search_input.addEventListener("input", this.handle_search_input.bind(this));
     this.nodes.search_input.addEventListener("keydown", this.handle_search_keydown.bind(this));
     this.nodes.clear_search_button.addEventListener("click", this.clear_search_hits.bind(this));
+    this.nodes.run_cell_button.addEventListener("click", this.handle_run_cell_click.bind(this));
+    this.nodes.cell_editor.addEventListener("focus", this.enter_edit_mode.bind(this));
+    this.nodes.cell_editor.addEventListener("blur", this.exit_edit_mode.bind(this));
     document.addEventListener("keydown", this.handle_global_keydown.bind(this));
     for (const button of this.nodes.profile_buttons) {
       button.addEventListener("click", this.handle_profile_click.bind(this));
@@ -119,8 +125,11 @@ class an_app_product_surface_controller {
   }
 
   handle_run_click() {
-    const command = this.resolve_command_from_selector("#run_button");
-    this.execute_command({ action: command ? command.action : "run_cell" });
+    this.execute_command({ selector: "#run_button", action: "run_cell" });
+  }
+
+  handle_run_cell_click() {
+    this.execute_command({ selector: "#run_cell_button", action: "run_cell" });
   }
 
   handle_search_input(event) {
@@ -139,7 +148,7 @@ class an_app_product_surface_controller {
     const command = this.resolve_command_from_keyboard(combo);
     if (!command) return;
     event.preventDefault();
-    this.execute_command({ action: command.action });
+    this.execute_command({ keyboard: combo, action: command.action });
   }
 
   handle_template_click(event) {
@@ -159,6 +168,13 @@ class an_app_product_surface_controller {
       selector: "#run_button",
       keyboard: "ctrl+enter",
       method: "run_command"
+    });
+    this.register_command({
+      id: "run_cell_from_cell_rail",
+      action: "run_cell",
+      selector: "#run_cell_button",
+      keyboard: "ctrl+s",
+      method: "run_active_cell"
     });
     this.register_command({
       id: "search_next_from_keyboard",
@@ -209,7 +225,10 @@ class an_app_product_surface_controller {
   }
 
   execute_command(config) {
-    const command = this.resolve_command_from_action(config.action);
+    let command = null;
+    if (config.selector) command = this.resolve_command_from_selector(config.selector);
+    if (!command && config.keyboard) command = this.resolve_command_from_keyboard(config.keyboard);
+    if (!command) command = this.resolve_command_from_action(config.action);
     if (!command || !command.method || !this[command.method]) {
       this.nodes.validation_label.textContent = "command unavailable";
       return { ok: false, data: null, errors: ["command unavailable"] };
@@ -223,6 +242,27 @@ class an_app_product_surface_controller {
     this.active_template_id = this.select_template_from_command(command_text);
     this.nodes.validation_label.textContent = "command parsed";
     this.render_all();
+  }
+
+  run_active_cell() {
+    const value = this.nodes.cell_editor.value || "";
+    this.nodes.cell_output.textContent = `Output: ${value}`;
+    this.nodes.validation_label.textContent = "cell executed";
+    this.restore_editor_focus();
+  }
+
+  enter_edit_mode() {
+    this.editor_mode = "edit";
+    this.active_cell_id = "cell_demo_1";
+  }
+
+  exit_edit_mode() {
+    this.editor_mode = "command";
+  }
+
+  restore_editor_focus() {
+    if (this.editor_mode !== "edit") return;
+    this.nodes.cell_editor.focus();
   }
 
   event_combo(event) {
@@ -254,9 +294,10 @@ class an_app_product_surface_controller {
     const hit_ids = [];
     for (const hit of this.search_state.hits) hit_ids.push(hit.id);
     for (const node of Array.from(document.querySelectorAll("[data-record-id]"))) {
-      const is_hit = hit_ids.includes(node.dataset.record_id);
+      const record_id = node.getAttribute("data-record-id");
+      const is_hit = hit_ids.includes(record_id);
       node.classList.toggle("search_hit", is_hit);
-      node.classList.toggle("active_search_hit", is_hit && node.dataset.record_id === this.active_search_hit_id());
+      node.classList.toggle("active_search_hit", is_hit && record_id === this.active_search_hit_id());
     }
   }
 
@@ -319,7 +360,7 @@ class an_app_product_surface_controller {
       button.type = "button";
       button.className = template.id === this.active_template_id ? "template_button active" : "template_button";
       button.dataset.template_id = template.id;
-      button.dataset.record_id = template.id;
+      button.setAttribute("data-record-id", template.id);
       button.textContent = template.name;
       button.addEventListener("click", this.handle_template_click.bind(this));
       this.nodes.template_list.appendChild(button);
@@ -374,7 +415,7 @@ class an_app_product_surface_controller {
     for (const group of groups) {
       const row = document.createElement("div");
       row.className = "block_row";
-      row.dataset.record_id = `${template.id}_${group[0].toLowerCase()}`;
+      row.setAttribute("data-record-id", `${template.id}_${group[0].toLowerCase()}`);
       row.textContent = `${group[0]}: ${group[1]}`;
       this.nodes.projection_view.appendChild(row);
     }
@@ -390,7 +431,7 @@ class an_app_product_surface_controller {
       const row = document.createElement("div");
       row.className = "tree_row";
       row.style.setProperty("--indent", "24px");
-      row.dataset.record_id = `${template.id}_${entity}`;
+      row.setAttribute("data-record-id", `${template.id}_${entity}`);
       row.textContent = entity;
       this.nodes.projection_view.appendChild(row);
     }
@@ -402,7 +443,7 @@ class an_app_product_surface_controller {
     for (const flow of template.flows) {
       const node = document.createElement("div");
       node.className = "diagram_node";
-      node.dataset.record_id = `${template.id}_${flow}`;
+      node.setAttribute("data-record-id", `${template.id}_${flow}`);
       node.textContent = `${template.domain} -> ${flow}`;
       wrapper.appendChild(node);
     }
@@ -421,7 +462,7 @@ class an_app_product_surface_controller {
     ];
     for (const row_value of rows) {
       const row = document.createElement("tr");
-      row.dataset.record_id = `${template.id}_${row_value[0]}`;
+      row.setAttribute("data-record-id", `${template.id}_${row_value[0]}`);
       const key = document.createElement("th");
       const value = document.createElement("td");
       key.textContent = row_value[0];

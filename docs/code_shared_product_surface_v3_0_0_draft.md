@@ -22,6 +22,7 @@ The browser surface now declares:
 - global workspace search input
 - search count and active hit marker
 - browser command records for action, selector, and keyboard resolution
+- notebook cell workspace with rail, editor, output, and focus restore
 
 ## When To Use It
 
@@ -43,3 +44,7 @@ instantiation, route validation, layout projections, and e2e contract creation.
 Visible surface tests validate required hooks, class-based controller shape,
 mount target, boot marker strings, search hooks, search markers, and responsive
 CSS guards.
+
+Browser e2e tests validate Chromium boot readiness, page error capture, search
+result count, hit navigation, keyboard execution, focus preservation, desktop
+rail layout, and mobile stacking.

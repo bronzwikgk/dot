@@ -18,3 +18,11 @@ error, listener, benchmark, and browser test states.
 
 Added focused Node tests in
 `test/v4_browser_runtime/agent_codex_an_app_v4_browser_runtime_v1_0_0_test.mjs`.
+
+## 2026-08-25 V4 Browser E2E Validation
+
+- Added Playwright as a dev dependency.
+- Added Chromium e2e test coverage for real product surface boot, search,
+  keyboard execution, editor focus preservation, desktop rail placement, and
+  mobile layout.
+- Full `node --test` passed with browser e2e included.

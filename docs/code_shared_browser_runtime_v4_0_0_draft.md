@@ -46,3 +46,8 @@ tests, benchmarks, or user workflows continue.
 Focused Node tests cover definition loading, mount target failure, ready and
 failed boot markers, duplicate listener prevention, benchmark short-circuit, and
 browser test report failure on page errors.
+
+The V4 product surface also has a Playwright Chromium e2e test that opens the
+real browser page and validates boot readiness, page error capture, search,
+keyboard execution, editor focus preservation, desktop rail placement, and
+mobile layout.

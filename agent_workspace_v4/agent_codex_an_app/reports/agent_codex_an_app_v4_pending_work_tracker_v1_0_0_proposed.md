@@ -35,12 +35,12 @@ Branch: `dot_agent_codex_an_app_v4`
 | v4_missing_005 | p0 | validated | browser boot marker contract |
 | v4_missing_011 | p0 | validated | global search |
 | v4_missing_013 | p0 | validated | browser boot-failure test/benchmark short-circuit |
-| v4_missing_018 | p0 | active | full browser health e2e |
-| v4_missing_019 | p0 | active | browser focus editing e2e |
-| v4_missing_020 | p0 | active | browser search e2e |
+| v4_missing_018 | p0 | validated | full browser health e2e |
+| v4_missing_019 | p0 | validated | browser focus editing e2e |
+| v4_missing_020 | p0 | validated | browser search e2e |
 | v4_missing_021 | p0 | validated | cell execution for natural language, code, markdown |
 | v4_missing_022 | p0 | validated | live book/cell create/move/delete |
-| v4_missing_024 | p0 | active | keyboard shortcut registry and e2e |
+| v4_missing_024 | p0 | validated | keyboard shortcut registry and e2e |
 | v4_missing_027 | p0 | pending | run all and DAG dependency behavior in UI |
 | v4_missing_033 | p0 | pending | layout parity |
 | v4_missing_035 | p0 | pending | project/product definition markdown schema |
