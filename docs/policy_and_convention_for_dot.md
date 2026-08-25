@@ -169,7 +169,7 @@ All files and folders.
 | F7 | Output in output/ | Output files in output/ | Manual review | Warning: Move to output/ |
 | F8 | Docs in docs/ | Documentation files in docs/ | Manual review | Warning: Move to docs/ |
 | F9 | HTML in html/ | HTML files in html/ | Manual review | Warning: Move to html/ |
-| F10 | Folder index | All folders should have an index file | `find . -type d -exec sh -c 'ls "{}" | grep -q "index" || echo "{}"' \;` | Warning: Generate index file |
+| F10 | Folder guide | Shared folders may have a project-specific guide file, but must not use generic `index` names | Manual review | Warning: Create or rename to project-specific guide |
 
 ### Additional File Structure Rules
 

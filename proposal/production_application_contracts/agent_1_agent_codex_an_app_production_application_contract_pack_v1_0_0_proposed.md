@@ -1,7 +1,7 @@
 # Production Application Contract Pack
 
 Date: 2026-08-25
-Owner: agent_codex_an_app
+Owner agent: agent_codex_an_app
 Status: proposed
 Purpose: define the pending documentation and rigid contracts needed before the next production development batch.
 
@@ -84,27 +84,27 @@ Agent assignment:
 
 - parent_contracts/agent_1_agent_codex_an_app_work_assignment_v1_0_0_proposed.md
 
-| Contract Id | Contract | Work Items Covered | Priority |
+| Contract Id | Contract File | Work Items Covered | Priority |
 | --- | --- | --- | --- |
-| contract_001 | dataset_registry_contract.md | work_001 | p0 |
-| contract_002 | vocabulary_and_name_reconciliation_contract.md | work_002, work_003, work_009, work_011, work_013, work_018 | p0 |
-| contract_003 | entity_relationship_trait_contract.md | work_003, work_004, work_005 | p0 |
-| contract_004 | validation_utility_contract.md | work_001 through work_025 validation layer | p0 |
-| contract_005 | action_entity_boundary_contract.md | entity lifecycle, registry-as-entity, version records | p0 |
-| contract_006 | version_system_contract.md | work_022, work_023, work_024, work_025 | p0 |
-| contract_007 | workflow_pipeline_runner_contract.md | work_002, work_015 | p0 |
-| contract_008 | provider_storage_index_contract.md | work_006, work_007, work_008 | p1 |
-| contract_009 | ui_surface_contract.md | work_011, work_012, work_013, work_014, work_018, work_019 | p1 |
-| contract_010 | an_app_lang_contract.md | work_015, work_016 | p1 |
-| contract_011 | an_bot_agent_contract.md | bot, command, agent, approval, task flows | p1 |
-| contract_012 | an_memory_reasoning_contract.md | work_010, work_017, work_021 | p1 |
-| contract_013 | template_domain_contract.md | templates, sample pipelines, domain starter packs | p1 |
-| contract_014 | quality_audit_e2e_contract.md | work_015, work_025 and all production readiness gates | p0 |
-| contract_015 | external_intake_file_conversion_contract.md | work_008, work_020 | p2 |
-| contract_016 | repository_operations_contract.md | AnGitAgent inbox repository automation, workflow runs, artifacts, logs, commit proposals | p1 |
-| contract_017 | agent_improvement_cycle_contract.md | AnGitAgent inbox self-check, score, failure pattern, improvement proposal, rollback, audit | p1 |
-| contract_018 | knowledge_tree_contract.md | AnGitAgent inbox source tree, knowledge nodes, relationships, diagrams, coverage reports | p1 |
-| contract_019 | an_app_brain_domain_contract.md | An App Brain subdomain coordination across language, memory, bot, reasoning, scoring, and improvement | p1 |
+| contract_001 | shared_detail_contract_001_dataset_registry_v1_0_0_proposed.md | work_001 | p0 |
+| contract_002 | shared_detail_contract_002_vocabulary_and_name_reconciliation_v1_0_0_proposed.md | work_002, work_003, work_009, work_011, work_013, work_018 | p0 |
+| contract_003 | shared_detail_contract_003_entity_relationship_trait_v1_0_0_proposed.md | work_003, work_004, work_005 | p0 |
+| contract_004 | shared_detail_contract_004_validation_utility_v1_0_0_proposed.md | work_001 through work_025 validation layer | p0 |
+| contract_005 | shared_detail_contract_005_action_entity_boundary_v1_0_0_proposed.md | entity lifecycle, registry-as-entity, version records | p0 |
+| contract_006 | shared_detail_contract_006_version_system_v1_0_0_proposed.md | work_022, work_023, work_024, work_025 | p0 |
+| contract_007 | shared_detail_contract_007_workflow_pipeline_runner_v1_0_0_proposed.md | work_002, work_015 | p0 |
+| contract_008 | shared_detail_contract_008_provider_storage_index_v1_0_0_proposed.md | work_006, work_007, work_008 | p1 |
+| contract_009 | shared_detail_contract_009_ui_surface_v1_0_0_proposed.md | work_011, work_012, work_013, work_014, work_018, work_019 | p1 |
+| contract_010 | shared_detail_contract_010_an_app_lang_v1_0_0_proposed.md | work_015, work_016 | p1 |
+| contract_011 | shared_detail_contract_011_an_bot_agent_v1_0_0_proposed.md | bot, command, agent, approval, task flows | p1 |
+| contract_012 | shared_detail_contract_012_an_memory_reasoning_v1_0_0_proposed.md | work_010, work_017, work_021 | p1 |
+| contract_013 | shared_detail_contract_013_template_domain_v1_0_0_proposed.md | templates, sample pipelines, domain starter packs | p1 |
+| contract_014 | shared_detail_contract_014_quality_audit_e2e_v1_0_0_proposed.md | work_015, work_025 and all production readiness gates | p0 |
+| contract_015 | shared_detail_contract_015_external_intake_file_conversion_v1_0_0_proposed.md | work_008, work_020 | p2 |
+| contract_016 | shared_detail_contract_016_repository_operations_v1_0_0_proposed.md | AnGitAgent inbox repository automation, workflow runs, artifacts, logs, commit proposals | p1 |
+| contract_017 | shared_detail_contract_017_agent_improvement_cycle_v1_0_0_proposed.md | AnGitAgent inbox self-check, score, failure pattern, improvement proposal, rollback, audit | p1 |
+| contract_018 | shared_detail_contract_018_knowledge_tree_v1_0_0_proposed.md | AnGitAgent inbox source tree, knowledge nodes, relationships, diagrams, coverage reports | p1 |
+| contract_019 | shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md | An App Brain subdomain coordination across language, memory, bot, reasoning, scoring, and improvement | p1 |
 
 ## Source Coverage Notes
 
