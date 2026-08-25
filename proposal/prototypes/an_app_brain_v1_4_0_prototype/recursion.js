@@ -2,7 +2,7 @@
  * recursion.js v1.4.0
  * Status: proposed
  * Owner: agent_lang_and_memory
- * Contract: contract_019 work_an_app_brain_006 (validation and recursion policy)
+ * Contract: shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md (contract_019) work_an_app_brain_006 (validation and recursion policy)
  * Related: contract_004 (validation_utility)
  *
  * Creates recursion_trace record.

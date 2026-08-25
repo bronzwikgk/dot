@@ -34,7 +34,8 @@ All dataset files, schemas, concepts, code, folders, and files.
 | N10 | Config naming | config + project_name + own_name + version + status + author + extension | Manual review | Error: Rename config file |
 | N11 | Agent proposal names | Agent-owned proposal contracts must include agent number and agent name in the filename | `rg --files proposal/production_application_contracts/parent_contracts | rg "agent_[123]_agent_"` | Error: Rename proposal contract |
 | N12 | File status and version | Planning, proposal, doc, report, template, and handoff files must include version and status in the filename unless legacy or source-only | Manual review | Warning: Rename before promotion |
-| N13 | Agent branch names | Agent work branches use `dot_<agent_name>_v<version>` | `git branch --show-current` | Error: move work to correct agent branch before merge |
+| N13 | Agent branch names | Agent work branches use `dot_<agent_name>_v<version>` | `git branch --show-current` | Error: move work to correct agent branch before user merge |
+| N14 | Protected branch ownership | Only the user pushes or merges into `master`, `main`, `wip_dot_v3`, or shared protected branches | Manual review and `git branch --show-current` | Error: stop and prepare handoff for user |
 
 ### Agent-Owned Proposal Filename Pattern
 
@@ -73,14 +74,18 @@ Approved current branches:
 - `dot_agent_ui_application_v1`
 - `dot_agent_lang_and_memory_v1`
 
-Merge target for the current development batch:
+Shared development target for the current development batch:
 
 ```text
 wip_dot_v3
 ```
 
-An agent branch may merge into `wip_dot_v3` only after checks, validation, tests,
-benchmark where relevant, audit, docs, logs, reports, and handoff all pass.
+Agents may only push to their own agent branch. Only the user may push or merge
+into `master`, `main`, `wip_dot_v3`, or any shared protected branch.
+
+An agent branch is eligible for user merge into `wip_dot_v3` only after checks,
+validation, tests, benchmark where relevant, audit, docs, logs, reports, and
+handoff all pass.
 
 ### Banned Or Avoidable Active Names
 
@@ -172,7 +177,8 @@ All `.js` files in the project.
 
 ### Merge Gate
 
-Before any merge into `wip_dot_v3`, the acting agent must provide:
+Before asking the user to merge an agent branch into `wip_dot_v3`, the acting
+agent must provide:
 
 - branch name
 - parent contract id
@@ -184,6 +190,8 @@ Before any merge into `wip_dot_v3`, the acting agent must provide:
 - docs/log/report links
 - unresolved risks
 - proposed commit message
+
+Agents must not perform the protected-branch push or merge themselves.
 
 ---
 

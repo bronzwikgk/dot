@@ -2,7 +2,7 @@
  * session.js v1.4.0
  * Status: proposed
  * Owner: agent_lang_and_memory
- * Contract: contract_019 work_an_app_brain_008 (context layers)
+ * Contract: shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md (contract_019) work_an_app_brain_008 (context layers)
  *
  * Manages brain_session lifecycle.
  * Session tracks: user_input history, context refs, conversation turns,

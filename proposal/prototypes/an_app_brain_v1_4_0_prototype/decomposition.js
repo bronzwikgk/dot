@@ -2,7 +2,7 @@
  * decomposition.js v1.4.0
  * Status: proposed
  * Owner: agent_lang_and_memory
- * Contract: contract_019 work_an_app_brain_002 (decomposition records + recursive split policy)
+ * Contract: shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md (contract_019) work_an_app_brain_002 (decomposition records + recursive split policy)
  * Related: contract_007 (workflow pipeline runner), contract_018 (knowledge tree)
  *
  * Creates decomposition_record: breaks ingested source into entities, relationships, actions.

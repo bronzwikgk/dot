@@ -56,9 +56,14 @@ Approved current agent branches:
 - `dot_agent_ui_application_v1`
 - `dot_agent_lang_and_memory_v1`
 
-The current development feature branch is `wip_dot_v3`. Agent branches may merge
-into `wip_dot_v3` only after checks, validation, tests, benchmark where
-relevant, audit, docs, logs, reports, and handoff all pass.
+The current development feature branch is `wip_dot_v3`. Agents may not push,
+merge, or commit directly into `master`, `main`, `wip_dot_v3`, or any other
+shared protected branch unless the user explicitly performs or authorizes that
+action. Agents may only push to their own agent branch.
+
+Agent branches are eligible for user merge into `wip_dot_v3` only after checks,
+validation, tests, benchmark where relevant, audit, docs, logs, reports, and
+handoff all pass.
 
 Before starting work, each agent must record:
 
@@ -69,8 +74,9 @@ Before starting work, each agent must record:
 - validation command
 - merge target branch
 
-No agent should commit directly to `wip_dot_v3` unless the user explicitly asks
-for an emergency direct change.
+No agent should commit directly to `wip_dot_v3`, `master`, `main`, or any shared
+protected branch. The user is the only person who pushes or merges into master
+branches.
 
 ## Approved Folder Rules
 
@@ -172,7 +178,9 @@ should stay in utilities unless a plugin is coordinating a governed workflow.
 - do not put executable behavior inside app data
 - do not claim production readiness from unit tests alone
 - do not create implementation files before required schema/contract approval
-- do not merge an agent branch into `wip_dot_v3` before all required gates pass
+- do not push or merge into `master`, `main`, `wip_dot_v3`, or any shared
+  protected branch
+- do not ask another agent to push to anything except that agent's own branch
 - do not hide skipped validation
 - do not silently promote source learning into active behavior
 

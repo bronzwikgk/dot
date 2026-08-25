@@ -4,7 +4,7 @@
 **Status:** proposed
 **Owner:** agent_lang_and_memory
 **Contract:** shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md
-**Parent contract:** agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract.md
+**Parent contract:** agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract_v1_0_0_proposed.md
 
 ## What It Is
 
@@ -55,17 +55,12 @@ Coordination layer for thinking-like behavior inside An App. An integration doma
 
 ## Related Files
 
-- `dot/code/plugins/an_app_brain_v1_4_0/an_app_brain.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/session.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/ingestion.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/decomposition.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/parsing.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/reasoning.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/composition.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/validation.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/recursion.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/learning.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/audit.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/context.js`
-- `dot/code/plugins/an_app_brain_v1_4_0/decision.js`
+- `dot/code/plugins/an_app_brain_v1_4_0_draft.js` (main plugin, ESM, class-based)
+- `dot/proposal/prototypes/an_app_brain_v1_4_0_prototype/` (earlier prototype, frozen)
+- `dot/test/language_and_knowledge/agent_3_agent_lang_and_memory_an_app_brain_module_load_v1_0_0_test.mjs`
+- `dot/test/language_and_knowledge/agent_3_agent_lang_and_memory_an_app_brain_record_shape_v1_0_0_test.mjs`
+- `dot/test/language_and_knowledge/agent_3_agent_lang_and_memory_an_app_brain_boundary_policy_v1_0_0_test.mjs`
 - `dot/proposal/production_application_contracts/shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md`
+- `dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract_v1_0_0_proposed.md`
+- `dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md`
+- `dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_work_an_app_brain_correction_and_test_plan_v1_0_0_proposed.md`

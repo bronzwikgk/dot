@@ -2,7 +2,7 @@
  * failure_and_pattern.js v1.4.0
  * Status: proposed
  * Owner: agent_lang_and_memory
- * Contract: shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md
+ * Contract: shared_detail_shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md (contract_019)_an_app_brain_domain_v1_0_0_proposed.md
  * Related: contract_017 (agent_improvement_cycle)
  *
  * Creates failure_record and pattern_record.

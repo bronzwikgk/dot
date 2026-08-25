@@ -2,7 +2,7 @@
  * ingestion.js v1.4.0
  * Status: proposed
  * Owner: agent_lang_and_memory
- * Contract: contract_019 work_an_app_brain_001 (ingestion records + source intake boundary)
+ * Contract: shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md (contract_019) work_an_app_brain_001 (ingestion records + source intake boundary)
  * Related: contract_007 (workflow pipeline runner), contract_018 (knowledge tree)
  *
  * Creates ingestion_record for each raw input.

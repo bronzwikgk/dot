@@ -2,7 +2,7 @@
  * learning.js v1.4.0
  * Status: proposed
  * Owner: agent_lang_and_memory
- * Contract: contract_019 work_an_app_brain_007 (learning and controlled improvement operations)
+ * Contract: shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md (contract_019) work_an_app_brain_007 (learning and controlled improvement operations)
  * Related: contract_017 (agent_improvement_cycle)
  *
  * Creates score_record and improvement_proposal.
