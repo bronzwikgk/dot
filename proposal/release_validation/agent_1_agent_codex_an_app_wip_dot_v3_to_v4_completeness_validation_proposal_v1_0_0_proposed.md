@@ -22,6 +22,37 @@ should be added before V4 is created.
 Agents must not push to protected/shared branches. The user alone pushes or
 merges `wip_dot_v3`, `wip_dot_v4`, `master`, or `main`.
 
+## Proposal Lock And Promotion Rule
+
+This proposal remains `proposed` until the user marks it locked. While it is
+proposed, agents may update their own branch/workspace copies and proposal
+files. Do not promote whole branch-root agent workspace folders into `master`,
+`wip_dot_v3`, or `wip_dot_v4` until the proposal is locked and the exact
+transfer set is approved.
+
+Promotion order:
+
+1. validate source and reference coverage
+2. update this proposal until no missing scope remains
+3. mark proposal status as `locked`
+4. create or update V4 contracts from the locked proposal
+5. agents implement inside their own V4 branch/workspace
+6. transfer only tested, documented, and reviewed artifacts into shared branches
+
+Allowed to transfer after lock:
+
+- production `code/plugins` and `code/utilities`
+- approved `app_data`
+- approved `templates`
+- docs, logs, reports, tests, and contracts with version/status filenames
+
+Not transferred directly:
+
+- whole branch-root agent workspaces
+- scratch files
+- copied source/reference dumps
+- prototype folders unless explicitly accepted as proposal/reference material
+
 ## Required V3 Validation Stages
 
 | Stage ID | Stage | Required Output | Pass Rule |
@@ -282,6 +313,23 @@ agent_workspace_v4/
   agent_lang_and_memory/
 ```
 
+Observed Agent 3 workspace shape:
+
+```text
+agent_3_agent_lang_and_memory/
+  code/
+  docs/
+  log/
+  proposal/
+  reports/
+  schema_contracts/
+  test/
+```
+
+This is acceptable as an agent-local workspace shape. For V4, it should be moved
+or mirrored under `agent_workspace_v4/agent_lang_and_memory/` unless the user
+approves a different branch-root folder convention.
+
 Each agent workspace must contain:
 
 ```text
@@ -295,6 +343,15 @@ app_data/
 user_data/
 handoff/
 ```
+
+If an agent uses singular local folders such as `test` or `log`, they must map
+them to the shared repo convention before transfer:
+
+| Agent Workspace Folder | Shared Transfer Folder |
+|---|---|
+| `test` | `test` if matching current repo convention, otherwise `tests` inside workspace |
+| `log` | `log` if matching current repo convention, otherwise `logs` inside workspace |
+| `schema_contracts` | `proposal/production_application_contracts/schema_contracts` |
 
 ## V4 Priority Recommendation
 
