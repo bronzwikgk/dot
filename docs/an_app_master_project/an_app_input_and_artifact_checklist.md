@@ -60,6 +60,12 @@ This checklist defines what an agent, developer, or maintainer should collect be
 | artifact_023 | user_flow_record | flow id, trigger, actors, entities, pipeline stages, permissions, states, outputs | user flow schema validation |
 | artifact_024 | state_catalog_record | state group, values, owner domain, allowed transitions | state catalog validation |
 | artifact_025 | permission_catalog_record | permission strings, config keys, metric names, owner domain | system dataset validation |
+| artifact_026 | version_record | entity id, version id, parent version ids, changed fields, validation result, audit ref | version contract validation |
+| artifact_027 | diff_record | compared versions, changed paths, before/after values, diff type, diagnostics | diff validation |
+| artifact_028 | branch_record | branch id, entity id, base version, owner, status, policy ref | branch validation |
+| artifact_029 | merge_record | source, target, strategy, conflicts, validation result, audit ref | merge policy validation |
+| artifact_030 | conflict_record | conflict type, path, competing values, recommendation, resolution status | conflict policy validation |
+| artifact_031 | tag_record | version id, label, purpose, created by, created at | tag validation |
 
 ## Concept Checklist
 
@@ -137,6 +143,14 @@ Use this checklist for layout-tree driven ui work.
 | index_check_002 | fuzzy search | fuzzy threshold is explicit |
 | index_check_003 | autocomplete | autocomplete result limit is explicit |
 | index_check_004 | rebuild | rebuild reports indexed count and failures |
+| version_check_001 | snapshot | snapshot records entity id, version id, parent version ids, timestamp, author/agent, validation result, and audit ref |
+| version_check_002 | diff | diff can compare text, config, schema, dataset, relationship, workflow, ui, and tree records |
+| version_check_003 | branch | branch records base version, purpose, owner, status, and policy |
+| version_check_004 | merge | merge auto-applies only when non-overlapping and validation passes |
+| version_check_005 | conflict | conflicts are created for incompatible field, relationship, schema, policy, dataset, workflow, or intent changes |
+| version_check_006 | restore | restore requires target version, restore mode, approval when policy requires it, and audit |
+| version_check_007 | tag | tags use approved labels and reference an existing version |
+| version_check_008 | provenance | field-level history can explain who changed a value, when, why, and from which source |
 
 ## Entity Operation Checklist
 

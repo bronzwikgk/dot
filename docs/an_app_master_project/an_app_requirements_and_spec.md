@@ -30,6 +30,7 @@
 | req_app_024 | domain | Support stock trading research and backtesting without live trading in V1. | should | adopted | algo_stock_trading | planned | test_trading_template | Algo Stock Trading requirements |
 | req_app_025 | inspiration | Maintain inspiration references as learning material, not active source of truth. | should | adopted | context | partial | test_inspiration_index | inspiration docs |
 | req_app_026 | samples | Include sample inputs, outputs, templates, and validation reports for each major domain. | should | proposed | quality_audit | missing | test_sample_pack | source adoption logs |
+| req_app_027 | version | Support entity-level version management inspired by Git concepts: snapshot, diff, branch, merge, conflict resolution, restore, tag, history, and field-level provenance. | must | adopted | version_system | planned | test_version_contract | Git concept model |
 
 ## Functional Spec
 
@@ -138,6 +139,12 @@ Core entity types that must be represented before production development:
 | provider | provider_system | Swappable adapter with contract and policy. |
 | storage_record | storage_system | Persistence event/version/recovery record. |
 | index_record | search_index | Search index metadata and stats. |
+| version_record | version_system | Saved entity snapshot with parent refs, author, timestamp, summary, validation, and changed fields. |
+| branch_record | version_system | Named line of entity work for draft, review, experiment, client-specific, agent-generated, or production changes. |
+| diff_record | version_system | Structured comparison across entity data, config, schema, relationships, ui, workflow, or text. |
+| merge_record | version_system | Governed combination of version or branch changes with conflict and validation results. |
+| conflict_record | version_system | Reviewable disagreement created by incompatible field, relationship, schema, policy, name, workflow, or intent changes. |
+| tag_record | version_system | Stable label for an important version such as release, approved template, delivery, or compliance-reviewed state. |
 | audit_report | quality_audit | Reviewable evidence and validation summary. |
 | diagnostic | quality_audit | Error, warning, or hint. |
 | template | template_domain | Reusable entity/artifact starter. |
@@ -377,6 +384,103 @@ Storage/index/provider rule:
 - provider outputs are proposed records until validated
 - indexes speed lookup but do not replace source records
 - persisted versions must preserve previous state and audit refs
+
+### Version Management Spec
+
+An App should learn from Git at the concept level, not by limiting itself to file-only version control. Versions apply to every durable entity: application, document, book, cell, dataset, schema, template, workflow, route, ui surface, policy, provider config, agent plan, report, and domain record.
+
+Required version concepts:
+
+| Concept | An App Meaning | Required Fields |
+| --- | --- | --- |
+| snapshot | Saved state of one entity or an entity group at a point in time. | `entity_id`, `version_id`, `parent_version_ids`, `snapshot_ref`, `created_by`, `created_at`, `validation_result` |
+| change_record | Explanation of what changed and why. | `version_id`, `change_summary`, `changed_fields`, `reason`, `source_refs`, `audit_ref` |
+| diff | Structured comparison between two versions. | `from_version_id`, `to_version_id`, `diff_type`, `changed_paths`, `before_values`, `after_values`, `diagnostics` |
+| branch | Separate line of work for safe drafting or review. | `branch_id`, `entity_id`, `base_version_id`, `status`, `owner`, `policy_ref` |
+| merge | Governed combination of changes from one branch/version into another. | `merge_id`, `source_ref`, `target_ref`, `strategy`, `conflicts`, `validation_result`, `audit_ref` |
+| conflict | Explicit disagreement requiring policy or user decision. | `conflict_id`, `conflict_type`, `path`, `left_value`, `right_value`, `recommendation`, `resolution_status` |
+| tag | Stable label for an important version. | `tag_id`, `version_id`, `label`, `purpose`, `created_by`, `created_at` |
+| restore | Return an entity to a previous version or clone it as a new draft. | `restore_id`, `entity_id`, `from_version_id`, `mode`, `approval_ref`, `audit_ref` |
+| provenance_trace | Field-level history. | `entity_id`, `field_path`, `versions`, `authors`, `source_refs`, `decision_refs` |
+
+Diff must support:
+
+- text diff for documents and notes.
+- structured diff for JSON/config/schema records.
+- tree diff for AST, document trees, layout trees, and notebooks.
+- relationship diff for links and relationship records.
+- workflow diff for stages, dependencies, conditions, and DAG records.
+- ui diff for layout tree, render profile, component, token, and route changes.
+- dataset diff for added, removed, renamed, duplicated, similar, or deprecated values.
+
+Branch policy must support:
+
+- `draft`
+- `review`
+- `experiment`
+- `client_specific`
+- `agent_generated`
+- `production`
+
+Merge policy must support:
+
+- auto merge when changes are non-overlapping and validation passes.
+- user approval when semantic conflicts exist.
+- rejection when schema, policy, relationship, or validation checks fail.
+- audit output for every merge attempt.
+
+Conflict detection must cover:
+
+- same field changed differently.
+- same relationship changed differently.
+- duplicate or similar concept names.
+- duplicate or similar dataset values.
+- incompatible schema changes.
+- incompatible policy changes.
+- workflow ordering conflicts.
+- unresolved source or provider references.
+- user intent conflicts.
+
+Version states:
+
+| State | Meaning |
+| --- | --- |
+| unversioned | Entity has no saved version record yet. |
+| changed | Entity differs from latest saved version. |
+| staged | Selected changes are prepared for a governed save. |
+| saved | Entity has a current saved version. |
+| branched | Entity is being edited on a non-production line of work. |
+| merging | Merge is being evaluated or applied. |
+| conflicted | Conflict record exists and requires resolution. |
+| restored | Entity was restored from a previous version. |
+| tagged | Version has an important stable label. |
+| archived | Version remains available but is no longer active. |
+
+Version operations:
+
+- `version_entity`
+- `diff_entity`
+- `branch_entity`
+- `merge_entity`
+- `resolve_conflict`
+- `restore_entity`
+- `tag_version`
+- `list_history`
+- `trace_provenance`
+- `stage_change`
+- `unstage_change`
+
+These operations should use existing entity behavior wherever possible. A new plugin should only be added when version-specific policy, diff, conflict, or history behavior cannot be cleanly handled by `action_entity` plus validation utilities.
+
+Version validation must check:
+
+- entity and parent version refs exist.
+- branch base version exists.
+- changed fields are valid for the entity schema.
+- relationship changes use approved relationship types.
+- dataset changes pass duplicate, similar-name, banned-word, and deprecation checks.
+- merge results pass schema and policy validation before becoming current state.
+- restore actions have the required approval and audit records.
 
 ### ui Surface Spec
 

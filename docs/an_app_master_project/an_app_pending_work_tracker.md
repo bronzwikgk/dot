@@ -136,6 +136,10 @@ Total detected dataset groups: 77.
 | work_019 | Add app-shell panel behavior checklist. | pending | ui_surface | p2 | actionSpace definition | Cover splash, load folder, context menu, panel controls, raw/preview, resize, panel scroll policy. |
 | work_020 | Add RSS feed discovery as external intake use case. | deferred | external_intake | p3 | actionSpace definition | Define later as provider-backed source intake. |
 | work_021 | Add knowledge reasoning use cases. | pending | an_memory | p2 | knowledge reasoning dataset | Add dynamic FAQ, policy compliance, tutoring as use cases. |
+| work_022 | Define version record schema and dataset names. | pending | version_system | p0 | Git concept model | Add snapshot, branch, diff, merge, conflict, tag, restore, and provenance contracts. |
+| work_023 | Define entity diff and conflict utility scope. | pending | version_system | p0 | Git concept model | Decide which comparison logic is utility-level versus plugin-level. |
+| work_024 | Define version plugin boundary against action_entity. | pending | version_system | p0 | Git concept model | Use action_entity for record lifecycle and add version behavior only where needed. |
+| work_025 | Add version workflow tests. | pending | version_system | p1 | Git concept model | Test snapshot, diff, branch, merge, conflict, restore, tag, and history flows. |
 
 ## Conflict And Reconciliation Notes
 

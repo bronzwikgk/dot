@@ -38,3 +38,11 @@ Scope: evaluation of recent dot code/docs/log updates, naming policy follow-up, 
 - The promoted master docs are planning and product-scope documents, not executable code.
 - Keep implementation work staged utility first, then plugin, then dataset/schema/docs/log, then test.
 - Keep naming snake_case and avoid introducing new names when an existing entity/action name can carry the capability.
+
+## 2026-08-25 - Version Management Doctrine Update
+
+- Added Git-inspired version management as entity-level product scope.
+- Updated the master project document with snapshot, diff, branch, merge, conflict, status, staging, history, tag, restore, and field provenance concepts.
+- Updated requirements/spec with `req_app_027`, version entity records, version states, operations, validation, and merge/conflict policy.
+- Updated input/artifact checklist with version, diff, branch, merge, conflict, tag, restore, and provenance checks.
+- Updated pending work tracker with version schema, diff/conflict utility, plugin boundary, and test tasks.

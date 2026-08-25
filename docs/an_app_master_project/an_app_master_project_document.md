@@ -120,6 +120,40 @@ These are capabilities and contracts. They do not require separate ownership cla
 
 System capabilities follow one rule: the capability contract is an entity, while the implementation may be a utility, plugin, provider, or existing action_entity behavior. This keeps state, storage, index, display, route, book, cell, and provider behavior inside the same governed entity model.
 
+## Version Management Doctrine
+
+An App should adapt the strongest Git ideas as an entity-level version system. The goal is not to manage only files. The goal is to let every important entity be saved, compared, branched, merged, restored, tagged, and audited.
+
+Version management applies to:
+
+- applications
+- documents, books, cells, and blocks
+- datasets and approved word lists
+- schemas and contracts
+- templates
+- workflows, pipelines, DAG records, and stage records
+- ui surfaces, layout trees, components, routes, and render profiles
+- policies and provider configs
+- bot sessions, agent plans, research outputs, and business-domain records
+
+Git concepts to adapt:
+
+| Git Concept | An App Adaptation |
+| --- | --- |
+| commit | entity snapshot with change summary, changed fields, validation result, source refs, and audit ref |
+| diff | structured comparison across text, JSON/config, tree, relationship, workflow, ui, schema, and dataset changes |
+| branch | separate line of work for draft, review, experiment, client-specific, agent-generated, or production changes |
+| merge | governed combination of changes with auto-merge, approval, rejection, conflict, and audit policy |
+| conflict | explicit review item for incompatible field, relationship, schema, policy, dataset, workflow, or intent changes |
+| status | current version state such as changed, staged, saved, branched, merging, conflicted, restored, tagged, or archived |
+| staging | selected changes prepared for save, review, merge, or release |
+| history | timeline of versions, authors, agents, validation results, decisions, and restore events |
+| tag | stable label for release, approved template, client delivery, production-ready, or compliance-reviewed state |
+| restore | revert an entity to an older version or clone an older version as a new draft |
+| field_provenance | field-level history showing who or what changed a value, when, why, and from which source |
+
+Version behavior should be implemented with existing entity capabilities first. `action_entity` can own create/read/update/delete/query behavior for version records, branch records, diff records, merge records, conflict records, tag records, and history records. New version-specific utilities or plugins are only justified for diff calculation, conflict detection, merge policy, restore safety, and provenance tracing.
+
 ## Business Use Cases
 
 An App should support:
