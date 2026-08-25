@@ -80,6 +80,8 @@ The source inbox describes a loop of test, measure, identify, adjust, and learn.
 - generated tests include seed and source failure refs
 - improvement cannot apply when score gets worse unless explicitly approved as an experiment
 - rollback ref exists before a governed mutation is applied
+- `optimize`, `optimise`, `evolve`, and `mutate` behavior has explicit score,
+  seed, policy, rollback, and audit boundaries when used
 - every cycle has audit evidence
 
 ## Success Criteria
@@ -109,4 +111,18 @@ The source inbox describes a loop of test, measure, identify, adjust, and learn.
 
 ## Handoff Notes
 
-The source inbox uses terms such as optimizer and evolution. In An App, adopt the useful behavior as an improvement cycle with score records, proposals, approval gates, rollback, and audit. Avoid source-only names unless the user authorizes them.
+The source inbox uses terms such as optimizer and evolution. In An App, adopt
+the useful behavior as a governed improvement cycle with score records,
+proposals, approval gates, rollback, and audit.
+
+Allowed controlled operation names:
+
+- `optimize`
+- `optimise`
+- `evolve`
+- `mutate`
+
+Blocked source-branded names for active implementation:
+
+- `neuro_rule`
+- `rule_engine`

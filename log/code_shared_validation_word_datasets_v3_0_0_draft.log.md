@@ -35,3 +35,27 @@ these arrays.
 ## 2026-08-25 Lock-Down Pass
 
 - Standardized the approved Node platform label to `node_runtime`.
+
+## 2026-08-25 Source-Derived Banned Vocabulary Update
+
+- Added source-derived thinking/learning terms to banned vocabulary:
+  `optimizer`, `optimization`, `evolve`, `evolution`, `evolutionary`,
+  `mutate`, `mutation`, `neuro_rule`, and `rule_engine`.
+- Updated the dataset doc, project policy, agent handbook, vocabulary contract,
+  improvement-cycle contract, and An App Brain contract.
+- Added agent work packet:
+  `proposal/production_application_contracts/parent_contracts/agent_work_name_governance_banned_words.md`.
+- Focused validation passed for the `banned_words` array.
+- Broad convention validation still fails on pre-existing repository-wide
+  convention findings and should be handled as a separate cleanup batch:
+  `node validate_conventions.js`.
+
+## 2026-08-25 Controlled Operation Correction
+
+- User clarified that optimize/evolve terminology should remain available, and
+  mutate may be needed for specific transforms.
+- Removed optimizer/optimization/evolve/evolution/evolutionary/mutate/mutation
+  from the banned vocabulary.
+- Added `optimize`, `optimise`, `evolve`, and `mutate` as controlled allowed
+  operation names.
+- Kept `neuro_rule` and `rule_engine` blocked as source-branded active names.

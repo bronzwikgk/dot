@@ -93,6 +93,7 @@ The ui compiler learning from `gui_v2` adds a ui-specific pipeline:
 | --- | --- |
 | An App Shell | Runtime shell that loads app definition, config, routes, dependencies, views, datasets, templates, and default flows. |
 | An App Lang | Language and grammar layer that parses natural English, structured text, DSL-like patterns, commands, and templates into records. |
+| An App Brain | Coordination subdomain for context, reasoning, decision records, response composition, scoring, and governed improvement proposals across language, memory, bot, and knowledge-tree records. |
 | An Bot | Conversation, command, session, task, approval, and automation interface inside An App. |
 | An Memory | Governed memory, source trust, evidence, conflict, recall, consolidation, and forgetting. |
 | Entity System | Entity CRUD, schema validation, relationship graph validation, import/export, provenance, and policy checks. |

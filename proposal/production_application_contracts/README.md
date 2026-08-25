@@ -33,6 +33,31 @@ Reference success sources:
 
 ## Contract Index
 
+This folder now has two contract layers:
+
+- parent contracts: 9 product delivery contracts in `parent_contracts`
+- detail contracts: 18 rigid subcontracts in this folder
+
+Parent contracts define what must be built for the production application. Detail contracts define the rules, utilities, plugin boundaries, datasets, validation, and audit behavior that each parent contract must obey.
+
+## Parent Contract Index
+
+| Parent Id | Parent Contract | Owner Agent | Priority | Main Detail Contracts |
+| --- | --- | --- | --- | --- |
+| parent_001 | parent_contracts/parent_001_production_app_shell_contract.md | agent_codex_an_app | p0 | contract_001, contract_002, contract_003, contract_004, contract_005, contract_006, contract_007, contract_008, contract_014 |
+| parent_002 | parent_contracts/parent_002_gui_application_builder_contract.md | agent_ui_application | p1 | contract_002, contract_005, contract_007, contract_009, contract_010, contract_013, contract_014 |
+| parent_003 | parent_contracts/parent_003_version_system_implementation_contract.md | agent_codex_an_app | p0 | contract_003, contract_004, contract_005, contract_006, contract_014 |
+| parent_004 | parent_contracts/parent_004_repository_operations_implementation_contract.md | agent_codex_an_app | p1 | contract_005, contract_006, contract_007, contract_008, contract_014, contract_016 |
+| parent_005 | parent_contracts/parent_005_an_app_lang_implementation_contract.md | agent_lang_and_memory | p1 | contract_001, contract_002, contract_004, contract_007, contract_010, contract_012, contract_014, contract_019 |
+| parent_006 | parent_contracts/parent_006_bot_agent_runtime_contract.md | agent_lang_and_memory | p1 | contract_004, contract_005, contract_007, contract_010, contract_011, contract_012, contract_014, contract_017, contract_019 |
+| parent_007 | parent_contracts/parent_007_memory_knowledge_tree_system_contract.md | agent_lang_and_memory | p1 | contract_001, contract_002, contract_003, contract_010, contract_012, contract_014, contract_015, contract_018, contract_019 |
+| parent_008 | parent_contracts/parent_008_production_templates_contract.md | agent_ui_application | p1 | contract_001, contract_002, contract_004, contract_009, contract_013, contract_014 |
+| parent_009 | parent_contracts/parent_009_real_app_e2e_validation_contract.md | agent_codex_an_app | p0 | contract_001, contract_002, contract_004, contract_005, contract_006, contract_007, contract_009, contract_010, contract_011, contract_012, contract_013, contract_014, contract_016, contract_017, contract_018, contract_019 |
+
+Agent assignment:
+
+- parent_contracts/AGENT_WORK_ASSIGNMENT.md
+
 | Contract Id | Contract | Work Items Covered | Priority |
 | --- | --- | --- | --- |
 | contract_001 | dataset_registry_contract.md | work_001 | p0 |
@@ -53,6 +78,7 @@ Reference success sources:
 | contract_016 | repository_operations_contract.md | AnGitAgent inbox repository automation, workflow runs, artifacts, logs, commit proposals | p1 |
 | contract_017 | agent_improvement_cycle_contract.md | AnGitAgent inbox self-check, score, failure pattern, improvement proposal, rollback, audit | p1 |
 | contract_018 | knowledge_tree_contract.md | AnGitAgent inbox source tree, knowledge nodes, relationships, diagrams, coverage reports | p1 |
+| contract_019 | an_app_brain_domain_contract.md | An App Brain subdomain coordination across language, memory, bot, reasoning, scoring, and improvement | p1 |
 
 ## Source Coverage Notes
 

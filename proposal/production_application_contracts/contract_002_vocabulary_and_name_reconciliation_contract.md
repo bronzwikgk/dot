@@ -30,6 +30,11 @@ Reconcile operation, task, pipeline, workflow, entity type, status, block, layou
 
 - no camelCase public API names
 - no banned terms outside explicit banned-name lists
+- source-branded terms such as `neuro_rule` and `rule_engine` remain blocked
+  unless the user explicitly authorizes promotion
+- controlled operation names such as `optimize`, `optimise`, `evolve`, and
+  `mutate` are allowed only with explicit contract boundaries, validation,
+  seed policy when relevant, rollback, and audit behavior
 - every alias has target canonical name
 - every similar name has a reuse/reject/authorize decision
 - status values are reconciled against lifecycle, execution, validation, ui, storage, provider, audit, memory, workflow, and version states
@@ -51,3 +56,5 @@ Reconcile operation, task, pipeline, workflow, entity type, status, block, layou
 
 - do not rename code without tests and docs
 - do not use source names as active names automatically
+- do not convert a source term into a new active domain, plugin, utility,
+  dataset, operation, or method name without authorization evidence

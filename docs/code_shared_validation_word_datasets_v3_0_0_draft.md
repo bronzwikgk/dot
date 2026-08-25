@@ -41,6 +41,30 @@ The banned vocabulary now includes the rejected artifact-creation terms.
 Approved application, operation, relationship, artifact, and pipeline names use
 `create` or `artifact creation` wording instead.
 
+The banned vocabulary blocks source-branded thinking/learning names that should
+not become active product names without authorization:
+
+- `neuro_rule`
+- `rule_engine`
+
+The operation words `optimize`, `optimise`, `evolve`, and `mutate` are allowed
+when their contracts define exact behavior, inputs, outputs, validation, seed
+policy when relevant, and rollback or audit behavior. These words should not be
+used as vague module names.
+
+Use approved An App names where they fit better:
+
+- `improvement_cycle`
+- `improvement_proposal`
+- `score_record`
+- `failure_record`
+- `pattern_record`
+- `rule_set`
+- `rule_record`
+- `assertion_record`
+- `validation_utility`
+- `an_app_brain`
+
 ## Runtime Vocabulary Update
 
 The approved Node platform label is `node_runtime`.

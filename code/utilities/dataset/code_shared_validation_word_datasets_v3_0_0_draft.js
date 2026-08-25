@@ -58,7 +58,7 @@ const operation_names = [
   "reject_candidate", "schedule_interview", "approve_request",
   "reject_request", "submit_appraisal", "finalize_rating", "assign_asset",
   "recover_asset", "commence_exit", "finalize_settlement", "assign_course",
-  "submit_score"
+  "submit_score", "optimize", "optimise", "evolve", "mutate"
 ];
 
 const datatype_names = [
@@ -897,7 +897,10 @@ const planning_artifact_field_names = [
   "sections", "risks", "metrics", "review_cadence", "status"
 ];
 
-const banned_words = ["src", "function", "foreach", "engine", "deps", "materialize", "materialization"];
+const banned_words = [
+  "src", "function", "foreach", "engine", "deps",
+  "materialize", "materialization", "neuro_rule", "rule_engine"
+];
 
 function validate_word_dataset_arrays(groups) {
   const errors = [];

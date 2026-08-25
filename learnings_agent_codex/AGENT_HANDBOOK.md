@@ -160,6 +160,8 @@ Banned or avoidable names include:
 - `deps`
 - `materialize`
 - `materialization`
+- `neuro_rule`
+- `rule_engine`
 - camelCase public API names such as `evaluateRule` or `flattenToVector`
 
 Approved examples:
@@ -172,6 +174,23 @@ Approved examples:
 - `version_entity`
 - `diff_entity`
 - `resolve_conflict`
+- `improvement_cycle`
+- `improvement_proposal`
+- `rule_set`
+- `rule_record`
+- `assertion_record`
+- `validation_utility`
+- `an_app_brain`
+
+Controlled but allowed operation names:
+
+- `optimize` or `optimise` for measurable improvement work
+- `evolve` for governed iterative improvement
+- `mutate` for specific transform/config/data variation
+
+These names need explicit contract boundaries, validation, seed policy when
+relevant, rollback or audit behavior, and should not be used as vague module
+names.
 
 ## 9. Documentation Rules
 

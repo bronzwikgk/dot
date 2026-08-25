@@ -33,6 +33,42 @@ All dataset files, schemas, concepts, code, folders, and files.
 | N9 | No generic names | No `README.md`, `CHANGELOG.md` - use project-specific names | Manual review | Error: Rename to project-specific name |
 | N10 | Config naming | config + project_name + own_name + version + status + author + extension | Manual review | Error: Rename config file |
 
+### Banned Or Avoidable Active Names
+
+These names must not be introduced as active product, code, dataset, operation,
+entity, utility, plugin, method, or folder names. They may appear only inside
+explicit banned-name lists, source coverage notes, migration notes, or warnings
+that say not to promote them.
+
+- `src`
+- `function`
+- `foreach`
+- `engine`
+- `deps`
+- `materialize`
+- `materialization`
+- `neuro_rule`
+- `rule_engine`
+
+Preferred approved replacements:
+
+- use `code`, not `src`
+- use class/config/constructor/method style, not standalone `function` style
+- use `dependencies`, not `deps`
+- use `create`, not `materialize`
+- use `rule_set`, `rule_record`, `assertion_record`, or `validation_utility`,
+  not rule-engine wording
+
+Controlled but allowed operation names:
+
+- `optimize` or `optimise` may be used for measurable improvement work when
+  the contract defines the score target and acceptance rule
+- `evolve` may be used for iterative improvement behavior when seed, policy,
+  approval, and audit are explicit
+- `mutate` may be used for transform/config/data variation when seed,
+  boundary, rollback, and validation are explicit
+- avoid using these words as vague product, plugin, utility, or domain names
+
 ---
 
 ## 2. Coding Policy

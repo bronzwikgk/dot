@@ -31,6 +31,7 @@
 | req_app_025 | inspiration | Maintain inspiration references as learning material, not active source of truth. | should | adopted | context | partial | test_inspiration_index | inspiration docs |
 | req_app_026 | samples | Include sample inputs, outputs, templates, and validation reports for each major domain. | should | proposed | quality_audit | missing | test_sample_pack | source adoption logs |
 | req_app_027 | version | Support entity-level version management inspired by Git concepts: snapshot, diff, branch, merge, conflict resolution, restore, tag, history, and field-level provenance. | must | adopted | version_system | planned | test_version_contract | Git concept model |
+| req_app_028 | brain | Support An App Brain as a coordination subdomain for context, reasoning, decisions, response composition, scoring, and improvement proposals. | should | proposed | an_app_brain | planned | test_brain_session | an_brain_domain_proposal, AnGitAgent inbox |
 
 ## Functional Spec
 
@@ -150,6 +151,9 @@ Core entity types that must be represented before production development:
 | template | template_domain | Reusable entity/artifact starter. |
 | bot_session | an_bot | Conversation/session state. |
 | agent | agent_system | Autonomous or assisted work actor. |
+| brain_session | an_app_brain | Context-bearing coordination session across language, memory, reasoning, decision, composition, scoring, and audit records. |
+| decision_record | an_app_brain | Structured record of selected next action, alternatives, reason, evidence refs, and approval needs. |
+| composition_record | an_app_brain | Structured response/artifact assembly record linked to reasoning, decision, and evidence refs. |
 | memory_record | an_memory | Evidence, recall, or consolidation record. |
 | fintech_organization | fintech_organization_management | Fintech business workspace root. |
 | trading_workspace | algo_stock_trading | Trading research workspace root. |
