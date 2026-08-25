@@ -7,6 +7,7 @@ import {
   pipeline_names,
   pipeline_stage_names,
   relationship_types as default_relationship_types,
+  schema_field_types,
   banned_words
 } from "./dataset/code_shared_validation_word_datasets_v3_0_0_draft.js";
 import {
@@ -46,6 +47,7 @@ class entity_validator {
       pipeline_stage_names: config.pipeline_stage_names || pipeline_stage_names,
       relationship_types: config.relationship_types || default_relationship_types,
       lifecycle_statuses: config.lifecycle_statuses || default_lifecycle_statuses,
+      schema_field_types: config.schema_field_types || schema_field_types,
       cell_statuses: config.cell_statuses || cell_statuses,
       cell_types: config.cell_types || cell_types,
       semantic_element_names: config.semantic_element_names || semantic_element_names,
@@ -78,6 +80,9 @@ class entity_validator {
     for (const contract of normalize_list(entity && entity.contracts)) {
       const missing = normalize_list(contract.required_fields).filter((field) => entity[field] === undefined);
       if (missing.length > 0) errors.push(`contract '${contract.name || "unnamed_contract"}' missing ${missing.join(", ")}`);
+    }
+    for (const schema of normalize_list(entity && entity.schemas)) {
+      errors.push(...this.validate_entity_against_schema(entity, schema).errors);
     }
     return { ok: errors.length === 0, errors };
   }
@@ -112,6 +117,37 @@ class entity_validator {
     if (!relationship.to) errors.push("relationship target is required");
     if (relationship.to && !this.is_snake_path(relationship.to)) errors.push("relationship target must use snake_case path format");
     return { ok: errors.length === 0, errors };
+  }
+
+  validate_relationship_graph(entities = []) {
+    const errors = [];
+    if (!Array.isArray(entities)) return { ok: false, errors: ["entities must be an array"], cycles: [] };
+    const ids = new Set();
+    for (const entity of entities) {
+      if (!this.is_plain_object(entity)) {
+        errors.push("graph entity must be an object");
+        continue;
+      }
+      if (!entity.id) {
+        errors.push("graph entity id is required");
+        continue;
+      }
+      if (ids.has(entity.id)) errors.push(`duplicate entity id '${entity.id}'`);
+      ids.add(entity.id);
+    }
+    for (const entity of entities) {
+      if (!this.is_plain_object(entity)) continue;
+      for (const relationship of normalize_list(entity.relationships)) {
+        const relationship_result = this.validate_relationship(relationship);
+        errors.push(...relationship_result.errors.map((error) => `${entity.id}: ${error}`));
+        if (relationship && relationship.to && !ids.has(relationship.to)) {
+          errors.push(`${entity.id} has missing relationship target ${relationship.to}`);
+        }
+      }
+    }
+    const cycles = detect_relationship_cycles(entities);
+    for (const cycle of cycles) errors.push(`cycle detected: ${cycle.join(" -> ")}`);
+    return { ok: errors.length === 0, errors, cycles };
   }
 
   validate_relationship_type(type) {
@@ -194,6 +230,117 @@ class entity_validator {
     const list = this.config[group_name] || [];
     const suggestions = list.filter((item) => edit_distance(item, value) <= this.config.near_duplicate_distance);
     return { ok: list.includes(value) && this.validate_banned_word(value).ok, group_name, value, suggestions };
+  }
+
+  validate_enum_field(field_name, value, group_name) {
+    const result = this.validate_approved_word(group_name, value);
+    return {
+      ok: result.ok,
+      field_name,
+      value,
+      group_name,
+      errors: result.ok ? [] : [`${field_name} '${value}' is not approved for ${group_name}`],
+      suggestions: result.suggestions
+    };
+  }
+
+  validate_dataset_group(group_name, values) {
+    const errors = [];
+    if (!this.is_snake_name(group_name)) errors.push("dataset group name must use snake_case");
+    if (!Array.isArray(values)) {
+      errors.push(`${group_name} must be an array`);
+      return { ok: false, group_name, count: 0, unique_count: 0, errors };
+    }
+    const seen = new Set();
+    for (const value of values) {
+      if (typeof value !== "string") {
+        errors.push(`${group_name} contains non-string value ${JSON.stringify(value)}`);
+        continue;
+      }
+      if (value.trim() !== value || value.length === 0) errors.push(`${group_name} contains invalid value ${JSON.stringify(value)}`);
+      if (!this.is_snake_name(value) && !this.is_snake_path(value)) errors.push(`${group_name} value '${value}' must use snake_case or snake_path`);
+      if (group_name !== "banned_words") {
+        const banned_result = this.validate_banned_word(value);
+        if (!banned_result.ok) errors.push(`${group_name} value '${value}' contains banned vocabulary ${banned_result.found.join(", ")}`);
+      }
+      if (seen.has(value)) errors.push(`${group_name} contains duplicate value '${value}'`);
+      seen.add(value);
+    }
+    return { ok: errors.length === 0, group_name, count: values.length, unique_count: seen.size, errors };
+  }
+
+  validate_dataset_groups(groups = {}) {
+    const reports = [];
+    const errors = [];
+    for (const [group_name, values] of Object.entries(groups || {})) {
+      if (!Array.isArray(values)) continue;
+      const report = this.validate_dataset_group(group_name, values);
+      reports.push(report);
+      errors.push(...report.errors);
+    }
+    return { ok: errors.length === 0, group_count: reports.length, reports, errors };
+  }
+
+  create_dataset_report(groups = {}) {
+    const result = this.validate_dataset_groups(groups);
+    return {
+      ok: result.ok,
+      group_count: result.group_count,
+      value_count: result.reports.reduce((sum, report) => sum + report.count, 0),
+      invalid_group_count: result.reports.filter((report) => !report.ok).length,
+      reports: result.reports,
+      errors: result.errors
+    };
+  }
+
+  validate_schema_record(schema) {
+    const errors = [];
+    if (!this.is_plain_object(schema)) return { ok: false, errors: ["schema must be an object"] };
+    if (!schema.id) errors.push("schema id is required");
+    if (schema.id && !this.is_snake_path(schema.id)) errors.push("schema id must use snake_case path format");
+    if (schema.type && !this.config.schema_field_types.includes(schema.type)) errors.push(`schema type '${schema.type}' is invalid`);
+    if (schema.fields !== undefined && !this.is_plain_object(schema.fields)) errors.push("schema fields must be an object");
+    for (const [field_name, field_schema] of Object.entries(schema.fields || {})) {
+      if (!this.is_snake_name(field_name)) errors.push(`schema field '${field_name}' must use snake_case`);
+      if (!this.is_plain_object(field_schema)) {
+        errors.push(`schema field '${field_name}' must be an object`);
+        continue;
+      }
+      if (field_schema.type && !this.config.schema_field_types.includes(field_schema.type)) {
+        errors.push(`schema field '${field_name}' type '${field_schema.type}' is invalid`);
+      }
+      if (field_schema.dataset && !this.is_snake_name(field_schema.dataset)) {
+        errors.push(`schema field '${field_name}' dataset must use snake_case`);
+      }
+    }
+    return { ok: errors.length === 0, errors };
+  }
+
+  validate_entity_against_schema(entity, schema) {
+    const errors = [];
+    const schema_result = this.validate_schema_record(schema);
+    if (!schema_result.ok) return schema_result;
+    for (const [field_name, field_schema] of Object.entries(schema.fields || {})) {
+      const value = entity ? entity[field_name] : undefined;
+      if (field_schema.required && value === undefined) {
+        errors.push(`field '${field_name}' is required`);
+        continue;
+      }
+      if (value === undefined) continue;
+      if (!this.validate_value_type(value, field_schema.type || "text")) errors.push(`field '${field_name}' must be ${field_schema.type}`);
+      if (field_schema.dataset) errors.push(...this.validate_enum_field(field_name, value, field_schema.dataset).errors);
+      if (Array.isArray(field_schema.options) && !field_schema.options.includes(value)) errors.push(`field '${field_name}' is not an approved option`);
+    }
+    return { ok: errors.length === 0, errors };
+  }
+
+  validate_value_type(value, type) {
+    if (type === "text" || type === "choice" || type === "reference" || type === "timestamp" || type === "markup") return typeof value === "string";
+    if (type === "number") return typeof value === "number" && Number.isFinite(value);
+    if (type === "boolean") return typeof value === "boolean";
+    if (type === "list") return Array.isArray(value);
+    if (type === "map" || type === "json") return this.is_plain_object(value);
+    return true;
   }
 
   validate_operation_name(name) {
@@ -294,6 +441,36 @@ const edit_distance = (left, right) => {
     }
   }
   return rows[a.length][b.length];
+};
+
+const detect_relationship_cycles = (entities) => {
+  const graph = new Map();
+  for (const entity of entities || []) {
+    if (!entity || !entity.id) continue;
+    graph.set(entity.id, normalize_list(entity.relationships).filter((item) => item && item.type === "depends_on").map((item) => item.to));
+  }
+  const cycles = [];
+  const visiting = new Set();
+  const visited = new Set();
+  const stack = [];
+  const visit = (id) => {
+    if (visiting.has(id)) {
+      const start = stack.indexOf(id);
+      cycles.push([...stack.slice(start), id]);
+      return;
+    }
+    if (visited.has(id)) return;
+    visiting.add(id);
+    stack.push(id);
+    for (const next of graph.get(id) || []) {
+      if (graph.has(next)) visit(next);
+    }
+    stack.pop();
+    visiting.delete(id);
+    visited.add(id);
+  };
+  for (const id of graph.keys()) visit(id);
+  return cycles;
 };
 
 export { entity_validator };

@@ -64,11 +64,14 @@ entity doctrine fields.
 - Entity ids, types, names, and operation names must not contain banned
   vocabulary.
 - Entity status must be approved.
+- Inline `schemas` are normalized as entity data.
+- Optional `schema_records` config validates every entity before persistence.
 - Relationship types must be approved unless explicitly allowed by config.
 - Legacy dependency input is disabled unless explicitly enabled for migration.
 - Relationship targets do not need to exist at link time.
 - Relationship targets must resolve during graph validation.
 - Cycles are reported during graph validation.
+- Graph validation is delegated to the shared `entity_validator` utility.
 - Cache entries should reflect the latest stored record.
 - `import_entity(text)` validates and persists the imported entity, then returns
   the same stored-record shape as `create`.
@@ -77,8 +80,7 @@ entity doctrine fields.
 
 ## Known Limits
 
-- Schema enforcement is still basic and should be expanded from the schema
-  contract catalog.
+- Full schema catalog import data is not complete yet.
 - Storage is memory-backed unless a driver is injected.
 - Full unit tests are not yet generated for this promoted file.
 

@@ -45,3 +45,9 @@ and focused migration checks are complete.
 
 - `normalize_entity()` now rejects non-object entity input.
 - Batch helpers now reject non-array inputs with explicit errors.
+
+## 2026-08-25 Validator Integration Pass
+
+- Normalized inline `schemas` on entity records.
+- Added optional `schema_records` config validation before persistence.
+- Delegated graph validation to shared `entity_validator`.

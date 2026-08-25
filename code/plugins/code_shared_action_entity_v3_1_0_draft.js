@@ -83,6 +83,7 @@ class action_entity {
       policies: normalize_list(input.policies),
       contracts: normalize_list(input.contracts),
       operations: normalize_list(input.operations),
+      schemas: normalize_list(input.schemas),
       tests: normalize_list(input.tests),
       docs: normalize_list(input.docs),
       logs: normalize_list(input.logs),
@@ -100,6 +101,10 @@ class action_entity {
     const result = this.validator.validate_entity(entity, this.registry);
     if (!result.ok) {
       throw new Error(result.errors.join("; "));
+    }
+    for (const schema of normalize_list(this.config.schema_records)) {
+      const schema_result = this.validator.validate_entity_against_schema(entity, schema);
+      if (!schema_result.ok) throw new Error(schema_result.errors.join("; "));
     }
     return result;
   }
@@ -282,16 +287,7 @@ class action_entity {
   async validate_graph() {
     const result = await this.query();
     const entities = result.data;
-    const ids = new Set(entities.map((entity) => entity.id));
-    const errors = [];
-    for (const entity of entities) {
-      for (const relationship of entity.relationships || []) {
-        if (!ids.has(relationship.to)) errors.push(`${entity.id} has missing relationship target ${relationship.to}`);
-      }
-    }
-    const cycles = detect_cycles(entities);
-    for (const cycle of cycles) errors.push(`cycle detected: ${cycle.join(" -> ")}`);
-    return { ok: errors.length === 0, errors, cycles };
+    return this.validator.validate_relationship_graph(entities);
   }
 
   export_entity(entity) {
@@ -412,37 +408,6 @@ const unique_list = (items) => {
     }
   }
   return out;
-};
-
-const detect_cycles = (entities) => {
-  const graph = new Map();
-  for (const entity of entities) {
-    graph.set(entity.id, [
-      ...(entity.relationships || []).filter((item) => item.type === "depends_on").map((item) => item.to)
-    ]);
-  }
-  const cycles = [];
-  const visiting = new Set();
-  const visited = new Set();
-  const stack = [];
-  const visit = (id) => {
-    if (visiting.has(id)) {
-      const start = stack.indexOf(id);
-      cycles.push([...stack.slice(start), id]);
-      return;
-    }
-    if (visited.has(id)) return;
-    visiting.add(id);
-    stack.push(id);
-    for (const next of graph.get(id) || []) {
-      if (graph.has(next)) visit(next);
-    }
-    stack.pop();
-    visiting.delete(id);
-    visited.add(id);
-  };
-  for (const id of graph.keys()) visit(id);
-  return cycles;
 };
 
 export { action_entity, memory_driver };
