@@ -28,6 +28,7 @@ The browser surface now declares:
   board, calendar, timeline, diagram, and dashboard
 - browser workspace persistence for selected template, layout, and active cell
 - keyboard undo/redo through version checkpoint records
+- visible workspace export/import controls
 
 ## When To Use It
 
@@ -61,4 +62,5 @@ Browser e2e tests validate Chromium boot readiness, page error capture, search
 result count, hit navigation, keyboard execution, focus preservation, desktop
 rail layout, mobile stacking, run-all keyboard execution, and all required
 layout projections. Reload persistence and Ctrl+Z/Ctrl+Y undo/redo are also
-validated in the browser e2e path.
+validated in the browser e2e path. Export/import and offline static loading are
+validated through browser e2e checks.

@@ -68,3 +68,9 @@ surface to the browser runtime validation contract.
 - Added version checkpoint based Ctrl+Z/Ctrl+Y undo and redo for the active
   cell editor.
 - Added browser e2e coverage for cell persistence after reload and undo/redo.
+
+## 2026-08-25 V4 Import Export Offline Update
+
+- Added visible export/import controls for workspace state.
+- Added browser import validation and executable-cell confirmation guard.
+- Added browser e2e coverage for export/import and offline static loading.

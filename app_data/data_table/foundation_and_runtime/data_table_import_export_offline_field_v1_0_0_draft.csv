@@ -1,0 +1,8 @@
+field_name,data_type,required,description
+format,text,true,approved import or export format
+content,text,true,file content for import or export
+state,json,true,workspace state payload
+requires_confirmation,boolean,false,true when imported cells include executable content
+assets,json,false,asset inventory records
+port,number,false,local static server port
+no_cache_header,text,false,local server cache-control value

@@ -28,7 +28,8 @@ body {
 }
 
 button,
-input {
+input,
+textarea {
   font: inherit;
 }
 
@@ -146,6 +147,14 @@ input {
   min-width: 0;
 }
 
+.file_row {
+  display: grid;
+  grid-template-columns: 92px 92px minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+  min-width: 0;
+}
+
 .command_row input,
 .search_row input {
   min-width: 0;
@@ -155,13 +164,22 @@ input {
   background: var(--surface);
 }
 
-.search_row button {
+.search_row button,
+.file_row button {
   min-height: 42px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--surface);
   color: var(--ink);
   cursor: pointer;
+}
+
+.file_row textarea {
+  min-width: 0;
+  resize: vertical;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 9px 10px;
 }
 
 #search_count {
@@ -424,7 +442,8 @@ dd {
 @media (max-width: 520px) {
   .top_bar,
   .command_row,
-  .search_row {
+  .search_row,
+  .file_row {
     grid-template-columns: 1fr;
     display: grid;
     max-width: 100%;

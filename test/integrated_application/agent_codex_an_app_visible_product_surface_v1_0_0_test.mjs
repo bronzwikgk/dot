@@ -16,6 +16,9 @@ test("visible product surface has required static files and hooks", async () => 
   assert.ok(html.includes('id="search_input"'));
   assert.ok(html.includes('id="clear_search_button"'));
   assert.ok(html.includes('id="search_count"'));
+  assert.ok(html.includes('id="export_workspace_button"'));
+  assert.ok(html.includes('id="import_workspace_button"'));
+  assert.ok(html.includes('id="import_workspace_text"'));
   assert.ok(html.includes('id="cell_editor"'));
   assert.ok(html.includes('id="run_cell_button"'));
   assert.ok(html.includes('id="run_all_button"'));
@@ -51,6 +54,9 @@ test("visible product surface keeps class based browser controller", async () =>
   assert.ok(browser_source.includes("save_workspace"));
   assert.ok(browser_source.includes("load_workspace"));
   assert.ok(browser_source.includes("validate_storage_key"));
+  assert.ok(browser_source.includes("export_workspace"));
+  assert.ok(browser_source.includes("import_workspace"));
+  assert.ok(browser_source.includes("validate_import"));
   assert.ok(browser_source.includes("undo_change"));
   assert.ok(browser_source.includes("redo_change"));
   assert.ok(browser_source.includes("ctrl+enter"));

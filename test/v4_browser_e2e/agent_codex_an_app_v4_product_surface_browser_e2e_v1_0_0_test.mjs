@@ -67,12 +67,40 @@ test("product surface browser e2e validates boot search keyboard focus and layou
     assert.equal(await page.inputValue("#cell_editor"), "create fintech dashboard updated");
     assert.equal(await page.textContent("#projection_title"), "Dashboard");
 
+    await page.click("#export_workspace_button");
+    await page.waitForFunction(() => document.getElementById("import_workspace_text").value.includes("export_record"));
+    await page.fill("#cell_editor", "temporary value");
+    await page.click("#import_workspace_button");
+    await page.waitForFunction(() => document.getElementById("cell_editor").value === "create fintech dashboard updated");
+    assert.equal(await page.textContent("#validation_label"), "import completed");
+
     await page.keyboard.press("Escape");
     assert.equal(await page.textContent("#search_count"), "0 results");
 
     const rail_box = await page.locator(".cell_rail").boundingBox();
     const body_box = await page.locator(".cell_body").boundingBox();
     assert.ok(rail_box.x + rail_box.width <= body_box.x);
+  } finally {
+    await browser.close();
+  }
+});
+
+test("product surface browser e2e validates offline static load", async () => {
+  const browser = await chromium.launch();
+  try {
+    const page = await browser.newPage({ viewport: { width: 1024, height: 720 } });
+    await page.route("**/*", (route) => {
+      const url = route.request().url();
+      if (url.startsWith("file:")) route.continue();
+      else route.abort();
+    });
+    await page.goto(surface_url);
+    await page.waitForFunction(() => window.__an_app_boot_marker__ && window.__an_app_boot_marker__.ready === true);
+    const external_refs = await page.evaluate(() => Array.from(document.querySelectorAll("script,link,img")).filter((node) => {
+      const value = node.getAttribute("src") || node.getAttribute("href") || "";
+      return value.startsWith("http://") || value.startsWith("https://");
+    }).length);
+    assert.equal(external_refs, 0);
   } finally {
     await browser.close();
   }

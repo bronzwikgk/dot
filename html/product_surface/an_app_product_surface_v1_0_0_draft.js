@@ -76,6 +76,9 @@ class an_app_product_surface_controller {
     this.nodes.search_input = document.getElementById("search_input");
     this.nodes.clear_search_button = document.getElementById("clear_search_button");
     this.nodes.search_count = document.getElementById("search_count");
+    this.nodes.export_workspace_button = document.getElementById("export_workspace_button");
+    this.nodes.import_workspace_button = document.getElementById("import_workspace_button");
+    this.nodes.import_workspace_text = document.getElementById("import_workspace_text");
     this.nodes.cell_editor = document.getElementById("cell_editor");
     this.nodes.cell_output = document.getElementById("cell_output");
     this.nodes.run_cell_button = document.getElementById("run_cell_button");
@@ -93,6 +96,8 @@ class an_app_product_surface_controller {
     this.nodes.search_input.addEventListener("input", this.handle_search_input.bind(this));
     this.nodes.search_input.addEventListener("keydown", this.handle_search_keydown.bind(this));
     this.nodes.clear_search_button.addEventListener("click", this.clear_search_hits.bind(this));
+    this.nodes.export_workspace_button.addEventListener("click", this.handle_export_workspace_click.bind(this));
+    this.nodes.import_workspace_button.addEventListener("click", this.handle_import_workspace_click.bind(this));
     this.nodes.run_cell_button.addEventListener("click", this.handle_run_cell_click.bind(this));
     this.nodes.run_all_button.addEventListener("click", this.handle_run_all_click.bind(this));
     this.nodes.cell_editor.addEventListener("input", this.handle_cell_input.bind(this));
@@ -154,6 +159,14 @@ class an_app_product_surface_controller {
       event.preventDefault();
       this.execute_command({ action: "search_next" });
     }
+  }
+
+  handle_export_workspace_click() {
+    this.execute_command({ selector: "#export_workspace_button", action: "export_book" });
+  }
+
+  handle_import_workspace_click() {
+    this.execute_command({ selector: "#import_workspace_button", action: "import_book" });
   }
 
   handle_global_keydown(event) {
@@ -223,6 +236,20 @@ class an_app_product_surface_controller {
       selector: "#clear_search_button",
       keyboard: "escape",
       method: "clear_search_hits"
+    });
+    this.register_command({
+      id: "export_workspace_from_button",
+      action: "export_book",
+      selector: "#export_workspace_button",
+      keyboard: null,
+      method: "export_workspace"
+    });
+    this.register_command({
+      id: "import_workspace_from_button",
+      action: "import_book",
+      selector: "#import_workspace_button",
+      keyboard: null,
+      method: "import_workspace"
     });
     this.register_command({
       id: "undo_from_keyboard",
@@ -712,6 +739,55 @@ class an_app_product_surface_controller {
       return { ok: true, data: record, errors: [] };
     } catch (error) {
       this.nodes.validation_label.textContent = "storage save failed";
+      return { ok: false, data: null, errors: [String(error.message || error)] };
+    }
+  }
+
+  export_workspace() {
+    const record = {
+      type: "export_record",
+      format: "json",
+      state: this.workspace_state()
+    };
+    const content = JSON.stringify(record, null, 2);
+    this.nodes.import_workspace_text.value = content;
+    this.nodes.cell_output.textContent = "Workspace exported";
+    this.nodes.validation_label.textContent = "export ready";
+    return { ok: true, data: { content }, errors: [] };
+  }
+
+  validate_import(record, confirmed) {
+    if (!record || typeof record !== "object" || Array.isArray(record)) return { ok: false, data: null, errors: ["import record must be an object"] };
+    if (!record.state || typeof record.state !== "object" || Array.isArray(record.state)) return { ok: false, data: null, errors: ["import state must be an object"] };
+    const cells = Array.isArray(record.state.cells) ? record.state.cells : [];
+    for (const cell of cells) {
+      if ((cell.cell_type || cell.type) === "code" && confirmed !== true) {
+        return { ok: false, data: { requires_confirmation: true }, errors: ["executable cells require confirmation"] };
+      }
+    }
+    return { ok: true, data: record, errors: [] };
+  }
+
+  import_workspace(config) {
+    const text = this.nodes.import_workspace_text.value || "";
+    try {
+      const record = JSON.parse(text);
+      const validation = this.validate_import(record, config && config.confirmed);
+      if (!validation.ok) {
+        this.nodes.validation_label.textContent = "import blocked";
+        return validation;
+      }
+      const state = record.state || {};
+      if (state.active_template_id) this.active_template_id = state.active_template_id;
+      if (state.active_profile) this.active_profile = state.active_profile;
+      if (Object.prototype.hasOwnProperty.call(state, "cell_content")) this.nodes.cell_editor.value = state.cell_content;
+      this.last_cell_value = this.nodes.cell_editor.value || "";
+      this.save_workspace();
+      this.render_all();
+      this.nodes.validation_label.textContent = "import completed";
+      return { ok: true, data: { type: "import_record", state }, errors: [] };
+    } catch (error) {
+      this.nodes.validation_label.textContent = "import failed";
       return { ok: false, data: null, errors: [String(error.message || error)] };
     }
   }
