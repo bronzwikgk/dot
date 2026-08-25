@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page Types - Token Variants</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css">
+    <style>
+        /* ===== SHARED TOKEN SCHEMA ===== */
+        :root {
+            --font-family-base: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-size-base: 1rem;
+            --line-height-base: 1.5;
+            --space-4: 0.25rem;
+            --space-5: 0.3125rem;
+            --space-7: 0.5rem;
+            --space-10: 0.75rem;
+            --space-15: 1rem;
+            --space-20: 1.25rem;
+            --radius-lg: 0.25rem;
+            --border-width-default: 0.0625rem;
+        }
+
+        /* ===== WEBSITE TOKENS ===== */
+        [data-page="website"] {
+            --color-text-primary: #1a1a1a;
+            --color-text-secondary: #4a4a4a;
+            --color-bg-body: #ffffff;
+            --color-bg-surface: #f8f9fa;
+            --color-brand-primary: #0066cc;
+            --color-border: #dee2e6;
+            --font-size-h1: 2.5rem;
+            --font-size-h2: 1.5rem;
+            --header-bg: #ffffff;
+            --aside-bg: #f8f9fa;
+        }
+
+        /* ===== BLOG TOKENS ===== */
+        [data-page="blog"] {
+            --color-text-primary: #2d2d2d;
+            --color-text-secondary: #6c757d;
+            --color-bg-body: #fafafa;
+            --color-bg-surface: #ffffff;
+            --color-brand-primary: #e74c3c;
+            --color-border: #e9ecef;
+            --font-size-h1: 2.25rem;
+            --font-size-h2: 1.375rem;
+            --header-bg: #ffffff;
+            --aside-bg: #f8f9fa;
+        }
+
+        /* ===== DOCUMENT TOKENS ===== */
+        [data-page="document"] {
+            --color-text-primary: #212529;
+            --color-text-secondary: #495057;
+            --color-bg-body: #ffffff;
+            --color-bg-surface: #f8f9fa;
+            --color-brand-primary: #2c3e50;
+            --color-border: #dee2e6;
+            --font-size-h1: 2rem;
+            --font-size-h2: 1.25rem;
+            --header-bg: #2c3e50;
+            --aside-bg: #f8f9fa;
+        }
+
+        /* ===== APPLICATION TOKENS ===== */
+        [data-page="application"] {
+            --color-text-primary: #0d1117;
+            --color-text-secondary: #586069;
+            --color-bg-body: #ffffff;
+            --color-bg-surface: #f6f8fa;
+            --color-brand-primary: #2ea44f;
+            --color-border: #e1e4e8;
+            --font-size-h1: 1.75rem;
+            --font-size-h2: 1.125rem;
+            --header-bg: #24292e;
+            --aside-bg: #f6f8fa;
+        }
+
+        /* ===== SAAS DASHBOARD TOKENS ===== */
+        [data-page="saas_dashboard"] {
+            --color-text-primary: #0f172a;
+            --color-text-secondary: #64748b;
+            --color-bg-body: #f1f5f9;
+            --color-bg-surface: #ffffff;
+            --color-brand-primary: #6366f1;
+            --color-border: #e2e8f0;
+            --font-size-h1: 1.5rem;
+            --font-size-h2: 1rem;
+            --header-bg: #1e293b;
+            --aside-bg: #f8fafc;
+        }
+
+        /* ===== SHARED LAYOUT ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { height: 100%; }
+        body { display: flex; flex-direction: column; height: 100%; font-family: var(--font-family-base); font-size: var(--font-size-base); color: var(--color-text-primary); background: var(--color-bg-body); }
+
+        header { background: var(--header-bg); border-bottom: var(--border-width-default) solid var(--color-border); padding: var(--space-7) var(--space-10); display: flex; align-items: center; }
+        main { display: flex; flex: 1; overflow: hidden; }
+        aside { width: 220px; background: var(--aside-bg); border-right: var(--border-width-default) solid var(--color-border); padding: var(--space-10); overflow-y: auto; }
+        article { flex: 1; overflow-y: auto; }
+        footer { background: var(--color-bg-surface); border-top: var(--border-width-default) solid var(--color-border); padding: var(--space-7) var(--space-10); font-size: 0.875rem; color: var(--color-text-secondary); }
+
+        h1 { font-size: var(--font-size-h1); font-weight: 700; margin-bottom: var(--space-10); }
+        h2 { font-size: var(--font-size-h2); font-weight: 600; margin-bottom: var(--space-7); color: var(--color-text-primary); }
+        p { margin-bottom: var(--space-10); line-height: 1.6; color: var(--color-text-secondary); }
+
+        ul, ol { list-style: none; margin-bottom: var(--space-10); }
+        li { padding: var(--space-5) 0; border-bottom: var(--border-width-default) solid var(--color-border); }
+
+        a { color: var(--color-brand-primary); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+
+        button { background: var(--color-brand-primary); color: white; border: none; padding: var(--space-5) var(--space-10); border-radius: var(--radius-lg); cursor: pointer; }
+
+        .page-type-nav { display: flex; gap: var(--space-7); padding: var(--space-10); background: var(--color-bg-surface); border-bottom: var(--border-width-default) solid var(--color-border); }
+        .page-type-nav a { padding: var(--space-5) var(--space-10); border-radius: var(--radius-lg); color: var(--color-text-secondary); text-decoration: none; }
+        .page-type-nav a:hover, .page-type-nav a.active { background: var(--color-brand-primary); color: white; }
+    </style>
+</head>
+<body>
+
+<nav class="page-type-nav">
+    <a href="#website" class="active">Website</a>
+    <a href="#blog">Blog</a>
+    <a href="#document">Document</a>
+    <a href="#application">Application</a>
+    <a href="#saas_dashboard">Dashboard</a>
+</nav>
+
+<!-- ===== WEBSITE ===== -->
+<section id="website" data-page="website">
+    <header>
+        <h2>Website Page Type</h2>
+        <nav><a href="#">Home</a> | <a href="#">About</a> | <a href="#">Services</a> | <a href="#">Contact</a></nav>
+    </header>
+    <main>
+        <aside>
+            <h3>Navigation</h3>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Services</a></li>
+            </ul>
+        </aside>
+        <article>
+            <h1>Welcome to Our Website</h1>
+            <p>This is a sample website page type. It uses blue brand color with clean, professional styling suitable for corporate websites.</p>
+            <h2>Our Services</h2>
+            <ul>
+                <li>Web Design</li>
+                <li>Development</li>
+                <li>SEO Optimization</li>
+            </ul>
+            <button>Contact Us</button>
+        </article>
+    </main>
+    <footer><p>2026 Company Name. All rights reserved.</p></footer>
+</section>
+
+<!-- ===== BLOG ===== -->
+<section id="blog" data-page="blog">
+    <header>
+        <h2>Blog Page Type</h2>
+        <nav><a href="#">Home</a> | <a href="#">Categories</a> | <a href="#">Archive</a></nav>
+    </header>
+    <main>
+        <aside>
+            <h3>Categories</h3>
+            <ul>
+                <li><a href="#">Technology</a></li>
+                <li><a href="#">Design</a></li>
+                <li><a href="#">Business</a></li>
+            </ul>
+        </aside>
+        <article>
+            <h1>Latest Blog Posts</h1>
+            <p>This is a sample blog page type. It uses red accent color with warm, readable styling suitable for content-heavy blogs.</p>
+            <h2>Featured Post</h2>
+            <p><strong>The Future of Web Development</strong></p>
+            <p>Published on <time datetime="2026-08-25">August 25, 2026</time></p>
+            <blockquote><p>A look at what's coming next in web technologies.</p></blockquote>
+        </article>
+    </main>
+    <footer><p>Blog Template 2026</p></footer>
+</section>
+
+<!-- ===== DOCUMENT ===== -->
+<section id="document" data-page="document">
+    <header>
+        <h2>Document Page Type</h2>
+        <nav><a href="#">Contents</a> | <a href="#">References</a> | <a href="#">Index</a></nav>
+    </header>
+    <main>
+        <aside>
+            <h3>Table of Contents</h3>
+            <ol>
+                <li><a href="#">Introduction</a></li>
+                <li><a href="#">Methodology</a></li>
+                <li><a href="#">Results</a></li>
+            </ol>
+        </aside>
+        <article>
+            <h1>Technical Documentation</h1>
+            <p>This is a sample document page type. It uses dark navy color with formal, structured styling suitable for technical documentation.</p>
+            <h2>Chapter 1: Overview</h2>
+            <p>The system architecture follows a modular design pattern...</p>
+            <table>
+                <tr><th>Component</th><th>Status</th></tr>
+                <tr><td>Module A</td><td>Complete</td></tr>
+                <tr><td>Module B</td><td>In Progress</td></tr>
+            </table>
+        </article>
+    </main>
+    <footer><p>Document v1.0 | Last updated: 2026-08-25</p></footer>
+</section>
+
+<!-- ===== APPLICATION ===== -->
+<section id="application" data-page="application">
+    <header>
+        <h2>Application Page Type</h2>
+        <nav><a href="#">Dashboard</a> | <a href="#">Projects</a> | <a href="#">Settings</a></nav>
+    </header>
+    <main>
+        <aside>
+            <h3>Projects</h3>
+            <ul>
+                <li><a href="#">Project Alpha</a></li>
+                <li><a href="#">Project Beta</a></li>
+            </ul>
+        </aside>
+        <article>
+            <h1>Project Dashboard</h1>
+            <p>This is a sample application page type. It uses green accent with GitHub-style dark header, suitable for developer tools.</p>
+            <h2>Recent Activity</h2>
+            <ul>
+                <li>Completed task: Setup CI/CD</li>
+                <li>Updated documentation</li>
+            </ul>
+            <button>New Project</button>
+        </article>
+    </main>
+    <footer><p>Application v2.1.0</p></footer>
+</section>
+
+<!-- ===== SAAS DASHBOARD ===== -->
+<section id="saas_dashboard" data-page="saas_dashboard">
+    <header>
+        <h2>Dashboard Page Type</h2>
+        <nav><a href="#">Overview</a> | <a href="#">Analytics</a> | <a href="#">Reports</a></nav>
+    </header>
+    <main>
+        <aside>
+            <h3>Metrics</h3>
+            <ul>
+                <li>Users: 12,450</li>
+                <li>Revenue: $45,200</li>
+            </ul>
+        </aside>
+        <article>
+            <h1>SaaS Dashboard</h1>
+            <p>This is a sample dashboard page type. It uses indigo accent with modern, data-focused styling suitable for SaaS applications.</p>
+            <h2>Key Metrics</h2>
+            <ul>
+                <li>Monthly Active Users: 12,450</li>
+                <li>Conversion Rate: 3.2%</li>
+                <li>Average Session: 4.5 min</li>
+            </ul>
+            <button>Generate Report</button>
+        </article>
+    </main>
+    <footer><p>Dashboard v3.0 | Data refreshed: 2026-08-25 14:30 UTC</p></footer>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Framework Validation Test</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="shared.css">
+    <style>
+        body { padding: 2rem; font-family: monospace; background: #f5f5f5; }
+        .pass { color: green; }
+        .fail { color: red; }
+        pre { background: white; padding: 1rem; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <h1>Framework Validation Test</h1>
+    <div id="results"></div>
+    
+    <script type="module">
+        import { 
+            dataset_gui_page_types,
+            dataset_gui_layout_types,
+            dataset_gui_component_types,
+            dataset_gui_hierarchy_levels,
+            dataset_gui_semantic_elements
+        } from './dataset/dataset_gui_framework_v1.js';
+        
+        import {
+            dataset_gui_relationship_contains,
+            dataset_gui_relationship_uses_component,
+            dataset_gui_relationship_renders,
+            dataset_gui_relationship_belongs_to_category,
+            dataset_gui_relationship_constrains,
+            dataset_gui_relationship_requires_id
+        } from './dataset/dataset_gui_relationships_v1.js';
+        
+        import { datatable_component_attributes } from './dataset/datatable_gui_components_v1.js';
+        
+        const results = document.getElementById('results');
+        let html = '<pre>';
+        
+        // Validate datasets
+        html += '=== DATASET VALIDATION ===\n';
+        html += `page_types: ${dataset_gui_page_types.length} items\n`;
+        html += `layout_types: ${dataset_gui_layout_types.length} items\n`;
+        html += `component_types: ${dataset_gui_component_types.length} items\n`;
+        html += `hierarchy_levels: ${dataset_gui_hierarchy_levels.length} items\n`;
+        html += `semantic_elements: ${dataset_gui_semantic_elements.length} items\n`;
+        
+        // Validate relationships
+        html += '\n=== RELATIONSHIP VALIDATION ===\n';
+        html += `contains: ${dataset_gui_relationship_contains.length}\n`;
+        html += `uses_component: ${dataset_gui_relationship_uses_component.length}\n`;
+        html += `renders: ${dataset_gui_relationship_renders.length}\n`;
+        html += `belongs_to_category: ${dataset_gui_relationship_belongs_to_category.length}\n`;
+        html += `constrains: ${dataset_gui_relationship_constrains.length}\n`;
+        html += `requires_id: ${dataset_gui_relationship_requires_id.length}\n`;
+        
+        // Validate data tables
+        html += '\n=== DATA TABLE VALIDATION ===\n';
+        html += `component_attributes: ${Object.keys(datatable_component_attributes).length} entries\n`;
+        
+        // Check HTML structure
+        html += '\n=== HTML STRUCTURE ===\n';
+        const components = document.querySelectorAll('[data-component]');
+        const ids = document.querySelectorAll('[data-id]');
+        html += `data-component: ${components.length} elements\n`;
+        html += `data-id: ${ids.length} elements\n`;
+        
+        // List component types used
+        const types = new Set([...components].map(el => el.dataset.component));
+        html += `Component types used: ${[...types].join(', ')}\n`;
+        
+        results.innerHTML = html;
+        console.log(html);
+    </script>
+</body>
+</html>

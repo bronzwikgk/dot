@@ -1,0 +1,1056 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Notion - Workspace</title>
+    
+    <!-- Reset -->
+    <link rel="stylesheet" href="reset.css">
+    <!-- Global tokens -->
+    <link rel="stylesheet" href="tokens.css">
+    <!-- Remix Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css">
+    
+    <!-- Embedded styles using style element (no classes) -->
+    <style>
+        /* ===== RESET & BASE ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            font-family: var(--font-family-base);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-base);
+            color: var(--color-text-primary);
+            height: var(--height-full);
+        }
+        
+        body {
+            display: flex;
+            flex-direction: column;
+            height: var(--height-full);
+            background: var(--color-bg-body);
+        }
+        
+        /* ===== HEADER / TOP BAR ===== */
+        header {
+            background: var(--color-bg-surface);
+            border-bottom: var(--border-width-default) solid var(--color-border-default);
+            padding: var(--space-5) var(--space-8);
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            width: var(--width-full);
+        }
+        
+        header h1 {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            padding-left: var(--brand-padding-left);
+            padding-right: var(--brand-padding-right);
+        }
+        
+        header nav {
+            display: flex;
+            gap: var(--space-15);
+            margin-right: auto;
+            align-items: center;
+        }
+        
+        header nav a {
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: var(--font-size-base-rem);
+            padding: var(--space-2) var(--space-5);
+            border-radius: var(--radius-lg);
+        }
+        
+        header nav a:hover {
+            background: var(--color-bg-hover);
+            color: var(--color-text-primary);
+        }
+        
+        header nav button {
+            background: var(--color-brand-primary);
+            color: var(--color-text-white);
+            border: none;
+            padding: var(--space-4) var(--space-10);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base-rem);
+            cursor: pointer;
+        }
+        
+        header nav button:hover {
+            background: var(--color-brand-primary-hover);
+        }
+        
+        /* ===== HEADER MENU BAR ===== */
+        header > nav:first-of-type {
+            display: flex;
+            align-items: center;
+        }
+        
+        header > nav:first-of-type > menu {
+            list-style: none;
+            display: flex;
+            gap: var(--space-1);
+        }
+        
+        header > nav:first-of-type > menu > li {
+            position: relative;
+        }
+        
+        header > nav:first-of-type > menu > li > a {
+            display: block;
+            padding: var(--space-4) var(--space-7);
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            border-radius: var(--radius-lg);
+        }
+        
+        header > nav:first-of-type > menu > li > a:hover {
+            background: var(--color-bg-hover);
+            color: var(--color-text-primary);
+        }
+        
+        /* ===== DROPDOWN ===== */
+        header > nav:first-of-type > menu > li > ul {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--color-bg-surface);
+            border: var(--border-width-default) solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2) 0;
+            min-width: max-content;
+            z-index: 100;
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+            list-style: none;
+        }
+        
+        /* Bridge gap between li and ul */
+        header > nav:first-of-type > menu > li::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            height: var(--space-5);
+        }
+        
+        header > nav:first-of-type > menu > li:hover > ul {
+            display: block;
+        }
+        
+        header > nav:first-of-type > menu > li > ul > li {
+            list-style: none;
+            white-space: nowrap;
+        }
+        
+        header > nav:first-of-type > menu > li > ul > li > a {
+            display: flex;
+            align-items: center;
+            gap: var(--space-5);
+            padding: var(--space-4) var(--space-7);
+            color: var(--color-text-body);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            white-space: nowrap;
+        }
+        
+        header > nav:first-of-type > menu > li > ul > li > a:hover {
+            background: var(--color-bg-hover);
+            color: var(--color-text-primary);
+        }
+        
+        header > nav:first-of-type > menu > li > ul > li > a > i {
+            font-size: var(--font-size-base-rem);
+            color: var(--color-text-muted);
+        }
+        
+        header > nav:first-of-type > menu > li > ul > hr {
+            border: none;
+            border-top: var(--border-width-default) solid var(--color-border-default);
+            margin: var(--space-2) 0;
+        }
+        
+        /* ===== WINDOW CONTROLS ===== */
+        header > section {
+            margin-left: auto;
+            display: flex;
+            gap: var(--space-5);
+            align-items: center;
+            flex-shrink: 0;
+        }
+        
+        header > section > button {
+            background: transparent;
+            color: var(--color-text-muted);
+            border: none;
+            width: 1.75rem;
+            height: 1.75rem;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: var(--font-size-lg);
+        }
+        
+        header > section > button:hover {
+            background: var(--color-bg-hover);
+            color: var(--color-text-primary);
+        }
+        
+        header > section > button:last-child:hover {
+            background: #e53e3e;
+            color: var(--color-text-white);
+        }
+        
+        header > section > hr {
+            width: var(--border-width-default);
+            height: 1.25rem;
+            background: var(--color-border-default);
+            border: none;
+            margin: 0 var(--space-2);
+        }
+        
+        /* ===== SEARCH BAR ===== */
+        header > form {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            background: var(--color-bg-hover);
+            border: var(--border-width-default) solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            padding: var(--space-3) var(--space-7);
+            margin: 0 var(--space-10);
+            flex-shrink: 0;
+        }
+        
+        header > form > i {
+            color: var(--color-text-muted);
+            font-size: var(--font-size-base-rem);
+        }
+        
+        header > form > input {
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-body);
+            width: 12rem;
+        }
+        
+        header > form > input::placeholder {
+            color: var(--color-text-disabled);
+        }
+        
+        /* ===== HEADER TABS (VS Code style) ===== */
+        article > header > nav {
+            display: flex;
+            align-items: center;
+            margin-bottom: var(--space-7);
+        }
+        
+        article > header > nav > menu {
+            list-style: none;
+            display: flex;
+            gap: var(--border-width-default);
+        }
+        
+        article > header > nav > menu > li {
+            position: relative;
+        }
+        
+        article > header > nav > menu > li > a {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-4) var(--space-7);
+            color: var(--color-text-muted);
+            text-decoration: none;
+            font-size: var(--font-size-sm);
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            white-space: nowrap;
+        }
+        
+        article > header > nav > menu > li > a:hover {
+            background: var(--color-bg-hover);
+            color: var(--color-text-primary);
+        }
+        
+        article > header > nav > menu > li[aria-current="page"] > a {
+            background: var(--color-bg-surface);
+            color: var(--color-text-primary);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        article > header > nav > menu > li > a > i:first-child {
+            font-size: var(--font-size-base-rem);
+        }
+        
+        article > header > nav > menu > li > a > i:last-child {
+            font-size: var(--font-size-xs);
+            color: var(--color-text-disabled);
+            opacity: 0;
+        }
+        
+        article > header > nav > menu > li > a:hover > i:last-child {
+            opacity: 1;
+        }
+        
+        /* ===== MAIN LAYOUT ===== */
+        main {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        /* ===== SIDEBAR ===== */
+        aside {
+            width: var(--sidebar-width);
+            background: var(--color-bg-surface);
+            border-right: var(--border-width-default) solid var(--color-border-default);
+            padding: var(--space-10) var(--space-7);
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+        
+        aside section {
+            margin-bottom: var(--space-15);
+        }
+        
+        aside section h2 {
+            font-size: var(--font-size-xs);
+            text-transform: uppercase;
+            letter-spacing: var(--letter-spacing-wide);
+            color: var(--color-text-disabled);
+            padding: 0 var(--space-5);
+            margin-bottom: var(--space-5);
+        }
+        
+        aside section nav {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-1);
+        }
+        
+        aside section nav a {
+            padding: var(--space-4) var(--space-7);
+            border-radius: var(--radius-lg);
+            color: var(--color-text-body);
+            text-decoration: none;
+            font-size: var(--font-size-base-rem);
+            display: flex;
+            align-items: center;
+            gap: var(--space-5);
+        }
+        
+        aside section nav a:hover {
+            background: var(--color-bg-hover);
+        }
+        
+        aside section nav a[aria-current="page"] {
+            background: var(--color-brand-primary-subtle);
+            color: var(--color-brand-primary);
+            font-weight: var(--font-weight-medium);
+        }
+        
+        aside section nav a::before {
+            content: attr(data-icon);
+            margin-right: var(--space-2);
+        }
+        
+        /* ===== ASIDE EXPLORER TREE ===== */
+        aside > section > details {
+            margin-bottom: var(--space-2);
+        }
+        
+        aside > section > details > summary {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3) var(--space-5);
+            font-size: var(--font-size-sm);
+            color: var(--color-text-body);
+            cursor: pointer;
+            border-radius: var(--radius-lg);
+            list-style: none;
+            font-weight: var(--font-weight-medium);
+        }
+        
+        aside > section > details > summary::-webkit-details-marker {
+            display: none;
+        }
+        
+        aside > section > details > summary::before {
+            content: "\25B6";
+            font-size: var(--font-size-xs);
+            color: var(--color-text-muted);
+            transition: transform 0.15s ease;
+        }
+        
+        aside > section > details[open] > summary::before {
+            transform: rotate(90deg);
+        }
+        
+        aside > section > details > summary:hover {
+            background: var(--color-bg-hover);
+        }
+        
+        aside > section > details > summary > i {
+            font-size: var(--font-size-base-rem);
+            color: var(--color-text-muted);
+        }
+        
+        aside > section > details > nav {
+            display: flex;
+            flex-direction: column;
+            padding-left: var(--space-10);
+        }
+        
+        /* ===== CONTENT AREA ===== */
+        article {
+            flex: 1;
+            overflow-y: auto;
+            width: var(--width-full);
+        }
+        
+        /* ===== PAGE HEADER ===== */
+        article > header {
+            background: transparent;
+            border-bottom: none;
+            padding: 0;
+            display: block;
+        }
+        
+        /* ===== CONTENT BLOCKS ===== */
+        article > section {
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 80%;
+            padding: var(--space-10) 0;
+            border-bottom: var(--border-width-default) solid var(--color-border-default);
+        }
+        
+        article > section:last-child {
+            border-bottom: none;
+        }
+        
+        article > section > h1 {
+            font-size: var(--font-size-4xl);
+            font-weight: var(--font-weight-bold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-5);
+        }
+        
+        article > section > h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-primary);
+            margin-bottom: var(--space-7);
+            display: flex;
+            align-items: center;
+            gap: var(--space-5);
+        }
+        
+        article > section > h3 {
+            font-size: var(--font-size-xl);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-secondary);
+            margin: var(--space-10) 0 var(--space-5) 0;
+        }
+        
+        article > section > p {
+            color: var(--color-text-body);
+            margin-bottom: var(--space-7);
+        }
+        
+        /* ===== TASK LIST ===== */
+        ul {
+            list-style: none;
+            margin: var(--space-5) 0 var(--space-10) 0;
+        }
+        
+        ul li {
+            padding: var(--space-4) var(--space-5);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-5);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+        }
+        
+        ul li:hover {
+            background: var(--color-bg-hover-light);
+        }
+        
+        article ul li::before {
+            content: "☐";
+            font-size: var(--font-size-xl);
+            color: var(--color-text-faint);
+            flex-shrink: 0;
+        }
+        
+        article ul li[aria-checked="true"]::before {
+            content: "☑";
+            color: var(--color-brand-primary);
+        }
+        
+        article ul li[aria-checked="true"] {
+            text-decoration: line-through;
+            color: var(--color-text-disabled);
+        }
+        
+        /* ===== ASIDE NAV - no word break ===== */
+        aside section nav a {
+            white-space: nowrap;
+        }
+        
+        /* ===== INLINE TAGS ===== */
+        strong {
+            color: var(--color-text-primary);
+        }
+        
+        em {
+            color: var(--color-text-em);
+            font-style: italic;
+        }
+        
+        code {
+            background: var(--color-bg-code);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-md);
+            color: var(--color-text-code);
+        }
+        
+        /* ===== QUOTE ===== */
+        blockquote {
+            border-left: var(--border-width-accent) solid var(--color-brand-primary);
+            padding: var(--space-5) var(--space-10);
+            margin: var(--space-10) 0;
+            background: var(--color-bg-blockquote);
+            border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+        }
+        
+        blockquote p {
+            color: var(--color-text-secondary);
+            font-style: italic;
+        }
+        
+        blockquote cite {
+            display: block;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-faint);
+            margin-top: var(--space-2);
+        }
+        
+        /* ===== TABLE ===== */
+        table {
+            width: var(--width-full);
+            border-collapse: collapse;
+            margin: var(--space-10) 0;
+            font-size: var(--font-size-base-rem);
+        }
+        
+        thead {
+            background: var(--color-bg-table-header);
+            border-bottom: var(--border-width-heavy) solid var(--color-border-default);
+        }
+        
+        th {
+            text-align: left;
+            padding: var(--space-6) var(--space-7);
+            font-weight: var(--font-weight-semibold);
+            color: var(--color-text-body);
+        }
+        
+        td {
+            padding: var(--space-6) var(--space-7);
+            border-bottom: var(--border-width-default) solid var(--color-bg-hover);
+            color: var(--color-text-em);
+        }
+        
+        tbody tr:hover {
+            background: var(--color-bg-table-row-hover);
+        }
+        
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--color-bg-surface);
+            border-top: var(--border-width-default) solid var(--color-border-default);
+            padding: var(--space-7) var(--space-15);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-shrink: 0;
+            font-size: var(--font-size-sm);
+            color: var(--color-text-disabled);
+        }
+        
+        footer nav {
+            display: flex;
+            gap: var(--space-15);
+        }
+        
+        footer nav a {
+            color: var(--color-text-disabled);
+            text-decoration: none;
+        }
+        
+        footer nav a:hover {
+            color: var(--color-text-body);
+        }
+        
+        /* ===== STATUS INDICATOR ===== */
+        progress {
+            width: var(--width-full);
+            height: var(--progress-height);
+            border-radius: var(--radius-sm);
+            border: none;
+            background: var(--color-border-default);
+        }
+        
+        progress::-webkit-progress-bar {
+            background: var(--color-border-default);
+            border-radius: var(--radius-sm);
+        }
+        
+        progress::-webkit-progress-value {
+            background: var(--color-brand-primary);
+            border-radius: var(--radius-sm);
+        }
+        
+        progress::-moz-progress-bar {
+            background: var(--color-brand-primary);
+            border-radius: var(--radius-sm);
+        }
+        
+        /* ===== FORM ELEMENTS IN CONTENT ===== */
+        label {
+            display: block;
+            font-weight: var(--font-weight-medium);
+            color: var(--color-text-secondary);
+            margin-bottom: var(--space-2);
+        }
+        
+        input, textarea, select {
+            width: var(--width-full);
+            padding: var(--space-5) var(--space-7);
+            border: var(--border-width-default) solid var(--color-border-input);
+            border-radius: var(--radius-lg);
+            font-size: var(--font-size-base-rem);
+            font-family: inherit;
+            background: var(--color-bg-surface);
+        }
+        
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--color-brand-primary);
+            box-shadow: 0 0 0 var(--focus-ring-width) var(--color-brand-focus-ring);
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: var(--textarea-min-height);
+        }
+        
+        /* ===== META INFO ===== */
+        time {
+            color: var(--color-text-faint);
+            font-size: var(--font-size-sm);
+        }
+        
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: var(--breakpoint-tablet)) {
+            aside {
+                width: var(--sidebar-width-mobile);
+                padding: var(--space-7) var(--space-5);
+            }
+            
+            article {
+                padding: var(--space-15);
+            }
+            
+            header nav a:not(:first-child) {
+                display: none;
+            }
+        }
+        
+        @media (max-width: var(--breakpoint-mobile)) {
+            body {
+                flex-direction: column;
+            }
+            
+            aside {
+                width: var(--width-full);
+                border-right: none;
+                border-bottom: var(--border-width-default) solid var(--color-border-default);
+                max-height: var(--sidebar-max-height-mobile);
+                overflow-y: auto;
+            }
+            
+            main {
+                flex-direction: column;
+            }
+            
+            article {
+                padding: var(--space-10);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER / TOP NAV ===== -->
+<header>
+    <h1>an app</h1>
+    <nav>
+        <menu>
+            <li><a href="#">File</a>
+                <ul>
+                    <li><a href="#"><i class="ri-add-circle-line"></i> New Book</a></li>
+                    <li><a href="#"><i class="ri-layout-grid-line"></i> New from Templates</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-upload-2-line"></i> Import</a></li>
+                    <li><a href="#"><i class="ri-download-2-line"></i> Export</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-save-line"></i> Save</a></li>
+                    <li><a href="#"><i class="ri-settings-3-line"></i> Settings</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Edit</a>
+                <ul>
+                    <li><a href="#"><i class="ri-arrow-go-back-line"></i> Undo</a></li>
+                    <li><a href="#"><i class="ri-arrow-go-forward-line"></i> Redo</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-arrow-up-line"></i> Move Cell Up</a></li>
+                    <li><a href="#"><i class="ri-arrow-down-line"></i> Move Cell Down</a></li>
+                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete Cell</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Insert</a>
+                <ul>
+                    <li><a href="#"><i class="ri-markdown-line"></i> Text Cell</a></li>
+                    <li><a href="#"><i class="ri-terminal-box-line"></i> Pipeline Cell</a></li>
+                    <li><a href="#"><i class="ri-code-line"></i> Code Cell</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-layout-masonry-line"></i> Component</a></li>
+                    <li><a href="#"><i class="ri-filter-3-line"></i> Filter</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Run</a>
+                <ul>
+                    <li><a href="#"><i class="ri-play-line"></i> Run Active</a></li>
+                    <li><a href="#"><i class="ri-play-circle-line"></i> Run Selected</a></li>
+                    <li><a href="#"><i class="ri-play-circle-line"></i> Run All</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-node-tree"></i> Execute DAG</a></li>
+                    <li><a href="#"><i class="ri-play-circle-line"></i> Execute Flow</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-eraser-line"></i> Reset</a></li>
+                </ul>
+            </li>
+            <li><a href="#">View</a>
+                <ul>
+                    <li><a href="#"><i class="ri-terminal-box-line"></i> Jupyter Layout</a></li>
+                    <li><a href="#"><i class="ri-layout-masonry-line"></i> Notion Layout</a></li>
+                    <li><a href="#"><i class="ri-code-s-slash-line"></i> VSCode Layout</a></li>
+                    <li><a href="#"><i class="ri-node-tree"></i> Flow Builder</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-side-bar-line"></i> Toggle Sidebar</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Help</a>
+                <ul>
+                    <li><a href="#"><i class="ri-information-line"></i> About</a></li>
+                    <li><a href="#"><i class="ri-lightbulb-line"></i> Getting Started</a></li>
+                    <li><a href="#"><i class="ri-book-open-line"></i> API Docs</a></li>
+                </ul>
+            </li>
+        </menu>
+    </nav>
+    <form role="search">
+        <i class="ri-search-line"></i>
+        <input type="search" placeholder="Search books, cells...">
+    </form>
+    <section>
+        <button type="button" title="Templates"><i class="ri-layout-grid-line"></i></button>
+        <button type="button" title="Take a Tour"><i class="ri-question-line"></i></button>
+        <button type="button" title="Settings"><i class="ri-settings-3-line"></i></button>
+        <hr>
+        <button type="button" title="Minimize"><i class="ri-subtract-line"></i></button>
+        <button type="button" title="Maximize"><i class="ri-checkbox-blank-line"></i></button>
+        <button type="button" title="Close"><i class="ri-close-line"></i></button>
+    </section>
+</header>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main>
+    
+    <!-- ===== SIDEBAR ===== -->
+    <aside>
+        <section>
+            <h2>Quick Access</h2>
+            <nav>
+                <a href="#" aria-current="page"><i class="ri-star-line"></i> Favorites</a>
+                <a href="#"><i class="ri-history-line"></i> Recent</a>
+                <a href="#"><i class="ri-archive-line"></i> Archived</a>
+            </nav>
+        </section>
+        
+        <section>
+            <h2>Explorer</h2>
+            <details open>
+                <summary><i class="ri-folder-3-line"></i> Workspace</summary>
+                <nav>
+                    <a href="#"><i class="ri-file-text-line"></i> Dashboard.md</a>
+                    <a href="#"><i class="ri-file-code-line"></i> index.js</a>
+                    <a href="#"><i class="ri-file-image-line"></i> logo.png</a>
+                </nav>
+            </details>
+            <details open>
+                <summary><i class="ri-folder-3-line"></i> Projects</summary>
+                <nav>
+                    <a href="#"><i class="ri-folder-3-line"></i> Website Redesign</a>
+                    <a href="#"><i class="ri-folder-3-line"></i> Mobile App</a>
+                    <a href="#"><i class="ri-folder-3-line"></i> API Integration</a>
+                </nav>
+            </details>
+            <details>
+                <summary><i class="ri-folder-3-line"></i> Templates</summary>
+                <nav>
+                    <a href="#"><i class="ri-file-text-line"></i> Notebook.tpl</a>
+                    <a href="#"><i class="ri-file-code-line"></i> Code.tpl</a>
+                    <a href="#"><i class="ri-file-chart-line"></i> Flow.tpl</a>
+                </nav>
+            </details>
+            <details>
+                <summary><i class="ri-folder-3-line"></i> Archives</summary>
+                <nav>
+                    <a href="#"><i class="ri-file-zip-line"></i> backup.zip</a>
+                </nav>
+            </details>
+        </section>
+        
+        <section>
+            <h2>Templates</h2>
+            <nav>
+                <a href="#"><i class="ri-layout-grid-line"></i> Notebook</a>
+                <a href="#"><i class="ri-code-box-line"></i> Code</a>
+                <a href="#"><i class="ri-flow-chart-line"></i> Flow</a>
+            </nav>
+        </section>
+        
+        <section>
+            <h2>Tags</h2>
+            <nav>
+                <a href="#"><i class="ri-price-tag-3-line"></i> Design</a>
+                <a href="#"><i class="ri-price-tag-3-line"></i> Development</a>
+                <a href="#"><i class="ri-price-tag-3-line"></i> Marketing</a>
+                <a href="#"><i class="ri-price-tag-3-line"></i> Urgent</a>
+            </nav>
+        </section>
+        
+        <section>
+            <h2>Trash</h2>
+            <nav>
+                <a href="#"><i class="ri-delete-bin-line"></i> Deleted Items</a>
+            </nav>
+        </section>
+    </aside>
+    
+    <!-- ===== PAGE CONTENT ===== -->
+    <article>
+        
+        <!-- Page Header with Tabs -->
+        <header>
+            <nav>
+                <menu>
+                    <li aria-current="page"><a href="#"><i class="ri-file-text-line"></i> Dashboard <i class="ri-close-line"></i></a></li>
+                    <li><a href="#"><i class="ri-projector-2-line"></i> Project Alpha <i class="ri-close-line"></i></a></li>
+                    <li><a href="#"><i class="ri-code-box-line"></i> API Notes <i class="ri-close-line"></i></a></li>
+                </menu>
+            </nav>
+        </header>
+        
+        <!-- Page Title -->
+        <section>
+            <h1>Project Dashboard</h1>
+            <p>Welcome back! Here's what's happening across your workspace.</p>
+        </section>
+        
+        <!-- Project Progress -->
+        <section>
+            <h2>📈 Project Progress</h2>
+            <p>Overall completion across all active projects.</p>
+            
+            <section>
+                <h3>Website Redesign</h3>
+                <progress value="75" max="100">75%</progress>
+                <p><strong>75%</strong> complete · <time datetime="2026-12-15">Due Dec 15</time></p>
+            </section>
+            
+            <section>
+                <h3>Mobile App</h3>
+                <progress value="40" max="100">40%</progress>
+                <p><strong>40%</strong> complete · <time datetime="2027-01-20">Due Jan 20</time></p>
+            </section>
+            
+            <section>
+                <h3>API Integration</h3>
+                <progress value="90" max="100">90%</progress>
+                <p><strong>90%</strong> complete · <time datetime="2026-11-30">Due Nov 30</time></p>
+            </section>
+        </section>
+        
+        <!-- Task List -->
+        <section>
+            <h2>✅ Today's Tasks</h2>
+            <p>Tasks assigned to you for today.</p>
+            
+            <ul>
+                <li aria-checked="true">Review design mockups</li>
+                <li aria-checked="true">Update project timeline</li>
+                <li aria-checked="false">Draft Q1 marketing strategy</li>
+                <li aria-checked="false">Deploy staging environment</li>
+                <li aria-checked="false">Schedule team sync meeting</li>
+            </ul>
+            
+            <p><strong>2 of 5</strong> tasks completed</p>
+        </section>
+        
+        <!-- Team Updates -->
+        <section>
+            <h2>💬 Team Updates</h2>
+            
+            <article>
+                <h3>Design System v2.0 Released</h3>
+                <p>
+                    <strong>Sarah Chen</strong> · <time datetime="2026-08-24T10:30">Today at 10:30 AM</time>
+                </p>
+                <p>
+                    The new design system includes <strong>component library</strong> updates, 
+                    <em>accessibility improvements</em>, and <code>theme tokens</code> for 
+                    dark mode support.
+                </p>
+                <blockquote>
+                    <p>"This release is a major milestone for our product consistency."</p>
+                    <cite>— Sarah Chen, Design Lead</cite>
+                </blockquote>
+            </article>
+            
+            <article>
+                <h3>Q3 Performance Review</h3>
+                <p>
+                    <strong>Mike Johnson</strong> · <time datetime="2026-08-23T15:45">Yesterday at 3:45 PM</time>
+                </p>
+                <p>
+                    Q3 metrics show <strong>15% growth</strong> in user engagement and 
+                    <em>record-low churn rates</em>. Major improvements in <code>onboarding flow</code> 
+                    contributed to these results.
+                </p>
+            </article>
+        </section>
+        
+        <!-- Project Team Table -->
+        <section>
+            <h2>👤 Project Team</h2>
+            
+            <table>
+                <caption>Active team members and their roles</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Name</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Projects</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Sarah Chen</strong></td>
+                        <td>Design Lead</td>
+                        <td>Website, App</td>
+                        <td>🟢 Active</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Mike Johnson</strong></td>
+                        <td>Engineering Manager</td>
+                        <td>API, App</td>
+                        <td>🟢 Active</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Emma Davis</strong></td>
+                        <td>Product Manager</td>
+                        <td>All projects</td>
+                        <td>🟡 On leave</td>
+                    </tr>
+                    <tr>
+                        <td><strong>James Park</strong></td>
+                        <td>Developer</td>
+                        <td>API</td>
+                        <td>🟢 Active</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4"><strong>4 active team members</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </section>
+        
+        <!-- Quick Note Form -->
+        <section>
+            <h2>✏️ Quick Note</h2>
+            <p>Add a quick update or task reminder.</p>
+            
+            <form>
+                <fieldset>
+                    <legend>New Note</legend>
+                    
+                    <label for="note-title">Title</label>
+                    <input type="text" id="note-title" placeholder="Enter note title...">
+                    
+                    <label for="note-content">Content</label>
+                    <textarea id="note-content" placeholder="Write your note here..."></textarea>
+                    
+                    <label for="note-priority">Priority</label>
+                    <select id="note-priority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+                    
+                    <button type="submit">Save Note</button>
+                </fieldset>
+            </form>
+        </section>
+        
+    </article>
+    
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <p>&copy; 2026 Semantic Notion · <time datetime="2026-08-25">August 25, 2026</time></p>
+    <nav>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+        <a href="#">API</a>
+    </nav>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,235 @@
+Here is the complete list of core Notion block types with their use cases, key attributes, and child component support.
+
+### 📝 Text & Structure Blocks
+
+| Block Type | Use Case | Key Attributes / Parameters | Supports Children? |
+| :--- | :--- | :--- | :--- |
+| **Paragraph** | Default text for writing notes, paragraphs, and general content. | `rich_text` (array of rich text objects for formatted text and inline mentions) | **Yes**, can contain nested blocks for indentation. |
+| **Heading 1 / 2 / 3** | Create section titles to structure a document hierarchically. | `rich_text` (heading text); `is_toggleable` (boolean) makes it a collapsible toggle heading. | If `is_toggleable` is **true**, it can contain children that expand/collapse. |
+| **Quote** | Highlight a block of text, often used for pull quotes or references. | `rich_text` (quoted text); supports `color` property. | **Yes**. |
+| **Callout** | Draw attention to information with a distinctive background and emoji/icon. | `rich_text` (text); `icon` (emoji or file); supports `color`. | **Yes**, content is nested inside the callout. |
+| **Code** | Display code snippets with syntax highlighting. | `rich_text` (code content); `language` (programming language); `caption`. | No (the `rich_text` array holds the content). |
+| **Equation** | Display a mathematical formula or expression using LaTeX/KaTeX syntax. | `expression` (string of LaTeX/KaTeX code). | No. |
+| **Divider** | Insert a horizontal rule to visually separate content sections. | No specific attributes. | No. |
+| **Table of Contents** | Auto-generate a navigation index of headings on the current page. | No specific attributes. | No. |
+
+### 📋 List & Interactive Blocks
+
+| Block Type | Use Case | Key Attributes / Parameters | Supports Children? |
+| :--- | :--- | :--- | :--- |
+| **Bulleted List** | Create unordered lists for items without a specific sequence. | `rich_text` (list item text). | **Yes**, nested items create indented sub-lists. |
+| **Numbered List** | Create ordered lists for steps, sequences, or prioritized items. | `rich_text` (list item text). | **Yes**. |
+| **To-Do** | Create interactive checkboxes for task management and tracking. | `rich_text` (task description); `checked` (boolean state). | **Yes**, nesting allows sub-tasks. |
+| **Toggle** | Create collapsible content that reveals details when clicked. | `rich_text` (toggle title); support for `color`. | **Yes**, the hidden content is nested inside the toggle. |
+| **Synced Block** | Create a reusable content block that updates everywhere when changed. | `synced_block` object; when referencing, `synced_from` object points to original. | **Yes**, children are nested inside the block. |
+
+### 🧩 Media & Embedded Blocks
+
+| Block Type | Use Case | Key Attributes / Parameters | Supports Children? |
+| :--- | :--- | :--- | :--- |
+| **Image** | Insert images from a file upload or external URL. | `file` (uploaded file) or `external` (URL); `caption`. | No (has a `caption` rich-text property instead). |
+| **Video** | Embed video files or external video links. | `file` (uploaded file) or `external` (URL); `caption`. | No. |
+| **Audio** | Embed audio files for playback. | `file` (uploaded file) or `external` (URL); `caption`. | No. |
+| **File** | Attach a file for download, supporting any file type. | `file` (uploaded file) or `external` (URL); `caption`; `name` (display name). | No. |
+| **Bookmark** | Create a rich link preview for an external URL. | `url` (the URL to bookmark). | No. |
+| **Embed** | Embed content from an external service (e.g., Google Maps, Figma) by providing a URL. | `url` (the embed source URL). | No. |
+
+### 🏗️ Structure & Layout Blocks
+
+| Block Type | Use Case | Key Attributes / Parameters | Supports Children? |
+| :--- | :--- | :--- | :--- |
+| **Column List** | Create a multi-column layout container. | Contains only `column` children. | **Yes**, it can contain **2 to 5 `column` blocks**. |
+| **Column** | Define a single column within a `column_list` to hold content. | No specific attributes. | **Yes**, it contains actual content blocks (paragraphs, images, etc.). |
+| **Child Page** | Create a new page nested within the current page. | This is a full `page` object with its own `properties` and `content`. | Conceptually a page, but the child hierarchy is managed via the parent-child relationship in the API. |
+| **Breadcrumb** | Display the page's location within the workspace hierarchy for navigation. | No specific attributes. | No. |
+
+### 📊 Database Blocks
+
+| Block Type | Use Case | Key Attributes / Parameters | Supports Children? |
+| :--- | :--- | :--- | :--- |
+| **Table** | Create a simple grid table (not a full database) with rows and columns. | `table_width` (number of columns); contains `table_row` children. | **Yes**, must contain `table_row` children. |
+| **Table Row** | Define a single row within a `table` block. | `cells` (array of rich text objects for each cell). | No. |
+| **Board** | Create a Kanban-style board view of a database. | This is a **database view** block. Its `type` will be `board` and references a source database. | No. |
+| **Gallery** | Create a gallery view of a database, showing a grid of items. | This is a **database view** block. Its `type` will be `gallery` and references a source database. | No. |
+| **List** | Create a list view of a database. | This is a **database view** block. Its `type` will be `list` and references a source database. | No. |
+| **Calendar** | Create a calendar view of a database with dates. | This is a **database view** block. Its `type` will be `calendar` and references a source database. | No. |
+
+### 🔧 Other Blocks
+
+| Block Type | Use Case | Key Attributes / Parameters | Supports Children? |
+| :--- | :--- | :--- | :--- |
+| **Link to Page** | Create a link to an existing page within your workspace. | Contains a reference to the target page's ID. | No. |
+| **Template Button** | **(Deprecated)** Used to insert a pre-defined set of blocks with one click. | Contained the template content. **Deprecated as of March 27, 2023**. | N/A (deprecated). |
+
+> **A Note on Children:** The "Supports Children?" column means a block can have other blocks nested inside it. This is the key to Notion's hierarchical and flexible data model. Blocks like `paragraph`, `toggle`, and `bulleted_list` can contain children to create indentation, lists, and collapsible content.
+Here is a **unified table** of all component types from Notion, Coda, Miro, and n8n with their categories and domains:
+
+---
+
+## Unified Component Types Table
+
+| # | Component Name | Source | Category | Domain | Sub-Category | Attributes | Parent Container | Child Components |
+|---|----------------|--------|----------|--------|--------------|------------|------------------|------------------|
+| 1 | Paragraph | Notion | Text | Document | Basic | rich_text, color | Page, Section, Callout | Inline elements |
+| 2 | Heading 1 | Notion | Text | Document | Structure | rich_text, is_toggleable | Page, Section | Text, Inline |
+| 3 | Heading 2 | Notion | Text | Document | Structure | rich_text, is_toggleable | Page, Section | Text, Inline |
+| 4 | Heading 3 | Notion | Text | Document | Structure | rich_text, is_toggleable | Page, Section | Text, Inline |
+| 5 | Quote | Notion | Text | Document | Highlight | rich_text, color | Page, Section, Callout | Text, Lists |
+| 6 | Callout | Notion | Text | Document | Highlight | rich_text, icon, color | Page, Section | Any block |
+| 7 | Code | Notion | Text | Document | Code | rich_text, language, caption | Page, Section | Inline code |
+| 8 | Equation | Notion | Text | Document | Math | expression (LaTeX) | Page, Section | None |
+| 9 | Divider | Notion | Layout | Document | Separator | None | Page, Section | None |
+| 10 | Table of Contents | Notion | Layout | Document | Navigation | None | Page | None |
+| 11 | Breadcrumb | Notion | Layout | Document | Navigation | None | Page | None |
+| 12 | Bulleted List | Notion | Interactive | Document | List | rich_text | Page, Section, Callout | Nested lists, Text |
+| 13 | Numbered List | Notion | Interactive | Document | List | rich_text | Page, Section, Callout | Nested lists, Text |
+| 14 | To-Do | Notion | Interactive | Document | Task | rich_text, checked | Page, Section, Callout | Nested to-dos, Text |
+| 15 | Toggle | Notion | Interactive | Document | Collapsible | rich_text, color | Page, Section | Any block |
+| 16 | Synced Block | Notion | Interactive | Document | Reusable | synced_block, synced_from | Page, Section | Any block |
+| 17 | Image | Notion | Media | Document | Visual | file, external, caption | Page, Section, Callout | None |
+| 18 | Video | Notion | Media | Document | Visual | file, external, caption | Page, Section, Callout | None |
+| 19 | Audio | Notion | Media | Document | Visual | file, external, caption | Page, Section, Callout | None |
+| 20 | File | Notion | Media | Document | Attachment | file, external, caption, name | Page, Section, Callout | None |
+| 21 | Bookmark | Notion | Media | Document | Link | url | Page, Section | None |
+| 22 | Embed | Notion | Media | Document | External | url | Page, Section | None |
+| 23 | Table (Database) | Notion | Data | Document | Database | title, properties | Page | Database rows |
+| 24 | Board (Kanban) | Notion | Data | Document | Database | title, properties, group_by | Page | Database items |
+| 25 | Gallery | Notion | Data | Document | Database | title, properties, cover | Page | Database items |
+| 26 | List (Database) | Notion | Data | Document | Database | title, properties | Page | Database items |
+| 27 | Calendar | Notion | Data | Document | Database | title, properties, date_property | Page | Database items |
+| 28 | Timeline | Notion | Data | Document | Database | title, properties, date_range | Page | Database items |
+| 29 | Column List | Notion | Layout | Document | Columns | None | Page, Section | 2-5 Column blocks |
+| 30 | Column | Notion | Layout | Document | Columns | None | Column List | Any block |
+| 31 | Child Page | Notion | Structure | Document | Page | title, properties | Page | Any block |
+| 32 | Link to Page | Notion | Structure | Document | Navigation | target_page_id | Page, Section | None |
+| 33 | Text Control | Coda | Interactive | Application | Form | value, placeholder, required | Form, Page, Section | None |
+| 34 | Select Control | Coda | Interactive | Application | Form | options, value, multi_select | Form, Page, Section | None |
+| 35 | Multiple Select | Coda | Interactive | Application | Form | options, value, max_selections | Form, Page, Section | None |
+| 36 | Relation Control | Coda | Interactive | Application | Data | target_table, value, display | Form, Page, Section | None |
+| 37 | Scale Control | Coda | Interactive | Application | Form | min, max, step, value | Form, Page, Section | None |
+| 38 | Checkbox Control | Coda | Interactive | Application | Form | checked, label | Form, Page, Section | None |
+| 39 | Date Range Control | Coda | Interactive | Application | Form | start_date, end_date, format | Form, Page, Section | None |
+| 40 | Button (Coda) | Coda | Interactive | Application | Action | label, action, formula | Form, Page, Section | None |
+| 41 | Sticky Note | Miro | Visual | Canvas | Note | text, color, position (x,y) | Canvas, Frame, Sticky Stack | None |
+| 42 | Card | Miro | Visual | Canvas | Card | title, description, assignee, status | Canvas, Frame | None |
+| 43 | Shape | Miro | Visual | Canvas | Drawing | type, fillColor, position | Canvas, Frame | None |
+| 44 | Connector | Miro | Visual | Canvas | Drawing | start, end, style | Canvas | None |
+| 45 | Text (Miro) | Miro | Visual | Canvas | Note | text, fontSize, position | Canvas, Frame | None |
+| 46 | Frame | Miro | Visual | Canvas | Container | title, position, size | Canvas | Any widget |
+| 47 | Sticky Stack | Miro | Visual | Canvas | Container | title, stickyCount | Canvas | Sticky Notes |
+| 48 | Dot Voting | Miro | Interactive | Canvas | Collaboration | options, votes, max_votes_per_user | Canvas | Sticky Notes, Cards |
+| 49 | Poll | Miro | Interactive | Canvas | Collaboration | question, options, responses | Canvas | None |
+| 50 | People | Miro | Interactive | Canvas | Collaboration | user, assignee, status | Canvas, Card | None |
+| 51 | Spinner Wheel | Miro | Interactive | Canvas | Collaboration | options, result | Canvas | None |
+| 52 | T-shirt Sizing | Miro | Interactive | Canvas | Collaboration | options (XS,S,M,L,XL), votes | Canvas | None |
+| 53 | Webhook Trigger | n8n | Process | Automation | Trigger | http_method, path, response | Workflow | None |
+| 54 | Schedule Trigger | n8n | Process | Automation | Trigger | cron, timezone, time | Workflow | None |
+| 55 | Polling Trigger | n8n | Process | Automation | Trigger | interval, last_fetched | Workflow | None |
+| 56 | HTTP Request | n8n | Process | Automation | Action | method, url, headers, body | Workflow | None |
+| 57 | IF Condition | n8n | Process | Automation | Logic | conditions, operand | Workflow | Branch nodes |
+| 58 | Switch | n8n | Process | Automation | Logic | rules, default | Workflow | Branch nodes |
+| 59 | Merge | n8n | Process | Automation | Data | mode (append, merge, multi-plex) | Workflow | Multiple nodes |
+| 60 | Aggregate | n8n | Process | Automation | Data | aggregation_type (sum, avg, count) | Workflow | Multiple nodes |
+| 61 | Code (n8n) | n8n | Process | Automation | Script | language, code, variables | Workflow | None |
+| 62 | Function | n8n | Process | Automation | Script | function_code, parameters | Workflow | None |
+| 63 | Database Query | n8n | Process | Automation | Data | connection, query, parameters | Workflow | None |
+| 64 | Email Sender | n8n | Process | Automation | Action | to, subject, body, attachments | Workflow | None |
+| 65 | Notification | n8n | Process | Automation | Action | message, type (success, error, info) | Workflow | None |
+
+---
+
+## Summary by Source and Category
+
+| Source | Category | Count |
+|--------|----------|-------|
+| **Notion** | Text & Structure | 11 |
+| | Layout | 4 |
+| | Interactive | 5 |
+| | Media | 6 |
+| | Data (Database) | 6 |
+| | **Total** | **32** |
+| **Coda** | Controls | 8 |
+| | **Total** | **8** |
+| **Miro** | Visual | 7 |
+| | Collaboration | 5 |
+| | **Total** | **12** |
+| **n8n** | Triggers | 3 |
+| | Actions | 3 |
+| | Logic | 2 |
+| | Data | 2 |
+| | Script | 2 |
+| | **Total** | **12** |
+
+---
+
+## Dataset Ready for Your Framework
+
+```javascript
+// ============================================================
+// FILE: datasets/entity_types.js
+// ============================================================
+export const ENTITY_TYPES = [
+  // Notion (32)
+  "paragraph", "heading_1", "heading_2", "heading_3", "quote", "callout",
+  "code", "equation", "divider", "table_of_contents", "breadcrumb",
+  "bulleted_list", "numbered_list", "to_do", "toggle", "synced_block",
+  "image", "video", "audio", "file", "bookmark", "embed",
+  "table_db", "board_db", "gallery_db", "list_db", "calendar_db", "timeline_db",
+  "column_list", "column", "child_page", "link_to_page",
+  
+  // Coda (8)
+  "text_control", "select_control", "multiple_select", "relation_control",
+  "scale_control", "checkbox_control", "date_range_control", "button_coda",
+  
+  // Miro (12)
+  "sticky_note", "card", "shape", "connector", "text_miro", "frame",
+  "sticky_stack", "dot_voting", "poll", "people", "spinner_wheel", "tshirt_sizing",
+  
+  // n8n (12)
+  "webhook_trigger", "schedule_trigger", "polling_trigger",
+  "http_request", "if_condition", "switch_node", "merge_node",
+  "aggregate_node", "code_node", "function_node", "database_query",
+  "email_sender", "notification_node"
+];
+```
+
+---
+
+## Category Types for Your Framework
+
+```javascript
+export const CATEGORY_TYPES = [
+  // Notion Categories
+  "text", "layout", "interactive", "media", "data", "structure",
+  
+  // Coda Categories
+  "application", "form",
+  
+  // Miro Categories
+  "visual", "canvas", "collaboration",
+  
+  // n8n Categories
+  "process", "automation", "trigger", "action", "logic", "script"
+];
+```
+
+---
+
+## Relationship Types Between Categories
+
+| Parent Category | Relationship | Child Category |
+|-----------------|--------------|----------------|
+| Page | contains | Any Notion block |
+| Section | contains | Text, Interactive, Media |
+| Callout | contains | Any Notion block |
+| Toggle | contains | Any Notion block |
+| Column List | contains | 2-5 Column blocks |
+| Column | contains | Any Notion block |
+| Form | contains | Coda Controls |
+| Canvas | contains | Miro widgets |
+| Frame | contains | Miro widgets |
+| Workflow | contains | n8n nodes |
+| IF Condition | contains | Branch nodes |
+| Merge | contains | Multiple nodes |
+
+This table gives you a complete, unified dataset ready for your framework's definitions, relationships, and validation rules.

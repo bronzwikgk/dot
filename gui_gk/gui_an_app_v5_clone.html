@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>An App - Composed UI</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="book.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css">
+    <style>
+        /* Context menu - hidden by default */
+        context-menu {
+            display: none;
+            position: fixed;
+            background: var(--color-bg-surface);
+            border: var(--border-width-default) solid var(--color-border);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            min-width: 12rem;
+            padding: var(--space-2) 0;
+        }
+        context-menu[open] {
+            display: block;
+        }
+        context-menu menuitem {
+            display: flex;
+            align-items: center;
+            gap: var(--space-5);
+            padding: var(--space-4) var(--space-7);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+        }
+        context-menu menuitem:hover {
+            background: var(--color-bg-hover);
+        }
+        context-menu menuitem[data-danger] {
+            color: #e53e3e;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ===== HEADER ===== -->
+<header data-component="header" data-id="header_01">
+    <h1 data-component="h1" data-id="brand">an app</h1>
+    <nav data-component="nav" data-id="menu_bar">
+        <menu data-component="menu">
+            <li data-component="li"><a href="#">File</a>
+                <ul data-component="ul">
+                    <li data-component="li"><a href="#"><i class="ri-add-circle-line"></i> New Book</a></li>
+                    <li data-component="li"><a href="#"><i class="ri-layout-grid-line"></i> Templates</a></li>
+                    <hr>
+                    <li data-component="li"><a href="#"><i class="ri-upload-2-line"></i> Import</a></li>
+                    <li data-component="li"><a href="#"><i class="ri-download-2-line"></i> Export</a></li>
+                    <hr>
+                    <li data-component="li"><a href="#"><i class="ri-save-line"></i> Save</a></li>
+                    <li data-component="li"><a href="#"><i class="ri-settings-3-line"></i> Settings</a></li>
+                </ul>
+            </li>
+            <li data-component="li"><a href="#">Edit</a>
+                <ul data-component="ul">
+                    <li data-component="li"><a href="#"><i class="ri-arrow-go-back-line"></i> Undo</a></li>
+                    <li data-component="li"><a href="#"><i class="ri-arrow-go-forward-line"></i> Redo</a></li>
+                    <hr>
+                    <li data-component="li"><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                </ul>
+            </li>
+            <li data-component="li"><a href="#">View</a>
+                <ul data-component="ul">
+                    <li data-component="li"><a href="#"><i class="ri-layout-masonry-line"></i> Notion</a></li>
+                    <li data-component="li"><a href="#"><i class="ri-code-s-slash-line"></i> Code</a></li>
+                    <li data-component="li"><a href="#"><i class="ri-node-tree"></i> Flow</a></li>
+                </ul>
+            </li>
+        </menu>
+    </nav>
+    <form role="search" data-component="form" data-id="search">
+        <i class="ri-search-line"></i>
+        <input type="search" placeholder="Search...">
+    </form>
+    <section data-component="section" data-id="window_controls">
+        <button type="button" title="Minimize"><i class="ri-subtract-line"></i></button>
+        <button type="button" title="Maximize"><i class="ri-checkbox-blank-line"></i></button>
+        <button type="button" title="Close"><i class="ri-close-line"></i></button>
+    </section>
+</header>
+
+<!-- ===== MAIN ===== -->
+<main data-component="main" data-id="editor">
+    <!-- ===== ASIDE ===== -->
+    <aside data-component="aside" data-id="sidebar">
+        <section data-component="section">
+            <h2>Quick Access</h2>
+            <nav><a href="#"><i class="ri-star-line"></i> Favorites</a><a href="#"><i class="ri-history-line"></i> Recent</a></nav>
+        </section>
+        <section data-component="section">
+            <h2>Explorer</h2>
+            <details open><summary><i class="ri-folder-3-line"></i> Books</summary>
+                <nav><a href="#"><i class="ri-file-text-line"></i> Library</a><a href="#"><i class="ri-file-text-line"></i> Docs</a></nav>
+            </details>
+        </section>
+        <section data-component="section">
+            <h2>Templates</h2>
+            <nav><a href="#"><i class="ri-layout-grid-line"></i> Notebook</a><a href="#"><i class="ri-file-code-line"></i> Code</a></nav>
+        </section>
+        <section data-component="section">
+            <h2>Tags</h2>
+            <nav><a href="#"><i class="ri-price-tag-3-line"></i> Ref</a><a href="#"><i class="ri-price-tag-3-line"></i> Draft</a></nav>
+        </section>
+        <section data-component="section">
+            <h2>Trash</h2>
+            <nav><a href="#"><i class="ri-delete-bin-line"></i> Deleted</a></nav>
+        </section>
+    </aside>
+
+    <!-- ===== ARTICLE ===== -->
+    <article data-component="article" data-id="book_01">
+        <header data-component="header" data-id="book_01_header">
+            <nav><menu>
+                <li aria-current="page"><a href="#"><i class="ri-file-text-line"></i> Library <i class="ri-close-line"></i></a></li>
+                <li><a href="#"><i class="ri-projector-2-line"></i> Docs <i class="ri-close-line"></i></a></li>
+            </menu></nav>
+        </header>
+
+        <section data-component="section" data-id="editor_area">
+            <section><h1>Component Library</h1><p>Reference of semantic blocks.</p></section>
+
+            <!-- COLLECTION 1: Text -->
+            <section><h2>Text Blocks</h2>
+                <ul>
+                    <li><section><h3>Paragraph</h3><p>Default text block for content.</p></section></li>
+                    <li><section><h3>Headings</h3><h1>H1</h1><h2>H2</h2><h3>H3</h3></section></li>
+                    <li><section><h3>Quote</h3><blockquote><p>Innovation distinguishes leader from follower.</p><cite>Steve Jobs</cite></blockquote></section></li>
+                    <li><section><h3>Code</h3><pre><code>const app = new AnApp();</code></pre></section></li>
+                </ul>
+            </section>
+
+            <!-- COLLECTION 2: List -->
+            <section><h2>List Blocks</h2>
+                <ul>
+                    <li><section><h3>Bulleted</h3><ul><li>Item one</li><li>Item two</li><li>Item three</li></ul></section></li>
+                    <li><section><h3>Numbered</h3><ol><li>Step one</li><li>Step two</li></ol></section></li>
+                    <li><section><h3>To-Do</h3><ul><li aria-checked="true">Done</li><li aria-checked="false">Pending</li></ul></section></li>
+                    <li><section><h3>Toggle</h3><details><summary>Expand</summary><p>Hidden content.</p></details></section></li>
+                </ul>
+            </section>
+
+            <!-- COLLECTION 3: Media -->
+            <section><h2>Media Blocks</h2>
+                <ul>
+                    <li><section><h3>Image</h3><figure><img src="https://picsum.photos/800/400" alt="Sample"><figcaption>Sample image</figcaption></figure></section></li>
+                    <li><section><h3>Video</h3><video controls><source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"></video></section></li>
+                    <li><section><h3>Audio</h3><audio controls><source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg"></audio></section></li>
+                    <li><section><h3>File</h3><a href="#" download><i class="ri-file-download-line"></i> document.pdf</a></section></li>
+                    <li><section><h3>Embed</h3><iframe src="https://www.openstreetmap.org/export/embed.html" width="100%" height="200"></iframe></section></li>
+                </ul>
+            </section>
+
+            <!-- COLLECTION 4: Database -->
+            <section><h2>Database Blocks</h2>
+                <ul>
+                    <li><section><h3>Table</h3><table><thead><tr><th>Name</th><th>Status</th><th>Due</th></tr></thead><tbody><tr><td>Design</td><td>Done</td><td>Sep 1</td></tr><tr><td>Dev</td><td>Progress</td><td>Sep 15</td></tr></tbody></table></section></li>
+                    <li><section><h3>Board</h3><ul><li>Todo: Research</li><li>In Progress: Design</li><li>Done: Kickoff</li></ul></section></li>
+                    <li><section><h3>Calendar</h3><table><thead><tr><th>S</th><th>M</th><th>T</th><th>W</th><th>T</th><th>F</th><th>S</th></tr></thead><tbody><tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td><td>7</td></tr></tbody></table></section></li>
+                    <li><section><h3>Timeline</h3><table><thead><tr><th>Task</th><th>Progress</th></tr></thead><tbody><tr><td>Research</td><td><progress value="100" max="100"></progress></td></tr><tr><td>Design</td><td><progress value="60" max="100"></progress></td></tr></tbody></table></section></li>
+                </ul>
+            </section>
+
+            <!-- COLLECTION 5: Forms -->
+            <section><h2>Form Blocks</h2>
+                <ul>
+                    <li><section><h3>Contact</h3><form><fieldset><legend>Send</legend><label for="n">Name</label><input id="n"><label for="m">Message</label><textarea id="m"></textarea><button>Send</button></fieldset></form></section></li>
+                    <li><section><h3>Progress</h3><progress value="75" max="100"></progress><p>75% complete</p></section></li>
+                </ul>
+            </section>
+
+            <!-- COLLECTION 6: Layout -->
+            <section><h2>Layout Blocks</h2>
+                <ul>
+                    <li><section><h3>Breadcrumb</h3><nav><a href="#">Home</a> / <a href="#">Library</a></nav></section></li>
+                    <li><section><h3>Child Page</h3><a href="#"><i class="ri-file-text-line"></i> Requirements</a></section></li>
+                </ul>
+            </section>
+
+            <!-- COLLECTION 7: Team -->
+            <section><h2>Team Updates</h2>
+                <ul>
+                    <li><article><h3>Design v2.0</h3><p><strong>Sarah</strong> <time>Today</time></p><p>New design system released.</p></article></li>
+                    <li><article><h3>Q3 Review</h3><p><strong>Mike</strong> <time>Yesterday</time></p><p>15% growth in engagement.</p></article></li>
+                </ul>
+            </section>
+        </section>
+
+        <footer data-component="footer"><p>Library | <time datetime="2026-08-25">Aug 25</time></p></footer>
+    </article>
+</main>
+
+<!-- ===== APP FOOTER ===== -->
+<footer data-component="footer"><p>An App v1.0</p><nav><a href="#">Privacy</a><a href="#">Terms</a></nav></footer>
+
+<!-- ===== CONTEXT MENU (hidden, shown on right-click) ===== -->
+<context-menu data-component="context-menu" id="context_menu">
+    <menuitem data-action="edit"><i class="ri-edit-line"></i> Edit</menuitem>
+    <menuitem data-action="duplicate"><i class="ri-file-copy-line"></i> Duplicate</menuitem>
+    <menuitem data-action="delete" data-danger><i class="ri-delete-bin-line"></i> Delete</menuitem>
+</context-menu>
+
+<script>
+// Context menu logic
+const contextMenu = document.getElementById('context_menu');
+let targetComponent = null;
+
+document.addEventListener('contextmenu', (e) => {
+    const component = e.target.closest('[data-component]');
+    if (component) {
+        e.preventDefault();
+        targetComponent = component;
+        contextMenu.style.left = e.pageX + 'px';
+        contextMenu.style.top = e.pageY + 'px';
+        contextMenu.setAttribute('open', '');
+    }
+});
+
+document.addEventListener('click', () => {
+    contextMenu.removeAttribute('open');
+    targetComponent = null;
+});
+
+contextMenu.querySelectorAll('menuitem').forEach(item => {
+    item.addEventListener('click', () => {
+        const action = item.getAttribute('data-action');
+        console.log(`${action} on ${targetComponent?.getAttribute('data-component')}`);
+    });
+});
+</script>
+
+</body>
+</html>

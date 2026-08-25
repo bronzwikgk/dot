@@ -1,0 +1,28 @@
+/* tokens_website.css - Website Page Type - COMPLETE TOKEN SET */
+:root {
+    /* Colors */
+    --color-text-primary: #1a1a1a;
+    --color-text-secondary: #4a4a4a;
+    --color-text-body: #333333;
+    --color-text-muted: #6c757d;
+    --color-bg-body: #ffffff;
+    --color-bg-surface: #f8f9fa;
+    --color-bg-hover: #e9ecef;
+    --color-brand-primary: #0066cc;
+    --color-brand-primary-hover: #0052a3;
+    --color-border: #dee2e6;
+
+    /* Typography */
+    --font-family-base: 'Georgia', 'Times New Roman', serif;
+    --font-size-base: 1rem;
+    --font-size-h1: 2.5rem;
+    --font-size-h2: 1.5rem;
+    --font-size-h3: 1.25rem;
+    --font-size-sm: 0.875rem;
+
+    /* Layout */
+    --header-bg: #ffffff;
+    --aside-bg: #f8f9fa;
+    --scroll-container: body;
+    --scroll-enabled: auto;
+}

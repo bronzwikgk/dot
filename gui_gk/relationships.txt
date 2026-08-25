@@ -1,0 +1,148 @@
+EDITOR > BOOK > COLLECTION > BLOCK > CELL
+==========================================
+
+HIERARCHY LEVELS
+----------------
+
+Level 0: EDITOR (body > main)
+  - Parent: body
+  - Children: aside, article
+  - Purpose: Viewport, manages open books
+
+Level 1: BOOK (main > article)
+  - Parent: main
+  - Children: header, section, footer
+  - Purpose: Single document with tabs
+
+Level 2: COLLECTION (article > section > section)
+  - Parent: article > section (editor area)
+  - Children: ul, h2, h1, p
+  - Purpose: Layout group (content category)
+
+Level 3: BLOCK (section > ul)
+  - Parent: collection (section)
+  - Children: li
+  - Purpose: Semantic container (list of items)
+
+Level 4: CELL (ul > li)
+  - Parent: block (ul)
+  - Children: section, article, text
+  - Purpose: Leaf content, atomic unit
+
+Level 5: NESTED (li > section)
+  - Parent: cell (li)
+  - Children: h3, p, ul, table, form, etc.
+  - Purpose: Detailed content within cell
+
+
+RELATIONSHIP RULES
+------------------
+
+1. EDITOR contains BOOKS
+   - body > main contains article elements
+   - Only one book visible at a time (tab switching)
+
+2. BOOK contains HEADER, SECTION, FOOTER
+   - article > header: tab navigation only
+   - article > section: scrollable editor area
+   - article > footer: status bar
+
+3. COLLECTION contains BLOCKS
+   - section > section: each collection has ul/ol
+   - section > h2: collection title
+   - No direct text in collection - must be in blocks
+
+4. BLOCK contains CELLS
+   - ul/ol contains li elements
+   - No checkbox on content cells
+   - Checkbox only on li[aria-checked] (task items)
+
+5. CELLS contain NESTED CONTENT
+   - li > section: nested block
+   - li > article: nested document
+   - li > text: simple content
+
+6. NESTED CONTENT can contain SUB-ITEMS
+   - section > ul > li: recursive nesting allowed
+   - Maximum depth: 4 levels recommended
+
+
+SELECTOR PATHS
+--------------
+
+Editor:           body > main
+Book:             body > main > article
+Book Header:      article > header
+Editor Area:      article > section
+Collection:       article > section > section
+Block:            article > section > section > ul
+Cell:             article > section > section > ul > li
+Nested Section:   ul > li > section
+Nested Article:   ul > li > article
+Book Footer:      article > footer
+Collection Title: article > section > section > h2
+Cell Content:     article > section > section > ul > li > section > *
+
+
+ID NAMING CONVENTION
+--------------------
+
+Format: {level}_{book}_{collection}_{block}_{cell}
+
+Examples:
+- book_01                          = First book
+- book_01_col_01                   = First collection in first book
+- book_01_col_01_block_01          = First block in first collection
+- book_01_col_01_block_01_cell_01  = First cell in first block
+- book_01_col_01_block_01_cell_01_section_01 = Nested section in cell
+
+
+CSS SPECIFICITY RULES
+---------------------
+
+Level 0 (Editor):     body > main
+Level 1 (Book):       body > main > article
+Level 2 (Collection): body > main > article > section > section
+Level 3 (Block):      body > main > article > section > section > ul
+Level 4 (Cell):       body > main > article > section > section > ul > li
+Level 5 (Nested):     body > main > article > section > section > ul > li > section
+
+
+SCROLL RULES
+------------
+
+Fixed (no scroll):
+- article > header (tabs)
+- article > footer (status)
+
+Scrollable:
+- article > section (editor area)
+
+
+WIDTH RULES
+-----------
+
+Collections: max-width: 80%, margin: auto
+Blocks: width: 100% (within collection)
+Cells: width: 100% (within block)
+
+
+LIFECYCLE
+---------
+
+1. Editor created on page load
+2. Book created when user opens document
+3. Collection created when user adds section
+4. Block created when user adds list/table/form
+5. Cell created when user adds item to block
+6. Nested content created when user drills into cell
+
+
+UPDATE RULES
+------------
+
+- Cell changes: immediate DOM update
+- Block changes: reflow siblings
+- Collection changes: reflow blocks
+- Book changes: update tab state
+- Editor changes: manage book visibility

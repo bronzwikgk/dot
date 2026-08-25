@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Notion - Component Library</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="book.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css">
+</head>
+<body>
+
+<!-- ===== APP HEADER ===== -->
+<header>
+    <h1>an app</h1>
+    <nav>
+        <menu>
+            <li><a href="#">File</a>
+                <ul>
+                    <li><a href="#"><i class="ri-add-circle-line"></i> New Book</a></li>
+                    <li><a href="#"><i class="ri-layout-grid-line"></i> New from Templates</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-upload-2-line"></i> Import</a></li>
+                    <li><a href="#"><i class="ri-download-2-line"></i> Export</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-save-line"></i> Save</a></li>
+                    <li><a href="#"><i class="ri-settings-3-line"></i> Settings</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Edit</a>
+                <ul>
+                    <li><a href="#"><i class="ri-arrow-go-back-line"></i> Undo</a></li>
+                    <li><a href="#"><i class="ri-arrow-go-forward-line"></i> Redo</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-arrow-up-line"></i> Move Cell Up</a></li>
+                    <li><a href="#"><i class="ri-arrow-down-line"></i> Move Cell Down</a></li>
+                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete Cell</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Insert</a>
+                <ul>
+                    <li><a href="#"><i class="ri-markdown-line"></i> Text Cell</a></li>
+                    <li><a href="#"><i class="ri-terminal-box-line"></i> Pipeline Cell</a></li>
+                    <li><a href="#"><i class="ri-code-line"></i> Code Cell</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-layout-masonry-line"></i> Component</a></li>
+                    <li><a href="#"><i class="ri-filter-3-line"></i> Filter</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Run</a>
+                <ul>
+                    <li><a href="#"><i class="ri-play-line"></i> Run Active</a></li>
+                    <li><a href="#"><i class="ri-play-circle-line"></i> Run Selected</a></li>
+                    <li><a href="#"><i class="ri-play-circle-line"></i> Run All</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-node-tree"></i> Execute DAG</a></li>
+                    <li><a href="#"><i class="ri-play-circle-line"></i> Execute Flow</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-eraser-line"></i> Reset</a></li>
+                </ul>
+            </li>
+            <li><a href="#">View</a>
+                <ul>
+                    <li><a href="#"><i class="ri-terminal-box-line"></i> Jupyter Layout</a></li>
+                    <li><a href="#"><i class="ri-layout-masonry-line"></i> Notion Layout</a></li>
+                    <li><a href="#"><i class="ri-code-s-slash-line"></i> VSCode Layout</a></li>
+                    <li><a href="#"><i class="ri-node-tree"></i> Flow Builder</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-side-bar-line"></i> Toggle Sidebar</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Help</a>
+                <ul>
+                    <li><a href="#"><i class="ri-information-line"></i> About</a></li>
+                    <li><a href="#"><i class="ri-lightbulb-line"></i> Getting Started</a></li>
+                    <li><a href="#"><i class="ri-book-open-line"></i> API Docs</a></li>
+                </ul>
+            </li>
+        </menu>
+    </nav>
+    <form role="search">
+        <i class="ri-search-line"></i>
+        <input type="search" placeholder="Search books, cells...">
+    </form>
+    <section>
+        <button type="button" title="Templates"><i class="ri-layout-grid-line"></i></button>
+        <button type="button" title="Take a Tour"><i class="ri-question-line"></i></button>
+        <button type="button" title="Settings"><i class="ri-settings-3-line"></i></button>
+        <hr>
+        <button type="button" title="Minimize"><i class="ri-subtract-line"></i></button>
+        <button type="button" title="Maximize"><i class="ri-checkbox-blank-line"></i></button>
+        <button type="button" title="Close"><i class="ri-close-line"></i></button>
+    </section>
+</header>
+
+<!-- ===== MAIN LAYOUT ===== -->
+<main>
+
+    <!-- ===== ASIDE ===== -->
+    <aside>
+        <section>
+            <h2>Quick Access</h2>
+            <nav>
+                <a href="#" aria-current="page"><i class="ri-star-line"></i> Favorites</a>
+                <a href="#"><i class="ri-history-line"></i> Recent</a>
+                <a href="#"><i class="ri-archive-line"></i> Archived</a>
+            </nav>
+        </section>
+
+        <section>
+            <h2>Explorer</h2>
+            <details open>
+                <summary><i class="ri-folder-3-line"></i> Component Library</summary>
+                <nav>
+                    <a href="#"><i class="ri-file-text-line"></i> Text Blocks</a>
+                    <a href="#"><i class="ri-file-list-3-line"></i> List Blocks</a>
+                    <a href="#"><i class="ri-file-image-line"></i> Media Blocks</a>
+                    <a href="#"><i class="ri-file-table-line"></i> Database Blocks</a>
+                    <a href="#"><i class="ri-file-code-line"></i> Code Blocks</a>
+                    <a href="#"><i class="ri-file-chart-line"></i> Layout Blocks</a>
+                </nav>
+            </details>
+            <details>
+                <summary><i class="ri-folder-3-line"></i> Templates</summary>
+                <nav>
+                    <a href="#"><i class="ri-file-text-line"></i> Blank Page</a>
+                    <a href="#"><i class="ri-file-code-line"></i> Meeting Notes</a>
+                </nav>
+            </details>
+        </section>
+
+        <section>
+            <h2>Tags</h2>
+            <nav>
+                <a href="#"><i class="ri-price-tag-3-line"></i> Reference</a>
+                <a href="#"><i class="ri-price-tag-3-line"></i> Draft</a>
+            </nav>
+        </section>
+    </aside>
+
+    <!-- ===== BOOK CONTENT ===== -->
+    <article>
+
+        <!-- Tab Bar -->
+        <header>
+            <nav>
+                <menu>
+                    <li aria-current="page"><a href="#"><i class="ri-file-text-line"></i> Component Library <i class="ri-close-line"></i></a></li>
+                    <li><a href="#"><i class="ri-projector-2-line"></i> Getting Started <i class="ri-close-line"></i></a></li>
+                </menu>
+            </nav>
+        </header>
+
+        <!-- Editor Area (scrollable) -->
+        <section>
+
+            <!-- Page Title -->
+            <section>
+                <h1>Component Library</h1>
+                <p>Complete reference of all Notion block types with live samples.</p>
+            </section>
+
+        <!-- ============================================ -->
+        <!-- TEXT & STRUCTURE BLOCKS -->
+        <!-- ============================================ -->
+
+        <section>
+            <h2>Text & Structure Blocks</h2>
+
+            <h3>Paragraph</h3>
+            <p>This is a default paragraph block. It contains rich text with <strong>bold</strong>, <em>italic</em>, <code>inline code</code>, and <a href="#">links</a>. Paragraphs are the most common block type for general content.</p>
+
+            <h3>Headings</h3>
+            <h1>Heading 1 - Page Title</h1>
+            <h2>Heading 2 - Section Title</h2>
+            <h3>Heading 3 - Subsection Title</h3>
+            <h4>Heading 4 - Minor Title</h4>
+            <h5>Heading 5 - Small Title</h5>
+            <h6>Heading 6 - Smallest Title</h6>
+
+            <h3>Quote</h3>
+            <blockquote>
+                <p>The best way to predict the future is to invent it. Think about what you want to do, and then do it.</p>
+                <cite>Alan Kay</cite>
+            </blockquote>
+
+            <h3>Callout</h3>
+            <aside>
+                <p><strong>Important:</strong> This is a callout block. It draws attention to key information with a distinctive style.</p>
+            </aside>
+
+            <h3>Code</h3>
+            <pre><code>function greet(name) {
+    return `Hello, ${name}!`;
+}
+
+const message = greet("World");
+console.log(message);</code></pre>
+
+            <h3>Divider</h3>
+            <hr>
+
+            <h3>Equation</h3>
+            <p>Inline equation: <span>E = mc<sup>2</sup></span></p>
+            <p>Block equation:</p>
+            <figure>
+                <p><strong>f(x) = (-b + sqrt(b<sup>2</sup> - 4ac)) / 2a</strong></p>
+                <figcaption>Quadratic formula</figcaption>
+            </figure>
+
+            <h3>Table of Contents</h3>
+            <nav>
+                <ol>
+                    <li><a href="#">Text & Structure Blocks</a></li>
+                    <li><a href="#">List & Interactive Blocks</a></li>
+                    <li><a href="#">Media Blocks</a></li>
+                    <li><a href="#">Database Blocks</a></li>
+                    <li><a href="#">Form Elements</a></li>
+                </ol>
+            </nav>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- LIST & INTERACTIVE BLOCKS -->
+        <!-- ============================================ -->
+
+        <section>
+            <h2>List & Interactive Blocks</h2>
+
+            <h3>Bulleted List</h3>
+            <ul>
+                <li>First item in the list</li>
+                <li>Second item with more detail</li>
+                <li>Third item for completeness</li>
+            </ul>
+
+            <h3>Numbered List</h3>
+            <ol>
+                <li>Step one: Initialize the project</li>
+                <li>Step two: Configure settings</li>
+                <li>Step three: Run the application</li>
+            </ol>
+
+            <h3>To-Do List</h3>
+            <ul>
+                <li aria-checked="true">Design system tokens defined</li>
+                <li aria-checked="true">CSS architecture created</li>
+                <li aria-checked="false">Component library complete</li>
+                <li aria-checked="false">Documentation written</li>
+                <li aria-checked="false">Tests passing</li>
+            </ul>
+
+            <h3>Toggle (Details/Summary)</h3>
+            <details>
+                <summary>Click to expand this toggle block</summary>
+                <p>This content is hidden by default and revealed when the toggle is clicked. Toggle blocks are great for FAQ sections, collapsible content, and progressive disclosure.</p>
+            </details>
+
+            <details open>
+                <summary>This toggle starts open</summary>
+                <p>Content visible by default. Good for important information that should always be shown.</p>
+            </details>
+
+            <h3>Synced Block (Simulated)</h3>
+            <aside>
+                <p>This content is synced across multiple pages. Changes here reflect everywhere this block appears.</p>
+            </aside>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- MEDIA BLOCKS -->
+        <!-- ============================================ -->
+
+        <section>
+            <h2>Media Blocks</h2>
+
+            <h3>Image</h3>
+            <figure>
+                <img src="https://picsum.photos/800/400" alt="Sample landscape image">
+                <figcaption>Figure 1: Sample image with caption</figcaption>
+            </figure>
+
+            <h3>Video</h3>
+            <video controls>
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+
+            <h3>Audio</h3>
+            <audio controls>
+                <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                Your browser does not support the audio element.
+            </audio>
+
+            <h3>File Attachment</h3>
+            <a href="#" download><i class="ri-file-download-line"></i> document.pdf (2.4 MB)</a>
+
+            <h3>Bookmark</h3>
+            <a href="https://notion.so" target="_blank">
+                <i class="ri-links-line"></i> Notion - Your connected workspace
+            </a>
+
+            <h3>Embed</h3>
+            <figure>
+                <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-0.1,51.5,0.1,51.6&layer=mapnik" width="100%" height="300"></iframe>
+                <figcaption>Embedded map from OpenStreetMap</figcaption>
+            </figure>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- DATABASE BLOCKS -->
+        <!-- ============================================ -->
+
+        <section>
+            <h2>Database Blocks</h2>
+
+            <h3>Table</h3>
+            <table>
+                <caption>Project tasks database</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">Task</th>
+                        <th scope="col">Assignee</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Due Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Design homepage</td>
+                        <td>Sarah Chen</td>
+                        <td>In Progress</td>
+                        <td>High</td>
+                        <td><time datetime="2026-09-01">Sep 1</time></td>
+                    </tr>
+                    <tr>
+                        <td>Build API endpoints</td>
+                        <td>Mike Johnson</td>
+                        <td>Todo</td>
+                        <td>High</td>
+                        <td><time datetime="2026-09-15">Sep 15</time></td>
+                    </tr>
+                    <tr>
+                        <td>Write documentation</td>
+                        <td>Emma Davis</td>
+                        <td>Done</td>
+                        <td>Medium</td>
+                        <td><time datetime="2026-08-20">Aug 20</time></td>
+                    </tr>
+                    <tr>
+                        <td>Setup CI/CD pipeline</td>
+                        <td>James Park</td>
+                        <td>In Progress</td>
+                        <td>Low</td>
+                        <td><time datetime="2026-09-30">Sep 30</time></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Board (Kanban)</h3>
+            <section>
+                <h4>Todo</h4>
+                <ul>
+                    <li>Research competitors</li>
+                    <li>Define milestones</li>
+                </ul>
+            </section>
+            <section>
+                <h4>In Progress</h4>
+                <ul>
+                    <li>Design system</li>
+                    <li>API development</li>
+                </ul>
+            </section>
+            <section>
+                <h4>Done</h4>
+                <ul>
+                    <li>Project kickoff</li>
+                    <li>Requirements gathering</li>
+                </ul>
+            </section>
+
+            <h3>Gallery</h3>
+            <section>
+                <figure>
+                    <img src="https://picsum.photos/200/150?random=1" alt="Project 1">
+                    <figcaption>Project Alpha</figcaption>
+                </figure>
+                <figure>
+                    <img src="https://picsum.photos/200/150?random=2" alt="Project 2">
+                    <figcaption>Project Beta</figcaption>
+                </figure>
+                <figure>
+                    <img src="https://picsum.photos/200/150?random=3" alt="Project 3">
+                    <figcaption>Project Gamma</figcaption>
+                </figure>
+            </section>
+
+            <h3>Calendar</h3>
+            <table>
+                <thead>
+                    <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+                    <tr><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr>
+                    <tr><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19</td><td>20</td></tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- FORM ELEMENTS -->
+        <!-- ============================================ -->
+
+        <section>
+            <h2>Form Elements</h2>
+
+            <form>
+                <fieldset>
+                    <legend>Contact Form</legend>
+
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your name...">
+
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="you@example.com">
+
+                    <label for="subject">Subject</label>
+                    <select id="subject">
+                        <option value="">Select a subject...</option>
+                        <option value="general">General Inquiry</option>
+                        <option value="support">Technical Support</option>
+                        <option value="feedback">Feedback</option>
+                    </select>
+
+                    <label for="message">Message</label>
+                    <textarea id="message" placeholder="Write your message here..."></textarea>
+
+                    <label for="priority">Priority</label>
+                    <select id="priority">
+                        <option value="low">Low</option>
+                        <option value="medium" selected>Medium</option>
+                        <option value="high">High</option>
+                    </select>
+
+                    <label>
+                        <input type="checkbox" checked> Subscribe to updates
+                    </label>
+
+                    <button type="submit">Send Message</button>
+                </fieldset>
+            </form>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- PROGRESS & STATUS -->
+        <!-- ============================================ -->
+
+        <section>
+            <h2>Progress & Status</h2>
+
+            <h3>Progress Bars</h3>
+            <p>Website Redesign</p>
+            <progress value="75" max="100">75%</progress>
+            <p><strong>75%</strong> complete <time datetime="2026-12-15">Due Dec 15</time></p>
+
+            <p>Mobile App</p>
+            <progress value="40" max="100">40%</progress>
+            <p><strong>40%</strong> complete <time datetime="2027-01-20">Due Jan 20</time></p>
+
+            <p>API Integration</p>
+            <progress value="90" max="100">90%</progress>
+            <p><strong>90%</strong> complete <time datetime="2026-11-30">Due Nov 30</time></p>
+
+            <h3>Status Indicators</h3>
+            <ul>
+                <li aria-checked="true">Task completed successfully</li>
+                <li aria-checked="false">Task pending review</li>
+            </ul>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- LAYOUT BLOCKS -->
+        <!-- ============================================ -->
+
+        <section>
+            <h2>Layout Blocks</h2>
+
+            <h3>Columns (Simulated)</h3>
+            <section>
+                <h4>Column 1</h4>
+                <p>First column content. Layout blocks allow side-by-side content arrangement.</p>
+            </section>
+            <section>
+                <h4>Column 2</h4>
+                <p>Second column content. Columns can contain any block type.</p>
+            </section>
+
+            <h3>Timeline (Gantt)</h3>
+            <table>
+                <caption>Project timeline</caption>
+                <thead>
+                    <tr><th>Task</th><th>Start</th><th>Duration</th><th>Progress</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Research</td><td><time datetime="2026-09-01">Sep 1</time></td><td>2 weeks</td><td><progress value="100" max="100"></progress></td></tr>
+                    <tr><td>Design</td><td><time datetime="2026-09-15">Sep 15</time></td><td>3 weeks</td><td><progress value="60" max="100"></progress></td></tr>
+                    <tr><td>Development</td><td><time datetime="2026-10-06">Oct 6</time></td><td>4 weeks</td><td><progress value="20" max="100"></progress></td></tr>
+                    <tr><td>Testing</td><td><time datetime="2026-11-03">Nov 3</time></td><td>2 weeks</td><td><progress value="0" max="100"></progress></td></tr>
+                </tbody>
+            </table>
+
+            <h3>Child Page</h3>
+            <a href="#"><i class="ri-file-text-line"></i> Project Requirements (nested page)</a>
+
+            <h3>Link to Page</h3>
+            <a href="#"><i class="ri-link"></i> Design System Documentation</a>
+
+            <h3>Breadcrumb</h3>
+            <nav>
+                <a href="#">Home</a> / <a href="#">Projects</a> / <a href="#">Component Library</a>
+            </nav>
+        </section>
+
+        <!-- ============================================ -->
+        <!-- TEAM UPDATES (Nested Articles) -->
+        <!-- ============================================ -->
+
+        <section>
+            <h2>Team Updates</h2>
+
+            <article>
+                <h3>Design System v2.0 Released</h3>
+                <p><strong>Sarah Chen</strong> <time datetime="2026-08-24T10:30">Today at 10:30 AM</time></p>
+                <p>The new design system includes <strong>component library</strong> updates, <em>accessibility improvements</em>, and <code>theme tokens</code> for dark mode support.</p>
+                <blockquote>
+                    <p>"This release is a major milestone for our product consistency."</p>
+                    <cite>Sarah Chen, Design Lead</cite>
+                </blockquote>
+            </article>
+
+            <article>
+                <h3>Q3 Performance Review</h3>
+                <p><strong>Mike Johnson</strong> <time datetime="2026-08-23T15:45">Yesterday at 3:45 PM</time></p>
+                <p>Q3 metrics show <strong>15% growth</strong> in user engagement and <em>record-low churn rates</em>. Major improvements in <code>onboarding flow</code> contributed to these results.</p>
+            </article>
+        </section>
+
+        </section>
+
+        <!-- Article Footer (Status Bar) -->
+        <footer>
+            <p>Component Library | 30 blocks | <time datetime="2026-08-25">Aug 25, 2026</time></p>
+        </footer>
+
+    </article>
+
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+    <p><time datetime="2026-08-25">August 25, 2026</time></p>
+    <nav>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+        <a href="#">API</a>
+    </nav>
+</footer>
+
+</body>
+</html>

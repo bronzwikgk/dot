@@ -130,6 +130,27 @@ Total: 22/22 records covered.
 
 Total: 18/18 operations covered.
 
+## Code Restructuring Status
+
+### Plugins Archived
+- code_shared_action_entity_v3_0_0_draft.js (old version)
+- code_shared_action_entity_v3_1_0_draft.js (old version)
+- code_shared_app_generator_v3_0_0_draft.js (merged into app_shell)
+- code_shared_integrated_application_v3_0_0_draft.js (merged into app_shell)
+- code_shared_entity_runner_v3_0_0_draft.js (merged into runner)
+
+### Plugins Remaining (active)
+- code_shared_action_entity_v4_0_0_draft.js (consolidated)
+- code_shared_app_shell_v3_0_0_draft.js
+- code_shared_runner_v3_0_0_draft.js
+- code_shared_product_surface_v3_0_0_draft.js
+- code_shared_ui_surface_v4_0_0_draft.js
+- code_shared_version_system_v3_0_0_draft.js
+- code_shared_repository_operations_v3_0_0_draft.js
+- code_shared_validator_v3_0_0_draft.js
+- code_shared_logger_v3_0_0_draft.js
+- an_app_brain_v1_4_0_draft.js
+
 ## Naming Convention Check
 
 All files use snake_case. All versions use v1_4_0 in folder name. Status is proposed/draft.

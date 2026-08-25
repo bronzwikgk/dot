@@ -1,0 +1,75 @@
+- No Class in css
+- page type
+- page layout types
+- componenet type
+- compoenents layout type
+- book layout type
+- editor layout type
+artcile> section > ul > Li> section> content
+Editor ➔ Book ➔ Collection (Layout) ➔ Block (Semantic) ➔ Cell (Leaf)
+
+each article must have a header and a section [ contains ul and li [contains section ]] and a footer
+each  article, section must have, header, and ul as their children
+each ul shoudl have collection of li
+
+Path-based CSS with semantic selectors only.
+
+
+Critical Rules for this model:
+
+A ContentCollection CANNOT contain a ContentCollection. Only Blocks.
+
+A ContentBlock CANNOT contain a ContentBlock. Only Cells.
+
+ContentCell is the absolute leaf node. It contains ONLY text and inline styles.
+
+The semantic object inside ContentBlock is how we enable Kanban/Calendar views later.
+
+
+
+Element	Purpose
+<header>	Page header and article header
+<nav>	Navigation menus
+<main>	Primary content wrapper
+<aside>	Sidebar with workspace nav
+<section>	Content groupings with headings
+<article>	Individual content entries
+<footer>	Page footer
+<h1>-<h3>	Headings in hierarchy
+<p>	Paragraphs
+<ul> + <li>	Task lists with ARIA states
+<table>	Project team data
+<blockquote>	Quoted team updates
+<code>	Inline code samples
+<time>	Date/time elements
+<progress>	Project progress bars
+<form> + <fieldset> + <legend>	Form with proper grouping
+<label> + <input> + <textarea> + <select>	Form controls
+
+- Parent	Relationship	Child
+<html>	contains	<head>, <body>
+<body>	contains	<header>, <main>, <footer>
+<main>	contains	<aside>, <article>
+<aside>	contains	<headr>, and multiple <section>
+<section>	contains	<h2>, <nav>
+<article>	contains	<header>, multiple <section>
+<section>	contains	<h2>, <p>, <ul>, <table>, <form>
+<ul>	must contain	<li>
+<table>	contains	<caption>, <thead>, <tbody>, <tfoot>
+<form>	contains	<fieldset>
+<fieldset>	contains	<legend>, <label>, <input>, <textarea>, <select>, <button>
+
+
+The Complete Framework Checklist
+Dataset	Purpose	Used For
+page_types	Define UI contexts	Theme engine, routing
+layout_types	Define visual projections	Viewport switcher
+component_types	Define semantic units	Data model validation
+hierarchy_levels	Define nesting rules	Tree validation, drag-drop limits
+semantic_elements	Define HTML support	Rich text editor, sanitization
+css_token_categories	Define design tokens	Theme builder, style generation
+relationship_types	Define connections	Graph traversal, UI navigation
+html_relationship_types	Define link rel attributes	Link editor, SEO tools
+relationship_*	Define component graphs	Data integrity, CRUD permissions
+The Golden Rule for Your Agent
+"These dataset files are the single source of truth for our framework. Every type, enum, and relationship in the system must come from these lists. When you need to validate user input, generate UI, or enforce business rules, always reference these datasets first. Never hardcode values—import them from these files."
