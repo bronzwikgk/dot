@@ -7,9 +7,9 @@
  * No standalone functions - only class with constructor and methods
  */
 
-import id_generator from "../utilities/id_generator.js";
-import validator from "../utilities/validator.js";
-import registry from "../utilities/registry.js";
+import id_generator from "../utilities/id_generator_v1_0_0.js";
+import validator from "../utilities/validator_v1_0_0.js";
+import registry from "../utilities/registry_v1_0_0.js";
 
 class action_entity {
   constructor(config = {}) {
@@ -105,6 +105,10 @@ class action_entity {
 
   create_component(data = {}) {
     return this.create("component", { name: data.name || "untitled_component", data: { type: data.type || "div" } });
+  }
+
+  list_cells(book_id) {
+    return this.query({ type: "cell", "data.book_id": book_id });
   }
 
   // ===== SEARCH =====
