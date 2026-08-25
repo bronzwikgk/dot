@@ -1,0 +1,9 @@
+field_name,data_type,required,description
+id,text,true,snake_path policy or cache id
+type,text,true,approved policy or cache type
+scope,text,false,approved cache scope
+max_entries,number,false,cache entry limit
+allowed_scopes,json,false,cache scopes allowed by policy
+key,text,false,snake_path cache key
+value,json,false,cache entry value
+updated_at,timestamp,false,cache entry timestamp

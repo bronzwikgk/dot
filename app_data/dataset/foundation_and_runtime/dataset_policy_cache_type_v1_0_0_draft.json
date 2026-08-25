@@ -1,0 +1,10 @@
+[
+  "cache_policy",
+  "storage_policy",
+  "security_policy",
+  "routing_policy",
+  "naming_policy",
+  "create_policy",
+  "shell_cache",
+  "cache_entry"
+]

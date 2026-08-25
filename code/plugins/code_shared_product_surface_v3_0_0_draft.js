@@ -243,6 +243,36 @@ class product_surface {
     };
   }
 
+  create_template_store(config = {}) {
+    const templates = product_surface.normalize_list(config.templates || this.config.templates);
+    const errors = [];
+    for (const template of templates) errors.push(...this.validate_template(template).errors);
+    return { ok: errors.length === 0, data: { type: "template_store", templates: product_surface.clone_value(templates) }, errors };
+  }
+
+  compose_template_tree(config = {}) {
+    const template = config.template || {};
+    const validation = this.validate_template(template);
+    if (!validation.ok) return validation;
+    const entity_nodes = product_surface.normalize_list(template.entities).map((name) => ({ id: `${template.id}.${name}`, type: "entity", label: name }));
+    const flow_nodes = product_surface.normalize_list(template.flows).map((name) => ({ id: `${template.id}.${name}`, type: "workflow", label: name }));
+    return {
+      ok: true,
+      data: {
+        type: "template_tree",
+        root: template.id,
+        nodes: [{ id: template.id, type: "template", label: template.name }, ...entity_nodes, ...flow_nodes]
+      },
+      errors: []
+    };
+  }
+
+  render_template_tree(config = {}) {
+    const tree = config.tree || this.compose_template_tree(config).data;
+    if (!tree || !Array.isArray(tree.nodes)) return { ok: false, errors: ["template tree nodes are required"] };
+    return { ok: true, data: { type: "tree_render_output", rows: tree.nodes.map((node) => `${node.type}:${node.label}`) }, errors: [] };
+  }
+
   create_preview_path(application = {}) {
     const validation = this.validate_application(application);
     if (!validation.ok) return validation;
@@ -272,6 +302,22 @@ class product_surface {
         "mobile_visual_check_passes"
       ]
     };
+  }
+
+  create_flow_canvas(config = {}) {
+    const nodes = product_surface.normalize_list(config.nodes);
+    const edges = product_surface.normalize_list(config.edges);
+    const errors = [];
+    const ids = new Set(nodes.map((node) => node.id));
+    for (const node of nodes) {
+      if (!node.id) errors.push("flow node id is required");
+      if (!node.type) errors.push(`flow node '${node.id || "unknown"}' type is required`);
+    }
+    for (const edge of edges) {
+      if (!ids.has(edge.from)) errors.push(`edge source '${edge.from}' is missing`);
+      if (!ids.has(edge.to)) errors.push(`edge target '${edge.to}' is missing`);
+    }
+    return { ok: errors.length === 0, data: { type: "flow_canvas", nodes: product_surface.clone_value(nodes), edges: product_surface.clone_value(edges), editable: config.editable !== false }, errors };
   }
 
   validate_application(application = {}) {
