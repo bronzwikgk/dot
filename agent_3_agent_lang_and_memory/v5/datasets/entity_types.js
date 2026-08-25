@@ -49,5 +49,7 @@ export const entity_types = [
   "bot_session",
   "agent",
   "brain_session",
-  "memory_record"
+  "memory_record",
+  "fintech_organization",
+  "trading_workspace"
 ]
