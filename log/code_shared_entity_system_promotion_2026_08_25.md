@@ -60,6 +60,43 @@ Log:
 
 - `dot/log/code_shared_entity_system_promotion_2026_08_25.md`
 
+## Documentation Completion Added Later On 2026-08-25
+
+Per-file docs were added for every promoted module and dataset:
+
+- `dot/docs/code_shared_action_entity_v3_1_0_draft.md`
+- `dot/docs/code_shared_app_generator_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_runner_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_validator_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_registry_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_parser_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_reasoner_v3_0_0_draft.md`
+- `dot/docs/code_shared_markdown_pipeline_v3_0_0_draft.md`
+- `dot/docs/code_shared_validation_word_datasets_v3_0_0_draft.md`
+- `dot/docs/code_shared_ui_word_datasets_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_behavior_datasets_v3_0_0_draft.md`
+
+Per-file logs were added for every promoted module and dataset:
+
+- `dot/log/code_shared_action_entity_v3_1_0_draft.log.md`
+- `dot/log/code_shared_app_generator_v3_0_0_draft.log.md`
+- `dot/log/code_shared_entity_runner_v3_0_0_draft.log.md`
+- `dot/log/code_shared_entity_validator_v3_0_0_draft.log.md`
+- `dot/log/code_shared_entity_registry_v3_0_0_draft.log.md`
+- `dot/log/code_shared_entity_parser_v3_0_0_draft.log.md`
+- `dot/log/code_shared_entity_reasoner_v3_0_0_draft.log.md`
+- `dot/log/code_shared_markdown_pipeline_v3_0_0_draft.log.md`
+- `dot/log/code_shared_validation_word_datasets_v3_0_0_draft.log.md`
+- `dot/log/code_shared_ui_word_datasets_v3_0_0_draft.log.md`
+- `dot/log/code_shared_entity_behavior_datasets_v3_0_0_draft.log.md`
+
+Decision docs and logs were added:
+
+- `dot/docs/code_shared_runner_boundary_v3_0_0_draft.md`
+- `dot/log/code_shared_runner_boundary_v3_0_0_draft.log.md`
+- `dot/docs/code_shared_action_entity_migration_v3_1_0_draft.md`
+- `dot/log/code_shared_action_entity_migration_v3_1_0_draft.log.md`
+
 ## Import Path Updates
 
 The promoted files were copied from the scratchpad and import paths were updated

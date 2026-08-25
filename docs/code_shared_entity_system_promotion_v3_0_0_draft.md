@@ -30,6 +30,27 @@ Utility datasets:
 - `dot/code/utilities/dataset/code_shared_ui_word_datasets_v3_0_0_draft.js`
 - `dot/code/utilities/dataset/code_shared_entity_behavior_datasets_v3_0_0_draft.js`
 
+## Companion Documents
+
+Per-file docs:
+
+- `dot/docs/code_shared_action_entity_v3_1_0_draft.md`
+- `dot/docs/code_shared_app_generator_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_runner_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_validator_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_registry_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_parser_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_reasoner_v3_0_0_draft.md`
+- `dot/docs/code_shared_markdown_pipeline_v3_0_0_draft.md`
+- `dot/docs/code_shared_validation_word_datasets_v3_0_0_draft.md`
+- `dot/docs/code_shared_ui_word_datasets_v3_0_0_draft.md`
+- `dot/docs/code_shared_entity_behavior_datasets_v3_0_0_draft.md`
+
+Decision docs:
+
+- `dot/docs/code_shared_runner_boundary_v3_0_0_draft.md`
+- `dot/docs/code_shared_action_entity_migration_v3_1_0_draft.md`
+
 ## What The Code Does
 
 `code_shared_action_entity_v3_1_0_draft.js` is the main entity plugin. It
@@ -87,8 +108,10 @@ used by validator and registry utilities.
 ## Remaining Work
 
 - Add focused unit tests under the existing shared test pattern.
-- Decide whether the existing shared runner should absorb the new entity runner
-  or remain separate.
+- Keep the existing shared runner and new entity runner separate for now, as
+  documented in `code_shared_runner_boundary_v3_0_0_draft.md`.
+- Keep action entity `v3_0_0` and `v3_1_0` side by side for now, as documented
+  in `code_shared_action_entity_migration_v3_1_0_draft.md`.
 - Add code-level schema enforcement for the schema catalog documented in the
   scratchpad.
 - Add generated registry reports for dataset ownership and coverage.
