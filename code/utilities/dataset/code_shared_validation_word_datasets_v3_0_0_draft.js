@@ -128,7 +128,7 @@ const intent_names = [
 const entity_field_names = [
   "id", "type", "name", "version", "status", "config", "attributes",
   "parameters", "relationships", "policies", "contracts", "operations",
-  "tests", "docs", "logs", "tags", "metadata", "created_at", "updated_at",
+  "schemas", "tests", "docs", "logs", "tags", "metadata", "created_at", "updated_at",
   "created_by", "updated_by"
 ];
 

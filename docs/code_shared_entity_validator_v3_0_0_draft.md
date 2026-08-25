@@ -34,6 +34,10 @@ It exposes validation and assertion methods for:
 - template ids
 - accessibility role names
 - approved words
+- dataset groups and dataset reports
+- schema records
+- entity records against schema records
+- relationship graphs
 - operation names
 - snake_case safe names
 - banned names
@@ -55,13 +59,21 @@ entity records.
   names, entity ids/types/names, and relationship type/target values.
 - Snake_case phrases are split into tokens before banned vocabulary validation.
 - Near-duplicate checks return suggestions.
+- Dataset reports include group count, value count, invalid group count,
+  per-group reports, and errors.
+- The `banned_words` dataset is allowed to contain its own blocked terms.
+- Schema records validate id, field names, field types, dataset references, and
+  required fields.
+- Relationship graph validation detects duplicate ids, missing relationship
+  targets, invalid relationships, and dependency cycles.
 
 ## Known Limits
 
-- It does not yet enforce every schema from the schema contract catalog.
+- Full schema catalog import data is not complete yet.
 - Relationship cardinality and inverse rules are not fully enforced yet.
 
 ## How It Was Tested
 
-Smoke checks validated safe names, banned names, relationship types, promoted
-module imports, and entity graph behavior through the promoted action entity.
+Smoke checks validated safe names, banned names, relationship types, dataset
+reports, schema records, promoted module imports, and entity graph behavior
+through the promoted action entity.

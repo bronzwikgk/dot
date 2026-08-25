@@ -34,3 +34,10 @@ validation rules.
   safe-name, and approved-word validation.
 - Banned checks now tokenize snake_case values so longer names containing a
   banned token are rejected.
+
+## 2026-08-25 Dataset And Schema Pass
+
+- Added dataset group validation and dataset report creation methods.
+- Added enum-field, schema-record, and entity-against-schema validation methods.
+- Added relationship graph validation with duplicate id, missing target, invalid relationship, and dependency cycle checks.
+- Allowed the `banned_words` dataset group to report its own blocked terms without failing that group for vocabulary content.
