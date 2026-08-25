@@ -34,7 +34,7 @@ Tests: 37/37 pass at `dot/test/language_and_knowledge/`
 
 | Category | Count | Status |
 |---|---|---|
-| Agent 3 code violations | 3 | all fixed (nested helper removed, `"src"` -> `"source_ref"`) |
+| Agent 3 code violations | 3 | all fixed (`function split` -> `split_node`, `"src"` -> `"source_ref"`) |
 | Agent 3 allowed mentions | 8 | documented in reconciliation report |
 | Existing dot code violations | 14+ | not agent_3 scope (shared utilities) |
 | Controlled words usage | 4 | allowed (policy lists, runtime checks) |
@@ -61,7 +61,7 @@ Reconciliation report: `dot/reports/language_and_knowledge/agent_3_agent_lang_an
 
 ### Prototype (dot/proposal/prototypes/an_app_brain_v1_4_0_prototype/) - FROZEN
 
-- an_app_brain.js, session.js, ingestion.js, decomposition.js, parsing.js, reasoning.js, composition.js, validation.js, recursion.js, learning.js, audit.js, context.js, decision.js, knowledge.js, failure_and_pattern.js
+- 15 CommonJS files, replaced by ESM plugin above
 
 ### Tests (dot/test/language_and_knowledge/)
 
@@ -71,72 +71,68 @@ Reconciliation report: `dot/reports/language_and_knowledge/agent_3_agent_lang_an
 
 Total: 37 tests, 37/37 pass
 
+### Reports (dot/reports/language_and_knowledge/)
+
+- agent_3_agent_lang_and_memory_name_governance_reconciliation_v1_0_0_proposed.md
+
 ### Doc (dot/docs/)
 
 - code_shared_an_app_brain_v1_4_0_draft.md
 
 ## Records Coverage vs Contract 019
 
-| Record | Module | Status |
-|---|---|---|
-| brain_session | session.js | covered |
-| context_record | context.js | covered |
-| ingestion_record | ingestion.js | covered |
-| decomposition_record | decomposition.js | covered |
-| parsing_record | parsing.js | covered |
-| knowledge_base_record | knowledge.js | covered |
-| knowledge_fact | knowledge.js | covered |
-| knowledge_formula | knowledge.js | covered |
-| knowledge_provenance | knowledge.js | covered |
-| reasoning_trace | reasoning.js | covered |
-| resolution_record | reasoning.js | covered |
-| decision_record | decision.js | covered |
-| composition_record | composition.js | covered |
-| understanding_record | composition.js | covered |
-| validation_report | validation.js | covered |
-| recursion_trace | recursion.js | covered |
-| boundary_record | validation.js | covered |
-| score_record | learning.js | covered |
-| failure_record | failure_and_pattern.js | covered |
-| pattern_record | failure_and_pattern.js | covered |
-| improvement_proposal | learning.js | covered |
-| evidence_record | audit.js | covered |
+| Record | Status |
+|---|---|
+| brain_session | covered |
+| context_record | covered |
+| ingestion_record | covered |
+| decomposition_record | covered |
+| parsing_record | covered |
+| knowledge_base_record | covered |
+| knowledge_fact | covered |
+| knowledge_formula | covered |
+| knowledge_provenance | covered |
+| reasoning_trace | covered |
+| resolution_record | covered |
+| decision_record | covered |
+| composition_record | covered |
+| understanding_record | covered |
+| validation_report | covered |
+| recursion_trace | covered |
+| boundary_record | covered |
+| score_record | covered |
+| failure_record | covered |
+| pattern_record | covered |
+| improvement_proposal | covered |
+| evidence_record | covered |
 
 Total: 22/22 records covered.
 
 ## Operations Coverage vs Contract 019
 
-| Operation | Module | Status |
-|---|---|---|
-| start_brain_session | session.js | covered |
-| ingest_source | ingestion.js | covered |
-| decompose_source | decomposition.js | covered |
-| read_context | context.js | covered |
-| update_context | context.js | covered |
-| parse_request | parsing.js | covered |
-| reason_about_request | reasoning.js | covered |
-| resolve_reference | reasoning.js | covered |
-| understand_request | composition.js | covered |
-| decide_next_action | decision.js | covered |
-| compose_response | composition.js | covered |
-| validate_reasoning | validation.js | covered |
-| check_boundary | validation.js | covered |
-| run_recursion_step | recursion.js | covered |
-| score_result | learning.js | covered |
-| create_improvement_proposal | learning.js | covered |
-| record_evidence | audit.js | covered |
-| audit_brain_session | audit.js | covered |
+| Operation | Status |
+|---|---|
+| start_brain_session | covered |
+| ingest_source | covered |
+| decompose_source | covered |
+| read_context | covered |
+| update_context | covered |
+| parse_request | covered |
+| reason_about_request | covered |
+| resolve_reference | covered |
+| understand_request | covered |
+| decide_next_action | covered |
+| compose_response | covered |
+| validate_reasoning | covered |
+| check_boundary | covered |
+| run_recursion_step | covered |
+| score_result | covered |
+| create_improvement_proposal | covered |
+| record_evidence | covered |
+| audit_brain_session | covered |
 
 Total: 18/18 operations covered.
 
 ## Naming Convention Check
 
-All files use snake_case. All versions use v1_4_0 in folder name. Status is proposed/draft.
-
-## Issues Found And Fixed
-
-1. context.js was missing context_record type - fixed
-2. Missing knowledge_base_record, knowledge_fact, knowledge_formula, knowledge_provenance - created knowledge.js
-3. Missing failure_record, pattern_record - created failure_and_pattern.js
-4. Schema contracts were missing - created 8 schema contract files
-5. Log file was missing - created this file
+All files use snake_case. All versions use v1_4_0 in folder name. Status is proposed/draft. No banned words in agent_3 code (reconciliation report confirms).
