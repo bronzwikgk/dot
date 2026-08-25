@@ -102,8 +102,8 @@ Proposal search command: `rg --files dot\proposal | rg "agent_2_agent_ui_applica
 
 Assigned parent contracts:
 
-- agent_2_agent_ui_application_parent_002_gui_application_builder_contract_v1_0_0_proposed.md
-- agent_2_agent_ui_application_parent_008_production_templates_contract_v1_0_0_proposed.md
+- agent_2_agent_ui_application_parent_002_gui_application_builder_contract_v1_0_0_partial_implemented.md
+- agent_2_agent_ui_application_parent_008_production_templates_contract_v1_0_0_partial_implemented.md
 
 Reason:
 
@@ -126,17 +126,23 @@ Immediate deliverables:
 - template fixture list
 - ui e2e checklist
 
+Implementation note:
+
+Agent Codex implemented the first Agent 2 product_surface batch on behalf of
+`agent_ui_application`. The owner remains `agent_ui_application`; final rendered
+GUI and visual validation remain pending.
+
 Priority backlog:
 
 | Priority | Work | Parent Contract | Detail Contracts | Output |
 | --- | --- | --- | --- | --- |
 | p0 | review approved ui names and blocked names | parent_002 | contract_002, contract_009 | ui vocabulary conflict report |
-| p0 | define builder entity model | parent_002 | contract_005, contract_009 | book/cell/view/route/state entity model |
-| p0 | define layout projection contract | parent_002 | contract_009 | approved layout projection rules |
-| p1 | build gui application builder scope | parent_002 | contract_007, contract_009, contract_010 | builder surface implementation plan |
-| p1 | define editor and command surfaces | parent_002 | contract_009, contract_010 | command palette/editor interactions checklist |
-| p1 | create production template fixture list | parent_008 | contract_001, contract_013, contract_014 | LMS, fintech, single-user, research, automation fixtures |
-| p1 | define template validation path | parent_008 | contract_004, contract_013, contract_014 | template smoke and generated-test plan |
+| p0 | define builder entity model | parent_002 | contract_005, contract_009 | partial_implemented in `code_shared_product_surface_v3_0_0_draft.js` |
+| p0 | define layout projection contract | parent_002 | contract_009 | partial_implemented with approved render profile mapping |
+| p1 | build gui application builder scope | parent_002 | contract_007, contract_009, contract_010 | partial_implemented as product_surface plugin contract layer |
+| p1 | define editor and command surfaces | parent_002 | contract_009, contract_010 | partial_implemented with command/editor/preview contracts |
+| p1 | create production template fixture list | parent_008 | contract_001, contract_013, contract_014 | partial_implemented with six template files |
+| p1 | define template validation path | parent_008 | contract_004, contract_013, contract_014 | partial_implemented with product_surface tests |
 | p2 | responsive ui hardening checklist | parent_002 | contract_009, contract_014 | desktop/mobile visual validation plan |
 | p2 | advanced layout parity | parent_002 | contract_009 | table, board, calendar, timeline, diagram, dashboard parity report |
 
@@ -208,7 +214,7 @@ Priority backlog:
 | Agent | Give This First | Also Give |
 | --- | --- | --- |
 | agent_codex_an_app | agent_1_agent_codex_an_app_parent_001_production_app_shell_contract_v1_0_0_partial_implemented.md | agent_1_agent_codex_an_app_parent_003_version_system_implementation_contract_v1_0_0_partial_implemented.md, agent_1_agent_codex_an_app_parent_004_repository_operations_implementation_contract_v1_0_0_partial_implemented.md, agent_1_agent_codex_an_app_parent_009_real_app_e2e_validation_contract_v1_0_0_partial_implemented.md, contract_004, contract_005, contract_006, contract_014 |
-| agent_ui_application | agent_2_agent_ui_application_parent_002_gui_application_builder_contract_v1_0_0_proposed.md | agent_2_agent_ui_application_parent_008_production_templates_contract_v1_0_0_proposed.md, contract_009, contract_013, active master docs |
+| agent_ui_application | agent_2_agent_ui_application_parent_002_gui_application_builder_contract_v1_0_0_partial_implemented.md | agent_2_agent_ui_application_parent_008_production_templates_contract_v1_0_0_partial_implemented.md, contract_009, contract_013, active master docs |
 | agent_lang_and_memory | agent_3_agent_lang_and_memory_work_an_app_brain_correction_and_test_plan_v1_0_0_proposed.md | agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md, agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_005_an_app_lang_implementation_contract_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_006_bot_agent_runtime_contract_v1_0_0_proposed.md, agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract_v1_0_0_proposed.md, contract_010, contract_011, contract_012, contract_017, contract_018, contract_019 |
 
 ## Shared Agent Rules

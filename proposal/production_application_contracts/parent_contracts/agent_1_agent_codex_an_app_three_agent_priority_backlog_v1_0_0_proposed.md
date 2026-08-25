@@ -155,3 +155,18 @@ Start with p0 only:
 - agent_codex_an_app starts shell/entity/version/e2e foundation.
 - agent_ui_application starts ui vocabulary and builder entity model.
 - agent_lang_and_memory starts name governance and An App Brain schema needs.
+
+## Agent 2 Implementation Note
+
+Agent Codex implemented the first product_surface/template batch for Agent 2:
+
+- `code/plugins/code_shared_product_surface_v3_0_0_draft.js`
+- `templates/product_surface`
+- `app_data/dataset/product_surface`
+- `app_data/datamap/product_surface`
+- `app_data/data_table/product_surface`
+- `app_data/definition/product_surface`
+- `test/product_surface/agent_codex_an_app_agent_2_product_surface_v1_0_0_test.mjs`
+
+Remaining Agent 2 work is the visible rendered GUI, desktop/mobile validation,
+and final real-port integration.

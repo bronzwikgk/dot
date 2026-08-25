@@ -1,0 +1,27 @@
+{
+  "id": "template_application_builder_v1",
+  "type": "template",
+  "name": "application_builder_template",
+  "domain": "application_builder",
+  "application": {
+    "id": "app_application_builder_demo",
+    "type": "application",
+    "name": "application_builder_application"
+  },
+  "routes": [
+    { "id": "route_builder_home", "name": "builder_home", "path": "/" },
+    { "id": "route_builder_preview", "name": "builder_preview", "path": "/preview" }
+  ],
+  "views": [
+    { "id": "view_builder_shell", "name": "builder_shell", "layout": "split_editor", "render_profile": "json_as_document" },
+    { "id": "view_builder_diagram", "name": "builder_diagram", "layout": "diagram", "render_profile": "json_as_diagram" }
+  ],
+  "workflows": [
+    { "id": "workflow_builder_create_application", "name": "create_application" }
+  ],
+  "policies": ["validate_before_preview"],
+  "sample_data": {
+    "template_count": 6,
+    "preview_state": "ready"
+  }
+}

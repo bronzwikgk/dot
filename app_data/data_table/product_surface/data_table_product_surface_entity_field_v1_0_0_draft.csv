@@ -1,0 +1,16 @@
+entity_type,field_name,required,value_shape,notes
+application,id,true,string,stable application entity id
+application,name,true,string,approved display name
+application,routes,false,array,route entities owned by application
+application,views,false,array,view entities owned by application
+application,workflows,false,array,workflow entities owned by application
+application,states,false,array,state entities owned by application
+book,id,true,string,book entity id
+book,cells,false,array,cell entities owned by book
+cell,cell_type,true,string,approved cell type
+view,layout,false,string,approved layout name
+view,render_profile,false,string,approved render profile name
+route,path,true,string,path starts with slash
+command,input_surface,false,string,approved input surface
+template,domain,true,string,approved template domain
+state,data,false,object,state payload remains entity data

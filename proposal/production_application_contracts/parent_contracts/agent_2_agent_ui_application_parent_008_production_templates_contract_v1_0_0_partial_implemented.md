@@ -1,6 +1,6 @@
 # Parent Contract 008: Production Templates
 
-Status: proposed
+Status: partial_implemented
 Priority: p1
 Owner agent: agent_ui_application
 Delivery lane: product_surface
@@ -57,6 +57,34 @@ template samples, and template validation fixtures must proceed independently.
 - templates can be edited through the builder surface
 - templates validate against mock ports without concrete Agent 1 or Agent 3 code
 - final integration needs are listed as explicit port-method requirements
+
+## Implementation Evidence
+
+- `templates/product_surface/template_product_surface_lms_v1_0_0_draft.json`
+- `templates/product_surface/template_product_surface_fintech_organization_v1_0_0_draft.json`
+- `templates/product_surface/template_product_surface_single_user_workspace_v1_0_0_draft.json`
+- `templates/product_surface/template_product_surface_research_workflow_v1_0_0_draft.json`
+- `templates/product_surface/template_product_surface_automation_workflow_v1_0_0_draft.json`
+- `templates/product_surface/template_product_surface_application_builder_v1_0_0_draft.json`
+- `code/plugins/code_shared_product_surface_v3_0_0_draft.js`
+- `test/product_surface/agent_codex_an_app_agent_2_product_surface_v1_0_0_test.mjs`
+
+## Completed Scope
+
+- template schema through plugin validation
+- LMS template
+- fintech organization template
+- single-user workspace template
+- research workflow template
+- automation workflow template
+- application builder template
+- template validation fixtures
+
+## Pending Integration Scope
+
+- editable rendered template UI
+- generated app e2e validation through real app shell
+- real Agent 1 and Agent 3 port binding
 
 ## Do Not
 

@@ -1,6 +1,6 @@
 # Parent Contract 002: Gui Application Builder
 
-Status: proposed
+Status: partial_implemented
 Priority: p1
 Owner agent: agent_ui_application
 Delivery lane: product_surface
@@ -65,6 +65,29 @@ compatible methods and tests.
 - responsive desktop and mobile checks pass
 - product_surface tests pass with mock ports before real integration
 - integration handoff lists exact Agent 1 and Agent 3 methods required
+
+## Implementation Evidence
+
+- `code/plugins/code_shared_product_surface_v3_0_0_draft.js`
+- `docs/product_surface/code_shared_product_surface_v3_0_0_draft_doc.md`
+- `test/product_surface/agent_codex_an_app_agent_2_product_surface_v1_0_0_test.mjs`
+- `reports/product_surface/agent_codex_an_app_agent_2_product_surface_implementation_report_v1_0_0_proposed.md`
+
+## Completed Scope
+
+- builder-facing entity model
+- layout projection behavior
+- command surface contract
+- editor surface contract
+- app preview path
+- ui e2e checklist
+- mock-port-only product_surface validation
+
+## Pending Integration Scope
+
+- rendered browser GUI
+- desktop and mobile visual validation
+- real Agent 1 and Agent 3 port binding
 
 ## Do Not
 
