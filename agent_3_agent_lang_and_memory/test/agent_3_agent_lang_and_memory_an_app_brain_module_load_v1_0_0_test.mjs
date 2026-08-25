@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { an_app_brain, CONTEXT_LAYERS, REASONING_TYPES, RESOLUTION_TYPES, BOUNDARY_ISSUES } from "../../code/plugins/an_app_brain_v1_4_0_draft.js";
+import { an_app_brain, CONTEXT_LAYERS, REASONING_TYPES, RESOLUTION_TYPES, BOUNDARY_ISSUES } from "../code/an_app_brain_v1_4_0_draft.js";
 
 test("an_app_brain module loads with ESM import", () => {
   const brain = new an_app_brain();

@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { an_app_brain } from "../../code/plugins/an_app_brain_v1_4_0_draft.js";
+import { an_app_brain } from "../code/an_app_brain_v1_4_0_draft.js";
 
 const brain = new an_app_brain();
 
