@@ -117,7 +117,9 @@ class an_app_brain {
       fol_formulas: [],
       timestamp: new Date().toISOString()
     };
-    record.fol_formulas = decomposition.entities.map(e => ({ predicate: "parsed", args: [e.name], depth: e.depth }));
+    for (const entity of decomposition.entities) {
+      record.fol_formulas.push({ predicate: "parsed", args: [entity.name], depth: entity.depth });
+    }
     record.validated = record.fol_formulas.length > 0;
     session.records.parsing.push(record);
     return record;
@@ -125,13 +127,17 @@ class an_app_brain {
 
   reason_about_request(parsed, session, memory_ref = null, context_ref = null) {
     if (!parsed) throw new Error("parsed required");
+    const conclusions = [];
+    for (const formula of parsed.fol_formulas) {
+      conclusions.push({ from: formula.args[0], to: formula.predicate, confidence: 0.8 });
+    }
     const record = {
       record_type: "reasoning_trace",
       source_ref: parsed.source_ref,
       reasoning_type: "deductive",
       evidence_refs: memory_ref ? [memory_ref] : [],
       assumption_markers: memory_ref ? [] : ["no_memory_ref_provided"],
-      conclusions: parsed.fol_formulas.map(f => ({ from: f.args[0], to: f.predicate, confidence: 0.8 })),
+      conclusions,
       timestamp: new Date().toISOString()
     };
     session.records.reasoning.push(record);
@@ -140,12 +146,16 @@ class an_app_brain {
 
   resolve_reference(reasoning, session, context_ref = null) {
     if (!reasoning) throw new Error("reasoning required");
+    const resolved_refs = [];
+    for (const conclusion of reasoning.conclusions) {
+      resolved_refs.push({ original: conclusion.from, resolved: conclusion.to, type: "entity_ref" });
+    }
     const record = {
       record_type: "resolution_record",
       source_ref: reasoning.source_ref,
       resolution_type: "entity_ref",
       context_layer_used: context_ref ? "context_ref" : "none",
-      resolved_refs: reasoning.conclusions.map(c => ({ original: c.from, resolved: c.to, type: "entity_ref" })),
+      resolved_refs,
       ambiguous: false,
       timestamp: new Date().toISOString()
     };
@@ -155,11 +165,15 @@ class an_app_brain {
 
   understand_request(resolution, session, context_ref = null) {
     if (!resolution) throw new Error("resolution required");
+    const implications = [];
+    for (const resolved_ref of resolution.resolved_refs) {
+      implications.push(resolved_ref.resolved);
+    }
     const record = {
       record_type: "understanding_record",
       source_ref: resolution.source_ref,
       intent: "respond_to_user",
-      implications: resolution.resolved_refs.map(r => r.resolved),
+      implications,
       gaps: resolution.ambiguous ? ["ambiguous_reference"] : [],
       context_used: resolution.context_layer_used,
       timestamp: new Date().toISOString()
@@ -170,7 +184,10 @@ class an_app_brain {
 
   decide_next_action(understanding, session, approval_policy = {}) {
     if (!understanding) throw new Error("understanding required");
-    const alternatives = understanding.implications.map(imp => ({ action: `respond_${imp}`, reason: imp }));
+    const alternatives = [];
+    for (const implication of understanding.implications) {
+      alternatives.push({ action: `respond_${implication}`, reason: implication });
+    }
     const record = {
       record_type: "decision_record",
       source_ref: understanding.source_ref,
@@ -214,7 +231,7 @@ class an_app_brain {
       record_type: "validation_report",
       source_ref: composition ? composition.source_ref : reasoning.source_ref,
       checks,
-      all_passed: Object.values(checks).every(v => v === true),
+      all_passed: an_app_brain.all_values_true(checks),
       timestamp: new Date().toISOString()
     };
     session.records.validation.push(record);
@@ -310,12 +327,20 @@ class an_app_brain {
   }
 
   audit_brain_session(session) {
+    const records_summary = {};
+    for (const entry of Object.entries(session.records)) {
+      records_summary[entry[0]] = entry[1].length;
+    }
+    let boundary_blocks = 0;
+    for (const boundary of session.records.boundary) {
+      if (boundary.blocked) boundary_blocks++;
+    }
     return {
       record_type: "audit_report",
       session_id: session.session_id,
       turn_count: session.turns.length,
-      records_summary: Object.fromEntries(Object.entries(session.records).map(([k, v]) => [k, v.length])),
-      boundary_blocks: session.records.boundary.filter(b => b.blocked).length,
+      records_summary,
+      boundary_blocks,
       timestamp: new Date().toISOString()
     };
   }
@@ -388,24 +413,31 @@ class an_app_brain {
 
   _recursive_split(node, policy, record, visited) {
     const result = { entities: [], relationships: [], actions: [], node_count: 0, depth: 0, stopped: false, stop_reason: null, cycle_detected: false, repeated_state_detected: false, timeout_reached: false };
+    const max_nodes = policy.max_nodes || this.config.max_nodes;
+    const pending = [{ name: node, depth: 0 }];
 
-    function split(n, depth) {
-      if (result.stopped) return;
-      if (depth >= policy.max_depth) { result.stopped = true; result.stop_reason = "max_depth"; return; }
-      if (result.node_count >= (policy.max_nodes || this.config.max_nodes)) { result.stopped = true; result.stop_reason = "max_nodes"; return; }
-      if (visited.has(n)) { result.stopped = true; result.stop_reason = "cycle"; result.cycle_detected = true; return; }
-      visited.add(n);
+    while (pending.length > 0 && !result.stopped) {
+      const current = pending.pop();
+      if (current.depth >= policy.max_depth) { result.stopped = true; result.stop_reason = "max_depth"; break; }
+      if (result.node_count >= max_nodes) { result.stopped = true; result.stop_reason = "max_nodes"; break; }
+      if (visited.has(current.name)) { result.stopped = true; result.stop_reason = "cycle"; result.cycle_detected = true; break; }
+      visited.add(current.name);
       result.node_count++;
-      result.depth = Math.max(result.depth, depth);
-      result.entities.push({ name: n, depth });
-      if (depth < policy.max_depth && result.node_count < (policy.max_nodes || this.config.max_nodes)) {
-        split(`${n}_left`, depth + 1);
-        split(`${n}_right`, depth + 1);
+      result.depth = Math.max(result.depth, current.depth);
+      result.entities.push({ name: current.name, depth: current.depth });
+      if (current.depth < policy.max_depth && result.node_count < max_nodes) {
+        pending.push({ name: `${current.name}_right`, depth: current.depth + 1 });
+        pending.push({ name: `${current.name}_left`, depth: current.depth + 1 });
       }
-    };
-
-    split(node, 0);
+    }
     return result;
+  }
+
+  static all_values_true(checks = {}) {
+    for (const value of Object.values(checks)) {
+      if (value !== true) return false;
+    }
+    return true;
   }
 }
 

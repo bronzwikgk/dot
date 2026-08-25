@@ -2,7 +2,9 @@
 
 **Version:** v1.4.0
 **Status:** proposed
+**Agent:** agent_3_agent_lang_and_memory
 **Owner:** agent_lang_and_memory
+**Branch:** dot_agent_lang_and_memory_v1
 **Contract:** shared_detail_contract_019_an_app_brain_domain_v1_0_0_proposed.md
 **Parent contract:** agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract_v1_0_0_proposed.md
 
