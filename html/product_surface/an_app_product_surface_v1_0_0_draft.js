@@ -56,6 +56,7 @@ class an_app_product_surface_controller {
     this.active_profile = config.active_profile || "json_as_document";
     this.nodes = {};
     this.search_state = { query: "", hits: [], active_index: -1 };
+    this.command_records = [];
   }
 
   boot() {
@@ -79,14 +80,16 @@ class an_app_product_surface_controller {
     this.nodes.audit_view = document.getElementById("audit_view");
     this.nodes.validation_label = document.getElementById("validation_label");
     this.nodes.profile_buttons = Array.from(document.querySelectorAll("[data-profile]"));
-    this.nodes.run_button.addEventListener("click", this.run_command.bind(this));
+    this.nodes.run_button.addEventListener("click", this.handle_run_click.bind(this));
     this.nodes.command_input.addEventListener("keydown", this.handle_command_keydown.bind(this));
     this.nodes.search_input.addEventListener("input", this.handle_search_input.bind(this));
     this.nodes.search_input.addEventListener("keydown", this.handle_search_keydown.bind(this));
     this.nodes.clear_search_button.addEventListener("click", this.clear_search_hits.bind(this));
+    document.addEventListener("keydown", this.handle_global_keydown.bind(this));
     for (const button of this.nodes.profile_buttons) {
       button.addEventListener("click", this.handle_profile_click.bind(this));
     }
+    this.register_default_commands();
     this.render_all();
     this.write_boot_marker("ready");
   }
@@ -112,7 +115,12 @@ class an_app_product_surface_controller {
   }
 
   handle_command_keydown(event) {
-    if (event.key === "Enter") this.run_command();
+    if (event.key === "Enter") this.execute_command({ action: "run_cell" });
+  }
+
+  handle_run_click() {
+    const command = this.resolve_command_from_selector("#run_button");
+    this.execute_command({ action: command ? command.action : "run_cell" });
   }
 
   handle_search_input(event) {
@@ -122,8 +130,16 @@ class an_app_product_surface_controller {
   handle_search_keydown(event) {
     if (event.key === "Enter") {
       event.preventDefault();
-      this.move_to_next_hit();
+      this.execute_command({ action: "search_next" });
     }
+  }
+
+  handle_global_keydown(event) {
+    const combo = this.event_combo(event);
+    const command = this.resolve_command_from_keyboard(combo);
+    if (!command) return;
+    event.preventDefault();
+    this.execute_command({ action: command.action });
   }
 
   handle_template_click(event) {
@@ -136,11 +152,86 @@ class an_app_product_surface_controller {
     this.render_all();
   }
 
+  register_default_commands() {
+    this.register_command({
+      id: "run_cell_from_button",
+      action: "run_cell",
+      selector: "#run_button",
+      keyboard: "ctrl+enter",
+      method: "run_command"
+    });
+    this.register_command({
+      id: "search_next_from_keyboard",
+      action: "search_next",
+      selector: "#search_input",
+      keyboard: "enter",
+      method: "move_to_next_hit"
+    });
+    this.register_command({
+      id: "clear_search_from_button",
+      action: "blur_editor",
+      selector: "#clear_search_button",
+      keyboard: "escape",
+      method: "clear_search_hits"
+    });
+  }
+
+  register_command(config) {
+    this.command_records.push({
+      type: "command_record",
+      id: config.id,
+      action: config.action,
+      selector: config.selector,
+      keyboard: config.keyboard,
+      method: config.method
+    });
+  }
+
+  resolve_command_from_action(action) {
+    for (const record of this.command_records) {
+      if (record.action === action) return record;
+    }
+    return null;
+  }
+
+  resolve_command_from_selector(selector) {
+    for (const record of this.command_records) {
+      if (record.selector === selector) return record;
+    }
+    return null;
+  }
+
+  resolve_command_from_keyboard(combo) {
+    for (const record of this.command_records) {
+      if (record.keyboard === combo) return record;
+    }
+    return null;
+  }
+
+  execute_command(config) {
+    const command = this.resolve_command_from_action(config.action);
+    if (!command || !command.method || !this[command.method]) {
+      this.nodes.validation_label.textContent = "command unavailable";
+      return { ok: false, data: null, errors: ["command unavailable"] };
+    }
+    this[command.method]();
+    return { ok: true, data: { command_id: command.id }, errors: [] };
+  }
+
   run_command() {
     const command_text = this.nodes.command_input.value || "";
     this.active_template_id = this.select_template_from_command(command_text);
     this.nodes.validation_label.textContent = "command parsed";
     this.render_all();
+  }
+
+  event_combo(event) {
+    const keys = [];
+    if (event.ctrlKey) keys.push("ctrl");
+    if (event.altKey) keys.push("alt");
+    if (event.shiftKey) keys.push("shift");
+    keys.push(String(event.key || "").toLowerCase());
+    return keys.join("+");
   }
 
   search_workspace(query) {

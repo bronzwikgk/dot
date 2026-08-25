@@ -29,3 +29,11 @@ surface to the browser runtime validation contract.
 - Kept browser controller class-method-only to match existing visible surface
   tests.
 - Focused search/status and visible surface tests passed.
+
+## 2026-08-25 V4 Browser Command Wiring Update
+
+- Added browser command records for Run, search-next, and clear-search actions.
+- Routed click, command input Enter, global Ctrl+Enter, search Enter, and Escape
+  through command resolution.
+- Kept the shared command registry utility as the source contract and mirrored
+  the same record shape in the static browser controller.

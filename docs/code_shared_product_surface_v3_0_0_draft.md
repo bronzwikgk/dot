@@ -21,6 +21,7 @@ The browser surface now declares:
 - started, ready, and failed boot states
 - global workspace search input
 - search count and active hit marker
+- browser command records for action, selector, and keyboard resolution
 
 ## When To Use It
 
