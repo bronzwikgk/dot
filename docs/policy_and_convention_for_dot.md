@@ -22,8 +22,8 @@ All dataset files, schemas, concepts, code, folders, and files.
 
 | # | Rule | Description | Validation | Violation Action |
 |:---|:---|:---|:---|:---|
-| N1 | snake_case only | All names use snake_case (letters, digits, underscores only) | `grep -rn '[A-Z]' --include="*.js" --include="*.md" --include="*.dataset"` | Error: Rename to snake_case |
-| N2 | No duplicates | No duplicate names across all files | `grep -rn "const " --include="*.dataset" | awk -F: '{print $3}' | sort \| uniq -d` | Error: Resolve duplicate names |
+| N1 | snake_case only | All names use snake_case (letters, digits, underscores only) | `grep -rn '[A-Z]' --include="*.js" --include="*.md" --include="*.datatable" --include="*.datamap"` | Error: Rename to snake_case |
+| N2 | No duplicates | No duplicate names across all files | `grep -rn "const " --include="*.datatable" | awk -F: '{print $3}' | sort \| uniq -d` | Error: Resolve duplicate names |
 | N3 | Singular | Names are singular unless inherently plural | Manual review | Warning: Rename to singular |
 | N4 | No abbreviations | No abbreviations that lose meaning | Manual review | Warning: Expand abbreviation |
 | N5 | Verb + entity | Operations follow `verb_entity` pattern | Manual review | Warning: Rename to verb_entity |
@@ -149,15 +149,15 @@ dot/
 Define how datasets are structured.
 
 ### Scope
-All `.dataset` files.
+All `.datatable` and `.datamap` files.
 
 ### Rules
 
 | # | Rule | Description | Validation | Violation Action |
 |:---|:---|:---|:---|:---|
-| D1 | Flat arrays | Datasets are flat arrays of strings only | `grep -rn "\[" --include="*.dataset" | grep -v "const"` | Error: Convert to flat array |
-| D2 | No nesting | No objects, no nested arrays | `grep -rn "{" --include="*.dataset"` | Error: Remove nesting |
-| D3 | Type names array | Each file has a `type_names` array listing categories | `grep -rn "type_names" --include="*.dataset"` | Error: Add type_names array |
+| D1 | Flat arrays | Datasets are flat arrays of strings only | `grep -rn "\[" --include="*.datatable" | grep -v "const"` | Error: Convert to flat array |
+| D2 | No nesting | No objects, no nested arrays | `grep -rn "{" --include="*.datatable"` | Error: Remove nesting |
+| D3 | Type names array | Each file has a `type_names` array listing categories | `grep -rn "type_names" --include="*.datatable"` | Error: Add type_names array |
 | D4 | Grouped by type | Names grouped under their type with comments | Manual review | Warning: Group by type |
 | D5 | Comments optional | Comments on names are optional but recommended | Manual review | Info: Add comments |
 | D6 | Export | Arrays are exported for use by other files | Manual review | Warning: Add exports |
