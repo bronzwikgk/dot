@@ -43,8 +43,8 @@ Branch: `dot_agent_codex_an_app_v4`
 | v4_missing_024 | p0 | validated | keyboard shortcut registry and e2e |
 | v4_missing_027 | p0 | validated | run all and DAG dependency behavior in UI |
 | v4_missing_033 | p0 | pending | layout parity |
-| v4_missing_035 | p0 | pending | project/product definition markdown schema |
-| v4_missing_036 | p0 | pending | runtime detection and dependency resolution |
+| v4_missing_035 | p0 | validated | project/product definition markdown schema |
+| v4_missing_036 | p0 | validated | runtime detection and dependency resolution |
 | v4_missing_037 | p0 | validated | browser entry and mount resolver |
 
 ## Contract Progress
@@ -60,7 +60,7 @@ Branch: `dot_agent_codex_an_app_v4`
 | v4_contract_007 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_007_persistence_version_undo_v1_0_0_proposed.md` |
 | v4_contract_008 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_008_import_export_offline_v1_0_0_proposed.md` |
 | v4_contract_009 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_009_cell_command_language_v1_0_0_proposed.md` |
-| v4_contract_010 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_010_definition_runtime_dependency_v1_0_0_proposed.md` |
+| v4_contract_010 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_010_definition_runtime_dependency_v1_0_0_proposed.md` |
 | v4_contract_011 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_011_policy_and_cache_v1_0_0_proposed.md` |
 | v4_contract_012 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_012_entry_mount_view_frame_v1_0_0_proposed.md` |
 
