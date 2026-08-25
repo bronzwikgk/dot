@@ -51,6 +51,15 @@ Branch: `dot_agent_codex_an_app_v4`
 
 | Contract ID | Status | File |
 |---|---|---|
+| v4_contract_001 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_001_command_registry_v1_0_0_proposed.md` |
+| v4_contract_002 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_002_editor_focus_v1_0_0_proposed.md` |
+| v4_contract_003 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_003_book_cell_operations_v1_0_0_proposed.md` |
+| v4_contract_004 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_004_search_and_status_v1_0_0_proposed.md` |
+| v4_contract_005 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_005_layout_parity_v1_0_0_proposed.md` |
+| v4_contract_006 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_006_browser_e2e_gate_v1_0_0_proposed.md` |
+| v4_contract_007 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_007_persistence_version_undo_v1_0_0_proposed.md` |
+| v4_contract_008 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_008_import_export_offline_v1_0_0_proposed.md` |
+| v4_contract_009 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_009_cell_command_language_v1_0_0_proposed.md` |
 | v4_contract_010 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_010_definition_runtime_dependency_v1_0_0_proposed.md` |
 | v4_contract_011 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_011_policy_and_cache_v1_0_0_proposed.md` |
 | v4_contract_012 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_012_entry_mount_view_frame_v1_0_0_proposed.md` |
