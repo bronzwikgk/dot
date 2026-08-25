@@ -12,6 +12,7 @@ Implemented by: agent_codex_an_app
 - added six production starter templates
 - added product_surface tests
 - added product_surface documentation
+- added static visible product surface files under `html/product_surface`
 
 ## Contract Coverage
 
@@ -30,6 +31,6 @@ node --test test\product_surface\agent_codex_an_app_agent_2_product_surface_v1_0
 
 ## Remaining
 
-- real browser/ui implementation
-- desktop and mobile visual checks
-- final integration with Agent 1 and Agent 3 real ports
+- desktop and mobile screenshot checks
+- persisted browser edit state
+- final integration release report with Agent 1 and Agent 3

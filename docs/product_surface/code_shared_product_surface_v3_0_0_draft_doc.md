@@ -69,8 +69,18 @@ Tests cover dataset validation, template registration, template expansion,
 invalid route rejection, multi-layout projection, and command/editor/preview
 contracts.
 
+## Visible Surface
+
+- `html/product_surface/an_app_product_surface_v1_0_0_draft.html`
+- `html/product_surface/an_app_product_surface_v1_0_0_draft.css`
+- `html/product_surface/an_app_product_surface_v1_0_0_draft.js`
+
+The visible surface currently supports template selection, command-triggered
+template selection, layout projection switching, preview path display, and audit
+display.
+
 ## Known Limits
 
-- this is a contract-level product surface, not a rendered browser UI
-- final desktop/mobile visual validation remains pending
-- real Agent 1 and Agent 3 ports are not bound yet
+- final desktop/mobile screenshot validation remains pending
+- real Agent 1 and Agent 3 ports are bound through `integrated_application`,
+  not directly in this product_surface plugin
