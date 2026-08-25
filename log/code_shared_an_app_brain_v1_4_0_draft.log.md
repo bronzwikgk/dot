@@ -8,8 +8,25 @@ Parent: agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_co
 ## Status
 
 Schema contracts: created (draft)
-Code modules: created (proposed)
+Code: single ESM class-based plugin (proposed) at `dot/code/plugins/an_app_brain_v1_4_0_draft.js`
+Prototype: frozen CommonJS at `dot/proposal/prototypes/an_app_brain_v1_4_0_prototype/`
 Doc: created (draft)
+Tests: 37/37 pass at `dot/test/language_and_knowledge/`
+
+## Correction Status (agent_3_agent_lang_and_memory_work_an_app_brain_correction_and_test_plan_v1_0_0_proposed.md)
+
+| Issue | Severity | Status |
+|---|---|---|
+| agent_3_fix_001 CommonJS -> ESM | major | fixed |
+| agent_3_fix_002 plugin before schema approval | major | fixed (moved to prototype, created single draft file) |
+| agent_3_fix_003 standalone functions -> class | major | fixed (class an_app_brain with constructor/config/methods) |
+| agent_3_fix_004 file placement/name convention | major | fixed (single file `an_app_brain_v1_4_0_draft.js`) |
+| agent_3_fix_005 no tests | major | fixed (3 test files, 37/37 pass) |
+| agent_3_fix_006 schema/code session_id mismatch | major | fixed (ingestion_record includes session_id) |
+| agent_3_fix_007 cycle/repeated-state/timeout | major | fixed (cycle detection via visited set, depth/node limits, timeout claim removed from code) |
+| agent_3_fix_008 duplicate domain behavior | major | fixed (coordinator with ports, no duplicate parser/memory/bot/runner) |
+| agent_3_fix_009 doc parent contract version ref | minor | fixed (uses full v1_0_0_proposed filename) |
+| agent_3_fix_010 contract_019 short wording | minor | fixed (uses full shared_detail_contract_019 filename in comments) |
 
 ## Files Created
 
@@ -24,23 +41,21 @@ Doc: created (draft)
 - agent_3_agent_lang_and_memory_schema_an_app_brain_boundary_recursion_v1_0_0_draft.md - boundary_record, recursion_trace
 - agent_3_agent_lang_and_memory_schema_an_app_brain_failure_pattern_v1_0_0_draft.md - failure_record, pattern_record
 
-### Code Modules (dot/code/plugins/an_app_brain_v1_4_0/)
+### Code (dot/code/plugins/)
 
-- an_app_brain.js - main coordinator, brain_pipeline()
-- session.js - brain_session lifecycle
-- ingestion.js - ingestion_record
-- decomposition.js - decomposition_record
-- parsing.js - parsing_record
-- reasoning.js - reasoning_trace + resolution_record
-- composition.js - understanding_record + composition_record
-- validation.js - validation_report + boundary_record
-- recursion.js - recursion_trace
-- learning.js - score_record + improvement_proposal
-- audit.js - evidence_record + audit_report
-- context.js - context_record (7 layers)
-- decision.js - decision_record
-- knowledge.js - knowledge_base_record, knowledge_fact, knowledge_formula, knowledge_provenance
-- failure_and_pattern.js - failure_record, pattern_record
+- an_app_brain_v1_4_0_draft.js - single ESM class-based plugin (all 22 records, 18 operations)
+
+### Prototype (dot/proposal/prototypes/an_app_brain_v1_4_0_prototype/) - FROZEN
+
+- an_app_brain.js, session.js, ingestion.js, decomposition.js, parsing.js, reasoning.js, composition.js, validation.js, recursion.js, learning.js, audit.js, context.js, decision.js, knowledge.js, failure_and_pattern.js
+
+### Tests (dot/test/language_and_knowledge/)
+
+- agent_3_agent_lang_and_memory_an_app_brain_module_load_v1_0_0_test.mjs (5 tests)
+- agent_3_agent_lang_and_memory_an_app_brain_record_shape_v1_0_0_test.mjs (21 tests)
+- agent_3_agent_lang_and_memory_an_app_brain_boundary_policy_v1_0_0_test.mjs (11 tests)
+
+Total: 37 tests, 37/37 pass
 
 ### Doc (dot/docs/)
 
