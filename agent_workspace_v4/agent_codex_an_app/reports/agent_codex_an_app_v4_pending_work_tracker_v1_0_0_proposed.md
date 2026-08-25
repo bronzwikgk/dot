@@ -42,7 +42,7 @@ Branch: `dot_agent_codex_an_app_v4`
 | v4_missing_022 | p0 | validated | live book/cell create/move/delete |
 | v4_missing_024 | p0 | validated | keyboard shortcut registry and e2e |
 | v4_missing_027 | p0 | validated | run all and DAG dependency behavior in UI |
-| v4_missing_033 | p0 | pending | layout parity |
+| v4_missing_033 | p0 | validated | layout parity |
 | v4_missing_035 | p0 | validated | project/product definition markdown schema |
 | v4_missing_036 | p0 | validated | runtime detection and dependency resolution |
 | v4_missing_037 | p0 | validated | browser entry and mount resolver |
@@ -55,7 +55,7 @@ Branch: `dot_agent_codex_an_app_v4`
 | v4_contract_002 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_002_editor_focus_v1_0_0_proposed.md` |
 | v4_contract_003 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_003_book_cell_operations_v1_0_0_proposed.md` |
 | v4_contract_004 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_004_search_and_status_v1_0_0_proposed.md` |
-| v4_contract_005 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_005_layout_parity_v1_0_0_proposed.md` |
+| v4_contract_005 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_005_layout_parity_v1_0_0_proposed.md` |
 | v4_contract_006 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_006_browser_e2e_gate_v1_0_0_proposed.md` |
 | v4_contract_007 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_007_persistence_version_undo_v1_0_0_proposed.md` |
 | v4_contract_008 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_008_import_export_offline_v1_0_0_proposed.md` |

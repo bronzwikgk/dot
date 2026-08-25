@@ -121,6 +121,7 @@ class product_surface {
   }
 
   create_layout_projection(entity = {}, render_profile = "json_as_document") {
+    if (entity && entity.entity) return this.create_layout_projection_from_config(entity);
     const errors = [];
     if (!entity || typeof entity !== "object" || Array.isArray(entity)) errors.push("entity must be an object");
     if (!render_profile_names.includes(render_profile)) errors.push(`render_profile '${render_profile}' is not approved`);
@@ -137,6 +138,78 @@ class product_surface {
         data: product_surface.clone_value(entity)
       }
     };
+  }
+
+  create_layout_projection_from_config(config = {}) {
+    const entity = config.entity || {};
+    const layout = config.layout || product_surface.layout_for_render_profile(config.render_profile || this.config.default_render_profile);
+    const layout_validation = this.validate_layout_name({ layout });
+    const errors = [];
+    if (!entity || typeof entity !== "object" || Array.isArray(entity)) errors.push("entity must be an object");
+    errors.push(...layout_validation.errors);
+    if (errors.length > 0) return { ok: false, errors };
+    return {
+      ok: true,
+      data: {
+        id: `projection_${layout}_${entity.id || entity.name || "entity"}`,
+        type: "layout_projection",
+        source_entity_id: entity.id || null,
+        layout,
+        render_profile: config.render_profile || product_surface.render_profile_for_layout(layout),
+        preview_state: "ready",
+        data: product_surface.clone_value(entity)
+      },
+      errors: []
+    };
+  }
+
+  validate_layout_name(config = {}) {
+    const layout = typeof config === "string" ? config : config.layout;
+    const ok = layout_names.includes(layout);
+    return { ok, data: ok ? { layout } : null, errors: ok ? [] : [`layout '${layout}' is not approved`] };
+  }
+
+  render_layout(config = {}) {
+    const projection = this.create_layout_projection_from_config(config);
+    if (!projection.ok) return projection;
+    const entity = projection.data.data;
+    const layout = projection.data.layout;
+    return {
+      ok: true,
+      data: {
+        type: "render_output",
+        layout,
+        source_entity_id: projection.data.source_entity_id,
+        rows: product_surface.rows_for_layout(entity, layout)
+      },
+      errors: []
+    };
+  }
+
+  switch_layout(config = {}) {
+    const before = product_surface.clone_value(config.entity || {});
+    const output = this.render_layout(config);
+    if (!output.ok) return output;
+    const after = product_surface.clone_value(config.entity || {});
+    if (JSON.stringify(before) !== JSON.stringify(after)) {
+      return { ok: false, data: null, errors: ["layout switch mutated source entity"] };
+    }
+    return output;
+  }
+
+  compare_layout_output(config = {}) {
+    const entity = config.entity || {};
+    const layouts = product_surface.normalize_list(config.layouts);
+    const outputs = [];
+    const errors = [];
+    for (const layout of layouts) {
+      const output = this.switch_layout({ entity, layout });
+      if (!output.ok) errors.push(...output.errors);
+      else outputs.push(output.data);
+    }
+    const ids = new Set(outputs.map((output) => output.source_entity_id));
+    if (ids.size > 1) errors.push("layout outputs do not preserve one source entity id");
+    return { ok: errors.length === 0, data: { source_entity_id: entity.id || null, outputs }, errors };
   }
 
   create_command_surface(config = {}) {
@@ -306,18 +379,51 @@ class product_surface {
 
   static layout_for_render_profile(render_profile) {
     const mapping = {
+      json_as_notebook: "notebook",
       json_as_text: "code_editor",
-      json_as_tree: "collapsible_tree",
+      json_as_tree: "tree",
       json_as_document: "block_editor",
       json_as_diagram: "diagram",
-      json_as_table: "table_view",
+      json_as_table: "table",
       json_as_cards: "card_view",
-      json_as_kanban: "kanban_view",
+      json_as_kanban: "board",
+      json_as_board: "board",
       json_as_calendar: "calendar_view",
+      json_as_timeline: "timeline",
+      json_as_dashboard: "dashboard",
       json_as_flowchart: "flowchart_view",
       json_as_mindmap: "mindmap_view"
     };
     return mapping[render_profile] || "document_view";
+  }
+
+  static render_profile_for_layout(layout) {
+    const mapping = {
+      notebook: "json_as_document",
+      code_editor: "json_as_text",
+      block_editor: "json_as_document",
+      tree: "json_as_tree",
+      table: "json_as_table",
+      board: "json_as_kanban",
+      calendar: "json_as_calendar",
+      timeline: "json_as_document",
+      diagram: "json_as_diagram",
+      dashboard: "json_as_cards"
+    };
+    return mapping[layout] || "json_as_document";
+  }
+
+  static rows_for_layout(entity = {}, layout = "block_editor") {
+    const base = [
+      { key: "id", value: entity.id || "" },
+      { key: "type", value: entity.type || "" },
+      { key: "name", value: entity.name || "" }
+    ];
+    if (layout === "dashboard") return base.concat([{ key: "status", value: entity.status || "draft" }]);
+    if (layout === "calendar") return base.concat([{ key: "date", value: entity.date || entity.created_at || "unscheduled" }]);
+    if (layout === "timeline") return base.concat([{ key: "sequence", value: entity.version || "0.1.0" }]);
+    if (layout === "board") return base.concat([{ key: "lane", value: entity.status || "draft" }]);
+    return base;
   }
 
   static normalize_list(value) {

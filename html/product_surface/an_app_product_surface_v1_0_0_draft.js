@@ -5,7 +5,7 @@ const product_surface_templates = [
     domain: "application_builder",
     entities: ["application", "template", "flow", "view", "component", "dataset"],
     flows: ["command_to_structure", "template_to_application", "application_preview"],
-    layouts: ["json_as_document", "json_as_tree", "json_as_diagram", "json_as_table"]
+    layouts: ["json_as_notebook", "json_as_text", "json_as_document", "json_as_tree", "json_as_diagram", "json_as_table", "json_as_board", "json_as_calendar", "json_as_timeline", "json_as_dashboard"]
   },
   {
     id: "template_lms_v1",
@@ -13,7 +13,7 @@ const product_surface_templates = [
     domain: "lms",
     entities: ["organization", "course", "lesson", "learner", "assessment", "certificate"],
     flows: ["course_authoring", "learner_progress", "assessment_review"],
-    layouts: ["json_as_document", "json_as_tree", "json_as_dashboard", "json_as_calendar"]
+    layouts: ["json_as_notebook", "json_as_text", "json_as_document", "json_as_tree", "json_as_diagram", "json_as_table", "json_as_board", "json_as_calendar", "json_as_timeline", "json_as_dashboard"]
   },
   {
     id: "template_fintech_organization_v1",
@@ -21,7 +21,7 @@ const product_surface_templates = [
     domain: "fintech_organization",
     entities: ["organization", "account", "customer", "payment", "ledger_entry", "policy"],
     flows: ["customer_onboarding", "payment_review", "ledger_audit"],
-    layouts: ["json_as_document", "json_as_table", "json_as_dashboard", "json_as_timeline"]
+    layouts: ["json_as_notebook", "json_as_text", "json_as_document", "json_as_tree", "json_as_diagram", "json_as_table", "json_as_board", "json_as_calendar", "json_as_timeline", "json_as_dashboard"]
   },
   {
     id: "template_research_workflow_v1",
@@ -29,7 +29,7 @@ const product_surface_templates = [
     domain: "research_workflow",
     entities: ["project", "source", "note", "claim", "evidence", "report"],
     flows: ["source_intake", "evidence_mapping", "report_generation"],
-    layouts: ["json_as_document", "json_as_tree", "json_as_diagram", "json_as_board"]
+    layouts: ["json_as_notebook", "json_as_text", "json_as_document", "json_as_tree", "json_as_diagram", "json_as_table", "json_as_board", "json_as_calendar", "json_as_timeline", "json_as_dashboard"]
   },
   {
     id: "template_automation_workflow_v1",
@@ -37,7 +37,7 @@ const product_surface_templates = [
     domain: "automation_workflow",
     entities: ["trigger", "action", "schedule", "condition", "run", "audit_event"],
     flows: ["schedule_trigger", "condition_check", "run_audit"],
-    layouts: ["json_as_diagram", "json_as_table", "json_as_timeline", "json_as_dashboard"]
+    layouts: ["json_as_notebook", "json_as_text", "json_as_document", "json_as_tree", "json_as_diagram", "json_as_table", "json_as_board", "json_as_calendar", "json_as_timeline", "json_as_dashboard"]
   },
   {
     id: "template_single_user_workspace_v1",
@@ -45,7 +45,7 @@ const product_surface_templates = [
     domain: "single_user_workspace",
     entities: ["user", "workspace", "book", "cell", "note", "task"],
     flows: ["capture_note", "organize_book", "task_review"],
-    layouts: ["json_as_document", "json_as_tree", "json_as_board", "json_as_calendar"]
+    layouts: ["json_as_notebook", "json_as_text", "json_as_document", "json_as_tree", "json_as_diagram", "json_as_table", "json_as_board", "json_as_calendar", "json_as_timeline", "json_as_dashboard"]
   }
 ];
 
@@ -438,6 +438,12 @@ class an_app_product_surface_controller {
     if (this.active_profile === "json_as_tree") this.render_tree(template);
     else if (this.active_profile === "json_as_diagram") this.render_diagram(template);
     else if (this.active_profile === "json_as_table") this.render_table(template);
+    else if (this.active_profile === "json_as_notebook") this.render_notebook(template);
+    else if (this.active_profile === "json_as_text") this.render_code_editor(template);
+    else if (this.active_profile === "json_as_board") this.render_board(template);
+    else if (this.active_profile === "json_as_calendar") this.render_calendar(template);
+    else if (this.active_profile === "json_as_timeline") this.render_timeline(template);
+    else if (this.active_profile === "json_as_dashboard") this.render_dashboard(template);
     else this.render_blocks(template);
   }
 
@@ -510,6 +516,76 @@ class an_app_product_surface_controller {
     this.nodes.projection_view.appendChild(table);
   }
 
+  render_notebook(template) {
+    for (const flow of template.flows) {
+      const row = document.createElement("div");
+      row.className = "notebook_row";
+      row.setAttribute("data-record-id", `${template.id}_${flow}`);
+      row.textContent = `cell: ${flow}`;
+      this.nodes.projection_view.appendChild(row);
+    }
+  }
+
+  render_code_editor(template) {
+    const code = document.createElement("pre");
+    code.className = "code_editor_view";
+    code.setAttribute("data-record-id", `${template.id}_code_editor`);
+    code.textContent = JSON.stringify(template, null, 2);
+    this.nodes.projection_view.appendChild(code);
+  }
+
+  render_board(template) {
+    const board = document.createElement("div");
+    board.className = "board_view";
+    for (const entity of template.entities) {
+      const card = document.createElement("div");
+      card.className = "board_card";
+      card.setAttribute("data-record-id", `${template.id}_${entity}`);
+      card.textContent = entity;
+      board.appendChild(card);
+    }
+    this.nodes.projection_view.appendChild(board);
+  }
+
+  render_calendar(template) {
+    const calendar = document.createElement("div");
+    calendar.className = "calendar_view";
+    for (const flow of template.flows) {
+      const event = document.createElement("div");
+      event.className = "calendar_event";
+      event.setAttribute("data-record-id", `${template.id}_${flow}`);
+      event.textContent = flow;
+      calendar.appendChild(event);
+    }
+    this.nodes.projection_view.appendChild(calendar);
+  }
+
+  render_timeline(template) {
+    const timeline = document.createElement("ol");
+    timeline.className = "timeline_view";
+    for (const flow of template.flows) {
+      const item = document.createElement("li");
+      item.setAttribute("data-record-id", `${template.id}_${flow}`);
+      item.textContent = flow;
+      timeline.appendChild(item);
+    }
+    this.nodes.projection_view.appendChild(timeline);
+  }
+
+  render_dashboard(template) {
+    const dashboard = document.createElement("div");
+    dashboard.className = "dashboard_view";
+    const items = [["entities", template.entities.length], ["flows", template.flows.length], ["layouts", template.layouts.length]];
+    for (const item of items) {
+      const metric = document.createElement("div");
+      metric.className = "dashboard_metric";
+      metric.setAttribute("data-record-id", `${template.id}_${item[0]}`);
+      metric.textContent = `${item[0]}: ${item[1]}`;
+      dashboard.appendChild(metric);
+    }
+    this.nodes.projection_view.appendChild(dashboard);
+  }
+
   render_audit(template) {
     const rows = [
       ["template", template.id],
@@ -530,9 +606,15 @@ class an_app_product_surface_controller {
   profile_title(profile) {
     const titles = {
       json_as_document: "Block Editor",
+      json_as_notebook: "Notebook",
+      json_as_text: "Code Editor",
       json_as_tree: "Tree",
       json_as_diagram: "Diagram",
-      json_as_table: "Table"
+      json_as_table: "Table",
+      json_as_board: "Board",
+      json_as_calendar: "Calendar",
+      json_as_timeline: "Timeline",
+      json_as_dashboard: "Dashboard"
     };
     return titles[profile] || "Block Editor";
   }

@@ -1,5 +1,6 @@
 const layout_names = [
-  "notebook", "code_editor", "block_editor", "diagram", "dashboard",
+  "notebook", "code_editor", "block_editor", "tree", "table", "board",
+  "calendar", "timeline", "diagram", "dashboard",
   "fullscreen", "tabbed_window", "aside_panel", "browser_shell",
   "terminal_shell", "text_editor", "collapsible_tree", "document_view",
   "table_view", "card_view", "kanban_view", "calendar_view",
@@ -105,9 +106,11 @@ const layout_modifier_names = [
 ];
 
 const render_profile_names = [
+  "json_as_notebook",
   "json_as_text", "json_as_tree", "json_as_document", "json_as_diagram",
   "json_as_table", "json_as_cards", "json_as_kanban",
-  "json_as_calendar", "json_as_flowchart", "json_as_mindmap"
+  "json_as_board", "json_as_calendar", "json_as_timeline",
+  "json_as_dashboard", "json_as_flowchart", "json_as_mindmap"
 ];
 
 const input_surface_names = [
@@ -131,7 +134,7 @@ const preview_state_names = [
   "unsupported"
 ];
 
-function validate_ui_word_dataset_arrays(groups) {
+const validate_ui_word_dataset_arrays = (groups) => {
   const errors = [];
   for (const [group_name, values] of Object.entries(groups || {})) {
     if (!Array.isArray(values)) continue;
@@ -146,7 +149,7 @@ function validate_ui_word_dataset_arrays(groups) {
     }
   }
   return { ok: errors.length === 0, errors };
-}
+};
 
 export {
   layout_names, cell_types, flow_node_types, cell_statuses,

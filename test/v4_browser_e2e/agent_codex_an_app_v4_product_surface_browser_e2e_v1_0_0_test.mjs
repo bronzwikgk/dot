@@ -38,6 +38,24 @@ test("product surface browser e2e validates boot search keyboard focus and layou
     await page.keyboard.press("Control+Shift+Enter");
     await page.waitForFunction(() => document.getElementById("cell_output").textContent.includes("render_output:display"));
 
+    const layout_checks = [
+      ["json_as_notebook", "Notebook", ".notebook_row"],
+      ["json_as_text", "Code Editor", ".code_editor_view"],
+      ["json_as_document", "Block Editor", ".block_row"],
+      ["json_as_tree", "Tree", ".tree_row"],
+      ["json_as_table", "Table", ".table_view"],
+      ["json_as_board", "Board", ".board_card"],
+      ["json_as_calendar", "Calendar", ".calendar_event"],
+      ["json_as_timeline", "Timeline", ".timeline_view"],
+      ["json_as_diagram", "Diagram", ".diagram_node"],
+      ["json_as_dashboard", "Dashboard", ".dashboard_metric"]
+    ];
+    for (const check of layout_checks) {
+      await page.click(`[data-profile="${check[0]}"]`);
+      await page.waitForSelector(check[2]);
+      assert.equal(await page.textContent("#projection_title"), check[1]);
+    }
+
     await page.keyboard.press("Escape");
     assert.equal(await page.textContent("#search_count"), "0 results");
 

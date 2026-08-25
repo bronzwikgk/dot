@@ -51,3 +51,12 @@ surface to the browser runtime validation contract.
 - Added `run_all` browser command record and cell rail button.
 - Added DAG-shaped run-all plan with parse, execute, and render tasks.
 - Added browser e2e coverage for Ctrl+Shift+Enter run-all execution.
+
+## 2026-08-25 V4 Layout Parity Update
+
+- Added product-surface layout validation, rendering, switching, and comparison
+  methods.
+- Added browser renderers and tabs for notebook, code editor, block editor,
+  tree, table, board, calendar, timeline, diagram, and dashboard.
+- Added tests proving same source entity id preservation and no mutation during
+  layout switching.

@@ -41,3 +41,13 @@ duplicate values.
 
 The approved GUI action names now include `run_all` for notebook-wide DAG-style
 cell execution.
+
+## V4 Layout Update
+
+The approved layout names now include `notebook`, `code_editor`,
+`block_editor`, `tree`, `table`, `board`, `calendar`, `timeline`, `diagram`,
+and `dashboard`.
+
+The approved render profile names now include matching browser projection
+profiles for notebook, code editor, board, calendar, timeline, and dashboard
+views.

@@ -304,7 +304,11 @@ input {
 .block_row,
 .tree_row,
 .table_row,
-.diagram_node {
+.diagram_node,
+.notebook_row,
+.board_card,
+.calendar_event,
+.dashboard_metric {
   border: 1px solid var(--line);
   border-radius: 6px;
   padding: 10px;
@@ -333,6 +337,33 @@ input {
 
 .diagram_node {
   border-left: 5px solid var(--accent_2);
+}
+
+.code_editor_view {
+  margin: 0;
+  overflow: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 12px;
+  background: #172026;
+  color: #f3f7f4;
+  font-family: Consolas, "Courier New", monospace;
+  white-space: pre-wrap;
+}
+
+.board_view,
+.calendar_view,
+.dashboard_view {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(140px, 1fr));
+  gap: 10px;
+}
+
+.timeline_view {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 22px;
 }
 
 .table_view {

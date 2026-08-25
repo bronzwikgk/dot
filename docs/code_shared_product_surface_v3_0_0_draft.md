@@ -24,11 +24,20 @@ The browser surface now declares:
 - browser command records for action, selector, and keyboard resolution
 - notebook cell workspace with rail, editor, output, and focus restore
 - run-all cell execution path with DAG-shaped task order
+- layout parity tabs for notebook, code editor, block editor, tree, table,
+  board, calendar, timeline, diagram, and dashboard
 
 ## When To Use It
 
 Use it when An App needs to create or inspect an application builder surface,
 template preview, or same-data layout projection.
+
+## Layout Parity
+
+Use `create_layout_projection`, `validate_layout_name`, `render_layout`,
+`switch_layout`, and `compare_layout_output` to prove approved layout names,
+same source entity id preservation, and no source entity mutation during layout
+switches.
 
 ## Runtime Contract
 
@@ -48,4 +57,5 @@ CSS guards.
 
 Browser e2e tests validate Chromium boot readiness, page error capture, search
 result count, hit navigation, keyboard execution, focus preservation, desktop
-rail layout, mobile stacking, and run-all keyboard execution.
+rail layout, mobile stacking, run-all keyboard execution, and all required
+layout projections.

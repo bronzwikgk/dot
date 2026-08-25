@@ -29,3 +29,9 @@ pollute the entity core.
 - Reason: V4 browser surface needs notebook-wide execution routed through the
   same command registry conventions as single-cell execution.
 - Verification: focused cell command language and browser e2e tests passed.
+
+## 2026-08-25 V4 Layout Update
+
+- Added active production layout names required by the product surface.
+- Added browser render profile names for notebook, code editor, board,
+  calendar, timeline, and dashboard projections.
