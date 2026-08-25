@@ -5,13 +5,13 @@ Status: proposed
 Owner agent: agent_codex_an_app
 Target branch: `wip_dot_v3`
 Next clean branch: `wip_dot_v4`
+Implementation branch: `dot_agent_codex_an_app_v4`
 
 ## Goal
 
 Validate `wip_dot_v3` with evidence before creating `wip_dot_v4`. Only clean,
-tested, documented, and convention-compliant items should move forward. Every
-agent must then create a V4 workspace folder in their own branch root and
-continue from the clean V4 baseline.
+tested, documented, and convention-compliant items should move forward. V4
+implementation is now owned by one agent: `agent_codex_an_app`.
 
 ## V3 Freeze Rule
 
@@ -21,6 +21,21 @@ should be added before V4 is created.
 
 Agents must not push to protected/shared branches. The user alone pushes or
 merges `wip_dot_v3`, `wip_dot_v4`, `master`, or `main`.
+
+## V4 Single-Agent Ownership
+
+The user has decided that only `agent_codex_an_app` will implement V4. Historical
+Agent 2 and Agent 3 names remain in V3 source records, reports, and contracts
+only as provenance. For V4 execution, all items are owned by:
+
+- agent name: `agent_codex_an_app`
+- implementation branch: `dot_agent_codex_an_app_v4`
+- baseline branch: `wip_dot_v4`
+- protected/shared branches: user-pushed only
+
+V4 may still preserve domain labels such as `ui_surface`, `language_and_knowledge`,
+`product_surface`, and `foundation_and_runtime`, but these are domains, not
+separate active agents.
 
 ## Proposal Lock And Promotion Rule
 
@@ -36,7 +51,7 @@ Promotion order:
 2. update this proposal until no missing scope remains
 3. mark proposal status as `locked`
 4. create or update V4 contracts from the locked proposal
-5. agents implement inside their own V4 branch/workspace
+5. `agent_codex_an_app` implements inside `dot_agent_codex_an_app_v4`
 6. transfer only tested, documented, and reviewed artifacts into shared branches
 
 Allowed to transfer after lock:
@@ -179,54 +194,52 @@ project can claim parity with the reference GUI/product suite.
 
 | V4 Item ID | Priority | Owner | Missing Item | Required Files/Artifacts | Validation |
 |---|---|---|---|---|---|
-| v4_missing_001 | p0 | agent_ui_application | unified command registry binding data-action, chrome selectors, keyboard combos, and methods | `app_data/dataset/ui_surface/dataset_ui_command_name_v1_0_0_draft.json`, `app_data/datamap/ui_surface/datamap_ui_command_binding_v1_0_0_draft.json`, command registry plugin or product_surface method | browser e2e proves click, selector, and keyboard combo invoke same command |
-| v4_missing_002 | p0 | agent_ui_application | edit/command mode gating | editor state entity definition, keyboard policy dataset, product surface edit-mode controller | tests prove `Ctrl+S` only saves while editing, `Escape` exits edit mode, undo/redo remain governed |
-| v4_missing_003 | p0 | agent_ui_application | focus-preserving renders | focus state entity, capture/restore methods, render sync method | browser e2e proves typing does not rebuild active row and focus remains stable |
-| v4_missing_004 | p0 | agent_ui_application | rail outside cell layout | cell row entity definition, CSS layout contract, visible cell row template | desktop/mobile browser validation proves rail is outside cell and sticky without overlap |
+| v4_missing_001 | p0 | agent_codex_an_app | unified command registry binding data-action, chrome selectors, keyboard combos, and methods | `app_data/dataset/ui_surface/dataset_ui_command_name_v1_0_0_draft.json`, `app_data/datamap/ui_surface/datamap_ui_command_binding_v1_0_0_draft.json`, command registry plugin or product_surface method | browser e2e proves click, selector, and keyboard combo invoke same command |
+| v4_missing_002 | p0 | agent_codex_an_app | edit/command mode gating | editor state entity definition, keyboard policy dataset, product surface edit-mode controller | tests prove `Ctrl+S` only saves while editing, `Escape` exits edit mode, undo/redo remain governed |
+| v4_missing_003 | p0 | agent_codex_an_app | focus-preserving renders | focus state entity, capture/restore methods, render sync method | browser e2e proves typing does not rebuild active row and focus remains stable |
+| v4_missing_004 | p0 | agent_codex_an_app | rail outside cell layout | cell row entity definition, CSS layout contract, visible cell row template | desktop/mobile browser validation proves rail is outside cell and sticky without overlap |
 | v4_missing_005 | p0 | agent_codex_an_app | browser boot marker contract | app shell browser boot record, boot marker policy, readiness gate | e2e proves boot success/failure markers and no false ready state |
-| v4_missing_006 | p1 | agent_ui_application | template store, composer, and tree renderer boundary | decide entity/port names; add definitions and tests if adopted | contract review proves no duplicate manager/plugin names and no hard dependency cycle |
+| v4_missing_006 | p1 | agent_codex_an_app | template store, composer, and tree renderer boundary | decide entity/port names; add definitions and tests if adopted | contract review proves no duplicate manager/plugin names and no hard dependency cycle |
 | v4_missing_007 | p1 | agent_codex_an_app | manifest/inventory stale entry validation | inventory utility/report for manifests and route/action registrations | validation report catches dead entries and duplicate bindings |
-| v4_missing_008 | p1 | agent_ui_application | docs route links to real module paths | docs route entity, docs surface, route fixtures | browser e2e proves help/about/settings/deep-link routes render correct docs |
-| v4_missing_009 | p1 | agent_ui_application | offline icon/package asset policy | asset dataset, vendor folder policy, no-CDN scan report | offline browser run passes with network disabled |
+| v4_missing_008 | p1 | agent_codex_an_app | docs route links to real module paths | docs route entity, docs surface, route fixtures | browser e2e proves help/about/settings/deep-link routes render correct docs |
+| v4_missing_009 | p1 | agent_codex_an_app | offline icon/package asset policy | asset dataset, vendor folder policy, no-CDN scan report | offline browser run passes with network disabled |
 | v4_missing_010 | p1 | agent_codex_an_app | relative config path anchoring | config source resolver utility, path policy, fixtures | tests prove relative paths anchor to source record and reject traversal |
-| v4_missing_011 | p0 | agent_ui_application | global search with hit marking, count, and cycling | search entity, search state, command binding, status surface | browser e2e proves hit count, next/previous cycling, clear behavior |
-| v4_missing_012 | p2 | agent_ui_application | demo/tour highlight selector | tour entity, step dataset, highlight CSS policy | browser e2e proves tour next/back/skip and highlight placement |
+| v4_missing_011 | p0 | agent_codex_an_app | global search with hit marking, count, and cycling | search entity, search state, command binding, status surface | browser e2e proves hit count, next/previous cycling, clear behavior |
+| v4_missing_012 | p2 | agent_codex_an_app | demo/tour highlight selector | tour entity, step dataset, highlight CSS policy | browser e2e proves tour next/back/skip and highlight placement |
 | v4_missing_013 | p0 | agent_codex_an_app | browser boot-failure test/benchmark short-circuit | readiness helper, benchmark guard, failure fixture | test proves benchmark/e2e stops on boot error and reports exact reason |
 | v4_missing_014 | p1 | agent_codex_an_app | storage selftest and storage key validation | storage provider boundary, storage key dataset, selftest report | tests prove invalid key/state is rejected and reported |
-| v4_missing_015 | p1 | agent_ui_application | storage errors surfaced in status bar | status surface entity, error record shape, browser status binding | browser e2e proves storage error appears in status surface |
+| v4_missing_015 | p1 | agent_codex_an_app | storage errors surfaced in status bar | status surface entity, error record shape, browser status binding | browser e2e proves storage error appears in status surface |
 | v4_missing_016 | p1 | agent_codex_an_app | local static server hardening | local server utility or script, no-cache policy, port/env handling | test proves no-cache header, `PORT` support, and friendly occupied-port failure |
-| v4_missing_017 | p1 | agent_ui_application | import confirmation for executable code cells | import policy entity, executable-cell warning state, confirmation surface | browser e2e proves executable import requires confirmation |
+| v4_missing_017 | p1 | agent_codex_an_app | import confirmation for executable code cells | import policy entity, executable-cell warning state, confirmation surface | browser e2e proves executable import requires confirmation |
 | v4_missing_018 | p0 | agent_codex_an_app | full browser health e2e | Puppeteer or Playwright test suite, app launch helper, page-error capture | health spec proves clean boot, no page errors, command registry present |
-| v4_missing_019 | p0 | agent_ui_application | browser focus editing e2e | visible editor surface and focus test | browser e2e proves focus survives typing and escape behavior |
-| v4_missing_020 | p0 | agent_ui_application | browser search e2e | global search UI and test | browser e2e proves search marks/cycles/clears |
-| v4_missing_021 | p0 | agent_ui_application + agent_lang_and_memory | cell execution for natural language, code, and markdown outputs | cell entity operations, output entity, An App Lang command parser, runner binding | e2e proves natural-language cell, code cell, and markdown cell produce expected output |
-| v4_missing_022 | p0 | agent_ui_application | live book/cell create/move/delete | book entity operations, cell entity operations, rail controls | browser e2e proves create book, add cell, move cell, remove cell |
-| v4_missing_023 | p1 | agent_codex_an_app + agent_ui_application | persistence across reload | storage provider, autosave policy, reload test fixtures | browser e2e proves state survives reload and invalid storage is reported |
-| v4_missing_024 | p0 | agent_ui_application | keyboard shortcut registry and e2e | keyboard combo dataset, command registry map, keyboard tests | browser e2e proves sidebar toggle, run selected cell, escape blur, save/undo/redo |
+| v4_missing_019 | p0 | agent_codex_an_app | browser focus editing e2e | visible editor surface and focus test | browser e2e proves focus survives typing and escape behavior |
+| v4_missing_020 | p0 | agent_codex_an_app | browser search e2e | global search UI and test | browser e2e proves search marks/cycles/clears |
+| v4_missing_021 | p0 | agent_codex_an_app | cell execution for natural language, code, and markdown outputs | cell entity operations, output entity, An App Lang command parser, runner binding | e2e proves natural-language cell, code cell, and markdown cell produce expected output |
+| v4_missing_022 | p0 | agent_codex_an_app | live book/cell create/move/delete | book entity operations, cell entity operations, rail controls | browser e2e proves create book, add cell, move cell, remove cell |
+| v4_missing_023 | p1 | agent_codex_an_app | persistence across reload | storage provider, autosave policy, reload test fixtures | browser e2e proves state survives reload and invalid storage is reported |
+| v4_missing_024 | p0 | agent_codex_an_app | keyboard shortcut registry and e2e | keyboard combo dataset, command registry map, keyboard tests | browser e2e proves sidebar toggle, run selected cell, escape blur, save/undo/redo |
 | v4_missing_025 | p1 | agent_codex_an_app | version-backed undo/redo for entities | undo/redo policy, version integration, action_entity/version_system test | tests prove revert/reapply and audit record correctness |
-| v4_missing_026 | p1 | agent_ui_application | six-template gallery cards | template gallery view, card entity/layout, template create action | browser e2e proves six cards render and create application/book from template |
-| v4_missing_027 | p0 | agent_codex_an_app + agent_ui_application | run all and DAG dependency behavior in UI | runner binding, run-all command, dependency datamap | e2e proves dependency order, skipped blocked nodes, and audit output |
-| v4_missing_028 | p1 | agent_ui_application | editable flow builder diagram canvas | flow node entity, edge entity, canvas state, palette, drop/connect actions | browser e2e proves node drop, edge connect, node run to completed |
-| v4_missing_029 | p1 | agent_codex_an_app + agent_ui_application | export/import files | export entity, import entity, file policy, confirmation rules | browser e2e proves export file and import restore/merge behavior |
-| v4_missing_030 | p1 | agent_ui_application | docs routing and hash deep links | docs route records, route selection state, deep-link test | browser e2e proves route navigation and selected entity restore |
-| v4_missing_031 | p2 | agent_ui_application | guided tour | tour template, step records, navigation controls | browser e2e proves next/back/skip and no stuck overlay |
-| v4_missing_032 | p2 | agent_ui_application | canvas drag/drop and chained flow run | canvas interaction handlers, chain execution record | browser e2e proves drag reposition and chained run completes |
-| v4_missing_033 | p0 | agent_ui_application | layout parity for notebook, code editor, block editor, board, calendar, timeline, diagram, dashboard, table, tree | layout dataset, render-profile datamap, projection tests, visible layouts | browser/static tests prove same entity data renders in every approved layout |
-| v4_missing_034 | p1 | agent_codex_an_app + agent_ui_application | offline capability and zero CDN references | vendor asset folder, asset inventory report, network-disabled e2e | offline browser e2e passes and scan shows zero CDN references |
+| v4_missing_026 | p1 | agent_codex_an_app | six-template gallery cards | template gallery view, card entity/layout, template create action | browser e2e proves six cards render and create application/book from template |
+| v4_missing_027 | p0 | agent_codex_an_app | run all and DAG dependency behavior in UI | runner binding, run-all command, dependency datamap | e2e proves dependency order, skipped blocked nodes, and audit output |
+| v4_missing_028 | p1 | agent_codex_an_app | editable flow builder diagram canvas | flow node entity, edge entity, canvas state, palette, drop/connect actions | browser e2e proves node drop, edge connect, node run to completed |
+| v4_missing_029 | p1 | agent_codex_an_app | export/import files | export entity, import entity, file policy, confirmation rules | browser e2e proves export file and import restore/merge behavior |
+| v4_missing_030 | p1 | agent_codex_an_app | docs routing and hash deep links | docs route records, route selection state, deep-link test | browser e2e proves route navigation and selected entity restore |
+| v4_missing_031 | p2 | agent_codex_an_app | guided tour | tour template, step records, navigation controls | browser e2e proves next/back/skip and no stuck overlay |
+| v4_missing_032 | p2 | agent_codex_an_app | canvas drag/drop and chained flow run | canvas interaction handlers, chain execution record | browser e2e proves drag reposition and chained run completes |
+| v4_missing_033 | p0 | agent_codex_an_app | layout parity for notebook, code editor, block editor, board, calendar, timeline, diagram, dashboard, table, tree | layout dataset, render-profile datamap, projection tests, visible layouts | browser/static tests prove same entity data renders in every approved layout |
+| v4_missing_034 | p1 | agent_codex_an_app | offline capability and zero CDN references | vendor asset folder, asset inventory report, network-disabled e2e | offline browser e2e passes and scan shows zero CDN references |
 | v4_missing_035 | p0 | agent_codex_an_app | project/product definition markdown schema | definition schema, sample definition file, validator coverage | tests prove metadata, allowed runtime, feature flags, config, dependencies, policies, schema, patterns, and shapes validate |
 | v4_missing_036 | p0 | agent_codex_an_app | runtime detection and dependency resolution | runtime detector, dependency resolver, dependency graph validation | tests prove browser/node runtime detection and dependency resolution for plugins/utilities/app_data/definitions |
-| v4_missing_037 | p0 | agent_codex_an_app + agent_ui_application | browser entry and mount resolver | entry JS contract, mount target dataset, view_frame entity | browser e2e proves entry loads definition, boots shell, and mounts into configured element id |
+| v4_missing_037 | p0 | agent_codex_an_app | browser entry and mount resolver | entry JS contract, mount target dataset, view_frame entity | browser e2e proves entry loads definition, boots shell, and mounts into configured element id |
 | v4_missing_038 | p1 | agent_codex_an_app | policy datasets and policy validation | cache/storage/security/routing/naming/create policy datasets and data tables | tests prove invalid policy names/values fail before boot |
 | v4_missing_039 | p1 | agent_codex_an_app | shell cache backed by dedicated action_entity instance | shell cache entity, action_entity cache integration, audit records | tests prove shell cache reads/writes through action_entity boundary |
-| v4_missing_040 | p1 | agent_ui_application | default listener and view frame resolution | listener entity, event binding map, view_frame definition | browser e2e proves default listeners and default view frame are resolved during boot |
+| v4_missing_040 | p1 | agent_codex_an_app | default listener and view frame resolution | listener entity, event binding map, view_frame definition | browser e2e proves default listeners and default view frame are resolved during boot |
 
 ## V4 Missing Item Grouping By Agent
 
 | Agent | P0 Items | P1 Items | P2 Items |
 |---|---|---|---|
-| agent_codex_an_app | v4_missing_005, v4_missing_013, v4_missing_018, v4_missing_027, v4_missing_035, v4_missing_036, v4_missing_037 | v4_missing_007, v4_missing_010, v4_missing_014, v4_missing_016, v4_missing_023, v4_missing_025, v4_missing_029, v4_missing_034, v4_missing_038, v4_missing_039 | none |
-| agent_ui_application | v4_missing_001, v4_missing_002, v4_missing_003, v4_missing_004, v4_missing_011, v4_missing_019, v4_missing_020, v4_missing_021, v4_missing_022, v4_missing_024, v4_missing_027, v4_missing_033, v4_missing_037 | v4_missing_006, v4_missing_008, v4_missing_009, v4_missing_015, v4_missing_017, v4_missing_023, v4_missing_026, v4_missing_028, v4_missing_029, v4_missing_030, v4_missing_034, v4_missing_040 | v4_missing_012, v4_missing_031, v4_missing_032 |
-| agent_lang_and_memory | v4_missing_021 | classification/entity extraction for app-building commands | none |
+| agent_codex_an_app | v4_missing_001 through v4_missing_005, v4_missing_011, v4_missing_013, v4_missing_018 through v4_missing_022, v4_missing_024, v4_missing_027, v4_missing_033, v4_missing_035 through v4_missing_037 | v4_missing_006 through v4_missing_010, v4_missing_014 through v4_missing_017, v4_missing_023, v4_missing_025, v4_missing_026, v4_missing_028 through v4_missing_030, v4_missing_034, v4_missing_038 through v4_missing_040 | v4_missing_012, v4_missing_031, v4_missing_032 |
 
 ## V4 Required New Or Updated Contracts
 
@@ -234,18 +247,18 @@ The following contracts should be created or updated before implementation:
 
 | Contract ID | Contract File | Purpose |
 |---|---|---|
-| v4_contract_001 | `proposal/production_application_contracts/v4/agent_2_agent_ui_application_command_registry_contract_v1_0_0_proposed.md` | command registry, keyboard bindings, selector/action binding |
-| v4_contract_002 | `proposal/production_application_contracts/v4/agent_2_agent_ui_application_editor_focus_contract_v1_0_0_proposed.md` | edit mode, focus preservation, cell row rendering |
-| v4_contract_003 | `proposal/production_application_contracts/v4/agent_2_agent_ui_application_book_cell_operations_contract_v1_0_0_proposed.md` | live book/cell create/move/remove/render |
-| v4_contract_004 | `proposal/production_application_contracts/v4/agent_2_agent_ui_application_search_and_status_contract_v1_0_0_proposed.md` | global search, status surface, storage error display |
-| v4_contract_005 | `proposal/production_application_contracts/v4/agent_2_agent_ui_application_layout_parity_contract_v1_0_0_proposed.md` | all approved layout projections and visual validation |
+| v4_contract_001 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_command_registry_contract_v1_0_0_proposed.md` | command registry, keyboard bindings, selector/action binding |
+| v4_contract_002 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_editor_focus_contract_v1_0_0_proposed.md` | edit mode, focus preservation, cell row rendering |
+| v4_contract_003 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_book_cell_operations_contract_v1_0_0_proposed.md` | live book/cell create/move/remove/render |
+| v4_contract_004 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_search_and_status_contract_v1_0_0_proposed.md` | global search, status surface, storage error display |
+| v4_contract_005 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_layout_parity_contract_v1_0_0_proposed.md` | all approved layout projections and visual validation |
 | v4_contract_006 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_browser_e2e_gate_contract_v1_0_0_proposed.md` | browser health, boot guard, benchmark short-circuit |
 | v4_contract_007 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_persistence_version_undo_contract_v1_0_0_proposed.md` | persistence, undo/redo, version-backed state |
 | v4_contract_008 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_import_export_offline_contract_v1_0_0_proposed.md` | file import/export, local server, offline assets |
-| v4_contract_009 | `proposal/production_application_contracts/v4/agent_3_agent_lang_and_memory_cell_command_language_contract_v1_0_0_proposed.md` | language parsing for GUI commands and cell execution |
+| v4_contract_009 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_cell_command_language_contract_v1_0_0_proposed.md` | language parsing for GUI commands and cell execution |
 | v4_contract_010 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_definition_runtime_dependency_contract_v1_0_0_proposed.md` | project/product definition file, allowed runtime, dependency resolver, default resolver |
 | v4_contract_011 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_policy_and_cache_contract_v1_0_0_proposed.md` | cache/storage/security/routing/naming/create policy validation and shell cache via action_entity |
-| v4_contract_012 | `proposal/production_application_contracts/v4/agent_2_agent_ui_application_entry_mount_view_frame_contract_v1_0_0_proposed.md` | browser entry file, mount target, default view frame, default listeners |
+| v4_contract_012 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_entry_mount_view_frame_contract_v1_0_0_proposed.md` | browser entry file, mount target, default view frame, default listeners |
 
 ## V4 Required New Or Updated App Data
 
@@ -301,16 +314,14 @@ git checkout -b wip_dot_v4
 
 ## Agent V4 Workspace Rule
 
-Each agent creates a V4 workspace folder in their own branch root after branching
-from `wip_dot_v4`.
+`agent_codex_an_app` creates a V4 workspace folder in its own branch root after
+branching from `wip_dot_v4`.
 
 Required folders:
 
 ```text
 agent_workspace_v4/
   agent_codex_an_app/
-  agent_ui_application/
-  agent_lang_and_memory/
 ```
 
 Observed Agent 3 workspace shape:
@@ -326,9 +337,8 @@ agent_3_agent_lang_and_memory/
   test/
 ```
 
-This is acceptable as an agent-local workspace shape. For V4, it should be moved
-or mirrored under `agent_workspace_v4/agent_lang_and_memory/` unless the user
-approves a different branch-root folder convention.
+This remains historical branch-local context only. V4 active work should use
+`agent_workspace_v4/agent_codex_an_app/`.
 
 Each agent workspace must contain:
 
@@ -358,12 +368,12 @@ them to the shared repo convention before transfer:
 | Priority | Owner | Work |
 |---|---|---|
 | p0 | agent_codex_an_app | V3 release validation inventory, contract coverage, e2e gate, V4 branch readiness report |
-| p0 | agent_ui_application | command registry, edit mode, focus preservation, books/cells, browser e2e shell |
-| p0 | agent_lang_and_memory | An App Lang command parsing contract for GUI commands and cell execution |
+| p0 | agent_codex_an_app | command registry, edit mode, focus preservation, books/cells, browser e2e shell |
+| p0 | agent_codex_an_app | An App Lang command parsing contract for GUI commands and cell execution |
 | p1 | agent_codex_an_app | version-backed undo/redo, persistence provider boundary, repository handoff |
-| p1 | agent_ui_application | search, template gallery, import/export, docs routing |
-| p1 | agent_lang_and_memory | classification/entity extraction for app-building commands |
-| p2 | all agents | guided tour, offline vendor assets, advanced diagram/canvas flows, benchmark gate |
+| p1 | agent_codex_an_app | search, template gallery, import/export, docs routing |
+| p1 | agent_codex_an_app | classification/entity extraction for app-building commands |
+| p2 | agent_codex_an_app | guided tour, offline vendor assets, advanced diagram/canvas flows, benchmark gate |
 
 ## Required V3 Release Validation Commands
 
