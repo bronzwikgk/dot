@@ -26,8 +26,9 @@ result, a simple resolver, or a highest-score decision.
 ## Runtime Contract
 
 - `reason` summarizes type, known status, traits, and operations.
-- `resolve` returns the matching relationship target for a requested type.
+- `resolve` checks whether an entity satisfies a requested operation or trait.
 - `explain` returns readable text for a result.
+- `explain` handles both `reason()` and `resolve()` results.
 - `decide` chooses the highest scored option.
 
 ## Known Limits

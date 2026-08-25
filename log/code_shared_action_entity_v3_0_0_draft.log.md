@@ -20,7 +20,7 @@ Ran focused Node checks for:
 - Automatic ID generation.
 - Custom ID field support.
 - Create/read/update/delete behavior.
-- `updatedAt` presence after update.
+- `updated_at` presence after update.
 - Cache size limit.
 - Read-result mutation isolation.
 - Query-result mutation isolation.
@@ -45,3 +45,12 @@ Push is handled by the user through GitHub Desktop.
 ## 2026-08-25
 
 - Renamed class references to snake_case naming standard where applicable.
+
+## 2026-08-25 Snake Case API Pass
+
+- Renamed memory driver helpers to `generate_id()` and `get_timestamp()`.
+- Renamed cache/id/timestamp fields to `cache_limit`, `id_field`, `created_at`, and `updated_at`.
+
+## 2026-08-25 Lock-Down Pass
+
+- `create()` now rejects non-object entity data.

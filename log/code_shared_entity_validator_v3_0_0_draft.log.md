@@ -28,3 +28,9 @@ validation rules.
 - Module import from promoted path passed.
 - Safe-name and banned-name smoke checks passed.
 - Relationship type smoke check passed.
+## 2026-08-25 Banned Vocabulary Update
+
+- Expanded banned vocabulary checks across entity, relationship, operation,
+  safe-name, and approved-word validation.
+- Banned checks now tokenize snake_case values so longer names containing a
+  banned token are rejected.

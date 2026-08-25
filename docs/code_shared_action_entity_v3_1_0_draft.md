@@ -15,6 +15,10 @@ versioning, import/export, and graph validation.
 
 It exposes:
 
+- `normalize_entity(input)`
+- `validate_entity(entity)`
+- `validate_input(input)`
+- `validate_output(output)`
 - `create(data, options)`
 - `read(id, options)`
 - `update(id, data, options)`
@@ -37,6 +41,7 @@ It exposes:
 - `get_dependents(id)`
 - `validate_graph()`
 - `add_policy(id, policy)`
+- `remove_policy(id, policy)`
 - `add_contract(id, contract)`
 - `add_operation(id, operation)`
 - `diff_entities(before, after)`
@@ -56,6 +61,8 @@ entity doctrine fields.
 ## Runtime Contract
 
 - Entity ids and types must use snake_case path/name rules.
+- Entity ids, types, names, and operation names must not contain banned
+  vocabulary.
 - Entity status must be approved.
 - Relationship types must be approved unless explicitly allowed by config.
 - Legacy dependency input is disabled unless explicitly enabled for migration.
@@ -63,8 +70,10 @@ entity doctrine fields.
 - Relationship targets must resolve during graph validation.
 - Cycles are reported during graph validation.
 - Cache entries should reflect the latest stored record.
-- Injected drivers may expose either `generate_id`/`get_timestamp` or the older
-  `generateId`/`getTimestamp` names.
+- `import_entity(text)` validates and persists the imported entity, then returns
+  the same stored-record shape as `create`.
+- Injected drivers expose `generate_id()` and `get_timestamp()`.
+- Entity inputs and batch inputs are rejected when their shape is invalid.
 
 ## Known Limits
 

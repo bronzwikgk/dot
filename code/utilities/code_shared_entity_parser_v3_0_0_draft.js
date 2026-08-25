@@ -6,6 +6,7 @@ class entity_parser {
   }
 
   parse(text = "") {
+    if (text === null || text === undefined) text = "";
     const tokens = this.tokenize(text);
     const entities = [];
     for (let index = 0; index < tokens.length; index += 1) {

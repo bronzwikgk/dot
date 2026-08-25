@@ -23,17 +23,17 @@ It is intentionally lightweight and dependency-free.
 `stats_util` exposes:
 
 - `mean(values)`
-- `standardDeviation(values)`
-- `standardError(stdDev, sampleSize)`
-- `confidenceInterval(mean, standardError)`
-- `weightedMean(values, weights)`
-- `zScore(rawValue, mean, stdDev)`
-- `zScoreBatch(values, mean, stdDev)`
+- `standard_deviation(values)`
+- `standard_error(std_dev, sample_size)`
+- `confidence_interval(mean, standard_error)`
+- `weighted_mean(values, weights)`
+- `z_score(raw_value, mean, std_dev)`
+- `z_score_batch(values, mean, std_dev)`
 
 Compatibility aliases:
 
 - `execute(values)` calls `mean(values)`.
-- `executeBatch(values, mean, stdDev)` calls `zScoreBatch(values, mean, stdDev)`.
+- `execute_batch(values, mean, std_dev)` calls `z_score_batch(values, mean, std_dev)`.
 
 ## When To Use It
 
@@ -65,19 +65,19 @@ const stats = new stats_util();
 Default:
 
 ```js
-zCritical: 1.96
+z_critical: 1.96
 ```
 
 Custom z-critical:
 
 ```js
-const stats = new stats_util({ zCritical: 1.645 });
+const stats = new stats_util({ z_critical: 1.645 });
 ```
 
 Explicit `0` is preserved:
 
 ```js
-const stats = new stats_util({ zCritical: 0 });
+const stats = new stats_util({ z_critical: 0 });
 ```
 
 ## Examples
@@ -92,42 +92,42 @@ stats.mean([1, 2, 3]);
 Population standard deviation:
 
 ```js
-stats.standardDeviation([2, 4]);
+stats.standard_deviation([2, 4]);
 // 1
 ```
 
 Standard error:
 
 ```js
-stats.standardError(4, 16);
+stats.standard_error(4, 16);
 // 1
 ```
 
 Confidence interval:
 
 ```js
-stats.confidenceInterval(10, 2);
+stats.confidence_interval(10, 2);
 // { lower: 6.08, upper: 13.92, midpoint: 10, width: 7.84 }
 ```
 
 Weighted mean:
 
 ```js
-stats.weightedMean([10, 20], [1, 3]);
+stats.weighted_mean([10, 20], [1, 3]);
 // 17.5
 ```
 
 Z-score:
 
 ```js
-stats.zScore(12, 10, 2);
+stats.z_score(12, 10, 2);
 // 1
 ```
 
 Batch z-score:
 
 ```js
-stats.zScoreBatch([8, 10, 12], 10, 2);
+stats.z_score_batch([8, 10, 12], 10, 2);
 // [-1, 0, 1]
 ```
 
@@ -136,14 +136,14 @@ stats.zScoreBatch([8, 10, 12], 10, 2);
 Maintainers and agents should preserve these guarantees:
 
 - `new stats_util()` must work with no config.
-- `zCritical` should use `1.96` only when missing, not when explicitly set to `0`.
+- `z_critical` should use `1.96` only when missing, not when explicitly set to `0`.
 - `mean(null)` and `mean([])` return `0`.
-- `standardDeviation()` returns population standard deviation, dividing by `n`.
-- `standardDeviation(null)` and arrays shorter than 2 return `0`.
-- `standardError()` returns `0` for non-positive sample sizes.
-- `weightedMean()` returns `0` for missing arrays, mismatched lengths, or zero total weight.
-- `zScore()` returns `0` when standard deviation is `0`.
-- `zScoreBatch(null)` and `zScoreBatch([])` return `[]`.
+- `standard_deviation()` returns population standard deviation, dividing by `n`.
+- `standard_deviation(null)` and arrays shorter than 2 return `0`.
+- `standard_error()` returns `0` for non-positive sample sizes.
+- `weighted_mean()` returns `0` for missing arrays, mismatched lengths, or zero total weight.
+- `z_score()` returns `0` when standard deviation is `0`.
+- `z_score_batch(null)` and `z_score_batch([])` return `[]`.
 - Methods should not mutate input arrays.
 
 ## How It Was Tested
@@ -151,7 +151,7 @@ Maintainers and agents should preserve these guarantees:
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {stats_util} from './code/utilities/code_shared_stats_v3_0_0_draft.js'; const s=new stats_util(); assert.equal(s.mean([1,2,3]),2); assert.equal(s.mean([]),0); assert.equal(s.execute([2,4]),3); assert.equal(s.standardDeviation([2,4]),1); assert.equal(s.standardDeviation([1]),0); assert.equal(s.standardError(4,16),1); assert.equal(s.standardError(4,0),0); assert.deepEqual(s.confidenceInterval(10,2),{lower:6.08,upper:13.92,midpoint:10,width:7.84}); assert.equal(s.weightedMean([10,20],[1,3]),17.5); assert.equal(s.weightedMean([10],[1,2]),0); assert.equal(s.weightedMean([10,20],[0,0]),0); assert.equal(s.zScore(12,10,2),1); assert.equal(s.zScore(12,10,0),0); assert.deepEqual(s.zScoreBatch([8,10,12],10,2),[-1,0,1]); assert.deepEqual(s.zScoreBatch(null,10,2),[]); const zero=new stats_util({zCritical:0}); assert.equal(zero.confidenceInterval(10,2).width,0); console.log('stats checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {stats_util} from './code/utilities/code_shared_stats_v3_0_0_draft.js'; const s=new stats_util(); assert.equal(s.mean([1,2,3]),2); assert.equal(s.mean([]),0); assert.equal(s.execute([2,4]),3); assert.equal(s.standard_deviation([2,4]),1); assert.equal(s.standard_deviation([1]),0); assert.equal(s.standard_error(4,16),1); assert.equal(s.standard_error(4,0),0); assert.deepEqual(s.confidence_interval(10,2),{lower:6.08,upper:13.92,midpoint:10,width:7.84}); assert.equal(s.weighted_mean([10,20],[1,3]),17.5); assert.equal(s.weighted_mean([10],[1,2]),0); assert.equal(s.weighted_mean([10,20],[0,0]),0); assert.equal(s.z_score(12,10,2),1); assert.equal(s.z_score(12,10,0),0); assert.deepEqual(s.z_score_batch([8,10,12],10,2),[-1,0,1]); assert.deepEqual(s.z_score_batch(null,10,2),[]); const zero=new stats_util({z_critical:0}); assert.equal(zero.confidence_interval(10,2).width,0); console.log('stats checks passed');"
 ```
 
 Expected output:
@@ -174,7 +174,7 @@ When updating this utility:
 
 ## Known Limits
 
-- `standardDeviation()` uses population variance, not sample variance.
+- `standard_deviation()` uses population variance, not sample variance.
 - Numeric inputs are assumed to already be numbers.
 - No special handling is provided for `NaN`, `Infinity`, or numeric strings.
 - Confidence interval math uses the configured z-critical multiplier directly.

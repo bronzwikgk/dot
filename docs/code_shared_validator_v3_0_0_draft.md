@@ -20,9 +20,11 @@ It is used by the runner before workflow steps and DAG tasks, and can also be us
 
 - Required fields.
 - Basic property types.
-- String `minLength` and `maxLength`.
+- String `min_length` and `max_length`.
+- Property `enum` lists.
+- String `format` for built-in `email`, `url`, and `date` formats.
 
-`validator.evaluateRule(rule, context)` evaluates rules in two forms:
+`validator.evaluate_rule(rule, context)` evaluates rules in two forms:
 
 - Structured rules, such as `{ left, operator, right }`.
 - String conditions, such as `{ condition: "input.score >= 10" }`.
@@ -33,7 +35,9 @@ It also supports compound rules:
 - `or`
 - `not`
 
-`validator.resolveValue(path, context)` resolves wrapped paths against a context object. For example, `{{input.name}}` reads `context.input.name`.
+`validator.resolve_value(path, context)` resolves wrapped paths against a context object. For example, `{{input.name}}` reads `context.input.name`.
+Falsy values such as `0`, `false`, and empty strings are preserved during
+resolution.
 
 ## When To Use It
 
@@ -73,7 +77,7 @@ Structured rules compare resolved left and right values:
 ```js
 const validator = new validator();
 
-validator.evaluateRule(
+validator.evaluate_rule(
   { left: "{{input.count}}", operator: ">=", right: 3 },
   { input: { count: 4 } }
 );
@@ -82,7 +86,7 @@ validator.evaluateRule(
 String conditions run inside Node's `vm` context and are wrapped as an expression:
 
 ```js
-validator.evaluateRule(
+validator.evaluate_rule(
   { condition: "input.count >= 3" },
   { input: { count: 4 } }
 );
@@ -93,7 +97,7 @@ String condition evaluation has a timeout so runaway expressions cannot hang the
 Compound rules recursively evaluate child rules:
 
 ```js
-validator.evaluateRule(
+validator.evaluate_rule(
   {
     type: "and",
     conditions: [
@@ -128,7 +132,9 @@ Maintainers and agents should preserve these guarantees:
 - Compound `and` rules should pass only when every child passes.
 - Compound `or` rules should pass when any child passes.
 - Compound `not` rules should invert the first child rule.
-- `resolveValue()` should return non-string values unchanged.
+- `resolve_value()` should return non-string values unchanged.
+- `evaluate_rule()` and `resolve_value()` should tolerate missing context.
+- JavaScript condition failures should evaluate to `false`; VM error logging is opt-in through `log_vm_errors`.
 - Unrecognized operators should return `false`.
 
 ## How It Was Tested
@@ -136,7 +142,7 @@ Maintainers and agents should preserve these guarantees:
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {validator} from './code/plugins/code_shared_validator_v3_0_0_draft.js'; const v=new validator(); assert.equal(v.validate(null,{required:['name']}).valid,false); assert.equal(v.evaluateRule({type:'and',conditions:[{left:'{{input.x}}',operator:'>=',right:2},{condition:'input.y <= 3'}]},{input:{x:2,y:3}}),true); assert.equal(v.evaluateRule({type:'or',conditions:[{left:'{{input.x}}',operator:'<',right:1},{left:'{{input.x}}',operator:'===',right:2}]},{input:{x:2}}),true); assert.equal(v.evaluateRule({type:'not',conditions:[{left:'{{input.x}}',operator:'<',right:1}]},{input:{x:2}}),true); assert.equal(v.evaluateRule({left:'{{input.name}}',operator:'!==',right:'b'},{input:{name:'a'}}),true); console.log('validator checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {validator} from './code/plugins/code_shared_validator_v3_0_0_draft.js'; const v=new validator(); assert.equal(v.validate(null,{required:['name']}).valid,false); assert.equal(v.evaluate_rule({type:'and',conditions:[{left:'{{input.x}}',operator:'>=',right:2},{condition:'input.y <= 3'}]},{input:{x:2,y:3}}),true); assert.equal(v.evaluate_rule({type:'or',conditions:[{left:'{{input.x}}',operator:'<',right:1},{left:'{{input.x}}',operator:'===',right:2}]},{input:{x:2}}),true); assert.equal(v.evaluate_rule({type:'not',conditions:[{left:'{{input.x}}',operator:'<',right:1}]},{input:{x:2}}),true); assert.equal(v.evaluate_rule({left:'{{input.name}}',operator:'!==',right:'b'},{input:{name:'a'}}),true); console.log('validator checks passed');"
 ```
 
 Expected output:
@@ -162,3 +168,5 @@ When updating this utility:
 - String condition context is shallow-copied into the VM sandbox.
 - Path resolution is simple dot traversal and does not support array index syntax beyond normal property names.
 - `contains` does not currently support substring matching.
+- Malformed property schemas return validation findings where possible instead
+  of becoming runtime TypeErrors.

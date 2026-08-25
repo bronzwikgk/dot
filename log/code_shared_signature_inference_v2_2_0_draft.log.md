@@ -34,7 +34,7 @@ Improve shared test generation subsystem
 Updated signature inference to match the shared utility design pattern:
 
 - Added `signature_inferencer` class with constructor/config shape.
-- Added camelCase instance methods.
+- Added mixed-case instance methods.
 - Kept existing snake_case function exports for compatibility.
 
 ### Verification
@@ -57,14 +57,20 @@ test_generation class API checks passed
 Renamed the public class API and instance methods to follow the snake_case-only project convention.
 
 ```text
-SignatureInferencer -> signature_inferencer
-inferSignature -> infer_signature
-inferSignatures -> infer_signatures
-classifyArchetype -> classify_archetype
-normalizeTypeToken -> normalize_type_token
-inferReturnFromSource -> infer_return_from_source
+signature inference class renamed to `signature_inferencer`
+single signature method renamed to `infer_signature`
+batch signature method renamed to `infer_signatures`
+archetype method renamed to `classify_archetype`
+type normalization method renamed to `normalize_type_token`
+return inference method renamed to `infer_return_from_source`
 ```
 
 ## 2026-08-25
 
 - Renamed class references to snake_case naming standard where applicable.
+
+## 2026-08-25 Quality Follow-Up
+
+- Preserved `has_module_state` on inferred signature records.
+- Stopped normalizing `ArrayBuffer` as `array<any>`.
+- Treated rest parameters as `array<any>`.

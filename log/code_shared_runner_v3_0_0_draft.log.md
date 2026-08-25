@@ -19,7 +19,7 @@ Ran focused Node checks for:
 - Inline AST plan execution.
 - validator-backed AST conditions.
 - Registered AST plan execution.
-- `nextMap` routing.
+- `next_map` routing.
 - DAG cycle rejection.
 - Missing dependency rejection.
 - Duplicate task ID rejection.
@@ -52,3 +52,24 @@ Push is handled by the user through GitHub Desktop.
 ## 2026-08-25
 
 - Fixed DAG execution so unknown task types or actions throw `[SYS-06]` instead of returning an error object as a successful result.
+- Added banned vocabulary checks for plan names, step ids/actions, task
+  ids/types/actions, subflow names, and dependency ids.
+
+## 2026-08-25 Quality Follow-Up
+
+- Preserved `terminated` status instead of overwriting it as completed.
+- Allowed `next_map.undefined` routing for steps with no produced output.
+- Added fallback mustache-style input resolution when no validator is injected.
+
+## 2026-08-25 Snake Case API Pass
+
+- Renamed public methods to `register_plan()`, `topological_sort()`, and `get_sessions()`.
+- Migrated runner plan fields to `step_id`, `next_map`, and `step_outputs`.
+- Runner action hosts now use `execute_action()`.
+
+## 2026-08-25 Lock-Down Pass
+
+- Invalid AST steps now fail with explicit `[SYS-06]` errors instead of TypeErrors.
+- Invalid DAG tasks now fail with explicit `[SYS-06]` errors.
+- Input source resolution now tolerates malformed source entries.
+- Registration now validates AST/DAG structure before storing a plan.

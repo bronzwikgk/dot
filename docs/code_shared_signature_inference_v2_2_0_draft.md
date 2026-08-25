@@ -66,6 +66,9 @@ Fixture checks verified:
 - Constructor records are included.
 - Source return inference recognizes array-returning patterns.
 - Output feeds into generated plans.
+- Module-state traits from inspection are preserved on inferred signatures.
+- `ArrayBuffer` is no longer normalized as `array<any>`.
+- Rest parameters are inferred as `array<any>`.
 
 Expected output:
 

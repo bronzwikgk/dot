@@ -62,7 +62,7 @@
       token = parts[0];
     }
     if (token === "[]") return "array<any>";
-    if (token.indexOf("array") === 0 || token.indexOf("]") === token.length - 1 && token.indexOf("[") !== -1) return "array<any>";
+    if (token === "array" || /^array\s*</.test(token) || /\[\]$/.test(token)) return "array<any>";
     if (token === "str") return "string";
     if (token === "int" || token === "float" || token === "double" || token === "num") return "number";
     if (token === "bool") return "boolean";
@@ -148,7 +148,9 @@
 
     for (var i = 0; i < fn_record.params.length; i++) {
       var declared = jsdoc.params[fn_record.params[i].name];
-      if (declared) {
+      if (fn_record.params[i].rest) {
+        param_types.push("array<any>");
+      } else if (declared) {
         param_types.push(declared);
       } else if (fn_record.params[i].has_default) {
         param_types.push(default_literal_to_type(fn_record.params[i].default_literal));
@@ -163,6 +165,9 @@
 
     var enriched = {};
     for (var key in fn_record) enriched[key] = fn_record[key];
+    if (fn_record.traits && fn_record.traits.has_module_state) {
+      enriched.has_module_state = true;
+    }
     enriched.param_types = param_types;
     enriched.return_type = return_type;
     enriched.archetype = classify_archetype(fn_record.name, param_types, return_type);
@@ -199,32 +204,32 @@ export class signature_inferencer {
     this.config = config || {};
   }
 
-  infer_signature(fnRecord) {
-    return globalThis.an_utility_signature_inference.infer_signature(fnRecord);
+  infer_signature(fn_record) {
+    return globalThis.an_utility_signature_inference.infer_signature(fn_record);
   }
 
-  infer_signatures(fnRecords) {
-    return globalThis.an_utility_signature_inference.infer_signatures(fnRecords);
+  infer_signatures(fn_records) {
+    return globalThis.an_utility_signature_inference.infer_signatures(fn_records);
   }
 
-  classify_archetype(name, paramTypes, returnType) {
-    return globalThis.an_utility_signature_inference.classify_archetype(name, paramTypes, returnType);
+  classify_archetype(name, param_types, return_type) {
+    return globalThis.an_utility_signature_inference.classify_archetype(name, param_types, return_type);
   }
 
-  normalize_type_token(rawType) {
-    return globalThis.an_utility_signature_inference.normalize_type_token(rawType);
+  normalize_type_token(raw_type) {
+    return globalThis.an_utility_signature_inference.normalize_type_token(raw_type);
   }
 
-  infer_return_from_source(fnRecord) {
-    return globalThis.an_utility_signature_inference.infer_return_from_source(fnRecord);
+  infer_return_from_source(fn_record) {
+    return globalThis.an_utility_signature_inference.infer_return_from_source(fn_record);
   }
 }
 
 const default_inferencer = new signature_inferencer();
 
-export function infer_signature(fnRecord) { return default_inferencer.infer_signature(fnRecord); }
-export function infer_signatures(fnRecords) { return default_inferencer.infer_signatures(fnRecords); }
-export function classify_archetype(name, paramTypes, returnType) { return default_inferencer.classify_archetype(name, paramTypes, returnType); }
-export function normalize_type_token(rawType) { return default_inferencer.normalize_type_token(rawType); }
-export function infer_return_from_source(fnRecord) { return default_inferencer.infer_return_from_source(fnRecord); }
+export function infer_signature(fn_record) { return default_inferencer.infer_signature(fn_record); }
+export function infer_signatures(fn_records) { return default_inferencer.infer_signatures(fn_records); }
+export function classify_archetype(name, param_types, return_type) { return default_inferencer.classify_archetype(name, param_types, return_type); }
+export function normalize_type_token(raw_type) { return default_inferencer.normalize_type_token(raw_type); }
+export function infer_return_from_source(fn_record) { return default_inferencer.infer_return_from_source(fn_record); }
 export default signature_inferencer;

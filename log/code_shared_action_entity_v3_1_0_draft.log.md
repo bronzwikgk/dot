@@ -28,4 +28,20 @@ and focused migration checks are complete.
 
 ## 2026-08-25
 
-- Added driver compatibility for older `generateId`/`getTimestamp` hooks, added relationship wrapper methods, and allowed relationship targets to be checked during graph validation instead of link time.
+- Added driver compatibility for older `generate_id`/`get_timestamp` hooks, added relationship wrapper methods, and allowed relationship targets to be checked during graph validation instead of link time.
+- Added banned vocabulary validation during entity normalization.
+
+## 2026-08-25 Quality Follow-Up
+
+- `import_entity(text)` now validates, persists, caches, and returns the stored-record shape.
+- Removed fragile unknown-type error remapping so validator messages pass through directly.
+- Creation timestamps now share one generated timestamp when `created_at`/`updated_at` are not supplied.
+
+## 2026-08-25 Snake Case API Pass
+
+- Removed mixed-case driver normalization fallbacks; drivers are expected to expose `generate_id()` and `get_timestamp()`.
+
+## 2026-08-25 Lock-Down Pass
+
+- `normalize_entity()` now rejects non-object entity input.
+- Batch helpers now reject non-array inputs with explicit errors.

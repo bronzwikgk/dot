@@ -53,7 +53,7 @@ Promote `v3_1_0` as the default action entity only after:
 - focused contract tests cover relationships and graph validation
 - callers depending on the old class name are checked
 - migration notes explain field changes
-- injected drivers using `generateId` and `getTimestamp` are compatibility
+- injected drivers using `generate_id` and `get_timestamp` are compatibility
   checked against the v3.1 snake_case driver adapter
 - docs and logs are complete
 
@@ -61,7 +61,7 @@ Promote `v3_1_0` as the default action entity only after:
 
 `v3_1_0` uses snake_case driver hooks: `generate_id` and `get_timestamp`.
 For migration safety it also adapts older injected drivers that expose
-`generateId` and `getTimestamp`.
+`generate_id` and `get_timestamp`.
 
 ## Current Recommendation
 

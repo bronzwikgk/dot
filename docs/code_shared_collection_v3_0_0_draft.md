@@ -26,21 +26,21 @@ It is intended for shared runtime code and test/data preparation code that needs
 `collection_util` exposes:
 
 - `concat(arrays)`
-- `flattenToVector(matrix)`
+- `flatten_to_vector(matrix)`
 - `slice(array, start, end)`
-- `extractWindow(array, windowSize, position)`
-- `slidingWindows(array, windowSize)`
+- `extract_window(array, window_size, position)`
+- `sliding_windows(array, window_size)`
 - `filter(items, predicate)`
-- `matchesPredicate(item, predicate)`
-- `filterByRange(items, field, min, max)`
+- `matches_predicate(item, predicate)`
+- `filter_by_range(items, field, min, max)`
 - `split(data)`
-- `splitWithLabels(data, labels)`
-- `shuffleArray(array)`
+- `split_with_labels(data, labels)`
+- `shuffle_array(array)`
 
 Compatibility aliases:
 
 - `execute(arrays)` calls `concat(arrays)`.
-- `executeWithLabels(data, labels)` calls `splitWithLabels(data, labels)`.
+- `execute_with_labels(data, labels)` calls `split_with_labels(data, labels)`.
 
 ## When To Use It
 
@@ -72,8 +72,8 @@ const collections = new collection_util();
 
 Defaults:
 
-- `trainRatio: 0.8`
-- `testRatio: 0.2`
+- `train_ratio: 0.8`
+- `test_ratio: 0.2`
 - `shuffle: false`
 - `seed: null`
 
@@ -81,13 +81,13 @@ Custom configuration:
 
 ```js
 const collections = new collection_util({
-  trainRatio: 0.7,
+  train_ratio: 0.7,
   shuffle: true,
   seed: 123
 });
 ```
 
-`testRatio` is stored for compatibility and documentation, but `split()` and `splitWithLabels()` currently compute the test set as the remainder after applying `trainRatio`.
+`test_ratio` is stored for compatibility and documentation, but `split()` and `split_with_labels()` currently compute the test set as the remainder after applying `train_ratio`.
 
 ## Examples
 
@@ -108,7 +108,7 @@ collections.slice([1, 2, 3, 4], -2, 3);
 Create sliding windows:
 
 ```js
-collections.slidingWindows([1, 2, 3], 2);
+collections.sliding_windows([1, 2, 3], 2);
 // [[1, 2], [2, 3]]
 ```
 
@@ -137,14 +137,14 @@ collections.split(["a", "b", "c", "d"]);
 Seeded shuffled split:
 
 ```js
-const splitA = new collection_util({ shuffle: true, seed: 123 }).split(data);
-const splitB = new collection_util({ shuffle: true, seed: 123 }).split(data);
-// splitA and splitB are identical
+const split_a = new collection_util({ shuffle: true, seed: 123 }).split(data);
+const split_b = new collection_util({ shuffle: true, seed: 123 }).split(data);
+// split_a and split_b are identical
 ```
 
 ## Predicate Operators
 
-`matchesPredicate()` and `filter()` support:
+`matches_predicate()` and `filter()` support:
 
 - `eq`
 - `neq`
@@ -162,25 +162,26 @@ Unknown operators return `false`.
 Maintainers and agents should preserve these guarantees:
 
 - `new collection_util()` must work with no config.
+- `flatten_to_vector(null)` returns an empty list.
 - A configured seed of `0` is a valid deterministic seed and must not be treated
   as missing.
 - `concat(null)` returns `[]`.
 - `slice(null, start, end)` returns `[]`.
 - `slice()` clamps the start and end to valid array bounds.
-- `slidingWindows()` throws for non-positive or non-finite window sizes.
+- `sliding_windows()` throws for non-positive or non-finite window sizes.
 - `filter(null, predicate)` returns `[]`.
 - Missing predicates match all items.
 - `split(null)` returns empty train/test arrays and index arrays.
-- `splitWithLabels(null, labels)` returns empty data/label/index arrays.
+- `split_with_labels(null, labels)` returns empty data/label/index arrays.
 - Shuffled splits are reproducible when `seed` is set.
-- `shuffleArray()` should not mutate its input array.
+- `shuffle_array()` should not mutate its input array.
 
 ## How It Was Tested
 
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {collection_util} from './code/utilities/code_shared_collection_v3_0_0_draft.js'; const c=new collection_util(); assert.equal(c.trainRatio,0.8); assert.equal(c.testRatio,0.2); assert.deepEqual(c.concat([[1,2],[3],[]]),[1,2,3]); assert.deepEqual(c.flattenToVector([[1,2],[3,4]]),[1,2,3,4]); assert.deepEqual(c.slice([1,2,3,4],-2,3),[1,2,3]); assert.deepEqual(c.extractWindow([1,2,3,4],2,1),[2,3]); assert.deepEqual(c.slidingWindows([1,2,3],2),[[1,2],[2,3]]); assert.throws(()=>c.slidingWindows([1,2],0),/positive windowSize/); const rows=[{x:-2,kind:'a'},{x:0,kind:'b'},{x:3,kind:'a'}]; assert.deepEqual(c.filter(rows,{field:'kind',operator:'eq',value:'a'}),[rows[0],rows[2]]); assert.deepEqual(c.filterByRange(rows,'x',-1,3),[rows[1],rows[2]]); assert.deepEqual(c.split(['a','b','c','d']),{train:['a','b','c'],test:['d'],train_indices:[0,1,2],test_indices:[3]}); const c2=new collection_util({trainRatio:0.5}); assert.deepEqual(c2.splitWithLabels(['a','b','c','d'],['A','B','C','D']),{train_data:['a','b'],test_data:['c','d'],train_labels:['A','B'],test_labels:['C','D'],train_indices:[0,1],test_indices:[2,3]}); const s1=new collection_util({shuffle:true,seed:123,trainRatio:0.5}).split(['a','b','c','d','e','f']); const s2=new collection_util({shuffle:true,seed:123,trainRatio:0.5}).split(['a','b','c','d','e','f']); assert.deepEqual(s1,s2); assert.notDeepEqual(s1.train_indices,[0,1,2]); console.log('collection checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {collection_util} from './code/utilities/code_shared_collection_v3_0_0_draft.js'; const c=new collection_util(); assert.equal(c.train_ratio,0.8); assert.equal(c.test_ratio,0.2); assert.deepEqual(c.concat([[1,2],[3],[]]),[1,2,3]); assert.deepEqual(c.flatten_to_vector([[1,2],[3,4]]),[1,2,3,4]); assert.deepEqual(c.slice([1,2,3,4],-2,3),[1,2,3]); assert.deepEqual(c.extract_window([1,2,3,4],2,1),[2,3]); assert.deepEqual(c.sliding_windows([1,2,3],2),[[1,2],[2,3]]); assert.throws(()=>c.sliding_windows([1,2],0),/positive window_size/); const rows=[{x:-2,kind:'a'},{x:0,kind:'b'},{x:3,kind:'a'}]; assert.deepEqual(c.filter(rows,{field:'kind',operator:'eq',value:'a'}),[rows[0],rows[2]]); assert.deepEqual(c.filter_by_range(rows,'x',-1,3),[rows[1],rows[2]]); assert.deepEqual(c.split(['a','b','c','d']),{train:['a','b','c'],test:['d'],train_indices:[0,1,2],test_indices:[3]}); const c2=new collection_util({train_ratio:0.5}); assert.deepEqual(c2.split_with_labels(['a','b','c','d'],['A','B','C','D']),{train_data:['a','b'],test_data:['c','d'],train_labels:['A','B'],test_labels:['C','D'],train_indices:[0,1],test_indices:[2,3]}); const s1=new collection_util({shuffle:true,seed:123,train_ratio:0.5}).split(['a','b','c','d','e','f']); const s2=new collection_util({shuffle:true,seed:123,train_ratio:0.5}).split(['a','b','c','d','e','f']); assert.deepEqual(s1,s2); assert.notDeepEqual(s1.train_indices,[0,1,2]); console.log('collection checks passed');"
 ```
 
 Expected output:
@@ -204,7 +205,7 @@ When updating this utility:
 
 ## Known Limits
 
-- `flattenToVector()` expects a matrix-like array and does not guard `null` rows.
+- `flatten_to_vector()` expects matrix-like rows and does not guard `null` rows.
 - `concat()` expects each child item to be array-like.
 - `filter()` supports one predicate at a time.
 - Splits are simple ratio splits, not stratified splits.

@@ -29,10 +29,11 @@ It also keeps the older compatibility functions:
 - `parse_params(param_text)`
 - `split_top_level(text, separator)`
 
-`inspect_source_auto()` prefers the Acorn AST backend when available and falls back to a legacy line parser.
+`inspect_source_auto()` prefers the Acorn AST parser mode when available and falls back to a legacy line parser.
 
 The returned inventory includes:
 
+- `inspection_mode`
 - `classes`
 - `export_style`
 - `exported_names`
@@ -68,6 +69,14 @@ Avoid using it as a security scanner or full parser for TypeScript/JSX.
   anonymous default classes.
 - One-line source slices are no longer extended into the following function/method.
 - Added `code_inspector` class export with constructor/config style while preserving existing function exports.
+- Module-level mutable state is now copied into each function record as
+  `traits.has_module_state`.
+- AST method containers are resolved from the containing class range, which
+  avoids losing outer class names when classes are nested or adjacent.
+- `traits.declared_at_module_depth` is set for module-level function records.
+- Nested functions are excluded from the top-level function inventory.
+- Parser mode is reported as `inspection_mode`; the old parser marker field is
+  no longer emitted.
 
 ## How It Was Tested
 

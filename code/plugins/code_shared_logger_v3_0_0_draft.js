@@ -37,6 +37,8 @@ class logger {
 class metrics {
   constructor() {
     this.counters = new Map();
+    this.gauges = new Map();
+    this.timers = new Map();
   }
 
   counter(name_value) {
@@ -51,12 +53,16 @@ class metrics {
   }
 
   gauge(name_value, numeric_value) {
-    this.counters.set("gauge:" + name_value, numeric_value);
+    this.gauges.set(name_value, numeric_value);
     return numeric_value;
   }
 
   snapshot() {
-    return Array.from(this.counters.entries());
+    return {
+      counters: Array.from(this.counters.entries()),
+      gauges: Array.from(this.gauges.entries()),
+      timers: Array.from(this.timers.entries())
+    };
   }
 }
 

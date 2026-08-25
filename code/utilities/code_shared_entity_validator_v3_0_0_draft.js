@@ -58,9 +58,10 @@ class entity_validator {
     const errors = [];
     if (!this.is_plain_object(entity)) errors.push("entity must be an object");
     if (entity && !this.is_snake_path(entity.id)) errors.push("id must use snake_case path format");
+    if (entity && !this.validate_no_banned_words([entity.id, entity.type, entity.name]).ok) errors.push("entity contains banned vocabulary");
     if (entity && !this.is_snake_name(entity.type)) errors.push("type must use snake_case");
     if (registry && entity && !this.config.allow_unknown_types && !registry.has_type(entity.type)) errors.push(`unknown type '${entity.type}'`);
-    if (entity && !this.validate_status(entity.status).ok) errors.push(`status '${entity.status}' is invalid`);
+    if (entity && entity.status !== undefined && !this.validate_status(entity.status).ok) errors.push(`status '${entity.status}' is invalid`);
     for (const operation of normalize_list(entity && entity.operations)) {
       const operation_name = typeof operation === "string" ? operation : operation.name;
       const operation_result = this.validate_operation_name(operation_name);
@@ -86,6 +87,7 @@ class entity_validator {
     if (!this.is_plain_object(input)) errors.push("input must be an object");
     if (input && !input.id) errors.push("id is required");
     if (input && !input.type) errors.push("type is required");
+    if (input && !this.validate_no_banned_words([input.id, input.type, input.name]).ok) errors.push("input contains banned vocabulary");
     if (input && input.id && !this.is_snake_path(input.id)) errors.push("id must use snake_case path format");
     if (input && input.type && !this.is_snake_name(input.type)) errors.push("type must use snake_case");
     if (registry && input && input.type && !this.config.allow_unknown_types && !registry.has_type(input.type)) errors.push(`unknown type '${input.type}'`);
@@ -106,6 +108,7 @@ class entity_validator {
       return { ok: false, errors };
     }
     if (!this.validate_relationship_type(relationship.type).ok) errors.push(`relationship type '${relationship.type}' is not allowed`);
+    if (!this.validate_no_banned_words([relationship.type, relationship.to]).ok) errors.push("relationship contains banned vocabulary");
     if (!relationship.to) errors.push("relationship target is required");
     if (relationship.to && !this.is_snake_path(relationship.to)) errors.push("relationship target must use snake_case path format");
     return { ok: errors.length === 0, errors };
@@ -190,11 +193,11 @@ class entity_validator {
   validate_approved_word(group_name, value) {
     const list = this.config[group_name] || [];
     const suggestions = list.filter((item) => edit_distance(item, value) <= this.config.near_duplicate_distance);
-    return { ok: list.includes(value), group_name, value, suggestions };
+    return { ok: list.includes(value) && this.validate_banned_word(value).ok, group_name, value, suggestions };
   }
 
   validate_operation_name(name) {
-    const ok = this.is_snake_name(name) && (
+    const ok = this.is_snake_name(name) && this.validate_banned_word(name).ok && (
       this.config.allow_unknown_operations ||
       this.config.operation_names.includes(name)
     );
@@ -202,11 +205,14 @@ class entity_validator {
   }
 
   validate_safe_name(name) {
-    return { ok: this.is_snake_name(name), name };
+    return { ok: this.is_snake_name(name) && this.validate_banned_word(name).ok, name };
   }
 
   validate_banned_word(value) {
-    return { ok: !this.config.banned_words.includes(value), value };
+    const normalized = String(value || "").toLowerCase();
+    const parts = normalized.split(/[^a-z0-9]+/).filter(Boolean);
+    const found = this.config.banned_words.filter((word) => normalized === word || parts.includes(word));
+    return { ok: found.length === 0, value, found };
   }
 
   validate_no_banned_words(values = []) {

@@ -5,7 +5,7 @@ const entity_types = [
   "model", "training_run", "prefix", "page", "comment", "credential",
   "variable", "command", "state_store", "user_flow", "test", "dataset",
   "policy", "contract", "doc", "log", "release", "application", "domain",
-  "product", "application_blueprint", "application_materialization",
+  "product", "application_blueprint", "application_creation",
   "registry", "route_map", "dataset_manifest", "template_taxonomy",
   "deployment_variant", "lifecycle_transition", "rbac_policy",
   "permission", "role", "audit_log", "organization", "department",
@@ -48,7 +48,7 @@ const operation_names = [
   "evaluate_condition", "execute_loop", "call_tool", "list_tools",
   "format_entity", "trace_connections", "get_ancestors", "add_comment",
   "resolve_comment", "list_comments", "import_file", "import_data",
-  "export_file", "export_data", "materialize_application",
+  "export_file", "export_data", "create_application_artifacts",
   "register_application", "register_product", "publish_application",
   "transition_lifecycle", "build_registry", "check_permission",
   "grant_permission", "revoke_permission", "create_person", "update_role",
@@ -77,7 +77,7 @@ const relationship_types = [
   "implemented_by", "triggers", "triggered_by", "publishes",
   "subscribes_to", "maps_to", "derived_from", "replaces", "replaced_by",
   "related_to", "has", "manages", "submits", "receives", "holds",
-  "completes", "authorizes", "denies", "materializes", "registered_by",
+  "completes", "authorizes", "denies", "creates_artifact", "registered_by",
   "registered_as", "allowed_by", "restricted_by"
 ];
 
@@ -118,7 +118,7 @@ const intent_names = [
   "inspect_system", "configure_app", "navigate_to_entity", "create_entity",
   "delete_entity", "clone_entity", "export_entity", "import_entity",
   "execute_entity", "inspect_entity", "create_application",
-  "materialize_application", "publish_application", "create_domain",
+  "create_application_artifacts", "publish_application", "create_domain",
   "define_route_map", "define_dataset_manifest", "select_template",
   "create_template", "assign_role", "check_access", "review_audit_log",
   "create_person", "transfer_department", "calculate_payroll",
@@ -158,7 +158,7 @@ const artifact_types = [
   "code_file", "test_file", "doc_file", "log_file", "dataset_file",
   "config_file", "manifest_file", "route_map_file", "sample_data_file",
   "registry_file", "template_taxonomy_file", "release_checklist_file",
-  "audit_log_file", "materialized_product_folder"
+  "audit_log_file", "created_product_folder"
 ];
 
 const file_roles = [
@@ -212,7 +212,7 @@ const product_blueprint_parts = [
 ];
 
 const deployment_variant_names = [
-  "browser", "node_backend", "node_tui", "apps_script", "tauri_shell",
+  "browser", "node_runtime", "node_tui", "apps_script", "tauri_shell",
   "pwa", "static_web", "desktop_shell"
 ];
 
@@ -258,7 +258,7 @@ const starter_template_names = [
 ];
 
 const sample_pipeline_names = [
-  "create_application_pipeline", "materialize_application_pipeline",
+  "create_application_pipeline", "create_application_artifacts_pipeline",
   "dataset_to_template_pipeline", "natural_input_to_entity_pipeline",
   "business_dashboard_pipeline", "approval_workflow_pipeline",
   "learning_progress_pipeline", "financial_record_pipeline",
@@ -296,7 +296,7 @@ const rbac_role_names = [
 
 const permission_action_names = [
   "create", "read", "update", "delete", "approve", "reject", "assign",
-  "transfer", "publish", "materialize", "audit", "configure"
+  "transfer", "publish", "create_artifacts", "audit", "configure"
 ];
 
 const config_section_names = [
@@ -897,7 +897,24 @@ const planning_artifact_field_names = [
   "sections", "risks", "metrics", "review_cadence", "status"
 ];
 
-const banned_words = ["src", "function", "foreach", "engine", "deps"];
+const banned_words = ["src", "function", "foreach", "engine", "deps", "materialize", "materialization"];
+
+function validate_word_dataset_arrays(groups) {
+  const errors = [];
+  for (const [group_name, values] of Object.entries(groups || {})) {
+    if (!Array.isArray(values)) continue;
+    const seen = new Set();
+    for (const value of values) {
+      if (typeof value !== "string" || value.trim() !== value || value.length === 0) {
+        errors.push(`${group_name} contains invalid value ${JSON.stringify(value)}`);
+        continue;
+      }
+      if (seen.has(value)) errors.push(`${group_name} contains duplicate value ${value}`);
+      seen.add(value);
+    }
+  }
+  return { ok: errors.length === 0, errors };
+}
 
 export {
   entity_types, entity_traits, operation_names, datatype_names,
@@ -960,5 +977,6 @@ export {
   schema_migration_state_names, topic_perspective_field_names,
   external_intake_source_type_names, external_intake_adapter_type_names,
   external_intake_field_names, planning_artifact_type_names,
-  planning_artifact_field_names, banned_words
+  planning_artifact_field_names, banned_words,
+  validate_word_dataset_arrays
 };

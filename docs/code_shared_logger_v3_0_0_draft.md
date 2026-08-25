@@ -32,6 +32,9 @@ It is dependency-free and intended for runtime inspection, diagnostics, and ligh
 - `gauge(name_value, numeric_value)`
 - `snapshot()`
 
+`snapshot()` returns separate `counters`, `gauges`, and `timers` arrays so a
+counter and gauge can safely use the same name.
+
 Factory helpers:
 
 - `create_logger(ceiling)`

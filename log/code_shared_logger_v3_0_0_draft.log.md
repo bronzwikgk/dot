@@ -46,3 +46,8 @@ Push is handled by the user through GitHub Desktop.
 ## 2026-08-25
 
 - Renamed class references to snake_case naming standard where applicable.
+
+## 2026-08-25 Quality Follow-Up
+
+- Split metric storage into separate counter, gauge, and timer maps.
+- Updated `snapshot()` to return separate `counters`, `gauges`, and `timers`.

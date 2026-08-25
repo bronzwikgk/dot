@@ -55,6 +55,15 @@ Generated tests can cover:
 - Plan summaries avoid prototype-key collisions such as the `constructor` key.
 - Added `test_generator` class export with constructor/config style while preserving existing function exports.
 - Sample fallback selection now guards entries with missing `type` values.
+- Module-level mutable state now propagates from inspector output through
+  signature records into file flags, so generated plans avoid unsafe
+  determinism and snapshot checks for stateful files.
+- Rest parameters are treated as array inputs by signature inference, avoiding
+  scalar argument emission for `...values`.
+- Parsed sample entries retain the raw JavaScript source only; the unused parsed
+  `value` field was removed.
+- Plan summaries tolerate missing or malformed unit/case arrays and group
+  incomplete units under `unknown`.
 
 ## When To Use It
 

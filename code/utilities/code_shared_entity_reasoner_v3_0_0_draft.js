@@ -4,8 +4,10 @@ class entity_reasoner {
   }
 
   reason(entity, registry = null) {
+    entity = entity || {};
     const known_type = !registry || registry.has_type(entity.type);
-    const traits = known_type ? entity.traits || (registry && registry.describe_type(entity.type).traits) || [] : [];
+    const type_description = known_type && registry ? registry.describe_type(entity.type) || {} : {};
+    const traits = known_type ? entity.traits || type_description.traits || [] : [];
     const operations = known_type && registry ? registry.operations_for_type(entity.type) : entity.operations || [];
     return {
       ok: known_type,
@@ -20,6 +22,7 @@ class entity_reasoner {
   }
 
   resolve(entity, need) {
+    entity = entity || {};
     const operations = entity.operations || [];
     if (operations.includes(need)) return { ok: true, via: "operation", need };
     if ((entity.traits || []).includes(need)) return { ok: true, via: "trait", need };
@@ -27,7 +30,9 @@ class entity_reasoner {
   }
 
   explain(result) {
+    result = result || {};
     if (result.ok === false) return result.reason;
+    if (result.via) return `${result.need || "need"} resolved by ${result.via}`;
     return `${result.id || "entity"} supports ${normalize_list(result.operations).join(", ")}`;
   }
 

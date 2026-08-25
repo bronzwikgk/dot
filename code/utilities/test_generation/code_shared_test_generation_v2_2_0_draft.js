@@ -45,17 +45,9 @@
         continue;
       }
       if (segments[i] === "") continue;
-      entry.values.push({ raw: segments[i], value: safe_json_parse(segments[i]) });
+      entry.values.push({ raw: segments[i] });
     }
     return entry;
-  }
-
-  function safe_json_parse(text) {
-    try {
-      return JSON.parse(text);
-    } catch (error) {
-      return text;
-    }
   }
 
   function values_for_type(sample_entries, wanted_type) {
@@ -67,7 +59,7 @@
     }
     var any = sample_entries.filter(function (e) { return e.type === "any"; });
     if (any.length > 0) return any[0].values;
-    return [{ raw: "undefined", value: undefined }];
+    return [{ raw: "undefined" }];
   }
 
   function build_arg_cases(sig, sample_entries) {
@@ -145,7 +137,7 @@
   function allowed_properties(sig, file_flags) {
     var flags = file_flags || {};
     var allowed = ["edge_safety"];
-    if (!is_stateful_signature(sig) && (!sig.traits || !sig.traits.maybe_nondeterministic)) {
+    if (!is_stateful_signature(sig, flags) && (!sig.traits || !sig.traits.maybe_nondeterministic)) {
       allowed.push("determinism");
       if (!(sig.traits && sig.traits.has_module_state) && !flags.has_module_state && !(sig.traits && sig.traits.uses_this)) {
         allowed.push("snapshot");
@@ -155,8 +147,10 @@
     return allowed;
   }
 
-  function is_stateful_signature(sig) {
-    return /^(create|update|delete|remove|insert|save|write|push|pop|shift|unshift|set|clear|query)$/i.test(sig.name || "");
+  function is_stateful_signature(sig, file_flags) {
+    return !!(file_flags && file_flags.has_module_state) ||
+      !!(sig && (sig.has_module_state || (sig.traits && sig.traits.has_module_state))) ||
+      /^(create|update|delete|remove|insert|save|write|push|pop|shift|unshift|set|clear|query)$/i.test(sig.name || "");
   }
 
   function select_template(templates, archetype) {
@@ -214,13 +208,16 @@
   }
 
   function summarize_plan(units) {
+    units = Array.isArray(units) ? units : [];
     var summary = { units: units.length, cases: 0, by_kind: Object.create(null), by_archetype: Object.create(null), skipped: 0 };
     for (var i = 0; i < units.length; i++) {
-      var unit = units[i];
-      summary.by_archetype[unit.archetype] = (summary.by_archetype[unit.archetype] || 0) + 1;
-      for (var c = 0; c < unit.cases.length; c++) {
+      var unit = units[i] || {};
+      var cases = Array.isArray(unit.cases) ? unit.cases : [];
+      var archetype = unit.archetype || "unknown";
+      summary.by_archetype[archetype] = (summary.by_archetype[archetype] || 0) + 1;
+      for (var c = 0; c < cases.length; c++) {
         summary.cases += 1;
-        summary.by_kind[unit.cases[c].kind] = (summary.by_kind[unit.cases[c].kind] || 0) + 1;
+        summary.by_kind[cases[c].kind] = (summary.by_kind[cases[c].kind] || 0) + 1;
       }
     }
     return summary;
@@ -231,12 +228,18 @@
     var templates = template_bank_strings.map(parse_template_entry);
     var samples = sample_bank_strings.map(parse_sample_entry);
     var edges = (opts.edge_bank_strings || []).map(parse_sample_entry);
+    var file_flags = { ...(opts.file_flags || {}) };
+    if (!file_flags.has_module_state) {
+      file_flags.has_module_state = (signatures || []).some(function (sig) {
+        return !!(sig && (sig.has_module_state || (sig.traits && sig.traits.has_module_state)));
+      });
+    }
     var units = [];
     for (var i = 0; i < signatures.length; i++) {
       var sig = signatures[i];
       if (!should_include_signature(sig, opts)) continue;
       if (opts.skip && opts.skip.indexOf(sig.name) !== -1) continue;
-      units.push(generate_unit_plan(sig, templates, samples, opts.file_flags, edges));
+      units.push(generate_unit_plan(sig, templates, samples, file_flags, edges));
     }
     return {
       target: opts.target || "unknown",
@@ -451,20 +454,20 @@ export class test_generator {
     this.config = config || {};
   }
 
-  generate_test_plan(signatures, templateBankStrings, sampleBankStrings, options = {}) {
-    return globalThis.an_utility_test_generation.generate_test_plan(signatures, templateBankStrings, sampleBankStrings, { ...this.config, ...options });
+  generate_test_plan(signatures, template_bank_strings, sample_bank_strings, options = {}) {
+    return globalThis.an_utility_test_generation.generate_test_plan(signatures, template_bank_strings, sample_bank_strings, { ...this.config, ...options });
   }
 
-  render_test_file(plan, requirePath, snapshotPath, options = {}) {
-    return globalThis.an_utility_test_generation.render_test_file(plan, requirePath, snapshotPath, { ...this.config, ...options });
+  render_test_file(plan, require_path, snapshot_path, options = {}) {
+    return globalThis.an_utility_test_generation.render_test_file(plan, require_path, snapshot_path, { ...this.config, ...options });
   }
 
-  parse_template_entry(entryText) {
-    return globalThis.an_utility_test_generation.parse_template_entry(entryText);
+  parse_template_entry(entry_text) {
+    return globalThis.an_utility_test_generation.parse_template_entry(entry_text);
   }
 
-  parse_sample_entry(entryText) {
-    return globalThis.an_utility_test_generation.parse_sample_entry(entryText);
+  parse_sample_entry(entry_text) {
+    return globalThis.an_utility_test_generation.parse_sample_entry(entry_text);
   }
 
   summarize_plan(units) {
@@ -478,14 +481,14 @@ export class test_generator {
 
 const default_generator = new test_generator();
 
-export function generate_test_plan(signatures, templateBankStrings, sampleBankStrings, options) {
-  return default_generator.generate_test_plan(signatures, templateBankStrings, sampleBankStrings, options);
+export function generate_test_plan(signatures, template_bank_strings, sample_bank_strings, options) {
+  return default_generator.generate_test_plan(signatures, template_bank_strings, sample_bank_strings, options);
 }
-export function render_test_file(plan, requirePath, snapshotPath, options) {
-  return default_generator.render_test_file(plan, requirePath, snapshotPath, options);
+export function render_test_file(plan, require_path, snapshot_path, options) {
+  return default_generator.render_test_file(plan, require_path, snapshot_path, options);
 }
-export function parse_template_entry(entryText) { return default_generator.parse_template_entry(entryText); }
-export function parse_sample_entry(entryText) { return default_generator.parse_sample_entry(entryText); }
+export function parse_template_entry(entry_text) { return default_generator.parse_template_entry(entry_text); }
+export function parse_sample_entry(entry_text) { return default_generator.parse_sample_entry(entry_text); }
 export function summarize_plan(units) { return default_generator.summarize_plan(units); }
 export function should_include_signature(signature, options) { return default_generator.should_include_signature(signature, options); }
 export default test_generator;

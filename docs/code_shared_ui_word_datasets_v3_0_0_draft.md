@@ -25,6 +25,8 @@ interface-related entity configuration.
 - UI vocabulary stays separate from core validation vocabulary.
 - String arrays should not contain duplicates.
 - New UI names should be checked against this file before adoption.
+- `validate_ui_word_dataset_arrays(groups)` can be used by tests or agents to
+  check UI string arrays for invalid values and duplicates.
 
 ## Known Limits
 

@@ -44,7 +44,7 @@ Improve shared test generation subsystem
 Updated the inspector to match the shared utility design pattern:
 
 - Added `code_inspector` class with constructor/config shape.
-- Added camelCase instance methods.
+- Added mixed-case instance methods.
 - Kept existing snake_case function exports for compatibility.
 
 ### Verification
@@ -67,10 +67,10 @@ test_generation class API checks passed
 Renamed the public class API and instance methods to follow the snake_case-only project convention.
 
 ```text
-CodeInspector -> code_inspector
-inspectSource* -> inspect_source*
-parseParams -> parse_params
-splitTopLevel -> split_top_level
+code inspector class renamed to `code_inspector`
+inspection methods renamed to `inspect_source*`
+parameter parser method renamed to `parse_params`
+top-level splitter method renamed to `split_top_level`
 ```
 
 ## 2026-08-25
@@ -80,3 +80,11 @@ splitTopLevel -> split_top_level
 ## 2026-08-25
 
 - Fixed legacy inspection for `export default class`, including anonymous default classes, so constructor test plans can be generated.
+
+## 2026-08-25 Quality Follow-Up
+
+- Copied detected module-level mutable state into each function record as `traits.has_module_state`.
+- Set `traits.declared_at_module_depth` for AST-inspected module functions.
+- Resolved AST method containers from containing class ranges instead of a fragile class stack only.
+- Renamed the old parser marker to `inspection_mode`.
+- Excluded nested functions from the top-level AST function inventory.

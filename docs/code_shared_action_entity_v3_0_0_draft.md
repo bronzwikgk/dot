@@ -11,7 +11,7 @@ The shared action entity utility provides a small storable entity surface for pl
 - Create, read, update, delete, and query operations.
 - Schema field validation.
 - Automatic IDs when none are supplied.
-- `createdAt` and `updatedAt` timestamps.
+- `created_at` and `updated_at` timestamps.
 - A bounded LRU-style read cache.
 - A built-in memory driver for standalone use.
 
@@ -29,8 +29,8 @@ It is intended to stop plugins from hand-rolling the same persistence wrapper re
 
 When no driver is supplied, the entity lazily creates a private in-memory driver. When a driver is supplied, the driver is expected to provide:
 
-- `generateId()`
-- `getTimestamp()`
+- `generate_id()`
+- `get_timestamp()`
 - `create(id, data, options)`
 - `read(id, options)`
 - `update(id, data, options)`
@@ -97,7 +97,7 @@ await tasks.update(created.data.id, { status: "closed" });
 Query it:
 
 ```js
-const openTasks = await tasks.query({ status: "open" });
+const open_tasks = await tasks.query({ status: "open" });
 ```
 
 Delete it:
@@ -118,15 +118,15 @@ Example:
 
 ```js
 const users = new action_entity("users", {
-  idField: "userId",
+  id_field: "user_id",
   schema: {
-    userId: { required: true },
+    user_id: { required: true },
     role: { enum: ["admin", "member"] }
   }
 });
 ```
 
-`idField` defaults to `id`.
+`id_field` defaults to `id`.
 
 ## Cache Behavior
 
@@ -136,13 +136,13 @@ The cache:
 
 - Is keyed by the entity ID field.
 - Refreshes entries on create, read, update, and query.
-- Evicts the oldest entry when it exceeds `cacheLimit`.
+- Evicts the oldest entry when it exceeds `cache_limit`.
 - Returns defensive copies so callers cannot mutate cached records by changing returned objects.
 
 Default cache limit is `500`.
 
 ```js
-const users = new action_entity("users", {}, null, { cacheLimit: 100 });
+const users = new action_entity("users", {}, null, { cache_limit: 100 });
 ```
 
 ## Runtime Contract
@@ -151,21 +151,21 @@ Maintainers and agents should preserve these guarantees:
 
 - `create()` should create a memory driver if no driver exists.
 - Missing IDs should be generated through the driver.
-- `createdAt` should be set on create when absent.
-- `updatedAt` should be refreshed on every create and update.
+- `created_at` should be set on create when absent.
+- `updated_at` should be refreshed on every create and update.
 - `read()` should throw when the ID is missing.
 - `update()` should merge existing data with new data.
 - `delete()` should evict the cached record.
 - `query()` should refresh cache entries for returned records.
 - Returned records should not expose mutable cache or memory-driver internals.
-- Cache size should not exceed `cacheLimit`.
+- Cache size should not exceed `cache_limit`.
 
 ## How It Was Tested
 
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {action_entity} from './code/plugins/code_shared_action_entity_v3_0_0_draft.js'; const entity=new action_entity('items',{schema:{name:{required:true}, status:{enum:['open','closed']}, due:{type:'date'}}},null,{cacheLimit:2}); await assert.rejects(()=>entity.create({status:'open'}),/name/); await assert.rejects(()=>entity.create({name:'bad',status:'nope'}),/status/); await assert.rejects(()=>entity.create({name:'bad',status:'open',due:'not-a-date'}),/valid date/); const created=await entity.create({name:'alpha',status:'open',due:'2026-08-24'}); assert.equal(created.ok,true); assert.match(created.data.id,/^items_/); const read1=await entity.read(created.data.id); assert.equal(read1.name,'alpha'); read1.name='mutated'; const read2=await entity.read(created.data.id); assert.equal(read2.name,'alpha'); const updated=await entity.update(created.data.id,{status:'closed'}); assert.equal(updated.data.status,'closed'); assert.notEqual(updated.data.updatedAt,undefined); const custom=new action_entity('users',{idField:'userId'}); const customCreated=await custom.create({userId:'u1',name:'Ada'}); assert.equal(customCreated.data.userId,'u1'); await entity.create({name:'beta',status:'open'}); await entity.create({name:'gamma',status:'open'}); assert.equal(entity.cache.size,2); const queried=await entity.query({status:'open'}); assert.equal(queried.ok,true); assert.ok(queried.data.length >= 2); queried.data[0].name='query-mutated'; const reread=await entity.read(queried.data[0].id); assert.notEqual(reread.name,'query-mutated'); const deleted=await entity.delete(created.data.id); assert.equal(deleted.ok,true); await assert.rejects(()=>entity.read(created.data.id),/not found/); console.log('action_entity checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {action_entity} from './code/plugins/code_shared_action_entity_v3_0_0_draft.js'; const entity=new action_entity('items',{schema:{name:{required:true}, status:{enum:['open','closed']}, due:{type:'date'}}},null,{cache_limit:2}); await assert.rejects(()=>entity.create({status:'open'}),/name/); await assert.rejects(()=>entity.create({name:'bad',status:'nope'}),/status/); await assert.rejects(()=>entity.create({name:'bad',status:'open',due:'not-a-date'}),/valid date/); const created=await entity.create({name:'alpha',status:'open',due:'2026-08-24'}); assert.equal(created.ok,true); assert.match(created.data.id,/^items_/); const read1=await entity.read(created.data.id); assert.equal(read1.name,'alpha'); read1.name='mutated'; const read2=await entity.read(created.data.id); assert.equal(read2.name,'alpha'); const updated=await entity.update(created.data.id,{status:'closed'}); assert.equal(updated.data.status,'closed'); assert.notEqual(updated.data.updated_at,undefined); const custom=new action_entity('users',{id_field:'user_id'}); const custom_created=await custom.create({user_id:'u1',name:'Ada'}); assert.equal(custom_created.data.user_id,'u1'); await entity.create({name:'beta',status:'open'}); await entity.create({name:'gamma',status:'open'}); assert.equal(entity.cache.size,2); const queried=await entity.query({status:'open'}); assert.equal(queried.ok,true); assert.ok(queried.data.length >= 2); queried.data[0].name='query-mutated'; const reread=await entity.read(queried.data[0].id); assert.notEqual(reread.name,'query-mutated'); const deleted=await entity.delete(created.data.id); assert.equal(deleted.ok,true); await assert.rejects(()=>entity.read(created.data.id),/not found/); console.log('action_entity checks passed');"
 ```
 
 Expected output:

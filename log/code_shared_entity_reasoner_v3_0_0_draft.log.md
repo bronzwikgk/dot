@@ -20,3 +20,8 @@ or semantic reasoning layer.
 
 - Module import from promoted path passed.
 - Highest-score decision smoke check passed.
+
+## 2026-08-25 Quality Follow-Up
+
+- Added null guards for `reason`, `resolve`, and `explain`.
+- Updated `explain` to produce useful text for `resolve` results.

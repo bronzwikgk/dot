@@ -13,7 +13,7 @@ This note records the confirmed findings from an external evaluation of
 | Unknown DAG task types returned an error object as a successful task result. | `runner` now throws `[SYS-06]` when a DAG task has no registered task type or executable action. |
 | `collection_util` treated seed `0` as missing. | `collection_util` now preserves seed `0` with nullish fallback. |
 | `action_entity` v3.1 docs listed relationship methods that were not present. | Added `add_relationship` and `remove_relationship` wrappers and documented both wrapper and direct link methods. |
-| `action_entity` v3.1 driver hooks changed during migration. | v3.1 now adapts older drivers that expose `generateId` and `getTimestamp`, while keeping snake_case hooks internally. |
+| `action_entity` v3.1 driver hooks changed during migration. | v3.1 now adapts older drivers that expose `generate_id` and `get_timestamp`, while keeping snake_case hooks internally. |
 | `link_entities` required target existence even though graph validation owns target resolution. | Links can now be created before targets exist; `validate_graph()` reports missing targets. |
 | Anonymous `export default class` was not handled by legacy inspection. | `code_inspector` now recognizes anonymous default classes and feeds constructor test generation correctly. |
 | Markdown pipeline docs said non-heading lines become text blocks. | Docs now match code: bullet lines become `list_item`; other non-empty lines become `paragraph`. |

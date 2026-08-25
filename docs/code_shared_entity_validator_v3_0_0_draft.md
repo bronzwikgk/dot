@@ -51,6 +51,9 @@ entity records.
 - Assertion methods throw when validation fails.
 - Unknown entity types, relationship types, or operations are rejected unless
   config explicitly allows them.
+- Banned vocabulary is rejected in safe names, approved-word checks, operation
+  names, entity ids/types/names, and relationship type/target values.
+- Snake_case phrases are split into tokens before banned vocabulary validation.
 - Near-duplicate checks return suggestions.
 
 ## Known Limits

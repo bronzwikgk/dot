@@ -47,7 +47,7 @@ Improve shared test generation subsystem
 Updated test generation to match the shared utility design pattern:
 
 - Added `test_generator` class with constructor/config shape.
-- Added camelCase instance methods.
+- Added mixed-case instance methods.
 - Kept existing snake_case function exports for compatibility.
 - Guarded fallback sample entries that do not have a `type`.
 
@@ -71,13 +71,13 @@ test_generation class API checks passed
 Renamed the public class API and instance methods to follow the snake_case-only project convention.
 
 ```text
-TestGenerator -> test_generator
-generateTestPlan -> generate_test_plan
-renderTestFile -> render_test_file
-parseTemplateEntry -> parse_template_entry
-parseSampleEntry -> parse_sample_entry
-summarizePlan -> summarize_plan
-shouldIncludeSignature -> should_include_signature
+test-generation class renamed to `test_generator`
+plan generation method renamed to `generate_test_plan`
+test rendering method renamed to `render_test_file`
+template parser method renamed to `parse_template_entry`
+sample parser method renamed to `parse_sample_entry`
+summary method renamed to `summarize_plan`
+signature inclusion method renamed to `should_include_signature`
 ```
 
 ## 2026-08-25
@@ -87,3 +87,11 @@ shouldIncludeSignature -> should_include_signature
 ## 2026-08-25
 
 - Confirmed constructor generation now works for default class inspection when the inspector reports class export style.
+
+## 2026-08-25 Quality Follow-Up
+
+- Propagated module-level mutable state from signatures into generated plan file flags.
+- Disabled determinism and snapshot generation for module-state files.
+- Confirmed rest parameters are inferred as array arguments through the test-generation path.
+- Removed the unused parsed sample `value` field; generated tests use the raw JavaScript source string.
+- Guarded `summarize_plan` against non-array units and missing case arrays; incomplete units are grouped under `unknown`.

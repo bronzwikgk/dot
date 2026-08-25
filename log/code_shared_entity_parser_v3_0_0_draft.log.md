@@ -26,3 +26,7 @@ behavior belongs in later parser work.
 - Module import from promoted path passed.
 - Parser smoke checks passed for create commands with `called`, `named`, and
   direct names.
+
+## 2026-08-25 Quality Follow-Up
+
+- Added null/undefined guard for `parse`.

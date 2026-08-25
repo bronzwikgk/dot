@@ -19,15 +19,15 @@ It is dependency-free and intended for lightweight ranking, search, deduplicatio
 
 `vector_math_util` exposes:
 
-- `distance(vectorA, vectorB)`
-- `similarity(vectorA, vectorB)`
-- `distanceBatch(targetVector, candidateVectors)`
-- `similarityBatch(targetVector, candidateVectors)`
+- `distance(vector_a, vector_b)`
+- `similarity(vector_a, vector_b)`
+- `distance_batch(target_vector, candidate_vectors)`
+- `similarity_batch(target_vector, candidate_vectors)`
 
 Compatibility aliases:
 
-- `execute(vectorA, vectorB)` calls `distance(vectorA, vectorB)`.
-- `executeBatch(targetVector, candidateVectors)` calls `distanceBatch(targetVector, candidateVectors)`.
+- `execute(vector_a, vector_b)` calls `distance(vector_a, vector_b)`.
+- `execute_batch(target_vector, candidate_vectors)` calls `distance_batch(target_vector, candidate_vectors)`.
 
 ## When To Use It
 
@@ -71,14 +71,14 @@ vectors.similarity([1, 0], [1, 0]);
 Batch distance:
 
 ```js
-vectors.distanceBatch([0, 0], [[3, 4], [0, 0]]);
+vectors.distance_batch([0, 0], [[3, 4], [0, 0]]);
 // [5, 0]
 ```
 
 Batch similarity:
 
 ```js
-vectors.similarityBatch([1, 0], [[1, 0], [0, 1]]);
+vectors.similarity_batch([1, 0], [[1, 0], [0, 1]]);
 // [1, 0]
 ```
 
@@ -106,8 +106,8 @@ Maintainers and agents should preserve these guarantees:
 - `similarity()` returns `0` when either vector magnitude is zero.
 - Batch methods preserve candidate order.
 - Batch methods return one numeric result per candidate.
-- `distanceBatch(target, null)` returns `[]`.
-- `similarityBatch(target, null)` returns `[]`.
+- `distance_batch(target, null)` returns `[]`.
+- `similarity_batch(target, null)` returns `[]`.
 - Methods should not mutate input arrays.
 
 ## Floating-Point Notes
@@ -125,7 +125,7 @@ Math.abs(actual - expected) < 1e-12
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {vector_math_util} from './code/utilities/code_shared_vector_math_v3_0_0_draft.js'; const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-12); const v=new vector_math_util(); assert.equal(v.distance([0,0],[3,4]),5); assert.equal(v.execute([1,1],[4,5]),5); assert.equal(v.distance(null,[1]),0); assert.equal(v.distance([1,2],[1]),0); near(v.similarity([1,0],[1,0]),1); assert.equal(v.similarity([1,0],[0,1]),0); near(v.similarity([1,1],[2,2]),1); assert.equal(v.similarity([0,0],[1,2]),0); assert.deepEqual(v.distanceBatch([0,0],[[3,4],[0,0]]),[5,0]); assert.deepEqual(v.similarityBatch([1,0],[[1,0],[0,1]]),[1,0]); assert.deepEqual(v.executeBatch([0,0],[[3,4]]),[5]); assert.deepEqual(v.distanceBatch([0,0],null),[]); assert.deepEqual(v.similarityBatch([1,0],null),[]); console.log('vector_math checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {vector_math_util} from './code/utilities/code_shared_vector_math_v3_0_0_draft.js'; const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-12); const v=new vector_math_util(); assert.equal(v.distance([0,0],[3,4]),5); assert.equal(v.execute([1,1],[4,5]),5); assert.equal(v.distance(null,[1]),0); assert.equal(v.distance([1,2],[1]),0); near(v.similarity([1,0],[1,0]),1); assert.equal(v.similarity([1,0],[0,1]),0); near(v.similarity([1,1],[2,2]),1); assert.equal(v.similarity([0,0],[1,2]),0); assert.deepEqual(v.distance_batch([0,0],[[3,4],[0,0]]),[5,0]); assert.deepEqual(v.similarity_batch([1,0],[[1,0],[0,1]]),[1,0]); assert.deepEqual(v.execute_batch([0,0],[[3,4]]),[5]); assert.deepEqual(v.distance_batch([0,0],null),[]); assert.deepEqual(v.similarity_batch([1,0],null),[]); console.log('vector_math checks passed');"
 ```
 
 Expected output:

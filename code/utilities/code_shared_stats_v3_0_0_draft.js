@@ -7,7 +7,7 @@
 export class stats_util {
   constructor(config = {}) {
     this.config = config || {};
-    this.zCritical = this.config.zCritical ?? 1.96;
+    this.z_critical = this.config.z_critical ?? this.config.z_critical ?? 1.96;
   }
   mean(values) {
     if (!values || values.length === 0) return 0;
@@ -16,39 +16,39 @@ export class stats_util {
     return sum / count;
   }
   execute(values) { return this.mean(values); }
-  standardDeviation(values) {
+  standard_deviation(values) {
     if (!values || values.length < 2) return 0;
     var mean = this.mean(values);
-    var sumSquaredDiffs = 0; var count = values.length; var index = 0;
-    while (index < count) { var diff = values[index] - mean; sumSquaredDiffs = sumSquaredDiffs + (diff * diff); index = index + 1; }
-    return Math.sqrt(sumSquaredDiffs / count);
+    var sum_squared_diffs = 0; var count = values.length; var index = 0;
+    while (index < count) { var diff = values[index] - mean; sum_squared_diffs = sum_squared_diffs + (diff * diff); index = index + 1; }
+    return Math.sqrt(sum_squared_diffs / count);
   }
-  standardError(stdDev, sampleSize) {
-    if (sampleSize <= 0) return 0;
-    return stdDev / Math.sqrt(sampleSize);
+  standard_error(std_dev, sample_size) {
+    if (sample_size <= 0) return 0;
+    return std_dev / Math.sqrt(sample_size);
   }
-  confidenceInterval(mean, standardError) {
-    var margin = this.zCritical * standardError;
+  confidence_interval(mean, standard_error) {
+    var margin = this.z_critical * standard_error;
     return { lower: mean - margin, upper: mean + margin, midpoint: mean, width: margin * 2 };
   }
-  weightedMean(values, weights) {
+  weighted_mean(values, weights) {
     if (!values || !weights) return 0;
     if (values.length !== weights.length) return 0;
-    var weightedSum = 0; var weightSum = 0; var index = 0; var count = values.length;
-    while (index < count) { weightedSum = weightedSum + (values[index] * weights[index]); weightSum = weightSum + weights[index]; index = index + 1; }
-    if (weightSum === 0) return 0;
-    return weightedSum / weightSum;
+    var weighted_sum = 0; var weight_sum = 0; var index = 0; var count = values.length;
+    while (index < count) { weighted_sum = weighted_sum + (values[index] * weights[index]); weight_sum = weight_sum + weights[index]; index = index + 1; }
+    if (weight_sum === 0) return 0;
+    return weighted_sum / weight_sum;
   }
-  zScore(rawValue, mean, stdDev) {
-    if (stdDev === 0) return 0;
-    return (rawValue - mean) / stdDev;
+  z_score(raw_value, mean, std_dev) {
+    if (std_dev === 0) return 0;
+    return (raw_value - mean) / std_dev;
   }
-  zScoreBatch(values, mean, stdDev) {
+  z_score_batch(values, mean, std_dev) {
     if (!values || values.length === 0) return [];
     var result = []; var index = 0; var count = values.length;
-    while (index < count) { result.push(this.zScore(values[index], mean, stdDev)); index = index + 1; }
+    while (index < count) { result.push(this.z_score(values[index], mean, std_dev)); index = index + 1; }
     return result;
   }
-  executeBatch(values, mean, stdDev) { return this.zScoreBatch(values, mean, stdDev); }
+  execute_batch(values, mean, std_dev) { return this.z_score_batch(values, mean, std_dev); }
 }
 export default stats_util;

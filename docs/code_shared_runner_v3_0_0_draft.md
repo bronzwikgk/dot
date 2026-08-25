@@ -17,19 +17,28 @@ It is the orchestration layer for the shared runtime. Worker behavior is injecte
 
 The runner can:
 
-- Register named plans with `registerPlan(name, plan)`.
-- Run named or inline plans with `run(planOrName, input)`.
+- Register named plans with `register_plan(name, plan)`.
+- Run named or inline plans with `run(plan_or_name, input)`.
 - Infer plan kind from `steps` or `tasks`.
 - Execute AST steps in sequence.
 - Execute DAG tasks in dependency order.
 - Fail when a DAG task has no matching task type or executable action.
+- Reject banned vocabulary in registered plan names, step ids/actions, task
+  ids/types/actions, subflow names, and DAG dependency ids.
 - Skip steps/tasks when validator-backed conditions fail.
-- Route AST execution with `nextMap`.
+- Route AST execution with `next_map`.
+- Route `next_map` using an explicit `undefined` key when a step produced no
+  output.
 - Stop AST execution with `TERMINATE`.
 - Nest subflows with `DECOMPOSE`.
 - Enforce a shared action budget across nested runs.
 - Enforce a nesting depth limit.
 - Report active sessions.
+- Preserve `terminated` session status instead of overwriting it as completed.
+- Resolve `{{input.path}}` and `{{step_outputs.path}}` inputs even when no
+  validator dependency is injected.
+- Reject invalid AST steps and malformed DAG tasks with explicit `[SYS-06]`
+  errors.
 
 ## When To Use It
 
@@ -60,25 +69,25 @@ const runner = new runner({ actions, validator });
 await runner.run({
   steps: [
     {
-      stepId: "load",
+      step_id: "load",
       action: "LOAD_USER",
-      inputs: { userId: "{{input.userId}}" }
+      inputs: { user_id: "{{input.user_id}}" }
     },
     {
-      stepId: "done",
+      step_id: "done",
       action: "RETURN",
       conditions: [
-        { left: "{{stepOutputs.load.active}}", operator: "===", right: true }
+        { left: "{{step_outputs.load.active}}", operator: "===", right: true }
       ]
     }
   ]
-}, { userId: "u_1" });
+}, { user_id: "u_1" });
 ```
 
 Each normal step calls:
 
 ```js
-actions.executeAction(step.action, resolvedInputs)
+actions.execute_action(step.action, resolved_inputs)
 ```
 
 If no actions host is provided, the runner returns the resolved inputs for the step.
@@ -144,7 +153,7 @@ The runner enforces:
 
 - Action limit: defaults to `50`.
 - Nesting depth limit: defaults to `16`.
-- `nextMap` target validation.
+- `next_map` target validation.
 - DAG task ID validation.
 - DAG duplicate ID validation.
 - DAG missing dependency validation.
@@ -156,22 +165,25 @@ The action budget is shared across nested runs so deeply decomposed workflows ca
 
 Maintainers and agents should preserve these guarantees:
 
-- `registerPlan()` and inline `run()` both infer plan kind.
+- `register_plan()` and inline `run()` both infer plan kind.
 - Unknown named plans throw.
 - Plans without `steps` or `tasks` throw `[SYS-06]`.
-- AST `nextMap` targets must exist.
+- AST `next_map` targets must exist.
 - DAG sort must return dependencies before dependents.
 - DAG cycles must throw instead of producing an order.
 - DAG missing dependencies must throw instead of being ignored.
 - Active sessions are removed after successful completion or termination.
 - Failed sessions retain failure status and error details.
+- Invalid AST steps and malformed DAG tasks fail with explicit `[SYS-06]`
+  errors instead of raw TypeErrors.
+- `register_plan()` validates AST/DAG structure before storing a plan.
 
 ## How It Was Tested
 
 Focused checks were run with Node ESM import:
 
 ```powershell
-node --input-type=module -e "import assert from 'node:assert/strict'; import {runner} from './code/plugins/code_shared_runner_v3_0_0_draft.js'; import {validator} from './code/plugins/code_shared_validator_v3_0_0_draft.js'; const calls=[]; const validator=new validator(); const runner=new runner({validator, actions:{executeAction:async (action, inputs)=>{calls.push({action, inputs}); return action==='CHOOSE'?'yes':inputs;}}, limits:{actions:10, depth:3}}); const inline=await runner.run({steps:[{stepId:'s1', action:'ECHO', conditions:[{left:'{{input.ok}}', operator:'===', right:true}], inputs:{value:'{{input.value}}'}}]}, {ok:true,value:42}); assert.deepEqual(inline.s1,{value:42}); runner.registerPlan('jump',{steps:[{stepId:'choose', action:'CHOOSE', nextMap:{yes:'done'}},{stepId:'skip', action:'SKIP'},{stepId:'done', action:'DONE', inputs:{ok:true}}]}); const jumped=await runner.run('jump'); assert.deepEqual(jumped.done,{ok:true}); assert.throws(()=>runner.topologicalSort([{task_id:'a', dependencies:['b']},{task_id:'b', dependencies:['a']}]),/cycle/); assert.throws(()=>runner.topologicalSort([{task_id:'a', dependencies:['z']}]),/dependency/); assert.throws(()=>runner.topologicalSort([{task_id:'a'},{task_id:'a'}]),/Duplicate/); assert.throws(()=>runner.topologicalSort([{dependencies:[]}]),/missing task_id/); const order=runner.topologicalSort([{task_id:'b',dependencies:['a']},{task_id:'a'}]).map(t=>t.task_id); assert.deepEqual(order,['a','b']); const dag=await runner.run({tasks:[{task_id:'first', action:'ECHO', inputs:{v:{source_type:'config', value:1}}},{task_id:'second', action:'ECHO', dependencies:['first'], inputs:{prev:{source_type:'task_output', task_id:'first'}}}]}); assert.deepEqual(dag.second,{prev:{v:1}}); console.log('runner checks passed');"
+node --input-type=module -e "import assert from 'node:assert/strict'; import {runner} from './code/plugins/code_shared_runner_v3_0_0_draft.js'; import {validator} from './code/plugins/code_shared_validator_v3_0_0_draft.js'; const calls=[]; const validator=new validator(); const runner=new runner({validator, actions:{execute_action:async (action, inputs)=>{calls.push({action, inputs}); return action==='CHOOSE'?'yes':inputs;}}, limits:{actions:10, depth:3}}); const inline=await runner.run({steps:[{step_id:'s1', action:'ECHO', conditions:[{left:'{{input.ok}}', operator:'===', right:true}], inputs:{value:'{{input.value}}'}}]}, {ok:true,value:42}); assert.deepEqual(inline.s1,{value:42}); runner.register_plan('jump',{steps:[{step_id:'choose', action:'CHOOSE', next_map:{yes:'done'}},{step_id:'skip', action:'SKIP'},{step_id:'done', action:'DONE', inputs:{ok:true}}]}); const jumped=await runner.run('jump'); assert.deepEqual(jumped.done,{ok:true}); assert.throws(()=>runner.topological_sort([{task_id:'a', dependencies:['b']},{task_id:'b', dependencies:['a']}]),/cycle/); assert.throws(()=>runner.topological_sort([{task_id:'a', dependencies:['z']}]),/dependency/); assert.throws(()=>runner.topological_sort([{task_id:'a'},{task_id:'a'}]),/Duplicate/); assert.throws(()=>runner.topological_sort([{dependencies:[]}]),/missing task_id/); const order=runner.topological_sort([{task_id:'b',dependencies:['a']},{task_id:'a'}]).map(t=>t.task_id); assert.deepEqual(order,['a','b']); const dag=await runner.run({tasks:[{task_id:'first', action:'ECHO', inputs:{v:{source_type:'config', value:1}}},{task_id:'second', action:'ECHO', dependencies:['first'], inputs:{prev:{source_type:'task_output', task_id:'first'}}}]}); assert.deepEqual(dag.second,{prev:{v:1}}); console.log('runner checks passed');"
 ```
 
 Expected output:
@@ -198,5 +210,7 @@ When updating this utility:
 - DAG execution is dependency ordered but not parallel.
 - Sessions are in-memory only.
 - Task registry classes are instantiated per task execution.
-- Failed sessions remain in `activeSessions` for inspection.
+- Failed sessions remain in `active_sessions` for inspection.
 - The runner does not validate action names beyond dispatch availability.
+- Plan contracts are snake_case: `step_id`, `next_map`, `step_outputs`,
+  `execute_action`, `task_id`, `task_type`, and `input_sources`.

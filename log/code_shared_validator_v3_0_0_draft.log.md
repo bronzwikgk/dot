@@ -40,3 +40,21 @@ Push is handled by the user through GitHub Desktop.
 ## 2026-08-25
 
 - Renamed class references to snake_case naming standard where applicable.
+
+## 2026-08-25 Quality Follow-Up
+
+- Added built-in string format validation for `email`, `url`, and `date`.
+- Preserved falsy resolved values such as `0` and `false`.
+- Removed the private `_resolve_value` alias from the class surface.
+
+## 2026-08-25 Snake Case API Pass
+
+- Renamed public methods to `evaluate_rule()` and `resolve_value()`.
+- Renamed string length schema keys to `min_length` and `max_length`.
+
+## 2026-08-25 Lock-Down Pass
+
+- Added enum property validation.
+- Guarded rule evaluation and path resolution against missing context.
+- Guarded malformed property schemas from becoming runtime TypeErrors.
+- Made VM condition error logging opt-in with `log_vm_errors`; failed condition execution still evaluates to false.

@@ -8,7 +8,7 @@
  * @scope_boundaries in_scope: acorn ast parsing when vendored or installed covering all modern syntax, line-oriented fallback parser for convention formatted sources, classes, factories, module exports, esm exports, jsdoc capture. out_of_scope: typescript syntax, jsx, execution of the inspected code.
  * @dependencies optional: vendor/acorn.js or npm acorn (falls back to legacy line parser).
  * @keywords inspect, parse, ast, functions, static analysis, inventory
- * @invariants every function declaration and class method appears in the inventory; auto backend output shape is identical across backends; the inspected source is never evaluated.
+ * @invariants every module function declaration and class method appears in the inventory; auto inspection output shape is identical across parser modes; the inspected source is never evaluated.
  * @changelog - 2026-08-24: 2.2.0: initial draft
  * @changelog - 2026-08-24: 2.2.0: added acorn backed inspect_source_ast and inspect_source_auto with identical inventory shape
  */
@@ -253,6 +253,9 @@
     for (var s = 0; s < lines.length; s++) {
       if (/^(let|var)\s+[A-Za-z_$]/.test(lines[s]) && depths[s] === 0) module_state = true;
     }
+    if (module_state) {
+      for (var f = 0; f < functions.length; f++) functions[f].traits.has_module_state = true;
+    }
 
     return {
       classes: classes,
@@ -335,6 +338,9 @@
     if (node.type === "FunctionDeclaration" && node.id) {
       return { name: node.id.name, kind: "function", explicit: true };
     }
+    if (parent && parent.type === "ExportNamedDeclaration" && node.type === "FunctionDeclaration" && node.id) {
+      return { name: node.id.name, kind: "function", explicit: true };
+    }
     if (parent && parent.type === "VariableDeclarator" && parent.id.type === "Identifier") {
       return { name: parent.id.name, kind: "function", explicit: true };
     }
@@ -361,7 +367,7 @@
     return best;
   }
 
-  function ast_traits(fn_node, contained) {
+  function ast_traits(fn_node, contained, declared_at_module_depth) {
     var traits = {
       has_conditionals: false,
       has_loops: false,
@@ -370,7 +376,7 @@
       is_async: !!fn_node.async,
       maybe_nondeterministic: false,
       uses_this: false,
-      declared_at_module_depth: false
+      declared_at_module_depth: !!declared_at_module_depth
     };
     var name = fn_node.id ? fn_node.id.name : null;
     for (var i = 0; i < contained.length; i++) {
@@ -421,7 +427,7 @@
       var inside_class = node.type === "FunctionExpression" && entry.parent && entry.parent.type === "MethodDefinition";
       if (inside_class) {
         var method_key = entry.parent.key.name || entry.parent.key.value;
-        var container_name = class_stack[class_stack.length - 1] || "(anonymous)";
+        var container_name = find_class_container(entries, i) || class_stack[class_stack.length - 1] || "(anonymous)";
         functions.push({
           name: method_key,
           container: container_name,
@@ -431,7 +437,7 @@
           source: source_text.slice(node.start, node.end),
           start_line: source_text.slice(0, node.start).split("\n").length,
           end_line: source_text.slice(0, node.end).split("\n").length,
-          traits: ast_traits(node, contained_in(node))
+          traits: ast_traits(node, contained_in(node), false)
         });
         seen.push(node);
         continue;
@@ -443,17 +449,19 @@
         if (seen[s].start <= node.start && node.end <= seen[s].end) depth_ok = false;
       }
       if (!depth_ok) continue;
+      if (find_container(entries, i) !== "module") continue;
       seen.push(node);
+      var container_name = find_container(entries, i);
       functions.push({
         name: label.name,
-        container: find_container(entries, i),
+        container: container_name,
         kind: label.kind,
         params: node.params.map(function (p) { return param_record(p, source_text); }),
         jsdoc: jsdoc_for(node.start, parsed.comments, source_text),
         source: source_text.slice(node.start, node.end),
         start_line: source_text.slice(0, node.start).split("\n").length,
         end_line: source_text.slice(0, node.end).split("\n").length,
-        traits: ast_traits(node, contained_in(node))
+        traits: ast_traits(node, contained_in(node), container_name === "module")
       });
     }
 
@@ -483,9 +491,12 @@
       var stmt = parsed.ast.body[p];
       if (stmt.type === "VariableDeclaration" && stmt.kind !== "const") module_state = true;
     }
+    if (module_state) {
+      for (var mf = 0; mf < functions.length; mf++) functions[mf].traits.has_module_state = true;
+    }
 
     return {
-      backend: "acorn",
+      inspection_mode: "acorn",
       classes: classes,
       export_style: exports_info.export_style,
       exported_names: exports_info.names,
@@ -505,6 +516,17 @@
       }
     }
     return container;
+  }
+
+  function find_class_container(entries, index) {
+    var node = entries[index].node;
+    for (var i = 0; i < entries.length; i++) {
+      var candidate = entries[i].node;
+      if ((candidate.type === "ClassDeclaration" || candidate.type === "ClassExpression") && candidate.start < node.start && node.end <= candidate.end) {
+        return candidate.id ? candidate.id.name : "(anonymous)";
+      }
+    }
+    return null;
   }
 
   function detect_exports_ast(ast, source_text) {
@@ -634,7 +656,7 @@
     var ast_result = inspect_source_ast(source_text);
     if (ast_result) return ast_result;
     var legacy = inspect_source(source_text);
-    legacy.backend = "legacy";
+    legacy.inspection_mode = "legacy";
     return legacy;
   }
 
@@ -652,20 +674,20 @@ export class code_inspector {
     this.config = config || {};
   }
 
-  inspect_source(sourceText) {
-    return globalThis.an_utility_code_inspector.inspect_source(sourceText);
+  inspect_source(source_text) {
+    return globalThis.an_utility_code_inspector.inspect_source(source_text);
   }
 
-  inspect_source_ast(sourceText) {
-    return globalThis.an_utility_code_inspector.inspect_source_ast(sourceText);
+  inspect_source_ast(source_text) {
+    return globalThis.an_utility_code_inspector.inspect_source_ast(source_text);
   }
 
-  inspect_source_auto(sourceText) {
-    return globalThis.an_utility_code_inspector.inspect_source_auto(sourceText);
+  inspect_source_auto(source_text) {
+    return globalThis.an_utility_code_inspector.inspect_source_auto(source_text);
   }
 
-  parse_params(paramText) {
-    return globalThis.an_utility_code_inspector.parse_params(paramText);
+  parse_params(param_text) {
+    return globalThis.an_utility_code_inspector.parse_params(param_text);
   }
 
   split_top_level(text, separator) {
@@ -675,9 +697,9 @@ export class code_inspector {
 
 const default_inspector = new code_inspector();
 
-export function inspect_source(sourceText) { return default_inspector.inspect_source(sourceText); }
-export function inspect_source_ast(sourceText) { return default_inspector.inspect_source_ast(sourceText); }
-export function inspect_source_auto(sourceText) { return default_inspector.inspect_source_auto(sourceText); }
-export function parse_params(paramText) { return default_inspector.parse_params(paramText); }
+export function inspect_source(source_text) { return default_inspector.inspect_source(source_text); }
+export function inspect_source_ast(source_text) { return default_inspector.inspect_source_ast(source_text); }
+export function inspect_source_auto(source_text) { return default_inspector.inspect_source_auto(source_text); }
+export function parse_params(param_text) { return default_inspector.parse_params(param_text); }
 export function split_top_level(text, separator) { return default_inspector.split_top_level(text, separator); }
 export default code_inspector;

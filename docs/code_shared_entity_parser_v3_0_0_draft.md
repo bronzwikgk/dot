@@ -30,6 +30,7 @@ schemas, confidence, clarification, sentence classification, and review states.
 ## Runtime Contract
 
 - Tokenization lowercases input.
+- `parse(null)` and `parse(undefined)` are treated as empty input.
 - Create commands produce `{ action, type, name }`.
 - Link commands produce `{ action, from, to }`.
 - Filler words such as `called` and `named` are skipped when selecting names.

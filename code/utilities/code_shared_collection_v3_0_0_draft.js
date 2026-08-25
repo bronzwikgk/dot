@@ -7,8 +7,8 @@
 export class collection_util {
   constructor(config = {}) {
     this.config = config || {};
-    this.trainRatio = this.config.trainRatio ?? 0.8;
-    this.testRatio = this.config.testRatio ?? 0.2;
+    this.train_ratio = this.config.train_ratio ?? this.config.train_ratio ?? 0.8;
+    this.test_ratio = this.config.test_ratio ?? this.config.test_ratio ?? 0.2;
     this.shuffle = this.config.shuffle || false;
     this.seed = this.config.seed ?? null;
   }
@@ -32,7 +32,8 @@ export class collection_util {
     return result;
   }
   execute(arrays) { return this.concat(arrays); }
-  flattenToVector(matrix) {
+  flatten_to_vector(matrix) {
+    if (!matrix) return [];
     var result = [];
     var rowIndex = 0;
     var rowCount = matrix.length;
@@ -51,31 +52,31 @@ export class collection_util {
   // from array_slicing
   slice(array, start, end) {
     if (!array) return [];
-    var safeStart = Math.max(0, start);
-    var safeEnd = Math.min(array.length, end);
+    var safe_start = Math.max(0, start);
+    var safe_end = Math.min(array.length, end);
     var result = [];
-    var index = safeStart;
-    while (index < safeEnd) {
+    var index = safe_start;
+    while (index < safe_end) {
       result.push(array[index]);
       index = index + 1;
     }
     return result;
   }
-  extractWindow(array, windowSize, position) {
+  extract_window(array, window_size, position) {
     var start = position;
-    var end = position + windowSize;
+    var end = position + window_size;
     return this.slice(array, start, end);
   }
-  slidingWindows(array, windowSize) {
+  sliding_windows(array, window_size) {
     if (!array) return [];
-    if (typeof windowSize !== 'number' || !Number.isFinite(windowSize) || windowSize <= 0) {
-      throw new RangeError('slidingWindows requires a finite positive windowSize, got ' + String(windowSize));
+    if (typeof window_size !== 'number' || !Number.isFinite(window_size) || window_size <= 0) {
+      throw new RangeError('sliding_windows requires a finite positive window_size, got ' + String(window_size));
     }
     var windows = [];
     var index = 0;
-    var maxStart = array.length - windowSize;
-    while (index <= maxStart) {
-      windows.push(this.slice(array, index, index + windowSize));
+    var max_start = array.length - window_size;
+    while (index <= max_start) {
+      windows.push(this.slice(array, index, index + window_size));
       index = index + 1;
     }
     return windows;
@@ -88,34 +89,34 @@ export class collection_util {
     var index = 0;
     var count = items.length;
     while (index < count) {
-      if (this.matchesPredicate(items[index], predicate)) result.push(items[index]);
+      if (this.matches_predicate(items[index], predicate)) result.push(items[index]);
       index = index + 1;
     }
     return result;
   }
-  matchesPredicate(item, predicate) {
+  matches_predicate(item, predicate) {
     if (!predicate) return true;
-    var fieldValue = item[predicate.field];
+    var field_value = item[predicate.field];
     var operator = predicate.operator;
-    var targetValue = predicate.value;
-    if (operator === 'eq') return fieldValue === targetValue;
-    if (operator === 'neq') return fieldValue !== targetValue;
-    if (operator === 'gt') return fieldValue > targetValue;
-    if (operator === 'gte') return fieldValue >= targetValue;
-    if (operator === 'lt') return fieldValue < targetValue;
-    if (operator === 'lte') return fieldValue <= targetValue;
-    if (operator === 'abs_lt') return Math.abs(fieldValue) < targetValue;
-    if (operator === 'abs_gt') return Math.abs(fieldValue) > targetValue;
+    var target_value = predicate.value;
+    if (operator === 'eq') return field_value === target_value;
+    if (operator === 'neq') return field_value !== target_value;
+    if (operator === 'gt') return field_value > target_value;
+    if (operator === 'gte') return field_value >= target_value;
+    if (operator === 'lt') return field_value < target_value;
+    if (operator === 'lte') return field_value <= target_value;
+    if (operator === 'abs_lt') return Math.abs(field_value) < target_value;
+    if (operator === 'abs_gt') return Math.abs(field_value) > target_value;
     return false;
   }
-  filterByRange(items, field, min, max) {
+  filter_by_range(items, field, min, max) {
     var predicate = { field: field, operator: 'gte', value: min };
-    var aboveMin = this.filter(items, predicate);
+    var above_min = this.filter(items, predicate);
     var result = [];
     var index = 0;
-    var count = aboveMin.length;
+    var count = above_min.length;
     while (index < count) {
-      if (aboveMin[index][field] <= max) result.push(aboveMin[index]);
+      if (above_min[index][field] <= max) result.push(above_min[index]);
       index = index + 1;
     }
     return result;
@@ -128,41 +129,41 @@ export class collection_util {
     var index = 0;
     var count = data.length;
     while (index < count) { indices.push(index); index = index + 1; }
-    if (this.shuffle) indices = this.shuffleArray(indices);
-    var splitPoint = Math.floor(data.length * this.trainRatio);
-    var trainIndices = [];
-    var testIndices = [];
+    if (this.shuffle) indices = this.shuffle_array(indices);
+    var split_point = Math.floor(data.length * this.train_ratio);
+    var train_indices = [];
+    var test_indices = [];
     index = 0;
     while (index < indices.length) {
-      if (index < splitPoint) trainIndices.push(indices[index]);
-      else testIndices.push(indices[index]);
+      if (index < split_point) train_indices.push(indices[index]);
+      else test_indices.push(indices[index]);
       index = index + 1;
     }
     var train = [];
-    var trainIdxIndex = 0;
-    while (trainIdxIndex < trainIndices.length) { train.push(data[trainIndices[trainIdxIndex]]); trainIdxIndex = trainIdxIndex + 1; }
+    var train_idx_index = 0;
+    while (train_idx_index < train_indices.length) { train.push(data[train_indices[train_idx_index]]); train_idx_index = train_idx_index + 1; }
     var test = [];
-    var testIdxIndex = 0;
-    while (testIdxIndex < testIndices.length) { test.push(data[testIndices[testIdxIndex]]); testIdxIndex = testIdxIndex + 1; }
-    return { train: train, test: test, train_indices: trainIndices, test_indices: testIndices };
+    var test_idx_index = 0;
+    while (test_idx_index < test_indices.length) { test.push(data[test_indices[test_idx_index]]); test_idx_index = test_idx_index + 1; }
+    return { train: train, test: test, train_indices: train_indices, test_indices: test_indices };
   }
-  shuffleArray(array) {
+  shuffle_array(array) {
     var result = [];
     var index = 0;
     var count = array.length;
     while (index < count) { result.push(array[index]); index = index + 1; }
-    var random = this.seed === null || this.seed === undefined ? Math.random : this._seededRandom(this.seed);
-    var currentIndex = result.length - 1;
-    while (currentIndex > 0) {
-      var randomIndex = Math.floor(random() * (currentIndex + 1));
-      var temp = result[currentIndex];
-      result[currentIndex] = result[randomIndex];
-      result[randomIndex] = temp;
-      currentIndex = currentIndex - 1;
+    var random = this.seed === null || this.seed === undefined ? Math.random : this._seeded_random(this.seed);
+    var current_index = result.length - 1;
+    while (current_index > 0) {
+      var random_index = Math.floor(random() * (current_index + 1));
+      var temp = result[current_index];
+      result[current_index] = result[random_index];
+      result[random_index] = temp;
+      current_index = current_index - 1;
     }
     return result;
   }
-  _seededRandom(seed) {
+  _seeded_random(seed) {
     var state = Number(seed);
     if (!Number.isFinite(state)) {
       state = String(seed).split('').reduce(function (total, ch) { return total + ch.charCodeAt(0); }, 0);
@@ -174,40 +175,40 @@ export class collection_util {
       return (state - 1) / 2147483646;
     };
   }
-  splitWithLabels(data, labels) {
+  split_with_labels(data, labels) {
     if (!data || data.length === 0) return { train_data: [], test_data: [], train_labels: [], test_labels: [], train_indices: [], test_indices: [] };
     var indices = [];
     var index = 0;
     var count = data.length;
     while (index < count) { indices.push(index); index = index + 1; }
-    if (this.shuffle) indices = this.shuffleArray(indices);
-    var splitPoint = Math.floor(data.length * this.trainRatio);
-    var trainIndices = [];
-    var testIndices = [];
+    if (this.shuffle) indices = this.shuffle_array(indices);
+    var split_point = Math.floor(data.length * this.train_ratio);
+    var train_indices = [];
+    var test_indices = [];
     index = 0;
     while (index < indices.length) {
-      if (index < splitPoint) trainIndices.push(indices[index]);
-      else testIndices.push(indices[index]);
+      if (index < split_point) train_indices.push(indices[index]);
+      else test_indices.push(indices[index]);
       index = index + 1;
     }
-    var trainData = [];
-    var trainLabels = [];
-    var trainIdxIndex = 0;
-    while (trainIdxIndex < trainIndices.length) {
-      trainData.push(data[trainIndices[trainIdxIndex]]);
-      if (labels && labels.length > trainIndices[trainIdxIndex]) trainLabels.push(labels[trainIndices[trainIdxIndex]]);
-      trainIdxIndex = trainIdxIndex + 1;
+    var train_data = [];
+    var train_labels = [];
+    var train_idx_index = 0;
+    while (train_idx_index < train_indices.length) {
+      train_data.push(data[train_indices[train_idx_index]]);
+      if (labels && labels.length > train_indices[train_idx_index]) train_labels.push(labels[train_indices[train_idx_index]]);
+      train_idx_index = train_idx_index + 1;
     }
-    var testData = [];
-    var testLabels = [];
-    var testIdxIndex = 0;
-    while (testIdxIndex < testIndices.length) {
-      testData.push(data[testIndices[testIdxIndex]]);
-      if (labels && labels.length > testIndices[testIdxIndex]) testLabels.push(labels[testIndices[testIdxIndex]]);
-      testIdxIndex = testIdxIndex + 1;
+    var test_data = [];
+    var test_labels = [];
+    var test_idx_index = 0;
+    while (test_idx_index < test_indices.length) {
+      test_data.push(data[test_indices[test_idx_index]]);
+      if (labels && labels.length > test_indices[test_idx_index]) test_labels.push(labels[test_indices[test_idx_index]]);
+      test_idx_index = test_idx_index + 1;
     }
-    return { train_data: trainData, test_data: testData, train_labels: trainLabels, test_labels: testLabels, train_indices: trainIndices, test_indices: testIndices };
+    return { train_data: train_data, test_data: test_data, train_labels: train_labels, test_labels: test_labels, train_indices: train_indices, test_indices: test_indices };
   }
-  executeWithLabels(data, labels) { return this.splitWithLabels(data, labels); }
+  execute_with_labels(data, labels) { return this.split_with_labels(data, labels); }
 }
 export default collection_util;

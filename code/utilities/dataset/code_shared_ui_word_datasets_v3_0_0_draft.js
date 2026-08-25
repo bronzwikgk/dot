@@ -131,11 +131,29 @@ const preview_state_names = [
   "unsupported"
 ];
 
+function validate_ui_word_dataset_arrays(groups) {
+  const errors = [];
+  for (const [group_name, values] of Object.entries(groups || {})) {
+    if (!Array.isArray(values)) continue;
+    const seen = new Set();
+    for (const value of values) {
+      if (typeof value !== "string" || value.trim() !== value || value.length === 0) {
+        errors.push(`${group_name} contains invalid value ${JSON.stringify(value)}`);
+        continue;
+      }
+      if (seen.has(value)) errors.push(`${group_name} contains duplicate value ${value}`);
+      seen.add(value);
+    }
+  }
+  return { ok: errors.length === 0, errors };
+}
+
 export {
   layout_names, cell_types, flow_node_types, cell_statuses,
   gui_action_names, panel_names, template_ids, export_formats,
   import_formats, keyboard_command_names, semantic_element_names,
   aria_role_names, editor_component_names, layout_modifier_names,
   render_profile_names, input_surface_names, accessibility_state_names,
-  interaction_state_names, preview_state_names
+  interaction_state_names, preview_state_names,
+  validate_ui_word_dataset_arrays
 };

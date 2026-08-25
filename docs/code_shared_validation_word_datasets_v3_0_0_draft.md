@@ -26,12 +26,24 @@ Use it as the shared source for validating approved core vocabulary.
 
 - Each exported group should be a one-dimensional array.
 - String arrays should not contain duplicates.
+- `validate_word_dataset_arrays(groups)` can be used by tests or agents to
+  check string arrays for invalid values and duplicates.
 - New names should be added here before validators accept them.
 
 ## Known Limits
 
 - It is a vocabulary source, not a full registry with owner metadata.
 - A generated dataset registry report is still needed.
+
+## Banned Vocabulary Update
+
+The banned vocabulary now includes the rejected artifact-creation terms.
+Approved application, operation, relationship, artifact, and pipeline names use
+`create` or `artifact creation` wording instead.
+
+## Runtime Vocabulary Update
+
+The approved Node platform label is `node_runtime`.
 
 ## How It Was Tested
 

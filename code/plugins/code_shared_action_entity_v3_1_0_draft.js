@@ -61,9 +61,14 @@ class action_entity {
   }
 
   normalize_entity(input = {}) {
+    if (!input || typeof input !== "object" || Array.isArray(input)) {
+      throw new Error("entity input must be an object");
+    }
     if (input.dependencies && !this.config.allow_legacy_dependencies) {
       throw new Error("legacy dependencies input is disabled; use relationships with depends_on");
     }
+    const banned_result = this.validator.validate_no_banned_words([input.id, input.type, input.name, ...normalize_list(input.operations).map((operation) => typeof operation === "string" ? operation : operation.name)]);
+    if (!banned_result.ok) throw new Error("entity input contains banned vocabulary: " + banned_result.found.join(", "));
     const timestamp = this.driver.get_timestamp();
     const entity = {
       id: input.id || this.driver.generate_id(input.type || "entity"),
@@ -84,7 +89,7 @@ class action_entity {
       tags: normalize_list(input.tags),
       metadata: clone_plain_object(input.metadata),
       created_at: input.created_at || timestamp,
-      updated_at: input.updated_at || timestamp,
+      updated_at: input.updated_at || input.created_at || timestamp,
       created_by: input.created_by || this.config.actor || "system",
       updated_by: input.updated_by || this.config.actor || "system"
     };
@@ -94,8 +99,7 @@ class action_entity {
   validate_entity(entity) {
     const result = this.validator.validate_entity(entity, this.registry);
     if (!result.ok) {
-      const errors = result.errors.map((error) => error.startsWith("unknown type") ? error.replace("unknown type", "type").replace(/$/, " is not registered") : error);
-      throw new Error(errors.join("; "));
+      throw new Error(result.errors.join("; "));
     }
     return result;
   }
@@ -158,18 +162,21 @@ class action_entity {
   }
 
   async create_batch(items = []) {
+    if (!Array.isArray(items)) throw new Error("create_batch expects an array");
     const out = [];
     for (const item of items) out.push(await this.create(item));
     return out;
   }
 
   async update_batch(items = []) {
+    if (!Array.isArray(items)) throw new Error("update_batch expects an array");
     const out = [];
     for (const item of items) out.push(await this.update(item.id, item));
     return out;
   }
 
   async query_batch(filters = []) {
+    if (!Array.isArray(filters)) throw new Error("query_batch expects an array");
     const out = [];
     for (const filter of filters) out.push(await this.query(filter));
     return out;
@@ -291,10 +298,12 @@ class action_entity {
     return JSON.stringify(entity, null, 2);
   }
 
-  import_entity(text) {
+  async import_entity(text, options = {}) {
     const entity = this.normalize_entity(JSON.parse(text));
     this.validate_entity(entity);
-    return entity;
+    const result = await this.driver.create(entity.id, entity, options);
+    this.touch_cache(entity.id, entity);
+    return { ...result, data: with_derived_fields(entity) };
   }
 
   touch_cache(key, value) {
@@ -319,12 +328,6 @@ const normalize_config = (config = {}) => {
 
 const normalize_driver = (driver, name) => {
   if (!driver) return new memory_driver(name);
-  if (typeof driver.generate_id !== "function" && typeof driver.generateId === "function") {
-    driver.generate_id = (prefix = name) => driver.generateId(prefix);
-  }
-  if (typeof driver.get_timestamp !== "function" && typeof driver.getTimestamp === "function") {
-    driver.get_timestamp = () => driver.getTimestamp();
-  }
   return driver;
 };
 

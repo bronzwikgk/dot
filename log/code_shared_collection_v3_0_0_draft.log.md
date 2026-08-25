@@ -51,3 +51,16 @@ Push is handled by the user through GitHub Desktop.
 ## 2026-08-25
 
 - Fixed deterministic split config so seed `0` is preserved instead of being treated as missing.
+
+## 2026-08-25 Quality Follow-Up
+
+- `flatten_to_vector(null)` now returns an empty list.
+
+## 2026-08-25 Snake Case Follow-Up
+
+- Renamed the matrix flatten helper to `flatten_to_vector` with no mixed-case alias.
+
+## 2026-08-25 Snake Case API Pass
+
+- Renamed collection helpers to `extract_window()`, `sliding_windows()`, `matches_predicate()`, `filter_by_range()`, `shuffle_array()`, `split_with_labels()`, and `execute_with_labels()`.
+- Renamed ratio config/state names to `train_ratio` and `test_ratio`.

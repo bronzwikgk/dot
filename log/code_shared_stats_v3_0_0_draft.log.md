@@ -6,9 +6,9 @@ Completed focused utility pass for `code/utilities/code_shared_stats_v3_0_0_draf
 
 ### Issues Fixed
 
-- `new stats_util({ zCritical: 0 })` incorrectly fell back to `1.96` because config used `||`.
+- `new stats_util({ z_critical: 0 })` incorrectly fell back to `1.96` because config used `||`.
 - Constructor did not declare a default config parameter.
-- `zScoreBatch(null, mean, stdDev)` could throw because it read `values.length`.
+- `z_score_batch(null, mean, std_dev)` could throw because it read `values.length`.
 
 ### Verification
 
@@ -26,7 +26,7 @@ Ran focused Node checks for:
 - Z-score and zero standard deviation.
 - Batch z-score.
 - Null batch z-score behavior.
-- Explicit zero `zCritical` behavior.
+- Explicit zero `z_critical` behavior.
 
 Result:
 
@@ -47,3 +47,8 @@ Push is handled by the user through GitHub Desktop.
 ## 2026-08-25
 
 - Renamed class references to snake_case naming standard where applicable.
+
+## 2026-08-25 Snake Case API Pass
+
+- Renamed stats helpers to `standard_deviation()`, `standard_error()`, `confidence_interval()`, `weighted_mean()`, `z_score()`, `z_score_batch()`, and `execute_batch()`.
+- Renamed confidence config/state to `z_critical`.

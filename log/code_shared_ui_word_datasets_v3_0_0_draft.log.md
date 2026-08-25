@@ -18,3 +18,7 @@ pollute the entity core.
 
 - Module import from promoted path passed.
 - Duplicate and empty word-array check passed.
+
+## 2026-08-25 Quality Follow-Up
+
+- Added `validate_ui_word_dataset_arrays(groups)` for programmatic duplicate and invalid-value checks.
