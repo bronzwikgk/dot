@@ -34,6 +34,7 @@ All dataset files, schemas, concepts, code, folders, and files.
 | N10 | Config naming | config + project_name + own_name + version + status + author + extension | Manual review | Error: Rename config file |
 | N11 | Agent proposal names | Agent-owned proposal contracts must include agent number and agent name in the filename | `rg --files proposal/production_application_contracts/parent_contracts | rg "agent_[123]_agent_"` | Error: Rename proposal contract |
 | N12 | File status and version | Planning, proposal, doc, report, template, and handoff files must include version and status in the filename unless legacy or source-only | Manual review | Warning: Rename before promotion |
+| N13 | Agent branch names | Agent work branches use `dot_<agent_name>_v<version>` | `git branch --show-current` | Error: move work to correct agent branch before merge |
 
 ### Agent-Owned Proposal Filename Pattern
 
@@ -57,6 +58,29 @@ starting work. Example:
 rg --files dot\proposal | rg "agent_2_agent_ui_application"
 rg --files dot\proposal | rg "agent_3_agent_lang_and_memory"
 ```
+
+### Agent Branch Naming
+
+Each agent keeps its own workspace branch:
+
+```text
+dot_<agent_name>_v<version>
+```
+
+Approved current branches:
+
+- `dot_agent_codex_an_app_v1`
+- `dot_agent_ui_application_v1`
+- `dot_agent_lang_and_memory_v1`
+
+Merge target for the current development batch:
+
+```text
+wip_dot_v3
+```
+
+An agent branch may merge into `wip_dot_v3` only after checks, validation, tests,
+benchmark where relevant, audit, docs, logs, reports, and handoff all pass.
 
 ### Banned Or Avoidable Active Names
 
@@ -145,6 +169,21 @@ All `.js` files in the project.
 | C6 | No external dependencies | No libraries unless specified by user | `grep -rn "node_modules" package.json` | Error: Remove dependency |
 | C7 | Node.js by default | Use Node.js unless Python specified | Manual review | Warning: Convert to Node.js |
 | C8 | One concern per file | Each file covers one module or utility | Manual review | Warning: Split file |
+
+### Merge Gate
+
+Before any merge into `wip_dot_v3`, the acting agent must provide:
+
+- branch name
+- parent contract id
+- detail contract ids
+- changed files
+- test command and result
+- benchmark command and result, or reason not applicable
+- audit result
+- docs/log/report links
+- unresolved risks
+- proposed commit message
 
 ---
 

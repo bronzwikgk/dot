@@ -39,6 +39,39 @@ authorization, or pending decision before claiming readiness.
 Process tooling guidance lives in
 `docs/agent_process_tooling_guidelines_dot_v1_0_0_proposed.md`.
 
+## Agent Branch And Workspace Rules
+
+Every agent must work in its own workspace branch before changes are merged into
+the current development feature branch.
+
+Branch naming pattern:
+
+```text
+dot_<agent_name>_v<version>
+```
+
+Approved current agent branches:
+
+- `dot_agent_codex_an_app_v1`
+- `dot_agent_ui_application_v1`
+- `dot_agent_lang_and_memory_v1`
+
+The current development feature branch is `wip_dot_v3`. Agent branches may merge
+into `wip_dot_v3` only after checks, validation, tests, benchmark where
+relevant, audit, docs, logs, reports, and handoff all pass.
+
+Before starting work, each agent must record:
+
+- current branch
+- intended agent branch
+- parent contract
+- detail contracts
+- validation command
+- merge target branch
+
+No agent should commit directly to `wip_dot_v3` unless the user explicitly asks
+for an emergency direct change.
+
 ## Approved Folder Rules
 
 Use subdomain folders for:
@@ -127,6 +160,7 @@ should stay in utilities unless a plugin is coordinating a governed workflow.
 - search `dot/proposal` for your agent name before starting work
 - keep version and status in planning/proposal/report/template filenames
 - include tests run, skipped tests, source refs, and known limits
+- maintain work in the agent branch named for your agent before merge review
 - use shared inbox for conflicts, proposed names, blocked decisions, and
   agent-to-agent communication
 
@@ -138,6 +172,7 @@ should stay in utilities unless a plugin is coordinating a governed workflow.
 - do not put executable behavior inside app data
 - do not claim production readiness from unit tests alone
 - do not create implementation files before required schema/contract approval
+- do not merge an agent branch into `wip_dot_v3` before all required gates pass
 - do not hide skipped validation
 - do not silently promote source learning into active behavior
 
@@ -153,6 +188,8 @@ Each handoff must include:
 - files changed
 - app data touched
 - tests run
+- benchmark run, or reason benchmark is not applicable
+- audit result
 - skipped tests and reason
 - unresolved names
 - unresolved conflicts
@@ -168,6 +205,7 @@ Work is ready to start when:
 - approved file location is known
 - required app data shape is known
 - validation path is known
+- agent branch is known
 - user authorization is recorded for any new active name
 
 ## Definition Of Done
@@ -178,6 +216,7 @@ Work is done only when:
 - no unauthorized names were introduced
 - related docs and logs are updated
 - tests or validation checks were run
+- benchmark and audit are complete, or explicitly not applicable
 - skipped checks have explicit reasons
 - report or handoff lists remaining risk
 - user receives a clear commit message
