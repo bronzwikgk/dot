@@ -69,6 +69,22 @@ Use approved An App names where they fit better:
 
 The approved Node platform label is `node_runtime`.
 
+## V4 Application Builder Vocabulary Update
+
+The approved entity type vocabulary now includes the V4 editor and notebook
+entities:
+
+- `book`
+- `cell`
+- `cell_output`
+- `cell_execution`
+- `cell_order`
+- `editor_state`
+- `focus_state`
+- `cell_row`
+- `cell_rail`
+- `render_sync_record`
+
 ## How It Was Tested
 
 The module imports successfully. Word-array checks found no empty arrays or

@@ -29,17 +29,17 @@ Branch: `dot_agent_codex_an_app_v4`
 | Item ID | Priority | Status | Work |
 |---|---|---|---|
 | v4_missing_001 | p0 | validated | unified command registry |
-| v4_missing_002 | p0 | pending | edit/command mode gating |
-| v4_missing_003 | p0 | pending | focus-preserving renders |
-| v4_missing_004 | p0 | pending | rail outside cell layout |
+| v4_missing_002 | p0 | validated | edit/command mode gating |
+| v4_missing_003 | p0 | validated | focus-preserving renders |
+| v4_missing_004 | p0 | validated | rail outside cell layout |
 | v4_missing_005 | p0 | pending | browser boot marker contract |
 | v4_missing_011 | p0 | pending | global search |
 | v4_missing_013 | p0 | pending | browser boot-failure test/benchmark short-circuit |
 | v4_missing_018 | p0 | pending | full browser health e2e |
-| v4_missing_019 | p0 | pending | browser focus editing e2e |
+| v4_missing_019 | p0 | active | browser focus editing e2e |
 | v4_missing_020 | p0 | pending | browser search e2e |
-| v4_missing_021 | p0 | pending | cell execution for natural language, code, markdown |
-| v4_missing_022 | p0 | pending | live book/cell create/move/delete |
+| v4_missing_021 | p0 | validated | cell execution for natural language, code, markdown |
+| v4_missing_022 | p0 | validated | live book/cell create/move/delete |
 | v4_missing_024 | p0 | active | keyboard shortcut registry and e2e |
 | v4_missing_027 | p0 | pending | run all and DAG dependency behavior in UI |
 | v4_missing_033 | p0 | pending | layout parity |
@@ -52,8 +52,8 @@ Branch: `dot_agent_codex_an_app_v4`
 | Contract ID | Status | File |
 |---|---|---|
 | v4_contract_001 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_001_command_registry_v1_0_0_proposed.md` |
-| v4_contract_002 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_002_editor_focus_v1_0_0_proposed.md` |
-| v4_contract_003 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_003_book_cell_operations_v1_0_0_proposed.md` |
+| v4_contract_002 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_002_editor_focus_v1_0_0_proposed.md` |
+| v4_contract_003 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_003_book_cell_operations_v1_0_0_proposed.md` |
 | v4_contract_004 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_004_search_and_status_v1_0_0_proposed.md` |
 | v4_contract_005 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_005_layout_parity_v1_0_0_proposed.md` |
 | v4_contract_006 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_006_browser_e2e_gate_v1_0_0_proposed.md` |

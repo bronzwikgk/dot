@@ -18,7 +18,9 @@ const entity_types = [
   "correction_record", "layout_ast", "style_rule", "markup_rule",
   "command_surface", "configuration_profile", "learning_store",
   "learning_metric", "parser_preview_state", "semantic_element_tree",
-  "style_tree", "query_renderer", "confidence_policy"
+  "style_tree", "query_renderer", "confidence_policy", "book", "cell",
+  "cell_output", "cell_execution", "cell_order", "editor_state",
+  "focus_state", "cell_row", "cell_rail", "render_sync_record"
 ];
 
 const entity_traits = [

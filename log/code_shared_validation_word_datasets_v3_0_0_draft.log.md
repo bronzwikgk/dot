@@ -59,3 +59,11 @@ these arrays.
 - Added `optimize`, `optimise`, `evolve`, and `mutate` as controlled allowed
   operation names.
 - Kept `neuro_rule` and `rule_engine` blocked as source-branded active names.
+
+## 2026-08-25 V4 Application Builder Vocabulary Update
+
+- Added approved entity type names for book/cell operations and editor/focus
+  runtime records.
+- Reason: V4 contracts require book, cell, output, execution, ordering, editor
+  state, focus state, row, rail, and render sync records to be normal entities.
+- Verification: focused V4 utility tests passed and full `node --test` passed.
