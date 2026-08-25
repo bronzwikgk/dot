@@ -18,9 +18,9 @@ class memory_driver {
     this.id_counter = 0;
   }
 
-  generate_id() {
+  generate_id(prefix) {
     this.id_counter += 1;
-    return `${this.name}_${this.id_counter}`;
+    return `${prefix || this.name}_${this.id_counter}`;
   }
 
   get_timestamp() {

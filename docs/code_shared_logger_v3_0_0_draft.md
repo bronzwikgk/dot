@@ -122,12 +122,14 @@ const timing = stop();
 // { name: "compose", duration_ms: 12 }
 ```
 
-Snapshots return entries:
+Snapshots return a flat array of [name, value] pairs:
 
 ```js
 metrics.snapshot();
 // [["hits", 2], ["gauge:load", 7]]
 ```
+
+Gauge names are prefixed with `gauge:` in the snapshot to distinguish them from counters.
 
 ## Runtime Contract
 

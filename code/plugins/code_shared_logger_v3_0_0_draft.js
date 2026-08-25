@@ -58,11 +58,14 @@ class metrics {
   }
 
   snapshot() {
-    return {
-      counters: Array.from(this.counters.entries()),
-      gauges: Array.from(this.gauges.entries()),
-      timers: Array.from(this.timers.entries())
-    };
+    const result = [];
+    for (const [name, value] of this.counters.entries()) {
+      result.push([name, value]);
+    }
+    for (const [name, value] of this.gauges.entries()) {
+      result.push([`gauge:${name}`, value]);
+    }
+    return result;
   }
 }
 

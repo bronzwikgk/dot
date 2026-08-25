@@ -54,3 +54,9 @@ Push is handled by the user through GitHub Desktop.
 ## 2026-08-25 Lock-Down Pass
 
 - `create()` now rejects non-object entity data.
+
+## 2026-08-25 Documentation Alignment
+
+- Updated constructor documentation to show all 4 parameters (name, config, driver, options).
+- Added `generate_id(prefix)` signature to match v3.1.0 for consistency.
+- Verified with smoke check: `action_entity v3.0.0 checks passed`.

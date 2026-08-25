@@ -299,7 +299,9 @@ class action_entity {
   }
 
   async import_entity(text, options = {}) {
-    const entity = this.normalize_entity(JSON.parse(text));
+    const parsed = JSON.parse(text);
+    if (parsed && parsed.dependencies) delete parsed.dependencies;
+    const entity = this.normalize_entity(parsed);
     this.validate_entity(entity);
     const result = await this.driver.create(entity.id, entity, options);
     this.touch_cache(entity.id, entity);

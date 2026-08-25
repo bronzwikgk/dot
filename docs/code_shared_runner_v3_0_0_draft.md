@@ -147,6 +147,23 @@ conditions: [
 
 If no validator is provided, conditions pass by default.
 
+## Error Codes
+
+The runner uses these error codes:
+
+- `[SYS-04]` - Action limit exceeded (default: 50 actions per session)
+- `[SYS-05]` - Nesting depth exceeded (default: 16 levels deep)
+- `[SYS-06]` - Plan validation errors:
+  - Plan is required
+  - AST plan steps must be an array
+  - AST step at index N is invalid
+  - AST step at index N is missing step_id
+  - DAG plan tasks must be an array
+  - Plan kind must be ast or dag
+  - Plan has no steps or tasks
+  - next_map target not found in steps
+  - Unknown DAG task type or action
+
 ## Safety Behavior
 
 The runner enforces:
@@ -177,6 +194,8 @@ Maintainers and agents should preserve these guarantees:
 - Invalid AST steps and malformed DAG tasks fail with explicit `[SYS-06]`
   errors instead of raw TypeErrors.
 - `register_plan()` validates AST/DAG structure before storing a plan.
+- Action limit exceeded throws `[SYS-04]`.
+- Nesting depth exceeded throws `[SYS-05]`.
 
 ## How It Was Tested
 

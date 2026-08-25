@@ -29,7 +29,7 @@ It is intended to stop plugins from hand-rolling the same persistence wrapper re
 
 When no driver is supplied, the entity lazily creates a private in-memory driver. When a driver is supplied, the driver is expected to provide:
 
-- `generate_id()`
+- `generate_id(prefix)` - generates a unique ID with optional prefix
 - `get_timestamp()`
 - `create(id, data, options)`
 - `read(id, options)`
@@ -60,7 +60,19 @@ Avoid using it for:
 
 ## How It Works
 
-Create an entity:
+Constructor signature:
+
+```js
+new action_entity(name, config, driver, options)
+```
+
+Parameters:
+- `name` (string): Entity collection name
+- `config` (object): Configuration including schema, id_field, cache_limit
+- `driver` (object): Optional storage driver (defaults to memory_driver)
+- `options` (object): Optional settings like cache_limit
+
+Create an entity collection:
 
 ```js
 const tasks = new action_entity("tasks", {
@@ -70,6 +82,14 @@ const tasks = new action_entity("tasks", {
     due: { type: "date" }
   }
 });
+```
+
+Create with custom driver:
+
+```js
+const tasks = new action_entity("tasks", {
+  schema: { title: { required: true } }
+}, customDriver, { cache_limit: 100 });
 ```
 
 Create a record:

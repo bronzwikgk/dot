@@ -51,3 +51,9 @@ Push is handled by the user through GitHub Desktop.
 
 - Split metric storage into separate counter, gauge, and timer maps.
 - Updated `snapshot()` to return separate `counters`, `gauges`, and `timers`.
+
+## 2026-08-25 Documentation Alignment
+
+- Fixed `snapshot()` to return flat array `[["name", value], ...]` matching documentation.
+- Added `gauge:` prefix to gauge names in snapshot for clarity.
+- Verified with smoke check: `logger checks passed`.

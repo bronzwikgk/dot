@@ -75,6 +75,20 @@ entity doctrine fields.
 - Injected drivers expose `generate_id()` and `get_timestamp()`.
 - Entity inputs and batch inputs are rejected when their shape is invalid.
 
+## Implemented Methods
+
+All documented methods are implemented:
+
+- **CRUD**: `create`, `read`, `update`, `delete`, `query`
+- **Batch**: `create_batch`, `update_batch`, `query_batch`
+- **Lifecycle**: `set_status`, `draft`, `activate`, `deprecate`, `archive`
+- **Relationships**: `link_entities`, `unlink_entities`, `add_relationship`, `remove_relationship`, `get_relationships`, `get_dependencies`, `get_dependents`
+- **Validation**: `validate_graph`
+- **Policies/Contracts**: `add_policy`, `remove_policy`, `add_contract`, `add_operation`
+- **Diffing**: `diff_entities(before, after)` - returns array of field changes
+- **Versioning**: `bump_version(entity, level)` - returns new version string (major/minor/patch)
+- **Import/Export**: `export_entity(entity)`, `import_entity(text)`
+
 ## Known Limits
 
 - Schema enforcement is still basic and should be expanded from the schema
@@ -85,4 +99,5 @@ entity doctrine fields.
 ## How It Was Tested
 
 Smoke checks imported the promoted module, created entities, read them, validated
-a correct relationship graph, and verified missing relationship targets fail.
+a correct relationship graph, verified missing relationship targets fail, and
+tested diff_entities, bump_version, export_entity, and import_entity.

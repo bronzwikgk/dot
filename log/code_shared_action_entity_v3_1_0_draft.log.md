@@ -45,3 +45,10 @@ and focused migration checks are complete.
 
 - `normalize_entity()` now rejects non-object entity input.
 - Batch helpers now reject non-array inputs with explicit errors.
+
+## 2026-08-25 Documentation Alignment
+
+- Updated documentation to confirm all methods are implemented: diff_entities, bump_version, export_entity, import_entity.
+- Added method signatures and usage examples to documentation.
+- Fixed `import_entity()` to strip derived `dependencies` field before normalizing.
+- Verified with smoke check: `v3.1.0 checks passed`.

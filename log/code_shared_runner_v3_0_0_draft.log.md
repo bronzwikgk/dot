@@ -73,3 +73,9 @@ Push is handled by the user through GitHub Desktop.
 - Invalid DAG tasks now fail with explicit `[SYS-06]` errors.
 - Input source resolution now tolerates malformed source entries.
 - Registration now validates AST/DAG structure before storing a plan.
+
+## 2026-08-25 Documentation Alignment
+
+- Added error codes documentation: `[SYS-04]` (action limit), `[SYS-05]` (depth limit), `[SYS-06]` (validation errors).
+- Updated runtime contract to include `[SYS-04]` and `[SYS-05]` guarantees.
+- Verified with smoke check: `runner checks passed`.
