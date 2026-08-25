@@ -92,7 +92,16 @@ class an_app_brain {
       timestamp: new Date().toISOString()
     };
     const result = this._recursive_split("input", policy, record, new Set());
-    Object.assign(record, result);
+    record.entities = result.entities;
+    record.relationships = result.relationships;
+    record.actions = result.actions;
+    record.node_count = result.node_count;
+    record.depth = result.depth;
+    record.recursion_stopped = result.stopped;
+    record.stop_reason = result.stop_reason;
+    record.cycle_detected = result.cycle_detected;
+    record.repeated_state_detected = result.repeated_state_detected;
+    record.timeout_reached = result.timeout_reached;
     session.records.decomposition.push(record);
     return record;
   }
@@ -382,7 +391,7 @@ class an_app_brain {
 
     const split = (n, depth) => {
       if (result.stopped) return;
-      if (depth > policy.max_depth) { result.stopped = true; result.stop_reason = "max_depth"; return; }
+      if (depth >= policy.max_depth) { result.stopped = true; result.stop_reason = "max_depth"; return; }
       if (result.node_count >= (policy.max_nodes || this.config.max_nodes)) { result.stopped = true; result.stop_reason = "max_nodes"; return; }
       if (visited.has(n)) { result.stopped = true; result.stop_reason = "cycle"; result.cycle_detected = true; return; }
       visited.add(n);

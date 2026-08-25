@@ -14,7 +14,7 @@ Created an agent-facing handbook for An App and initialized the shared inbox pro
 - `dot/learnings_agent_codex/AGENT_HANDBOOK.md`
 - `dot/learnings_agent_codex/shared_inbox/shared_inbox_learnings_agent_codex_v1_0_0_proposed.md`
 - `dot/learnings_agent_codex/shared_inbox/shared_inbox_message_template_learnings_agent_codex_v1_0_0_proposed.md`
-- `dot/learnings_agent_codex/shared_inbox/2026_08_25_agent_codex_an_app_handbook_created.md`
+- `dot/learnings_agent_codex/shared_inbox/2026_08_25_agent_codex_an_app_handbook_created_v1_0_0_proposed.md`
 
 ## Evidence
 
