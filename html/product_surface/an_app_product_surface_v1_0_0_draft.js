@@ -57,6 +57,10 @@ class an_app_product_surface_controller {
     this.nodes = {};
     this.search_state = { query: "", hits: [], active_index: -1 };
     this.command_records = [];
+    this.storage_key = "an_app.product_surface.workspace";
+    this.undo_stack = [];
+    this.redo_stack = [];
+    this.last_cell_value = "";
   }
 
   boot() {
@@ -91,6 +95,7 @@ class an_app_product_surface_controller {
     this.nodes.clear_search_button.addEventListener("click", this.clear_search_hits.bind(this));
     this.nodes.run_cell_button.addEventListener("click", this.handle_run_cell_click.bind(this));
     this.nodes.run_all_button.addEventListener("click", this.handle_run_all_click.bind(this));
+    this.nodes.cell_editor.addEventListener("input", this.handle_cell_input.bind(this));
     this.nodes.cell_editor.addEventListener("focus", this.enter_edit_mode.bind(this));
     this.nodes.cell_editor.addEventListener("blur", this.exit_edit_mode.bind(this));
     document.addEventListener("keydown", this.handle_global_keydown.bind(this));
@@ -98,6 +103,8 @@ class an_app_product_surface_controller {
       button.addEventListener("click", this.handle_profile_click.bind(this));
     }
     this.register_default_commands();
+    this.load_workspace();
+    this.run_storage_selftest();
     this.render_all();
     this.write_boot_marker("ready");
   }
@@ -159,12 +166,26 @@ class an_app_product_surface_controller {
 
   handle_template_click(event) {
     this.active_template_id = event.currentTarget.dataset.template_id;
+    this.save_workspace();
     this.render_all();
   }
 
   handle_profile_click(event) {
     this.active_profile = event.currentTarget.dataset.profile;
+    this.save_workspace();
     this.render_all();
+  }
+
+  handle_cell_input(event) {
+    const next_value = event.currentTarget.value;
+    if (next_value === this.last_cell_value) return;
+    this.create_undo_checkpoint({
+      entity_id: "cell_demo_1",
+      before: { id: "cell_demo_1", content: this.last_cell_value },
+      after: { id: "cell_demo_1", content: next_value }
+    });
+    this.last_cell_value = next_value;
+    this.save_workspace();
   }
 
   register_default_commands() {
@@ -202,6 +223,20 @@ class an_app_product_surface_controller {
       selector: "#clear_search_button",
       keyboard: "escape",
       method: "clear_search_hits"
+    });
+    this.register_command({
+      id: "undo_from_keyboard",
+      action: "undo_action",
+      selector: null,
+      keyboard: "ctrl+z",
+      method: "undo_change"
+    });
+    this.register_command({
+      id: "redo_from_keyboard",
+      action: "redo_action",
+      selector: null,
+      keyboard: "ctrl+y",
+      method: "redo_change"
     });
   }
 
@@ -261,6 +296,7 @@ class an_app_product_surface_controller {
     const value = this.nodes.cell_editor.value || "";
     this.nodes.cell_output.textContent = `Output: ${value}`;
     this.nodes.validation_label.textContent = "cell executed";
+    this.save_workspace();
     this.restore_editor_focus();
   }
 
@@ -272,6 +308,7 @@ class an_app_product_surface_controller {
     }
     this.nodes.cell_output.textContent = `Run all: ${outputs.join(", ")}`;
     this.nodes.validation_label.textContent = "run all completed";
+    this.save_workspace();
     this.restore_editor_focus();
   }
 
@@ -628,6 +665,113 @@ class an_app_product_surface_controller {
       for (const layout of template.layouts) records.push({ id: `${template.id}_${layout}`, type: "layout", name: layout });
     }
     return records;
+  }
+
+  validate_storage_key(key) {
+    return /^[a-z][a-z0-9_]*(\.[a-z][a-z0-9_]*)*$/.test(String(key || ""));
+  }
+
+  run_storage_selftest() {
+    if (!this.validate_storage_key(this.storage_key)) {
+      this.nodes.validation_label.textContent = "storage key invalid";
+      return { ok: false, data: null, errors: ["storage key invalid"] };
+    }
+    try {
+      localStorage.setItem(`${this.storage_key}.selftest`, JSON.stringify({ ok: true }));
+      const value = localStorage.getItem(`${this.storage_key}.selftest`);
+      localStorage.removeItem(`${this.storage_key}.selftest`);
+      if (value !== JSON.stringify({ ok: true })) {
+        this.nodes.validation_label.textContent = "storage unavailable";
+        return { ok: false, data: null, errors: ["storage selftest failed"] };
+      }
+      return { ok: true, data: { type: "storage_record", key: this.storage_key }, errors: [] };
+    } catch (error) {
+      this.nodes.validation_label.textContent = "storage unavailable";
+      return { ok: false, data: null, errors: [String(error.message || error)] };
+    }
+  }
+
+  workspace_state() {
+    return {
+      active_template_id: this.active_template_id,
+      active_profile: this.active_profile,
+      active_cell_id: "cell_demo_1",
+      cell_content: this.nodes.cell_editor.value || ""
+    };
+  }
+
+  save_workspace() {
+    if (!this.validate_storage_key(this.storage_key)) return { ok: false, data: null, errors: ["storage key invalid"] };
+    try {
+      const record = {
+        type: "storage_record",
+        key: this.storage_key,
+        state: this.workspace_state()
+      };
+      localStorage.setItem(this.storage_key, JSON.stringify(record));
+      return { ok: true, data: record, errors: [] };
+    } catch (error) {
+      this.nodes.validation_label.textContent = "storage save failed";
+      return { ok: false, data: null, errors: [String(error.message || error)] };
+    }
+  }
+
+  load_workspace() {
+    try {
+      const text = localStorage.getItem(this.storage_key);
+      if (!text) {
+        this.last_cell_value = this.nodes.cell_editor.value || "";
+        return { ok: true, data: null, errors: [] };
+      }
+      const record = JSON.parse(text);
+      const state = record.state || {};
+      if (state.active_template_id) this.active_template_id = state.active_template_id;
+      if (state.active_profile) this.active_profile = state.active_profile;
+      if (Object.prototype.hasOwnProperty.call(state, "cell_content")) this.nodes.cell_editor.value = state.cell_content;
+      this.last_cell_value = this.nodes.cell_editor.value || "";
+      return { ok: true, data: record, errors: [] };
+    } catch (error) {
+      this.nodes.validation_label.textContent = "storage load failed";
+      this.last_cell_value = this.nodes.cell_editor.value || "";
+      return { ok: false, data: null, errors: [String(error.message || error)] };
+    }
+  }
+
+  create_undo_checkpoint(config) {
+    const checkpoint = {
+      id: `version_checkpoint_${this.undo_stack.length + 1}`,
+      type: "version_checkpoint",
+      entity_id: config.entity_id,
+      before: config.before,
+      after: config.after
+    };
+    this.undo_stack.push(checkpoint);
+    this.redo_stack = [];
+    return { ok: true, data: checkpoint, errors: [] };
+  }
+
+  undo_change() {
+    const checkpoint = this.undo_stack.pop();
+    if (!checkpoint) return { ok: false, data: null, errors: ["undo stack is empty"] };
+    this.redo_stack.push(checkpoint);
+    this.nodes.cell_editor.value = checkpoint.before.content || "";
+    this.last_cell_value = this.nodes.cell_editor.value;
+    this.nodes.validation_label.textContent = "undo applied";
+    this.save_workspace();
+    this.restore_editor_focus();
+    return { ok: true, data: { type: "undo_record", checkpoint_id: checkpoint.id }, errors: [] };
+  }
+
+  redo_change() {
+    const checkpoint = this.redo_stack.pop();
+    if (!checkpoint) return { ok: false, data: null, errors: ["redo stack is empty"] };
+    this.undo_stack.push(checkpoint);
+    this.nodes.cell_editor.value = checkpoint.after.content || "";
+    this.last_cell_value = this.nodes.cell_editor.value;
+    this.nodes.validation_label.textContent = "redo applied";
+    this.save_workspace();
+    this.restore_editor_focus();
+    return { ok: true, data: { type: "redo_record", checkpoint_id: checkpoint.id }, errors: [] };
   }
 }
 

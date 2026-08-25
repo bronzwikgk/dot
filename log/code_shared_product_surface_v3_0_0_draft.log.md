@@ -60,3 +60,11 @@ surface to the browser runtime validation contract.
   tree, table, board, calendar, timeline, diagram, and dashboard.
 - Added tests proving same source entity id preservation and no mutation during
   layout switching.
+
+## 2026-08-25 V4 Persistence Update
+
+- Added browser storage selftest, workspace save/load, reload restoration, and
+  storage failure status reporting.
+- Added version checkpoint based Ctrl+Z/Ctrl+Y undo and redo for the active
+  cell editor.
+- Added browser e2e coverage for cell persistence after reload and undo/redo.

@@ -48,9 +48,16 @@ test("visible product surface keeps class based browser controller", async () =>
   assert.ok(browser_source.includes("run_all_cells"));
   assert.ok(browser_source.includes("create_run_all_plan"));
   assert.ok(browser_source.includes("restore_editor_focus"));
+  assert.ok(browser_source.includes("save_workspace"));
+  assert.ok(browser_source.includes("load_workspace"));
+  assert.ok(browser_source.includes("validate_storage_key"));
+  assert.ok(browser_source.includes("undo_change"));
+  assert.ok(browser_source.includes("redo_change"));
   assert.ok(browser_source.includes("ctrl+enter"));
   assert.ok(browser_source.includes("ctrl+s"));
   assert.ok(browser_source.includes("ctrl+shift+enter"));
+  assert.ok(browser_source.includes("ctrl+z"));
+  assert.ok(browser_source.includes("ctrl+y"));
   assert.ok(browser_source.includes("escape"));
   assert.equal(browser_source.includes("fun" + "ction "), false);
   assert.equal(browser_source.includes("=>"), false);

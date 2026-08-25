@@ -57,7 +57,7 @@ Branch: `dot_agent_codex_an_app_v4`
 | v4_contract_004 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_004_search_and_status_v1_0_0_proposed.md` |
 | v4_contract_005 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_005_layout_parity_v1_0_0_proposed.md` |
 | v4_contract_006 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_006_browser_e2e_gate_v1_0_0_proposed.md` |
-| v4_contract_007 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_007_persistence_version_undo_v1_0_0_proposed.md` |
+| v4_contract_007 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_007_persistence_version_undo_v1_0_0_proposed.md` |
 | v4_contract_008 | proposed | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_008_import_export_offline_v1_0_0_proposed.md` |
 | v4_contract_009 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_009_cell_command_language_v1_0_0_proposed.md` |
 | v4_contract_010 | validated | `agent_workspace_v4/agent_codex_an_app/proposal/agent_codex_an_app_v4_contract_010_definition_runtime_dependency_v1_0_0_proposed.md` |
@@ -73,12 +73,12 @@ Branch: `dot_agent_codex_an_app_v4`
 | v4_missing_008 | p1 | pending | docs route links to module paths |
 | v4_missing_009 | p1 | pending | offline icon/package asset policy |
 | v4_missing_010 | p1 | pending | relative config path anchoring |
-| v4_missing_014 | p1 | pending | storage selftest and storage key validation |
-| v4_missing_015 | p1 | pending | storage errors surfaced in status bar |
+| v4_missing_014 | p1 | validated | storage selftest and storage key validation |
+| v4_missing_015 | p1 | validated | storage errors surfaced in status bar |
 | v4_missing_016 | p1 | pending | local static server hardening |
 | v4_missing_017 | p1 | pending | import confirmation for executable code cells |
-| v4_missing_023 | p1 | pending | persistence across reload |
-| v4_missing_025 | p1 | pending | version-backed undo/redo |
+| v4_missing_023 | p1 | validated | persistence across reload |
+| v4_missing_025 | p1 | validated | version-backed undo/redo |
 | v4_missing_026 | p1 | pending | six-template gallery cards |
 | v4_missing_028 | p1 | pending | editable flow builder diagram canvas |
 | v4_missing_029 | p1 | pending | export/import files |

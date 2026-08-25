@@ -35,6 +35,12 @@ test("product surface browser e2e validates boot search keyboard focus and layou
     await page.waitForFunction(() => document.getElementById("cell_output").textContent.includes("create fintech dashboard"));
     assert.equal(await page.evaluate(() => document.activeElement.id), "cell_editor");
 
+    await page.fill("#cell_editor", "create fintech dashboard updated");
+    await page.keyboard.press("Control+Z");
+    await page.waitForFunction(() => document.getElementById("cell_editor").value === "create fintech dashboard");
+    await page.keyboard.press("Control+Y");
+    await page.waitForFunction(() => document.getElementById("cell_editor").value === "create fintech dashboard updated");
+
     await page.keyboard.press("Control+Shift+Enter");
     await page.waitForFunction(() => document.getElementById("cell_output").textContent.includes("render_output:display"));
 
@@ -55,6 +61,11 @@ test("product surface browser e2e validates boot search keyboard focus and layou
       await page.waitForSelector(check[2]);
       assert.equal(await page.textContent("#projection_title"), check[1]);
     }
+
+    await page.reload();
+    await page.waitForFunction(() => window.__an_app_boot_marker__ && window.__an_app_boot_marker__.ready === true);
+    assert.equal(await page.inputValue("#cell_editor"), "create fintech dashboard updated");
+    assert.equal(await page.textContent("#projection_title"), "Dashboard");
 
     await page.keyboard.press("Escape");
     assert.equal(await page.textContent("#search_count"), "0 results");

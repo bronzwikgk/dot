@@ -1,0 +1,7 @@
+[
+  "storage_record",
+  "autosave_record",
+  "undo_record",
+  "redo_record",
+  "version_checkpoint"
+]

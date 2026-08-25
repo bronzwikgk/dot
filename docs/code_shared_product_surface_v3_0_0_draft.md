@@ -26,6 +26,8 @@ The browser surface now declares:
 - run-all cell execution path with DAG-shaped task order
 - layout parity tabs for notebook, code editor, block editor, tree, table,
   board, calendar, timeline, diagram, and dashboard
+- browser workspace persistence for selected template, layout, and active cell
+- keyboard undo/redo through version checkpoint records
 
 ## When To Use It
 
@@ -58,4 +60,5 @@ CSS guards.
 Browser e2e tests validate Chromium boot readiness, page error capture, search
 result count, hit navigation, keyboard execution, focus preservation, desktop
 rail layout, mobile stacking, run-all keyboard execution, and all required
-layout projections.
+layout projections. Reload persistence and Ctrl+Z/Ctrl+Y undo/redo are also
+validated in the browser e2e path.
