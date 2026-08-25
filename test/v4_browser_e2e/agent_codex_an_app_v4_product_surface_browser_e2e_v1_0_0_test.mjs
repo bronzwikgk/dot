@@ -35,6 +35,9 @@ test("product surface browser e2e validates boot search keyboard focus and layou
     await page.waitForFunction(() => document.getElementById("cell_output").textContent.includes("create fintech dashboard"));
     assert.equal(await page.evaluate(() => document.activeElement.id), "cell_editor");
 
+    await page.keyboard.press("Control+Shift+Enter");
+    await page.waitForFunction(() => document.getElementById("cell_output").textContent.includes("render_output:display"));
+
     await page.keyboard.press("Escape");
     assert.equal(await page.textContent("#search_count"), "0 results");
 

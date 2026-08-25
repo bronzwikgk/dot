@@ -21,7 +21,7 @@ const flow_node_types = [
 const cell_statuses = ["pending", "running", "done", "error"];
 
 const gui_action_names = [
-  "run_cell", "copy_link", "move_up", "move_down", "delete_cell",
+  "run_cell", "run_all", "copy_link", "move_up", "move_down", "delete_cell",
   "switch_book", "close_book", "add_block", "create_template", "demo_next",
   "demo_prev", "demo_skip", "new_book", "export_book", "import_book",
   "undo_action", "redo_action", "blur_editor", "search_next",

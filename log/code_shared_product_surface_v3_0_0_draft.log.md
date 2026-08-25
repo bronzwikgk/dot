@@ -45,3 +45,9 @@ surface to the browser runtime validation contract.
 - Added Playwright Chromium e2e tests for boot readiness, page errors, search,
   keyboard execution, focus preservation, desktop rail layout, and mobile
   layout.
+
+## 2026-08-25 V4 Run-All UI Update
+
+- Added `run_all` browser command record and cell rail button.
+- Added DAG-shaped run-all plan with parse, execute, and render tasks.
+- Added browser e2e coverage for Ctrl+Shift+Enter run-all execution.

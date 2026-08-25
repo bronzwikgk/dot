@@ -22,3 +22,10 @@ pollute the entity core.
 ## 2026-08-25 Quality Follow-Up
 
 - Added `validate_ui_word_dataset_arrays(groups)` for programmatic duplicate and invalid-value checks.
+
+## 2026-08-25 V4 Command Update
+
+- Added approved GUI action name `run_all`.
+- Reason: V4 browser surface needs notebook-wide execution routed through the
+  same command registry conventions as single-cell execution.
+- Verification: focused cell command language and browser e2e tests passed.

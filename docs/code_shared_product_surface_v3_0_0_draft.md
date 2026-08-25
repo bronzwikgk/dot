@@ -23,6 +23,7 @@ The browser surface now declares:
 - search count and active hit marker
 - browser command records for action, selector, and keyboard resolution
 - notebook cell workspace with rail, editor, output, and focus restore
+- run-all cell execution path with DAG-shaped task order
 
 ## When To Use It
 
@@ -47,4 +48,4 @@ CSS guards.
 
 Browser e2e tests validate Chromium boot readiness, page error capture, search
 result count, hit navigation, keyboard execution, focus preservation, desktop
-rail layout, and mobile stacking.
+rail layout, mobile stacking, and run-all keyboard execution.

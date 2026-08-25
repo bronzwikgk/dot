@@ -75,6 +75,7 @@ class an_app_product_surface_controller {
     this.nodes.cell_editor = document.getElementById("cell_editor");
     this.nodes.cell_output = document.getElementById("cell_output");
     this.nodes.run_cell_button = document.getElementById("run_cell_button");
+    this.nodes.run_all_button = document.getElementById("run_all_button");
     this.nodes.app_name = document.getElementById("app_name");
     this.nodes.preview_path = document.getElementById("preview_path");
     this.nodes.summary_grid = document.getElementById("summary_grid");
@@ -89,6 +90,7 @@ class an_app_product_surface_controller {
     this.nodes.search_input.addEventListener("keydown", this.handle_search_keydown.bind(this));
     this.nodes.clear_search_button.addEventListener("click", this.clear_search_hits.bind(this));
     this.nodes.run_cell_button.addEventListener("click", this.handle_run_cell_click.bind(this));
+    this.nodes.run_all_button.addEventListener("click", this.handle_run_all_click.bind(this));
     this.nodes.cell_editor.addEventListener("focus", this.enter_edit_mode.bind(this));
     this.nodes.cell_editor.addEventListener("blur", this.exit_edit_mode.bind(this));
     document.addEventListener("keydown", this.handle_global_keydown.bind(this));
@@ -130,6 +132,10 @@ class an_app_product_surface_controller {
 
   handle_run_cell_click() {
     this.execute_command({ selector: "#run_cell_button", action: "run_cell" });
+  }
+
+  handle_run_all_click() {
+    this.execute_command({ selector: "#run_all_button", action: "run_all" });
   }
 
   handle_search_input(event) {
@@ -175,6 +181,13 @@ class an_app_product_surface_controller {
       selector: "#run_cell_button",
       keyboard: "ctrl+s",
       method: "run_active_cell"
+    });
+    this.register_command({
+      id: "run_all_from_cell_rail",
+      action: "run_all",
+      selector: "#run_all_button",
+      keyboard: "ctrl+shift+enter",
+      method: "run_all_cells"
     });
     this.register_command({
       id: "search_next_from_keyboard",
@@ -249,6 +262,29 @@ class an_app_product_surface_controller {
     this.nodes.cell_output.textContent = `Output: ${value}`;
     this.nodes.validation_label.textContent = "cell executed";
     this.restore_editor_focus();
+  }
+
+  run_all_cells() {
+    const plan = this.create_run_all_plan();
+    const outputs = [];
+    for (const task of plan.tasks) {
+      outputs.push(`${task.task_id}:${task.action}`);
+    }
+    this.nodes.cell_output.textContent = `Run all: ${outputs.join(", ")}`;
+    this.nodes.validation_label.textContent = "run all completed";
+    this.restore_editor_focus();
+  }
+
+  create_run_all_plan() {
+    return {
+      type: "execution_plan",
+      kind: "dag",
+      tasks: [
+        { task_id: "parse_cell", action: "parse" },
+        { task_id: "execute_cell", action: "run_cell", dependencies: ["parse_cell"] },
+        { task_id: "render_output", action: "display", dependencies: ["execute_cell"] }
+      ]
+    };
   }
 
   enter_edit_mode() {

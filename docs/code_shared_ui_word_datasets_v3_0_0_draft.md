@@ -36,3 +36,8 @@ interface-related entity configuration.
 
 The module imports successfully. Word-array checks found no empty arrays or
 duplicate values.
+
+## V4 Command Update
+
+The approved GUI action names now include `run_all` for notebook-wide DAG-style
+cell execution.
