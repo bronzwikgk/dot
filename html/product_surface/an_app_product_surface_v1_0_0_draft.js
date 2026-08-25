@@ -58,6 +58,12 @@ class an_app_product_surface_controller {
   }
 
   boot() {
+    this.write_boot_marker("started");
+    this.nodes.mount = document.getElementById("an_app_mount");
+    if (!this.nodes.mount) {
+      this.report_boot_error("mount target 'an_app_mount' not found");
+      return;
+    }
     this.nodes.template_list = document.getElementById("template_list");
     this.nodes.command_input = document.getElementById("command_input");
     this.nodes.run_button = document.getElementById("run_button");
@@ -75,6 +81,27 @@ class an_app_product_surface_controller {
       button.addEventListener("click", this.handle_profile_click.bind(this));
     }
     this.render_all();
+    this.write_boot_marker("ready");
+  }
+
+  write_boot_marker(status) {
+    window.__an_app_boot_marker__ = {
+      type: "boot_marker",
+      status,
+      ready: status === "ready",
+      failed: status === "failed"
+    };
+  }
+
+  report_boot_error(message) {
+    window.__an_app_boot_marker__ = {
+      type: "boot_marker",
+      status: "failed",
+      ready: false,
+      failed: true,
+      detail: message
+    };
+    if (this.nodes.validation_label) this.nodes.validation_label.textContent = "boot failed";
   }
 
   handle_command_keydown(event) {
