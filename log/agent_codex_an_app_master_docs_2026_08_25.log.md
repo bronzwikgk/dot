@@ -46,3 +46,24 @@ Scope: evaluation of recent dot code/docs/log updates, naming policy follow-up, 
 - Updated requirements/spec with `req_app_027`, version entity records, version states, operations, validation, and merge/conflict policy.
 - Updated input/artifact checklist with version, diff, branch, merge, conflict, tag, restore, and provenance checks.
 - Updated pending work tracker with version schema, diff/conflict utility, plugin boundary, and test tasks.
+
+## 2026-08-25 - Scratchpad Learning Archive Transfer
+
+- Copied the remaining `scratchpad_entity_system` learning material into `dot/learnings_agent_codex`.
+- Preserved docs, datasets, trial code, tests, generated tests, README, package metadata, and scratchpad runner files.
+- Added `dot/learnings_agent_codex/LEARNING_ARCHIVE_INDEX.md` to clarify archive purpose, active-master boundary, and adoption policy.
+- Transfer validation: source count `78`, destination count `78`.
+
+## 2026-08-25 - Agent Handbook And Shared Inbox
+
+- Added `dot/learnings_agent_codex/AGENT_HANDBOOK.md`.
+- Added shared inbox folder at `dot/learnings_agent_codex/shared_inbox`.
+- Added inbox README, reusable message template, and first handoff note.
+- Handbook covers project context, active source of truth, pending work, development order, testing, e2e validation, evaluation, naming conventions, do/don't rules, version doctrine, and ready-to-push criteria.
+
+## 2026-08-25 - Convention Enforcement Update
+
+- Strengthened the handbook from guidance to enforcement for entity doctrine and naming governance.
+- Added a required new-name authorization gate.
+- Updated shared inbox protocol so proposed new or similar names must be logged and authorized before implementation.
+- Updated inbox template with proposed-name authorization fields.

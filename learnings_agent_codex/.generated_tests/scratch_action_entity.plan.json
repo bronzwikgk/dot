@@ -1,0 +1,227 @@
+{
+  "inventory": {
+    "export_style": "named_object",
+    "exported_names": [
+      "action_entity",
+      "memory_driver"
+    ],
+    "functions": [
+      {
+        "name": "constructor",
+        "kind": "constructor",
+        "container": "memory_driver"
+      },
+      {
+        "name": "generate_id",
+        "kind": "method",
+        "container": "memory_driver"
+      },
+      {
+        "name": "get_timestamp",
+        "kind": "method",
+        "container": "memory_driver"
+      },
+      {
+        "name": "create",
+        "kind": "method",
+        "container": "memory_driver"
+      },
+      {
+        "name": "read",
+        "kind": "method",
+        "container": "memory_driver"
+      },
+      {
+        "name": "update",
+        "kind": "method",
+        "container": "memory_driver"
+      },
+      {
+        "name": "delete",
+        "kind": "method",
+        "container": "memory_driver"
+      },
+      {
+        "name": "query",
+        "kind": "method",
+        "container": "memory_driver"
+      },
+      {
+        "name": "constructor",
+        "kind": "constructor",
+        "container": "action_entity"
+      },
+      {
+        "name": "normalize_entity",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "validate_entity",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "validate_input",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "validate_output",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "create",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "read",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "update",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "delete",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "query",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "create_batch",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "update_batch",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "query_batch",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "set_status",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "draft",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "activate",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "deprecate",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "archive",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "link_entities",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "unlink_entities",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "get_relationships",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "get_dependencies",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "get_dependents",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "add_policy",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "remove_policy",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "add_contract",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "add_operation",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "diff_entities",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "bump_version",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "validate_graph",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "export_entity",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "import_entity",
+        "kind": "method",
+        "container": "action_entity"
+      },
+      {
+        "name": "touch_cache",
+        "kind": "method",
+        "container": "action_entity"
+      }
+    ]
+  },
+  "summary": {
+    "units": 2,
+    "cases": 2,
+    "by_kind": {
+      "constructor": 2
+    },
+    "by_archetype": {
+      "constructor": 2
+    },
+    "skipped": 0
+  }
+}
