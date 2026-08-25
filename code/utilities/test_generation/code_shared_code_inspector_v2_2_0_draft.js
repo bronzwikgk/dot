@@ -12,6 +12,10 @@
  * @changelog - 2026-08-24: 2.2.0: initial draft
  * @changelog - 2026-08-24: 2.2.0: added acorn backed inspect_source_ast and inspect_source_auto with identical inventory shape
  */
+import { createRequire } from "node:module";
+
+const node_require = createRequire(import.meta.url);
+
 (function (root, factory) {
   const api = factory();
   if (typeof module === "object" && module.exports) module.exports = api;
@@ -267,10 +271,8 @@
   }
 
   function load_acorn() {
-    if (typeof require === "function") {
-      try { return require("./vendor/acorn.js"); } catch (error_vendor) {}
-      try { return require("acorn"); } catch (error_npm) {}
-    }
+    try { return node_require("./vendor/acorn.js"); } catch (error_vendor) {}
+    try { return node_require("acorn"); } catch (error_npm) {}
     return null;
   }
 
@@ -478,7 +480,7 @@
         exports_info = { export_style: "named_object", names: factory_names_fallback };
       }
     }
-    if (exports_info.export_style === "class" && exports_info.names.length === 0) {
+    if (exports_info.export_style === "class") {
       var target_class = exports_info.export_target || (classes.length > 0 ? classes[0] : null);
       if (target_class) {
         exports_info.names = functions.filter(function (f) {
@@ -500,6 +502,7 @@
       classes: classes,
       export_style: exports_info.export_style,
       exported_names: exports_info.names,
+      export_target: exports_info.export_target,
       has_module_state: module_state,
       functions: functions
     };
@@ -543,6 +546,15 @@
         if (prop.type === "Property" && prop.key) keys.push(prop.key.name || prop.key.value);
       }
       return keys;
+    }
+
+    function class_name_set() {
+      var found = {};
+      for (var i = 0; i < program_stmts.length; i++) {
+        var stmt = program_stmts[i];
+        if (stmt.type === "ClassDeclaration" && stmt.id) found[stmt.id.name] = true;
+      }
+      return found;
     }
 
     function factory_return_names(call_node) {
@@ -626,8 +638,19 @@
           if (target_is_class) export_target = target_name;
           names = [];
         } else if (assign.right.type === "ObjectExpression") {
-          style = "named_object";
-          names = object_keys(assign.right);
+          var object_export_names = object_keys(assign.right);
+          var known_classes = class_name_set();
+          var default_class_export = false;
+          for (var op = 0; op < assign.right.properties.length; op++) {
+            var prop = assign.right.properties[op];
+            var key_name = prop.key && (prop.key.name || prop.key.value);
+            if (key_name === "default" && prop.value && prop.value.type === "Identifier" && known_classes[prop.value.name]) {
+              default_class_export = true;
+              export_target = "default";
+            }
+          }
+          style = default_class_export ? "class" : "named_object";
+          names = default_class_export ? [] : object_export_names;
         } else if (assign.right.type === "CallExpression") {
           var factory_names_found = factory_return_names(assign.right);
           if (factory_names_found.length > 0) {

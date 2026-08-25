@@ -95,3 +95,12 @@ signature inclusion method renamed to `should_include_signature`
 - Confirmed rest parameters are inferred as array arguments through the test-generation path.
 - Removed the unused parsed sample `value` field; generated tests use the raw JavaScript source string.
 - Guarded `summarize_plan` against non-array units and missing case arrays; incomplete units are grouped under `unknown`.
+
+## 2026-08-25 - ESM Constructor Rendering Follow-Up
+
+- Added `export_target` propagation into generated test plans.
+- Fixed ESM named class constructor rendering so constructor tests no longer target the first method export.
+- Fixed CJS default-object class constructor rendering with `mod.default || mod`.
+- Added `test/test_generation_esm_regression.test.mjs`.
+- Regenerated generated tests and self-tests.
+- Final validation: `1167` tests passed, `0` failed.

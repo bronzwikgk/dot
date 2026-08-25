@@ -88,3 +88,11 @@ top-level splitter method renamed to `split_top_level`
 - Resolved AST method containers from containing class ranges instead of a fragile class stack only.
 - Renamed the old parser marker to `inspection_mode`.
 - Excluded nested functions from the top-level AST function inventory.
+
+## 2026-08-25 - ESM Parser And Export Metadata Follow-Up
+
+- Fixed Acorn loading under ESM by using Node `createRequire`.
+- Added class export target metadata so constructor exports and public method names are tracked separately.
+- Fixed named ESM class export detection so method plans are not dropped.
+- Fixed CJS default-object class export detection for `module.exports = { default: ClassName }`.
+- Validated through focused ESM regression tests and full generated test suite.

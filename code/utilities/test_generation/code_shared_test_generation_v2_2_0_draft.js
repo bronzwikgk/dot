@@ -246,6 +246,7 @@
       module_kind: opts.module_kind || "named_object",
       export_style: opts.export_style || "named_object",
       exported_names: opts.exported_names || [],
+      export_target: opts.export_target || null,
       summary: summarize_plan(units),
       units: units
     };
@@ -380,10 +381,10 @@
     if (plan.export_style === "class") {
       var ctor_expr;
       if (is_esm) {
-        var primary = (plan.exported_names && plan.exported_names[0]) || "default";
+        var primary = plan.export_target || (plan.exported_names && plan.exported_names[0]) || "default";
         ctor_expr = "mod.default || mod[" + JSON.stringify(primary) + "] || mod";
       } else {
-        ctor_expr = "mod";
+        ctor_expr = "mod.default || mod";
       }
       lines.push("const __ctor = " + ctor_expr + ";");
       lines.push("let __instance = null;");

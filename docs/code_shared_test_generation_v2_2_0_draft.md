@@ -132,3 +132,11 @@ When updating:
 - Edge-safety tests allow normal `Error`, `TypeError`, and `RangeError`.
 - Generated tests do not mock filesystem, network, process, or global side effects.
 - Stateful method detection is name-based and conservative.
+
+## 2026-08-25 ESM Class Export Fix
+
+- Test plans now preserve `export_target` separately from `exported_names`.
+- ESM class test rendering now constructs named exported classes with the class export target instead of accidentally using the first method name.
+- CJS class rendering now supports `module.exports = { default: ClassName }` through a `mod.default || mod` constructor fallback.
+- Regeneration scripts now pass `export_target` into generated plans and manifest output.
+- Added focused regression coverage for named ESM class exports and CJS default-object class exports.

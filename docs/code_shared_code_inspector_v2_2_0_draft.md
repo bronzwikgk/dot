@@ -119,4 +119,13 @@ When updating:
 
 - TypeScript and JSX are out of scope.
 - The legacy parser is convention-based.
-- Acorn loading may be unavailable in ESM-only contexts without an explicit dependency.
+- Acorn is an explicit dev dependency for Node ESM test-generation use.
+
+## 2026-08-25 ESM Parser Fix
+
+- Added Node ESM-compatible Acorn loading through `createRequire`.
+- Added `acorn` as a dev dependency so the AST parser is reachable during normal ESM test generation.
+- Added `export_target` metadata for class-style exports so constructor target selection does not conflict with method names.
+- Fixed named ESM class exports so `exported_names` represents public class methods while `export_target` represents the constructor export.
+- Fixed `module.exports = { default: ClassName }` detection so CJS default-object class exports are treated as class exports.
+- Added focused regression coverage in `test/test_generation_esm_regression.test.mjs`.

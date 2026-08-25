@@ -67,3 +67,22 @@ Scope: evaluation of recent dot code/docs/log updates, naming policy follow-up, 
 - Added a required new-name authorization gate.
 - Updated shared inbox protocol so proposed new or similar names must be logged and authorized before implementation.
 - Updated inbox template with proposed-name authorization fields.
+
+## 2026-08-25 - Test Generation ESM Major Fixes
+
+- Verified the external evaluation report against current code and confirmed the ESM test-generation cluster was real.
+- Fixed Acorn loading under ESM by adding Node `createRequire` usage and adding `acorn` as a dev dependency.
+- Added `export_target` propagation so class constructor targets and method exports remain separate.
+- Fixed named ESM class methods being dropped from generated plans.
+- Fixed ESM named class constructor rendering.
+- Fixed CJS default-object class constructor rendering.
+- Fixed runner/logger doc command local-name collisions.
+- Added focused tracked regression tests and proposal task contracts.
+- Validation: `node --test .testgen/*.test.mjs` passed with `1167` tests, `0` failed.
+
+## 2026-08-25 - Production Application Contract Pack
+
+- Added `dot/proposal/production_application_contracts`.
+- Created 15 production contracts covering all active pending work groups and production e2e success criteria.
+- Added a contract README and validation checklist.
+- Contracts enforce entity doctrine, naming authorization, snake_case, validation, testing, docs/logs, and shared inbox handoff.
