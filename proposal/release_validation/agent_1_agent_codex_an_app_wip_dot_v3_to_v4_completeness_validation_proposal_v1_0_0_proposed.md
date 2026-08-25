@@ -89,6 +89,30 @@ V4, not as a claim that V3 already implements all behavior.
 | ref_gui_033 | notion/notebook/code editor/block editor layout parity | partial: document/tree/diagram/table projections exist | add notebook, code editor, block editor, board, calendar, timeline, dashboard parity |
 | ref_gui_034 | offline icon/assets and zero CDN | missing | add offline asset scan and vendor policy |
 
+## An App Text Scope Coverage
+
+Source: `D:\0dot1_Aug_2016_master\an_app.txt`
+
+| Scope ID | Source Requirement | V3 Coverage | V4 Action |
+|---|---|---|---|
+| an_app_txt_001 | An App is a JS application/framework for maintaining a knowledge base and using it to create more applications | partial: V3 has shell, product_surface, An App Brain, and templates | define framework-level package/shell boundary and knowledge-to-application e2e |
+| an_app_txt_002 | everything is an entity, including application, file, UI component, and template | partial: V3 has entity doctrine and product_surface entity definitions | add app_data definitions for file, UI component, route, view frame, listener, dependency, cache, policy |
+| an_app_txt_003 | each project/product has a definition markdown file | partial: product_surface definitions exist, but not full project/product definition contract | create project/product definition schema and template |
+| an_app_txt_004 | definition file includes metadata such as allowed_runtime | missing | add allowed runtime dataset and definition schema field |
+| an_app_txt_005 | definition file includes feature flags | missing | add feature flag dataset/table and runtime resolver support |
+| an_app_txt_006 | definition file includes definitions, shapes, patterns, schema, and config | partial: scattered schema/contracts exist | create unified definition document structure and validator |
+| an_app_txt_007 | config includes runtime_based_dependency for plugins/utilities/dataset/datamap/data_table/definitions | partial: docs mention dependencies; no runtime resolver | implement dependency resolver contract and tests |
+| an_app_txt_008 | policies include cache, storage, security, routing, naming, create, and related policies | partial: naming/repository policies exist | add policy datasets, data tables, and validation utility coverage |
+| an_app_txt_009 | app shell maintains global context and cache using dedicated action_entity instance | partial: app_shell exists; cache/action_entity dedicated instance not validated | add shell cache entity and action_entity integration tests |
+| an_app_txt_010 | app shell detects runtime | missing | add runtime detector utility or shell method |
+| an_app_txt_011 | app shell resolves definition | missing | add definition resolver utility or shell method |
+| an_app_txt_012 | app shell resolves runtime-based dependencies | missing | add dependency resolver and dependency graph validation |
+| an_app_txt_013 | app shell resolves defaults | missing | add default resolver for flow/listener/view frame |
+| an_app_txt_014 | app shell resolves default flows | partial: workflow plan validation exists | add default flow records and shell boot integration |
+| an_app_txt_015 | app shell resolves default listeners | missing | add listener entity, listener dataset, and event binding tests |
+| an_app_txt_016 | app shell resolves default view frame | missing | add view_frame entity and mount target validation |
+| an_app_txt_017 | browser entry JS loads shell and definition file, creates instance, and mounts into matching element id | missing | add browser entry contract, mount resolver, and e2e boot test |
+
 ## V3 Completeness Answer
 
 V3 is not complete against the pasted full reference GUI success criteria. V3 is
@@ -158,13 +182,19 @@ project can claim parity with the reference GUI/product suite.
 | v4_missing_032 | p2 | agent_ui_application | canvas drag/drop and chained flow run | canvas interaction handlers, chain execution record | browser e2e proves drag reposition and chained run completes |
 | v4_missing_033 | p0 | agent_ui_application | layout parity for notebook, code editor, block editor, board, calendar, timeline, diagram, dashboard, table, tree | layout dataset, render-profile datamap, projection tests, visible layouts | browser/static tests prove same entity data renders in every approved layout |
 | v4_missing_034 | p1 | agent_codex_an_app + agent_ui_application | offline capability and zero CDN references | vendor asset folder, asset inventory report, network-disabled e2e | offline browser e2e passes and scan shows zero CDN references |
+| v4_missing_035 | p0 | agent_codex_an_app | project/product definition markdown schema | definition schema, sample definition file, validator coverage | tests prove metadata, allowed runtime, feature flags, config, dependencies, policies, schema, patterns, and shapes validate |
+| v4_missing_036 | p0 | agent_codex_an_app | runtime detection and dependency resolution | runtime detector, dependency resolver, dependency graph validation | tests prove browser/node runtime detection and dependency resolution for plugins/utilities/app_data/definitions |
+| v4_missing_037 | p0 | agent_codex_an_app + agent_ui_application | browser entry and mount resolver | entry JS contract, mount target dataset, view_frame entity | browser e2e proves entry loads definition, boots shell, and mounts into configured element id |
+| v4_missing_038 | p1 | agent_codex_an_app | policy datasets and policy validation | cache/storage/security/routing/naming/create policy datasets and data tables | tests prove invalid policy names/values fail before boot |
+| v4_missing_039 | p1 | agent_codex_an_app | shell cache backed by dedicated action_entity instance | shell cache entity, action_entity cache integration, audit records | tests prove shell cache reads/writes through action_entity boundary |
+| v4_missing_040 | p1 | agent_ui_application | default listener and view frame resolution | listener entity, event binding map, view_frame definition | browser e2e proves default listeners and default view frame are resolved during boot |
 
 ## V4 Missing Item Grouping By Agent
 
 | Agent | P0 Items | P1 Items | P2 Items |
 |---|---|---|---|
-| agent_codex_an_app | v4_missing_005, v4_missing_013, v4_missing_018, v4_missing_027 | v4_missing_007, v4_missing_010, v4_missing_014, v4_missing_016, v4_missing_023, v4_missing_025, v4_missing_029, v4_missing_034 | none |
-| agent_ui_application | v4_missing_001, v4_missing_002, v4_missing_003, v4_missing_004, v4_missing_011, v4_missing_019, v4_missing_020, v4_missing_021, v4_missing_022, v4_missing_024, v4_missing_027, v4_missing_033 | v4_missing_006, v4_missing_008, v4_missing_009, v4_missing_015, v4_missing_017, v4_missing_023, v4_missing_026, v4_missing_028, v4_missing_029, v4_missing_030, v4_missing_034 | v4_missing_012, v4_missing_031, v4_missing_032 |
+| agent_codex_an_app | v4_missing_005, v4_missing_013, v4_missing_018, v4_missing_027, v4_missing_035, v4_missing_036, v4_missing_037 | v4_missing_007, v4_missing_010, v4_missing_014, v4_missing_016, v4_missing_023, v4_missing_025, v4_missing_029, v4_missing_034, v4_missing_038, v4_missing_039 | none |
+| agent_ui_application | v4_missing_001, v4_missing_002, v4_missing_003, v4_missing_004, v4_missing_011, v4_missing_019, v4_missing_020, v4_missing_021, v4_missing_022, v4_missing_024, v4_missing_027, v4_missing_033, v4_missing_037 | v4_missing_006, v4_missing_008, v4_missing_009, v4_missing_015, v4_missing_017, v4_missing_023, v4_missing_026, v4_missing_028, v4_missing_029, v4_missing_030, v4_missing_034, v4_missing_040 | v4_missing_012, v4_missing_031, v4_missing_032 |
 | agent_lang_and_memory | v4_missing_021 | classification/entity extraction for app-building commands | none |
 
 ## V4 Required New Or Updated Contracts
@@ -182,6 +212,9 @@ The following contracts should be created or updated before implementation:
 | v4_contract_007 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_persistence_version_undo_contract_v1_0_0_proposed.md` | persistence, undo/redo, version-backed state |
 | v4_contract_008 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_import_export_offline_contract_v1_0_0_proposed.md` | file import/export, local server, offline assets |
 | v4_contract_009 | `proposal/production_application_contracts/v4/agent_3_agent_lang_and_memory_cell_command_language_contract_v1_0_0_proposed.md` | language parsing for GUI commands and cell execution |
+| v4_contract_010 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_definition_runtime_dependency_contract_v1_0_0_proposed.md` | project/product definition file, allowed runtime, dependency resolver, default resolver |
+| v4_contract_011 | `proposal/production_application_contracts/v4/agent_1_agent_codex_an_app_policy_and_cache_contract_v1_0_0_proposed.md` | cache/storage/security/routing/naming/create policy validation and shell cache via action_entity |
+| v4_contract_012 | `proposal/production_application_contracts/v4/agent_2_agent_ui_application_entry_mount_view_frame_contract_v1_0_0_proposed.md` | browser entry file, mount target, default view frame, default listeners |
 
 ## V4 Required New Or Updated App Data
 
@@ -193,6 +226,10 @@ The following contracts should be created or updated before implementation:
 | v4_app_data_004 | `app_data/definition/ui_surface` | command, keyboard_combo, editor_state, focus_state, search_state, status_surface |
 | v4_app_data_005 | `app_data/definition/product_surface` | book, cell, output, flow_node, flow_edge, tour_step, asset_record |
 | v4_app_data_006 | `templates/product_surface` | notebook/book/cell starter, flow builder starter, docs route starter, offline demo starter |
+| v4_app_data_007 | `app_data/dataset/application_definition` | allowed runtime names, feature flag names, policy names, dependency kind names, default resolver names |
+| v4_app_data_008 | `app_data/datamap/application_definition` | definition-to-runtime dependency map, policy-to-validation map, default-flow/listener/view-frame map |
+| v4_app_data_009 | `app_data/data_table/application_definition` | definition attributes, dependency attributes, policy attributes, default resolver attributes |
+| v4_app_data_010 | `app_data/definition/application_definition` | project_definition, product_definition, dependency_record, policy_record, default_record, mount_target, view_frame |
 
 ## V4 Browser E2E Suite Target
 
