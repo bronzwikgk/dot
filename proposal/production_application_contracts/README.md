@@ -50,6 +50,15 @@ Reference success sources:
 | contract_013 | template_domain_contract.md | templates, sample pipelines, domain starter packs | p1 |
 | contract_014 | quality_audit_e2e_contract.md | work_015, work_025 and all production readiness gates | p0 |
 | contract_015 | external_intake_file_conversion_contract.md | work_008, work_020 | p2 |
+| contract_016 | repository_operations_contract.md | AnGitAgent inbox repository automation, workflow runs, artifacts, logs, commit proposals | p1 |
+| contract_017 | agent_improvement_cycle_contract.md | AnGitAgent inbox self-check, score, failure pattern, improvement proposal, rollback, audit | p1 |
+| contract_018 | knowledge_tree_contract.md | AnGitAgent inbox source tree, knowledge nodes, relationships, diagrams, coverage reports | p1 |
+
+## Source Coverage Notes
+
+| Source | Coverage Note | Status |
+| --- | --- | --- |
+| github_dump/dump/inbox_AnGitAgent_inbox | ANGITAGENT_INBOX_COVERAGE_EVALUATION.md | proposal-covered |
 
 ## Required Validation For Any Contract Batch
 

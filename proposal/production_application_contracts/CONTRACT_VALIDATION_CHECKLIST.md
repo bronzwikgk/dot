@@ -14,6 +14,9 @@ Use this checklist before any agent starts implementation from these contracts.
 - contract defines do and do-not rules
 - contract names related files or expected locations
 - contract includes e2e impact when relevant
+- contract lists source coverage when created from a source inbox
+- contract maps source-only terms to approved or proposed An App terms
+- contract records authorization needs for any source name that should not be promoted directly
 
 ## Batch Acceptance
 
