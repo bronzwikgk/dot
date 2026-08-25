@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domain: repository_operations
+Owner agent: agent_codex_an_app
 Source coverage: github_dump/dump/inbox_AnGitAgent_inbox
 
 ## Purpose

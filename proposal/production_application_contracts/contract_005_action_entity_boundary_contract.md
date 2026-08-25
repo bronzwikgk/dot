@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p0
 Owner domain: entity_system
+Owner agent: agent_codex_an_app
 
 ## Purpose
 

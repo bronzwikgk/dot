@@ -18,7 +18,7 @@ Updated the active banned vocabulary and related docs/contracts. Follow-up user 
 - dot/proposal/production_application_contracts/contract_002_vocabulary_and_name_reconciliation_contract.md
 - dot/proposal/production_application_contracts/contract_017_agent_improvement_cycle_contract.md
 - dot/proposal/production_application_contracts/contract_019_an_app_brain_domain_contract.md
-- dot/proposal/production_application_contracts/parent_contracts/agent_work_name_governance_banned_words.md
+- dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md
 
 ## Evidence
 
@@ -50,7 +50,7 @@ requested_authorization: user allowed optimize/evolve/mutate style operation con
 
 ## Recommended Next Action
 
-Assign `agent_lang_and_memory` the work packet in `parent_contracts/agent_work_name_governance_banned_words.md`.
+Assign `agent_lang_and_memory` the work packet in `parent_contracts/agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md`.
 
 ## Resolution
 

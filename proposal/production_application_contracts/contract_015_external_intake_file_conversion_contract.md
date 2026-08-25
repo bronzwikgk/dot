@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p2
 Owner domains: external_intake, file_conversion
+Owner agent: agent_lang_and_memory
 Work items: work_008, work_020
 
 ## Purpose

@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p0
 Owner domain: quality_audit
+Owner agent: agent_codex_an_app
 Work items: work_015, work_025 and all production readiness gates
 
 ## Purpose

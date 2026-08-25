@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p0
 Owner domain: entity_system
+Owner agent: agent_codex_an_app
 Work items: work_003, work_004, work_005
 
 ## Purpose

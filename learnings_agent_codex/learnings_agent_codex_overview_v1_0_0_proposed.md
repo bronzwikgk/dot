@@ -17,7 +17,7 @@ Read these first:
 
 ```text
 scratchpad_entity_system/
-  README.md
+  learnings_agent_codex_overview_v1_0_0_proposed.md
   package.json
   run_generated_action_entity_tests.mjs
   code/

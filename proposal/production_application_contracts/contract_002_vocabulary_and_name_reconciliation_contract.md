@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p0
 Owner domains: dataset_registry, workflow_system, entity_system, schema_contract, ui_surface
+Owner agent: agent_lang_and_memory
 Work items: work_002, work_003, work_009, work_011, work_013, work_018
 
 ## Purpose

@@ -9,6 +9,8 @@
 | req_app_003 | concept | Document active concepts with the canonical concept shape. | must | adopted | doctrine | planned | test_concept_shape | an_app_v5 |
 | req_app_004 | vocabulary | Validate approved names, banned words, duplicate values, similar names, reservations, and deprecations before active use. | must | adopted | dataset_registry | partial | test_vocabulary_governance | Dataset Registry Requirements, an_app_v5 |
 | req_app_005 | dataset | Organize datasets by code, ui, system, and domain ownership while keeping one-dimensional word datasets flat. | must | adopted | dataset_registry | partial | test_dataset_registry | an_app_v5 |
+| req_app_005a | app_data | Store app data in `app_data/dataset`, `app_data/datamap`, and `app_data/data_table` with strict shape boundaries. | must | proposed | dataset_registry | planned | test_app_data_shape | user clarification 2026-08-25 |
+| req_app_005b | structure | Organize templates, docs, proposals, tests, reports, and logs by subdomain; store user working data in `user_data`; store entity definitions in `app_data/definition`. | must | proposed | doctrine | planned | test_folder_structure | user clarification 2026-08-25 |
 | req_app_006 | schema | Maintain schema and contract records for entity, relationship, command, action, workflow, template, route, ui, provider, storage, index, and domain records. | must | adopted | schema_contract | partial | test_schema_catalog | Schema Contract Catalog |
 | req_app_007 | pipeline | Support the canonical An App pipeline with stage records, diagnostics, dry run, single-stage run, debug stepping, and trace output. | must | adopted | workflow_system | partial | test_pipeline_trace | an_app_stale, gk_app_v2 |
 | req_app_008 | language | Convert English, controlled text, definition files, commands, templates, and structured samples into validated entity change plans. | must | adopted | an_app_lang | planned | test_language_parse | English Language Domain, An App Lang |
@@ -66,12 +68,16 @@
 | index | Search capability over entity records. | Index is a supporting capability, not core truth. |
 | registry | Entity-backed catalog of approved records. | Registry behavior can use action_entity; validation stays in utilities. |
 | dataset | One-dimensional approved word array unless a map/table is explicitly needed. | Dataset validates names and allowed values. |
+| datamap | Collection of relationships grouped by relationship type. | Datamap stores edges and mapping groups, not flat vocabulary or item attributes. |
+| data_table | CSV-style two-dimensional table of attributes and parameters for dataset items, built from the schema for that group or type. | Data table stores item fields, thresholds, parameters, and descriptive values. |
 | schema | Field/type/requiredness contract for record shape. | Schema validates structure. |
 | contract | Behavioral or integration agreement around inputs, outputs, policy, and validation. | Contract can reference schemas and datasets. |
 | catalog | Human or entity-backed collection of related records. | Catalog is documentation/organization, not validation by itself. |
 | provider | Swappable adapter with interface, config, permissions, health, fallback, and audit. | Provider output must be validated before becoming governed data. |
 | utility | Reusable deterministic helper class for validation, parsing, formatting, extraction, or pure transformation. | Utilities should avoid owning durable app state. |
 | plugin | Capability class that performs governed behavior and can call utilities. | Plugins may mutate entities only through approved policy. |
+| definition | Entity definition document for an entity type or entity-shaped record. | Definitions belong in `app_data/definition` and describe shape, fields, relationships, policies, lifecycle, validation, examples, and update process. |
+| user_data | User-created or imported working data that is not promoted yet. | User data is source material until validated and promoted through approved app data, docs, templates, or code. |
 
 ### Canonical Pipeline Stage Catalog
 
@@ -232,7 +238,7 @@ Entity operations should be handled through `action_entity` where possible. Regi
 
 ### Dataset Core
 
-Datasets are one-dimensional approved word arrays unless a richer map is required. Dataset validation must check:
+Datasets are one-dimensional approved word arrays unless a datamap or data_table is explicitly required. Dataset validation must check:
 
 - array shape
 - string-only values
@@ -250,6 +256,29 @@ Dataset ownership may be grouped as:
 - domain datasets: business-domain records such as fintech and trading names
 
 Plain `.dataset` artifacts can be used as source material, but active code should still expose validated datasets in the format chosen for the implementation batch.
+
+Approved app data layout:
+
+| Folder | Shape | Use |
+| --- | --- | --- |
+| `app_data/dataset` | one-dimensional array | approved names, types, statuses, operations, layout names, policy values, validation labels |
+| `app_data/datamap` | relationship groups keyed by relationship type | parent-child maps, alias maps, compatible-with maps, ownership maps, dependency maps, source-to-target maps |
+| `app_data/data_table` | schema-shaped CSV-style table | attributes, parameters, thresholds, defaults, flags, labels, descriptions, and settings for dataset items |
+| `app_data/definition` | entity definition document | entity shape, fields, config, relationships, policies, lifecycle, validation, examples, source refs, and update process |
+
+Validation must reject map-shaped or table-shaped data inside `app_data/dataset`, reject ungrouped relationships inside `app_data/datamap`, and reject table columns that are not allowed by the relevant schema.
+
+Project artifacts should be organized by subdomain:
+
+- `docs/<subdomain_name>`
+- `proposal/<subdomain_name>`
+- `templates/<subdomain_name>`
+- `test/<subdomain_name>`
+- `reports/<subdomain_name>`
+- `log/<subdomain_name>`
+
+User-created or imported working data belongs in `user_data` until it is
+validated and promoted.
 
 ### Concept Definition Spec
 

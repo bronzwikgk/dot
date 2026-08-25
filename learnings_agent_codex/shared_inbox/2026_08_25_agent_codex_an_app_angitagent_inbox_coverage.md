@@ -14,9 +14,9 @@ The AnGitAgent inbox was partially covered by existing An App master docs and co
 - dot/proposal/production_application_contracts/contract_016_repository_operations_contract.md
 - dot/proposal/production_application_contracts/contract_017_agent_improvement_cycle_contract.md
 - dot/proposal/production_application_contracts/contract_018_knowledge_tree_contract.md
-- dot/proposal/production_application_contracts/ANGITAGENT_INBOX_COVERAGE_EVALUATION.md
-- dot/proposal/production_application_contracts/README.md
-- dot/proposal/production_application_contracts/CONTRACT_VALIDATION_CHECKLIST.md
+- dot/proposal/production_application_contracts/angitagent_inbox_coverage_evaluation_v1_0_0_proposed.md
+- dot/proposal/production_application_contracts/production_application_contract_pack_v1_0_0_proposed.md
+- dot/proposal/production_application_contracts/contract_validation_checklist_v1_0_0_proposed.md
 
 ## Evidence
 

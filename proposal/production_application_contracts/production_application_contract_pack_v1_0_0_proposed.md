@@ -19,10 +19,13 @@ Reference success sources:
 - `gk/shared/experiments/an_app_v5`
 - `an_app.txt`
 - `dot/docs/an_app_master_project`
+- `dot/docs/development_guidelines_for_dot.md`
+- `dot/docs/agent_process_tooling_guidelines_dot_v1_0_0_proposed.md`
 - `dot/learnings_agent_codex`
 
 ## Mandatory Agent Rules
 
+- Every contract must name the assigned `Owner agent`.
 - Everything durable or governable is an entity.
 - Do not add a new or similar name without user authorization.
 - Reuse approved names before proposing new names.
@@ -30,6 +33,12 @@ Reference success sources:
 - Work utility first, then plugin, then dataset/schema/docs/log/test.
 - Every promoted item needs doc, log, tests, and validation evidence.
 - Do not claim e2e readiness from unit tests alone.
+- Before editing, cross-check the current conversation, master docs, policy docs,
+  parent contract, detail contracts, and shared inbox for convention conflicts,
+  banned names, pending decisions, and user corrections.
+- Organize templates, docs, proposals, tests, reports, and logs by subdomain.
+- Store entity definition documents in `app_data/definition`.
+- Store user-created or imported working data in `user_data` until promoted.
 
 ## Contract Index
 
@@ -44,19 +53,19 @@ Parent contracts define what must be built for the production application. Detai
 
 | Parent Id | Parent Contract | Owner Agent | Priority | Main Detail Contracts |
 | --- | --- | --- | --- | --- |
-| parent_001 | parent_contracts/parent_001_production_app_shell_contract.md | agent_codex_an_app | p0 | contract_001, contract_002, contract_003, contract_004, contract_005, contract_006, contract_007, contract_008, contract_014 |
-| parent_002 | parent_contracts/parent_002_gui_application_builder_contract.md | agent_ui_application | p1 | contract_002, contract_005, contract_007, contract_009, contract_010, contract_013, contract_014 |
-| parent_003 | parent_contracts/parent_003_version_system_implementation_contract.md | agent_codex_an_app | p0 | contract_003, contract_004, contract_005, contract_006, contract_014 |
-| parent_004 | parent_contracts/parent_004_repository_operations_implementation_contract.md | agent_codex_an_app | p1 | contract_005, contract_006, contract_007, contract_008, contract_014, contract_016 |
-| parent_005 | parent_contracts/parent_005_an_app_lang_implementation_contract.md | agent_lang_and_memory | p1 | contract_001, contract_002, contract_004, contract_007, contract_010, contract_012, contract_014, contract_019 |
-| parent_006 | parent_contracts/parent_006_bot_agent_runtime_contract.md | agent_lang_and_memory | p1 | contract_004, contract_005, contract_007, contract_010, contract_011, contract_012, contract_014, contract_017, contract_019 |
-| parent_007 | parent_contracts/parent_007_memory_knowledge_tree_system_contract.md | agent_lang_and_memory | p1 | contract_001, contract_002, contract_003, contract_010, contract_012, contract_014, contract_015, contract_018, contract_019 |
-| parent_008 | parent_contracts/parent_008_production_templates_contract.md | agent_ui_application | p1 | contract_001, contract_002, contract_004, contract_009, contract_013, contract_014 |
-| parent_009 | parent_contracts/parent_009_real_app_e2e_validation_contract.md | agent_codex_an_app | p0 | contract_001, contract_002, contract_004, contract_005, contract_006, contract_007, contract_009, contract_010, contract_011, contract_012, contract_013, contract_014, contract_016, contract_017, contract_018, contract_019 |
+| parent_001 | parent_contracts/agent_1_agent_codex_an_app_parent_001_production_app_shell_contract.md | agent_codex_an_app | p0 | contract_001, contract_002, contract_003, contract_004, contract_005, contract_006, contract_007, contract_008, contract_014 |
+| parent_002 | parent_contracts/agent_2_agent_ui_application_parent_002_gui_application_builder_contract.md | agent_ui_application | p1 | contract_002, contract_005, contract_007, contract_009, contract_010, contract_013, contract_014 |
+| parent_003 | parent_contracts/agent_1_agent_codex_an_app_parent_003_version_system_implementation_contract.md | agent_codex_an_app | p0 | contract_003, contract_004, contract_005, contract_006, contract_014 |
+| parent_004 | parent_contracts/agent_1_agent_codex_an_app_parent_004_repository_operations_implementation_contract.md | agent_codex_an_app | p1 | contract_005, contract_006, contract_007, contract_008, contract_014, contract_016 |
+| parent_005 | parent_contracts/agent_3_agent_lang_and_memory_parent_005_an_app_lang_implementation_contract.md | agent_lang_and_memory | p1 | contract_001, contract_002, contract_004, contract_007, contract_010, contract_012, contract_014, contract_019 |
+| parent_006 | parent_contracts/agent_3_agent_lang_and_memory_parent_006_bot_agent_runtime_contract.md | agent_lang_and_memory | p1 | contract_004, contract_005, contract_007, contract_010, contract_011, contract_012, contract_014, contract_017, contract_019 |
+| parent_007 | parent_contracts/agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract.md | agent_lang_and_memory | p1 | contract_001, contract_002, contract_003, contract_010, contract_012, contract_014, contract_015, contract_018, contract_019 |
+| parent_008 | parent_contracts/agent_2_agent_ui_application_parent_008_production_templates_contract.md | agent_ui_application | p1 | contract_001, contract_002, contract_004, contract_009, contract_013, contract_014 |
+| parent_009 | parent_contracts/agent_1_agent_codex_an_app_parent_009_real_app_e2e_validation_contract.md | agent_codex_an_app | p0 | contract_001, contract_002, contract_004, contract_005, contract_006, contract_007, contract_009, contract_010, contract_011, contract_012, contract_013, contract_014, contract_016, contract_017, contract_018, contract_019 |
 
 Agent assignment:
 
-- parent_contracts/AGENT_WORK_ASSIGNMENT.md
+- parent_contracts/agent_work_assignment_v1_0_0_proposed.md
 
 | Contract Id | Contract | Work Items Covered | Priority |
 | --- | --- | --- | --- |
@@ -84,7 +93,7 @@ Agent assignment:
 
 | Source | Coverage Note | Status |
 | --- | --- | --- |
-| github_dump/dump/inbox_AnGitAgent_inbox | ANGITAGENT_INBOX_COVERAGE_EVALUATION.md | proposal-covered |
+| github_dump/dump/inbox_AnGitAgent_inbox | angitagent_inbox_coverage_evaluation_v1_0_0_proposed.md | proposal-covered |
 
 ## Required Validation For Any Contract Batch
 
@@ -102,12 +111,16 @@ Documentation checks:
 - requirement IDs have no duplicates
 - work IDs have no duplicates
 - contract IDs have no duplicates
+- every contract names its owner agent
+- every handoff names the acting agent
 - touched docs/logs have no avoidable-name drift except when listing banned terms
 - every changed utility/plugin/dataset has matching docs and logs
+- the agent reports whether it checked current conversation context and lists any
+  detected convention conflicts
 
 ## Definition Of Done
 
 - All contracts in this folder exist and map to active master requirements.
-- Each contract names owner domain, related files, inputs, outputs, validation, tests, success criteria, do rules, do-not rules, and handoff notes.
+- Each contract names owner agent, owner domain, related files, inputs, outputs, validation, tests, success criteria, do rules, do-not rules, and handoff notes.
 - The shared inbox is used for proposed names, conflicts, and unresolved decisions.
 - User receives a commit message and a clear list of remaining implementation work.

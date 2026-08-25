@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domains: an_bot, quality_audit, an_memory
+Owner agent: agent_lang_and_memory
 Source coverage: github_dump/dump/inbox_AnGitAgent_inbox
 
 ## Purpose

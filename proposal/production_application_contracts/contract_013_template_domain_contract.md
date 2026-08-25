@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domain: template_domain
+Owner agent: agent_ui_application
 
 ## Purpose
 

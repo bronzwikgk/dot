@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p0
 Owner domain: quality_audit
+Owner agent: agent_codex_an_app
 Work items: validation layer for work_001 through work_025
 
 ## Purpose

@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domain: an_app_brain
+Owner agent: agent_lang_and_memory
 Source coverage: proposal/an_brain_domain_proposal.md v1.4.0, github_dump/dump/inbox_AnGitAgent_inbox
 
 ## Purpose

@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domain: an_app_lang
+Owner agent: agent_lang_and_memory
 Work items: work_015, work_016
 
 ## Purpose

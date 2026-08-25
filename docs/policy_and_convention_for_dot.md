@@ -146,6 +146,64 @@ All files and folders.
 | F9 | HTML in html/ | HTML files in html/ | Manual review | Warning: Move to html/ |
 | F10 | Folder index | All folders should have an index file | `find . -type d -exec sh -c 'ls "{}" | grep -q "index" || echo "{}"' \;` | Warning: Generate index file |
 
+### Additional File Structure Rules
+
+| # | Rule | Description | Validation | Violation Action |
+|:---|:---|:---|:---|:---|
+| F11 | Subdomain folders | Templates, docs, proposals, tests, reports, and logs are organized by subdomain | Manual review | Warning: Move or mirror into subdomain folder |
+| F12 | User data | User-created/imported working data belongs in `user_data` until promoted | Manual review | Warning: Move to user_data or promote through validation |
+| F13 | Entity definitions | Entity definition documents belong in `app_data/definition` | Manual review | Error: Move definition file to app_data/definition |
+
+### Approved Implementation Lanes
+
+Code and app data must use these lanes:
+
+| Lane | Folder | Meaning |
+|:---|:---|:---|
+| plugin | `code/plugins` | Governed behavior classes that may coordinate entity operations, call utilities, and produce audit output. |
+| utility | `code/utilities` | Deterministic helper classes for validation, parsing, formatting, extraction, comparison, math, text, or pure transformation. The approved lane name is `utility`; the existing folder remains `utilities` until a separate migration is approved. |
+| dataset | `app_data/dataset` | One-dimensional approved arrays only. Use this for names, statuses, types, operations, layout names, event names, policy values, and other flat allowed-value groups. |
+| datamap | `app_data/datamap` | Relationship collections grouped by relationship type. Use this for edges, aliases, compatible-with maps, parent-child maps, ownership maps, and source-to-target relationship groups. |
+| data_table | `app_data/data_table` | CSV-style two-dimensional tables containing attributes and parameters for dataset items, built from the schema for that group or type. |
+| definition | `app_data/definition` | Entity definition documents describing entity shape, fields, config, relationships, policies, lifecycle, validation, examples, and update process. |
+| template | `templates/<subdomain_name>` | Reusable entity/artifact starters organized by subdomain. |
+| report | `reports/<subdomain_name>` | Evaluation, validation, audit, comparison, and readiness reports organized by subdomain. |
+| user_data | `user_data` | User-created or user-imported working data that is not active doctrine, code, template, contract, or approved app data yet. |
+
+Placement rules:
+
+- do not put relationship edges inside a dataset
+- do not put item attributes or parameters inside a dataset
+- do not put executable behavior inside app data
+- use `datamap` when the main fact is "this item relates to that item"
+- use `data_table` when the main fact is "this item has these fields"
+- use `dataset` only when the artifact is a flat allowed-value array
+- use `app_data/definition` for entity definition documents
+- organize templates, docs, proposals, tests, reports, and logs by subdomain
+- keep user working data in `user_data` until it is validated and promoted
+
+### Subdomain Organization
+
+When a file belongs to a domain or subdomain, place it under a matching
+subdomain folder where practical:
+
+```text
+docs/<subdomain_name>/
+proposal/<subdomain_name>/
+templates/<subdomain_name>/
+test/<subdomain_name>/
+reports/<subdomain_name>/
+log/<subdomain_name>/
+app_data/definition/<subdomain_name>/
+app_data/dataset/<subdomain_name>/
+app_data/datamap/<subdomain_name>/
+app_data/data_table/<subdomain_name>/
+```
+
+Existing legacy files may remain in place until a migration batch is approved.
+New files should follow the subdomain rule unless the file is a root index,
+global policy, or cross-domain master document.
+
 ### Folder Structure
 
 ```
@@ -178,7 +236,9 @@ dot/
 Define how datasets are structured.
 
 ### Scope
-All `.datatable` and `.datamap` files.
+All active app data files under `app_data/dataset`, `app_data/datamap`, and
+`app_data/data_table`, plus legacy `.datatable` and `.datamap` files until
+they are migrated.
 
 ### Rules
 
@@ -190,6 +250,9 @@ All `.datatable` and `.datamap` files.
 | D4 | Grouped by type | Names grouped under their type with comments | Manual review | Warning: Group by type |
 | D5 | Comments optional | Comments on names are optional but recommended | Manual review | Info: Add comments |
 | D6 | Export | Arrays are exported for use by other files | Manual review | Warning: Add exports |
+| D7 | Relationship maps | Relationship collections belong in `app_data/datamap` and must be grouped by relationship type | Manual review | Error: Move relationship data to datamap |
+| D8 | Attribute tables | Attributes and parameters belong in `app_data/data_table` and must follow the schema for the group/type | Manual review | Error: Move attribute data to data_table |
+| D9 | Dataset purity | `app_data/dataset` files contain one-dimensional arrays only | Manual review | Error: Split map/table data into datamap or data_table |
 
 ---
 

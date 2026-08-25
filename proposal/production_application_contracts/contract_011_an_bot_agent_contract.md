@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domains: an_bot, agent_system
+Owner agent: agent_lang_and_memory
 
 ## Purpose
 

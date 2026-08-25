@@ -4,8 +4,10 @@ Use this checklist before any agent starts implementation from these contracts.
 
 ## Required Checks
 
-- contract has id, status, owner domain, work item mapping, and priority
+- contract has id, status, owner agent, owner domain, work item mapping, and priority
 - contract maps to active master docs
+- assigned agent name matches the parent contract or approved handoff
+- assigned agent cross-checked the current conversation, master docs, policy docs, parent contract, detail contracts, and shared inbox before editing
 - contract follows entity doctrine
 - contract does not introduce unauthorized names
 - contract defines inputs and outputs
@@ -26,4 +28,5 @@ A batch is acceptable only when:
 - all touched active docs/logs are updated
 - tests pass or the skipped test reason is explicit
 - shared inbox records unresolved authorization questions
+- handoff records the acting agent name and conversation cross-check result
 - user receives a commit message

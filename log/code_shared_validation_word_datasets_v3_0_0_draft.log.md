@@ -44,7 +44,7 @@ these arrays.
 - Updated the dataset doc, project policy, agent handbook, vocabulary contract,
   improvement-cycle contract, and An App Brain contract.
 - Added agent work packet:
-  `proposal/production_application_contracts/parent_contracts/agent_work_name_governance_banned_words.md`.
+  `proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_work_name_governance_banned_words_v1_0_0_proposed.md`.
 - Focused validation passed for the `banned_words` array.
 - Broad convention validation still fails on pre-existing repository-wide
   convention findings and should be handled as a separate cleanup batch:

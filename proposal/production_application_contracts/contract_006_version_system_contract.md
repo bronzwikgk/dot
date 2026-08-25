@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p0
 Owner domain: version_system
+Owner agent: agent_codex_an_app
 Work items: work_022, work_023, work_024, work_025
 
 ## Purpose

@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p0
 Owner domain: workflow_system
+Owner agent: agent_codex_an_app
 Work items: work_002, work_015
 
 ## Purpose

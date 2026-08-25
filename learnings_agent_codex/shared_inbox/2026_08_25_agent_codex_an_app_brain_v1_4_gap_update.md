@@ -19,8 +19,8 @@ contract records, boundary policy, and an agent work packet.
 - dot/docs/an_app_master_project/an_app_requirements_and_spec.md
 - dot/docs/policy_and_convention_for_dot.md
 - dot/proposal/production_application_contracts/contract_019_an_app_brain_domain_contract.md
-- dot/proposal/production_application_contracts/parent_contracts/parent_007_memory_knowledge_tree_system_contract.md
-- dot/proposal/production_application_contracts/parent_contracts/agent_work_an_app_brain_v1_4_0.md
+- dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_parent_007_memory_knowledge_tree_system_contract.md
+- dot/proposal/production_application_contracts/parent_contracts/agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md
 
 ## Evidence
 
@@ -53,7 +53,7 @@ requested_authorization: already authorized by user
 
 ## Recommended Next Action
 
-Hand `agent_work_an_app_brain_v1_4_0.md` to `agent_lang_and_memory` after the
+Hand `agent_3_agent_lang_and_memory_work_an_app_brain_v1_4_0_proposed.md` to `agent_lang_and_memory` after the
 current foundation work is stable.
 
 ## Resolution

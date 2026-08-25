@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domain: ui_surface
+Owner agent: agent_ui_application
 Work items: work_011, work_012, work_013, work_014, work_018, work_019
 
 ## Purpose

@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domains: provider_system, storage_system, search_index, file_conversion
+Owner agent: agent_codex_an_app
 Work items: work_006, work_007, work_008
 
 ## Purpose

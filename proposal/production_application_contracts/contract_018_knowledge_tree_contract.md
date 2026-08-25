@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domains: an_memory, an_app_lang, entity_system
+Owner agent: agent_lang_and_memory
 Source coverage: github_dump/dump/inbox_AnGitAgent_inbox
 
 ## Purpose

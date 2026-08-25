@@ -329,6 +329,13 @@ Every promoted utility, plugin, dataset, schema, template, or domain must have:
 - known limits
 - update process
 
+Development work must follow `docs/development_guidelines_for_dot.md` and
+`docs/agent_process_tooling_guidelines_dot_v1_0_0_proposed.md`.
+Templates, docs, proposals, tests, reports, and logs should be organized by
+subdomain. Entity definition documents belong in `app_data/definition`.
+User-created or imported working data belongs in `user_data` until validated
+and promoted.
+
 Vocabulary governance from `an_app_v5` adds these rules:
 
 - check existing registry and datasets before creating a name
@@ -339,6 +346,16 @@ Vocabulary governance from `an_app_v5` adds these rules:
 - operations should use `verb_entity` names when the operation is specific
 - datasets should stay flat one-dimensional arrays unless a relationship map or data table is explicitly required
 - bag-of-words and similar-word maps are governance aids, not replacement sources of truth
+
+App data uses three approved folders:
+
+| Folder | Purpose | Boundary |
+| --- | --- | --- |
+| `app_data/dataset` | One-dimensional approved arrays. | Use for flat allowed values such as names, types, statuses, operations, layout names, policy values, and validation labels. |
+| `app_data/datamap` | Relationship collections grouped by relationship type. | Use when the core fact is an edge or mapping such as parent-child, alias, compatible-with, owns, depends-on, source-to-target, or validates. |
+| `app_data/data_table` | CSV-style two-dimensional attribute and parameter tables. | Use when the core fact is a dataset item plus schema-defined fields, thresholds, settings, parameters, or descriptive attributes. |
+
+App data must not contain executable behavior. Plugins and utilities consume app data; they do not hide app data inside code.
 
 ## Known Boundaries
 

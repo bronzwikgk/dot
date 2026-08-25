@@ -3,6 +3,7 @@
 Status: proposed
 Priority: p1
 Owner domains: an_memory, quality_audit
+Owner agent: agent_lang_and_memory
 Work items: work_010, work_017, work_021
 
 ## Purpose
