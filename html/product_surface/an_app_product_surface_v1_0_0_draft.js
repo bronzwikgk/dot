@@ -55,6 +55,7 @@ class an_app_product_surface_controller {
     this.active_template_id = config.active_template_id || "template_application_builder_v1";
     this.active_profile = config.active_profile || "json_as_document";
     this.nodes = {};
+    this.search_state = { query: "", hits: [], active_index: -1 };
   }
 
   boot() {
@@ -67,6 +68,9 @@ class an_app_product_surface_controller {
     this.nodes.template_list = document.getElementById("template_list");
     this.nodes.command_input = document.getElementById("command_input");
     this.nodes.run_button = document.getElementById("run_button");
+    this.nodes.search_input = document.getElementById("search_input");
+    this.nodes.clear_search_button = document.getElementById("clear_search_button");
+    this.nodes.search_count = document.getElementById("search_count");
     this.nodes.app_name = document.getElementById("app_name");
     this.nodes.preview_path = document.getElementById("preview_path");
     this.nodes.summary_grid = document.getElementById("summary_grid");
@@ -77,6 +81,9 @@ class an_app_product_surface_controller {
     this.nodes.profile_buttons = Array.from(document.querySelectorAll("[data-profile]"));
     this.nodes.run_button.addEventListener("click", this.run_command.bind(this));
     this.nodes.command_input.addEventListener("keydown", this.handle_command_keydown.bind(this));
+    this.nodes.search_input.addEventListener("input", this.handle_search_input.bind(this));
+    this.nodes.search_input.addEventListener("keydown", this.handle_search_keydown.bind(this));
+    this.nodes.clear_search_button.addEventListener("click", this.clear_search_hits.bind(this));
     for (const button of this.nodes.profile_buttons) {
       button.addEventListener("click", this.handle_profile_click.bind(this));
     }
@@ -108,6 +115,17 @@ class an_app_product_surface_controller {
     if (event.key === "Enter") this.run_command();
   }
 
+  handle_search_input(event) {
+    this.search_workspace(event.currentTarget.value);
+  }
+
+  handle_search_keydown(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      this.move_to_next_hit();
+    }
+  }
+
   handle_template_click(event) {
     this.active_template_id = event.currentTarget.dataset.template_id;
     this.render_all();
@@ -123,6 +141,56 @@ class an_app_product_surface_controller {
     this.active_template_id = this.select_template_from_command(command_text);
     this.nodes.validation_label.textContent = "command parsed";
     this.render_all();
+  }
+
+  search_workspace(query) {
+    const value = String(query || "").trim().toLowerCase();
+    const records = this.workspace_records();
+    const hits = [];
+    if (value) {
+      for (const record of records) {
+        if (JSON.stringify(record).toLowerCase().includes(value)) {
+          hits.push({ id: record.id, type: "search_hit", label: record.name || record.id });
+        }
+      }
+    }
+    this.search_state = { query: value, hits, active_index: hits.length > 0 ? 0 : -1 };
+    this.mark_search_hits();
+    this.update_search_count();
+  }
+
+  mark_search_hits() {
+    const hit_ids = [];
+    for (const hit of this.search_state.hits) hit_ids.push(hit.id);
+    for (const node of Array.from(document.querySelectorAll("[data-record-id]"))) {
+      const is_hit = hit_ids.includes(node.dataset.record_id);
+      node.classList.toggle("search_hit", is_hit);
+      node.classList.toggle("active_search_hit", is_hit && node.dataset.record_id === this.active_search_hit_id());
+    }
+  }
+
+  clear_search_hits() {
+    this.search_state = { query: "", hits: [], active_index: -1 };
+    this.nodes.search_input.value = "";
+    this.mark_search_hits();
+    this.update_search_count();
+  }
+
+  move_to_next_hit() {
+    if (this.search_state.hits.length === 0) return;
+    this.search_state.active_index = (this.search_state.active_index + 1) % this.search_state.hits.length;
+    this.mark_search_hits();
+  }
+
+  update_search_count() {
+    const count = this.search_state.hits.length;
+    this.nodes.search_count.textContent = count === 1 ? "1 result" : `${count} results`;
+    this.nodes.validation_label.textContent = count === 0 && this.search_state.query ? "no search results" : "ready";
+  }
+
+  active_search_hit_id() {
+    const hit = this.search_state.hits[this.search_state.active_index];
+    return hit ? hit.id : null;
   }
 
   select_template_from_command(command_text) {
@@ -149,6 +217,8 @@ class an_app_product_surface_controller {
     this.render_summary(template);
     this.render_projection(template);
     this.render_audit(template);
+    this.mark_search_hits();
+    this.update_search_count();
   }
 
   render_templates() {
@@ -158,6 +228,7 @@ class an_app_product_surface_controller {
       button.type = "button";
       button.className = template.id === this.active_template_id ? "template_button active" : "template_button";
       button.dataset.template_id = template.id;
+      button.dataset.record_id = template.id;
       button.textContent = template.name;
       button.addEventListener("click", this.handle_template_click.bind(this));
       this.nodes.template_list.appendChild(button);
@@ -212,6 +283,7 @@ class an_app_product_surface_controller {
     for (const group of groups) {
       const row = document.createElement("div");
       row.className = "block_row";
+      row.dataset.record_id = `${template.id}_${group[0].toLowerCase()}`;
       row.textContent = `${group[0]}: ${group[1]}`;
       this.nodes.projection_view.appendChild(row);
     }
@@ -227,6 +299,7 @@ class an_app_product_surface_controller {
       const row = document.createElement("div");
       row.className = "tree_row";
       row.style.setProperty("--indent", "24px");
+      row.dataset.record_id = `${template.id}_${entity}`;
       row.textContent = entity;
       this.nodes.projection_view.appendChild(row);
     }
@@ -238,6 +311,7 @@ class an_app_product_surface_controller {
     for (const flow of template.flows) {
       const node = document.createElement("div");
       node.className = "diagram_node";
+      node.dataset.record_id = `${template.id}_${flow}`;
       node.textContent = `${template.domain} -> ${flow}`;
       wrapper.appendChild(node);
     }
@@ -256,6 +330,7 @@ class an_app_product_surface_controller {
     ];
     for (const row_value of rows) {
       const row = document.createElement("tr");
+      row.dataset.record_id = `${template.id}_${row_value[0]}`;
       const key = document.createElement("th");
       const value = document.createElement("td");
       key.textContent = row_value[0];
@@ -292,6 +367,17 @@ class an_app_product_surface_controller {
       json_as_table: "Table"
     };
     return titles[profile] || "Block Editor";
+  }
+
+  workspace_records() {
+    const records = [];
+    for (const template of this.templates) {
+      records.push({ id: template.id, type: "template", name: template.name, domain: template.domain });
+      for (const entity of template.entities) records.push({ id: `${template.id}_${entity}`, type: "entity", name: entity });
+      for (const flow of template.flows) records.push({ id: `${template.id}_${flow}`, type: "flow", name: flow });
+      for (const layout of template.layouts) records.push({ id: `${template.id}_${layout}`, type: "layout", name: layout });
+    }
+    return records;
   }
 }
 

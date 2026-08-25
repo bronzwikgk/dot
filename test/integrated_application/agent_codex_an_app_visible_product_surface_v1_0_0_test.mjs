@@ -13,6 +13,9 @@ test("visible product surface has required static files and hooks", async () => 
   assert.ok(html.includes("an_app_product_surface_v1_0_0_draft.js"));
   assert.ok(html.includes('id="template_list"'));
   assert.ok(html.includes('id="command_input"'));
+  assert.ok(html.includes('id="search_input"'));
+  assert.ok(html.includes('id="clear_search_button"'));
+  assert.ok(html.includes('id="search_count"'));
   assert.ok(html.includes('id="projection_view"'));
   assert.ok(html.includes('id="an_app_mount"'));
   assert.ok(html.includes('data-mount-target="an_app_mount"'));
@@ -29,6 +32,9 @@ test("visible product surface keeps class based browser controller", async () =>
   assert.ok(browser_source.includes('this.write_boot_marker("started")'));
   assert.ok(browser_source.includes('this.write_boot_marker("ready")'));
   assert.ok(browser_source.includes('status: "failed"'));
+  assert.ok(browser_source.includes("search_workspace"));
+  assert.ok(browser_source.includes("mark_search_hits"));
+  assert.ok(browser_source.includes("move_to_next_hit"));
   assert.equal(browser_source.includes("fun" + "ction "), false);
   assert.equal(browser_source.includes("=>"), false);
 });
@@ -39,4 +45,6 @@ test("visible product surface css has responsive layout guards", async () => {
   assert.ok(css.includes("@media (max-width: 520px)"));
   assert.ok(css.includes("min-width: 0"));
   assert.ok(css.includes("box-sizing: border-box"));
+  assert.ok(css.includes(".search_hit"));
+  assert.ok(css.includes(".active_search_hit"));
 });

@@ -21,3 +21,11 @@ surface to the browser runtime validation contract.
 - Focused visible product surface tests passed.
 - Focused browser runtime tests passed.
 - Full `node --test` passed.
+
+## 2026-08-25 V4 Search Surface Update
+
+- Added visible workspace search input, clear button, result count, search hit
+  markers, and active hit cycling.
+- Kept browser controller class-method-only to match existing visible surface
+  tests.
+- Focused search/status and visible surface tests passed.

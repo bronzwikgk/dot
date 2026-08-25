@@ -19,6 +19,8 @@ The browser surface now declares:
 - mount target `an_app_mount`
 - boot marker `__an_app_boot_marker__`
 - started, ready, and failed boot states
+- global workspace search input
+- search count and active hit marker
 
 ## When To Use It
 
@@ -38,4 +40,5 @@ template preview, or same-data layout projection.
 Product-surface plugin tests validate datasets, templates, application
 instantiation, route validation, layout projections, and e2e contract creation.
 Visible surface tests validate required hooks, class-based controller shape,
-mount target, boot marker strings, and responsive CSS guards.
+mount target, boot marker strings, search hooks, search markers, and responsive
+CSS guards.

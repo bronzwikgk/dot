@@ -127,12 +127,35 @@ input {
   gap: 8px;
 }
 
-.command_row input {
+.search_row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 92px 96px;
+  gap: 8px;
+  align-items: center;
+}
+
+.command_row input,
+.search_row input {
   min-width: 0;
   padding: 11px 12px;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--surface);
+}
+
+.search_row button {
+  min-height: 42px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+#search_count {
+  color: var(--muted);
+  font-size: 13px;
+  text-align: right;
 }
 
 .projection_tabs {
@@ -208,6 +231,15 @@ input {
   background: #fbfcfb;
 }
 
+.search_hit {
+  outline: 2px solid var(--accent_2);
+  outline-offset: 2px;
+}
+
+.search_hit.active_search_hit {
+  background: #fff7ed;
+}
+
 .tree_row {
   margin-left: var(--indent);
 }
@@ -275,9 +307,14 @@ dd {
 
 @media (max-width: 520px) {
   .top_bar,
-  .command_row {
+  .command_row,
+  .search_row {
     grid-template-columns: 1fr;
     display: grid;
+  }
+
+  #search_count {
+    text-align: left;
   }
 
   .summary_grid {
