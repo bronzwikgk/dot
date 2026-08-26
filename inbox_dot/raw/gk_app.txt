@@ -1,0 +1,1005 @@
+# Product Requirements Document (PRD)
+## Universal Pipeline System
+### Code • Documents • Automation • AI Agents
+
+---
+
+## 1. Executive Summary
+
+### 1.1 Product Vision
+A single unified system that combines code editing, structured documentation, workflow automation, and AI agent orchestration into one seamless experience. All functionality is powered by a 13-stage universal pipeline that treats every input—code, text, automation triggers, or agent commands—as data flowing through the same architecture.
+
+### 1.2 Problem Statement
+Users currently juggle separate tools for coding, documentation, automation, and AI assistance. This fragmentation causes context switching, data silos, and inefficient workflows. No single tool provides a unified environment where code, docs, automation, and AI agents coexist and interoperate natively.
+
+### 1.3 Core Value Proposition
+- **One Pipeline, Many Uses**: The same 13-stage pipeline processes code, documents, automation workflows, and agent interactions
+- **Zero External Dependencies**: Pure JavaScript implementation, runs anywhere with a JavaScript runtime
+- **Native Interoperability**: Code understands docs, docs trigger automations, automations invoke agents, agents edit code
+- **Local-First & Offline Capable**: Your data stays under your control; cloud sync is optional
+
+---
+
+## 2. User Personas
+
+| Persona | Primary Use | Pain Points | Key Needs |
+| :--- | :--- | :--- | :--- |
+| **Developer** | Write and debug code | Switching between editor, terminal, and docs | Syntax highlighting, autocomplete, debugging, Git integration |
+| **Technical Writer** | Document systems, APIs | Code and docs get out of sync | Markdown editing, code embedding, automatic API docs |
+| **Project Manager** | Track tasks, timelines, dependencies | Data scattered across spreadsheets and tools | Databases, views, task assignments, progress tracking |
+| **Automation Engineer** | Build workflows, integrations | Complex automation requires coding | Visual workflow builder, triggers, actions, error handling |
+| **Team Lead** | Coordinate work, review progress | Too many meetings, not enough visibility | Dashboards, reporting, approval workflows, notifications |
+| **AI Operator** | Deploy and manage AI agents | Hard to coordinate multiple agents | Agent orchestration, memory, tools, parallel execution |
+
+---
+
+## 3. Functional Requirements
+
+### 3.1 The Core Pipeline (FR-PIPE-01 to FR-PIPE-13)
+
+The system must implement a 13-stage pipeline. Each stage must accept defined input contracts and produce defined output contracts.
+
+| ID | Stage | Input | Output | Description |
+| :--- | :--- | :--- | :--- | :--- |
+| FR-PIPE-01 | **Decompose** | ExternalData (file, stream, user input, network, database) | PipelineNode[] | Break raw input into atomic pipeline nodes |
+| FR-PIPE-02 | **Validate** | PipelineNode[] | { nodes, errors } | Gatekeeper — reject malformed nodes early |
+| FR-PIPE-03 | **Parse** | PipelineNode[] | PipelineNode[] (with parent/child relationships) | Organize nodes into hierarchical tree |
+| FR-PIPE-04 | **Transform** | PipelineNode[] | PipelineNode[] (enriched) | Normalize, desugar, apply defaults |
+| FR-PIPE-05 | **Reason** | PipelineNode[] | { nodes, diagnostics } | Apply semantic logic (types, rules, permissions) |
+| FR-PIPE-06 | **Resolve** | PipelineNode[] | { nodes, refMap } | Link internal references to targets |
+| FR-PIPE-07 | **Index** | PipelineNode[] | Index | Build searchable, queryable index |
+| FR-PIPE-08 | **Compose** | PipelineNode[] | ComposedOutput | Assemble into final flat output structure |
+| FR-PIPE-09 | **Execute** | ComposedOutput | ExecutionResult | Run code, evaluate formulas, execute workflows |
+| FR-PIPE-10 | **Format** | ComposedOutput \| ExecutionResult | SerializedFormat | Convert to exportable format |
+| FR-PIPE-11 | **Display** | ComposedOutput \| ExecutionResult | DisplayOutput | Render to visual surface (UI) |
+| FR-PIPE-12 | **Persist** | PipelineNode[] \| ComposedOutput | void | Save state to persistent storage |
+| FR-PIPE-13 | **Respond** | PipelineNode[] | Trigger | Detect changes, loop back to Decompose |
+
+### 3.2 The Editor Surface (FR-EDIT-01 to FR-EDIT-08)
+
+The system must provide a unified editing surface that supports multiple content types.
+
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| FR-EDIT-01 | Support code editing with syntax highlighting for 20+ languages | P0 |
+| FR-EDIT-02 | Support document editing (rich text, markdown, block-based) | P0 |
+| FR-EDIT-03 | Support visual workflow automation builder (drag-and-drop nodes) | P1 |
+| FR-EDIT-04 | Support real-time collaboration (multiple users editing same file) | P2 |
+| FR-EDIT-05 | Provide inline autocomplete (code completions, document suggestions, workflow nodes) | P0 |
+| FR-EDIT-06 | Provide diagnostics (errors, warnings, hints) inline and in a panel | P0 |
+| FR-EDIT-07 | Support multiple cursor selection and multi-line editing | P1 |
+| FR-EDIT-08 | Support undo/redo with unlimited history (configurable limit) | P0 |
+
+### 3.3 The Document Engine (FR-DOC-01 to FR-DOC-07)
+
+The system must support structured documents with databases, relations, and views.
+
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| FR-DOC-01 | Support block-based documents (headings, paragraphs, lists, callouts, code blocks) | P0 |
+| FR-DOC-02 | Support database creation with configurable property types (text, number, select, relation, rollup) | P0 |
+| FR-DOC-03 | Support multiple database views (table, board, gallery, list, calendar) | P0 |
+| FR-DOC-04 | Support cross-database relations with two-way linking and rollups | P1 |
+| FR-DOC-05 | Support document versioning and history (time-travel to any version) | P1 |
+| FR-DOC-06 | Support comments, mentions, and discussions | P1 |
+| FR-DOC-07 | Support full-text search across all documents and databases | P0 |
+
+### 3.4 The Automation Engine (FR-AUTO-01 to FR-AUTO-08)
+
+The system must support visual workflow automation without requiring code.
+
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| FR-AUTO-01 | Provide visual workflow builder with node-based programming | P0 |
+| FR-AUTO-02 | Support triggers: schedule, webhook, file change, database change, manual | P0 |
+| FR-AUTO-03 | Support actions: HTTP request, database query, file I/O, send email, send notification | P0 |
+| FR-AUTO-04 | Support conditionals (if/else), loops (for, while), and error handling (try/catch) | P0 |
+| FR-AUTO-05 | Support variables, data transformation, and JSON/XML parsing | P1 |
+| FR-AUTO-06 | Support sub-workflow invocation (workflows calling other workflows) | P1 |
+| FR-AUTO-07 | Support workflow execution logs with detailed error traces | P0 |
+| FR-AUTO-08 | Support parallel execution of independent branches | P1 |
+
+### 3.5 The Agent Engine (FR-AGT-01 to FR-AGT-10)
+
+The system must support AI agent orchestration, memory, and tool use.
+
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| FR-AGT-01 | Support orchestrator agents that decompose complex tasks into subtasks | P0 |
+| FR-AGT-02 | Support parallel execution of subagents | P0 |
+| FR-AGT-03 | Support agent memory (short-term, long-term, project memory) | P0 |
+| FR-AGT-04 | Support agent tool calling (terminal, file system, browser, API, database) | P0 |
+| FR-AGT-05 | Support agent-to-agent communication and handoff | P1 |
+| FR-AGT-06 | Support agent approval workflows (pause for human review) | P0 |
+| FR-AGT-07 | Support agent-streamed output (real-time thought process display) | P0 |
+| FR-AGT-08 | Support agent artifacts (plans, code diffs, screenshots, walkthroughs) | P0 |
+| FR-AGT-09 | Support agent system instructions and custom prompts per agent | P0 |
+| FR-AGT-10 | Support agent fallback (LLM-agnostic — works with multiple providers) | P1 |
+
+### 3.6 The Integration Layer (FR-INT-01 to FR-INT-06)
+
+The system must connect all engines seamlessly.
+
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| FR-INT-01 | Code blocks in documents can be executed or edited in the editor pane | P0 |
+| FR-INT-02 | Automations can be triggered from documents (e.g., click a button in a doc) | P0 |
+| FR-INT-03 | Agents can read and write documents and code files directly | P0 |
+| FR-INT-04 | Database changes can trigger automations and agent tasks | P1 |
+| FR-INT-05 | Agent execution logs appear in the same interface as workflow logs | P0 |
+| FR-INT-06 | All content (code, docs, workflows, agents) is searchable from one search bar | P0 |
+
+### 3.7 The User Interface (FR-UI-01 to FR-UI-10)
+
+The system must provide a unified, customizable user interface.
+
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| FR-UI-01 | Provide a tabbed or split-pane interface for multiple content views | P0 |
+| FR-UI-02 | Support sidebar navigation (file tree, database list, workflow list, agent list) | P0 |
+| FR-UI-03 | Support command palette (Ctrl+P / Cmd+P) | P0 |
+| FR-UI-04 | Support keyboard shortcuts and customizable keymaps | P0 |
+| FR-UI-05 | Support dark and light themes | P0 |
+| FR-UI-06 | Support customizable layouts (save/load workspace layouts) | P1 |
+| FR-UI-07 | Support zooming (UI scaling) | P2 |
+| FR-UI-08 | Support mobile-responsive design (read-only on small screens) | P2 |
+| FR-UI-09 | Provide a unified activity bar (switching between views) | P0 |
+| FR-UI-10 | Provide status bar (file info, line count, cursor position, notifications) | P0 |
+
+### 3.8 Storage & Persistence (FR-STORE-01 to FR-STORE-06)
+
+The system must support multiple storage backends.
+
+| ID | Requirement | Priority |
+| :--- | :--- | :--- |
+| FR-STORE-01 | Support local file system storage (directory-based) | P0 |
+| FR-STORE-02 | Support browser IndexedDB storage (for web version) | P1 |
+| FR-STORE-03 | Support cloud sync (configurable sync provider) | P2 |
+| FR-STORE-04 | Support Git integration (commit, push, pull, diff) | P1 |
+| FR-STORE-05 | Support automatic and manual saves | P0 |
+| FR-STORE-06 | Support backup and restore | P1 |
+
+---
+
+## 4. Non-Functional Requirements
+
+### 4.1 Performance
+
+| ID | Requirement | Target |
+| :--- | :--- | :--- |
+| NFR-PERF-01 | Pipeline processing latency (small files) | < 50ms |
+| NFR-PERF-02 | Pipeline processing latency (large files > 10MB) | < 2s |
+| NFR-PERF-03 | Autocomplete response time (keystroke to display) | < 100ms |
+| NFR-PERF-04 | Document open time (1000 blocks) | < 500ms |
+| NFR-PERF-05 | Workflow execution start delay | < 200ms |
+| NFR-PERF-06 | Agent streaming latency (first token) | < 1s |
+| NFR-PERF-07 | Memory usage (idle) | < 100MB |
+| NFR-PERF-08 | Memory usage (with large file > 10MB) | < 500MB |
+
+### 4.2 Scalability
+
+| ID | Requirement | Target |
+| :--- | :--- | :--- |
+| NFR-SCALE-01 | Maximum file size supported | 100MB |
+| NFR-SCALE-02 | Maximum concurrent documents open | 100 |
+| NFR-SCALE-03 | Maximum concurrent automation workflows | 50 |
+| NFR-SCALE-04 | Maximum concurrent agents | 20 |
+| NFR-SCALE-05 | Maximum database rows per database | 10,000 |
+| NFR-SCALE-06 | Maximum blocks per document | 10,000 |
+
+### 4.3 Reliability
+
+| ID | Requirement | Target |
+| :--- | :--- | :--- |
+| NFR-REL-01 | Crash recovery (auto-save state every 30s) | Required |
+| NFR-REL-02 | Data integrity (no data loss on crash) | Required |
+| NFR-REL-03 | Autosave frequency | Every 5 seconds |
+| NFR-REL-04 | Error handling (graceful degradation) | Required |
+| NFR-REL-05 | Minimum uptime (desktop) | 99.9% |
+
+### 4.4 Security
+
+| ID | Requirement | Target |
+| :--- | :--- | :--- |
+| NFR-SEC-01 | Local-first: data never leaves device by default | Required |
+| NFR-SEC-02 | Optional cloud sync with end-to-end encryption | Required |
+| NFR-SEC-03 | Agent tool sandboxing (limited file system access) | Required |
+| NFR-SEC-04 | Workflow execution sandboxing | Required |
+| NFR-SEC-05 | Authentication (if multi-user) | Optional |
+
+### 4.5 Maintainability
+
+| ID | Requirement | Target |
+| :--- | :--- | :--- |
+| NFR-MAINT-01 | Pure JavaScript (no external dependencies) | Required |
+| NFR-MAINT-02 | Modular design (each pipeline stage is independently swappable) | Required |
+| NFR-MAINT-03 | Self-documenting code (clear contracts between stages) | Required |
+| NFR-MAINT-04 | Comprehensive logging (all pipeline stages log activity) | Required |
+| NFR-MAINT-05 | Debug mode (detailed trace of pipeline flow) | Required |
+
+### 4.6 Compatibility
+
+| ID | Requirement | Target |
+| :--- | :--- | :--- |
+| NFR-COMP-01 | Runtime: Node.js 18+, Deno 1.0+, Bun 1.0+, Modern Browsers | Required |
+| NFR-COMP-02 | Operating Systems: Windows, macOS, Linux | Required |
+| NFR-COMP-03 | Language Server Protocol (LSP) support | Required |
+| NFR-COMP-04 | TextMate grammar support (for syntax highlighting) | Required |
+| NFR-COMP-05 | Export formats: JSON, HTML, PDF, Markdown, XML | Required |
+| NFR-COMP-06 | Import formats: JSON, Markdown, CSV, XML | Required |
+
+---
+
+## 5. Technical Architecture
+
+### 5.1 High-Level Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────┐
+│                          USER INTERFACE LAYER                                   │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌────────┐ │
+│  │  Editor  │ │  Canvas  │ │ Workflow │ │  Agent   │ │  Search  │ │Command │ │
+│  │  Pane    │ │  View    │ │  Builder │ │  Chat    │ │  Bar     │ │Palette │ │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘ └──────────┘ └────────┘ │
+│                                                                                 │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │                        DISPLAY LAYER (Stage 11)                         │   │
+│  │  Contract: ComposedOutput | ExecutionResult → DisplayOutput             │   │
+│  └─────────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                          │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │                        13-STAGE UNIVERSAL PIPELINE                       │   │
+│  │                                                                          │   │
+│  │  DECOMPOSE → VALIDATE → PARSE → TRANSFORM → REASON → RESOLVE → INDEX   │   │
+│  │                → COMPOSE → EXECUTE → FORMAT → DISPLAY → PERSIST → RESPOND│   │
+│  └─────────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                          │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │                     CORE ENGINE LAYER                                    │   │
+│  │  ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐          │   │
+│  │  │    Code    │ │  Document  │ │ Automation │ │   Agent    │          │   │
+│  │  │   Engine   │ │   Engine   │ │   Engine   │ │   Engine   │          │   │
+│  │  └────────────┘ └────────────┘ └────────────┘ └────────────┘          │   │
+│  └─────────────────────────────────────────────────────────────────────────┘   │
+│                                      │                                          │
+│  ┌─────────────────────────────────────────────────────────────────────────┐   │
+│  │                        STORAGE LAYER (Stage 12)                         │   │
+│  │  ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐          │   │
+│  │  │   File     │ │  IndexedDB │ │  Database  │ │   Cloud    │          │   │
+│  │  │   System   │ │   (Web)    │ │  (SQLite)  │ │   Sync     │          │   │
+│  │  └────────────┘ └────────────┘ └────────────┘ └────────────┘          │   │
+│  └─────────────────────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 5.2 Pipeline Stage Interfaces
+
+Each pipeline stage must implement the following interface:
+
+```typescript
+interface PipelineStage {
+  // Unique identifier
+  id: string;
+  
+  // Human-readable name
+  name: string;
+  
+  // Input contract definition
+  input: {
+    type: string;           // The expected input type
+    schema: object;         // JSON schema for validation
+  };
+  
+  // Output contract definition
+  output: {
+    type: string;           // The output type
+    schema: object;         // JSON schema for validation
+  };
+  
+  // Execute the stage
+  execute: (input: any, context: PipelineContext) => Promise<any>;
+  
+  // Validate input before execution
+  validate: (input: any) => ValidationResult;
+  
+  // Handle errors gracefully
+  onError: (error: Error, input: any) => PipelineNode[];
+}
+```
+
+### 5.3 Pipeline Context
+
+```typescript
+interface PipelineContext {
+  // Unique identifier for this pipeline run
+  runId: string;
+  
+  // Current stage
+  currentStage: string;
+  
+  // Pipeline configuration
+  config: {
+    language: string;
+    environment: 'development' | 'production' | 'testing';
+    debug: boolean;
+    maxNodes: number;
+    timeout: number;
+  };
+  
+  // Shared state across stages
+  shared: {
+    diagnostics: Diagnostic[];
+    refMap: Map<string, string>;
+    index: Index | null;
+    composed: ComposedOutput | null;
+    executionResult: ExecutionResult | null;
+    displayOutput: DisplayOutput | null;
+  };
+  
+  // Stage-specific state
+  stageState: Map<string, any>;
+  
+  // Metrics (for performance tracking)
+  metrics: {
+    startTime: number;
+    stageTimings: Map<string, number>;
+    nodeCount: number;
+  };
+}
+```
+
+### 5.4 Core Data Models
+
+```typescript
+// The universal node that flows through all pipeline stages
+interface PipelineNode {
+  id: string;
+  type: string;              // "file", "block", "symbol", "component", "token", "workflow", "agent-task"
+  data: any;                 // The payload (text, JSON, AST, binary)
+  metadata: {
+    source: string;          // "file", "network", "user_input", "database", "generated"
+    line: number;
+    column: number;
+    parentId: string | null;
+    childrenIds: string[];
+    attributes: Record<string, any>;
+    templateRef?: string;
+    slotMap?: Record<string, string>;
+    // Document-specific
+    databaseId?: string;
+    propertyValues?: Record<string, any>;
+    // Workflow-specific
+    nodeType?: 'trigger' | 'action' | 'condition' | 'loop' | 'subworkflow';
+    // Agent-specific
+    agentId?: string;
+    taskId?: string;
+    subagentIds?: string[];
+  };
+  state: {
+    decomposed: boolean;
+    validated: boolean;
+    parsed: boolean;
+    transformed: boolean;
+    reasoned: boolean;
+    resolved: boolean;
+    indexed: boolean;
+    composed: boolean;
+    executed: boolean;
+    formatted: boolean;
+    displayed: boolean;
+    persisted: boolean;
+  };
+  diagnostics: Diagnostic[];
+}
+
+// Diagnostic (error, warning, hint)
+interface Diagnostic {
+  severity: 'error' | 'warning' | 'hint' | 'info';
+  message: string;
+  code: string;
+  source: string;             // Which stage generated it
+  range: {
+    startLine: number;
+    startColumn: number;
+    endLine: number;
+    endColumn: number;
+  };
+  related?: Diagnostic[];
+}
+
+// Index (stage 7 output)
+interface Index {
+  inverted: Map<string, string[]>;    // Term → Node IDs
+  fullText: Map<string, string>;      // Node ID → Text content
+  properties: Map<string, any>;       // Fast property lookups
+  metadata: {
+    totalNodes: number;
+    indexedAt: number;
+  };
+}
+
+// Composed Output (stage 8 output)
+interface ComposedOutput {
+  tree: RenderableNode[];
+  renderOrder: string[];
+  styles: string[];
+  scripts: string[];
+  bundle: {
+    html: string;
+    css: string;
+    js: string;
+  };
+  graph: {
+    adjacency: Map<string, string[]>;
+    topoSorted: string[];
+  };
+  workflows: WorkflowDefinition[];
+  agentTasks: AgentTask[];
+}
+
+// Renderable Node (composed tree node)
+interface RenderableNode {
+  id: string;
+  type: string;
+  html: string;
+  css: string | null;
+  js: string | null;
+  children: RenderableNode[];
+  props: Record<string, any>;
+  events: Record<string, Function>;
+  refs: Record<string, HTMLElement>;
+}
+
+// Display Output (stage 11 output)
+interface DisplayOutput {
+  root: HTMLElement;
+  views: {
+    main: HTMLElement;
+    sidebar: HTMLElement;
+    terminal: HTMLElement;
+    agentChat: HTMLElement;
+    workflowCanvas: HTMLElement;
+  };
+  activeNode: string | null;
+  visibleNodes: string[];
+  update: (newComposed: ComposedOutput) => void;
+  destroy: () => void;
+  select: (nodeId: string) => void;
+  focus: () => void;
+}
+```
+
+### 5.5 Engine Definitions
+
+#### Code Engine
+```typescript
+interface CodeEngine {
+  // Language support
+  languages: string[];
+  
+  // Pipeline stage implementations
+  parse: (nodes: PipelineNode[]) => PipelineNode[];
+  reason: (nodes: PipelineNode[]) => { nodes: PipelineNode[], diagnostics: Diagnostic[] };
+  resolve: (nodes: PipelineNode[]) => { nodes: PipelineNode[], refMap: Map<string, string> };
+  respond: (nodes: PipelineNode[]) => Trigger;
+  
+  // LSP client methods
+  getCompletions: (position: Position, nodes: PipelineNode[]) => CompletionItem[];
+  getDefinition: (symbol: string, nodes: PipelineNode[]) => Definition;
+  getDiagnostics: (nodes: PipelineNode[]) => Diagnostic[];
+  
+  // Syntax highlighting
+  highlight: (nodes: PipelineNode[]) => PipelineNode[];
+}
+```
+
+#### Document Engine
+```typescript
+interface DocumentEngine {
+  // Block types supported
+  blockTypes: string[];
+  
+  // Pipeline stage implementations
+  parse: (nodes: PipelineNode[]) => PipelineNode[];
+  reason: (nodes: PipelineNode[]) => { nodes: PipelineNode[], diagnostics: Diagnostic[] };
+  resolve: (nodes: PipelineNode[]) => { nodes: PipelineNode[], refMap: Map<string, string> };
+  compose: (nodes: PipelineNode[]) => ComposedOutput;
+  
+  // Database methods
+  createDatabase: (schema: DatabaseSchema) => Database;
+  queryDatabase: (databaseId: string, query: DatabaseQuery) => any[];
+  updateRow: (databaseId: string, rowId: string, data: any) => void;
+  deleteRow: (databaseId: string, rowId: string) => void;
+  
+  // Relation methods
+  linkRelations: (sourceId: string, targetId: string, propertyId: string) => void;
+  resolveRelations: (nodes: PipelineNode[]) => PipelineNode[];
+}
+```
+
+#### Automation Engine
+```typescript
+interface AutomationEngine {
+  // Node types supported
+  nodeTypes: string[];  // "trigger", "action", "condition", "loop", "subworkflow"
+  
+  // Pipeline stage implementations
+  parse: (nodes: PipelineNode[]) => PipelineNode[];
+  transform: (nodes: PipelineNode[]) => PipelineNode[];
+  execute: (composed: ComposedOutput) => ExecutionResult;
+  persist: (nodes: PipelineNode[] | ComposedOutput) => void;
+  
+  // Workflow methods
+  executeWorkflow: (workflowId: string, context: WorkflowContext) => Promise<WorkflowResult>;
+  triggerWorkflow: (trigger: Trigger, context: WorkflowContext) => Promise<void>;
+  pauseWorkflow: (workflowId: string) => void;
+  resumeWorkflow: (workflowId: string, data: any) => void;
+  
+  // Parallel execution
+  executeParallel: (tasks: WorkflowTask[]) => Promise<ParallelResult>;
+  
+  // Error handling
+  handleError: (error: Error, workflowId: string) => WorkflowRecoveryAction;
+}
+```
+
+#### Agent Engine
+```typescript
+interface AgentEngine {
+  // Agent types
+  agentTypes: string[];  // "orchestrator", "subagent", "tool-caller"
+  
+  // Pipeline stage implementations
+  decompose: (input: ExternalData) => PipelineNode[];
+  execute: (composed: ComposedOutput) => ExecutionResult;
+  compose: (nodes: PipelineNode[]) => ComposedOutput;
+  respond: (nodes: PipelineNode[]) => Trigger;
+  
+  // Agent methods
+  orchestrate: (task: AgentTask, agents: AgentDefinition[]) => Promise<AgentResult>;
+  spawnSubagent: (agent: AgentDefinition, task: AgentTask) => Promise<AgentResult>;
+  executeParallel: (agents: AgentDefinition[], tasks: AgentTask[]) => Promise<ParallelAgentResult>;
+  
+  // Memory methods
+  getMemory: (agentId: string, memoryType: 'short' | 'long' | 'project') => Memory;
+  updateMemory: (agentId: string, memoryType: 'short' | 'long' | 'project', data: any) => void;
+  summarizeMemory: (agentId: string) => string;
+  
+  // Tool methods
+  listTools: () => ToolDefinition[];
+  callTool: (agentId: string, toolName: string, params: any) => Promise<ToolResult>;
+  
+  // Artifact methods
+  createArtifact: (agentId: string, artifact: Artifact) => void;
+  getArtifacts: (agentId: string) => Artifact[];
+}
+```
+
+### 5.6 Storage Interfaces
+
+```typescript
+interface StorageProvider {
+  // Basic operations
+  read: (path: string) => Promise<any>;
+  write: (path: string, data: any) => Promise<void>;
+  delete: (path: string) => Promise<void>;
+  list: (path: string) => Promise<string[]>;
+  exists: (path: string) => Promise<boolean>;
+  
+  // Versioning
+  getVersion: (path: string, version: string) => Promise<any>;
+  listVersions: (path: string) => Promise<string[]>;
+  revertToVersion: (path: string, version: string) => Promise<void>;
+  
+  // Search
+  search: (query: string, options: SearchOptions) => Promise<SearchResult[]>;
+  index: (path: string, data: any) => Promise<void>;
+  reindex: (path: string) => Promise<void>;
+  
+  // Sync
+  sync: (remoteUrl: string, options: SyncOptions) => Promise<SyncResult>;
+  getSyncStatus: () => SyncStatus;
+}
+```
+
+---
+
+## 6. User Interface Requirements
+
+### 6.1 Layout
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│  ┌─────────────────────────────────────────────────────────────────────────────┐   │
+│  │  MENU BAR / TITLE BAR                                                        │   │
+│  │  File  Edit  View  Insert  Format  Tools  Agent  Help                        │   │
+│  └─────────────────────────────────────────────────────────────────────────────┘   │
+│  ┌───────┬─────────────────────────────────────────────────────────┬──────────────┐ │
+│  │       │                                                         │              │ │
+│  │ ACTIVITY│                     EDITOR AREA                       │   SIDEBAR    │ │
+│  │  BAR   │  ┌────────────────────────────────────────────────┐   │              │ │
+│  │       │  │  TABS: file1.js | file2.md | workflow3 | agent4│   │   ┌─────────┐ │ │
+│  │  📁    │  ├────────────────────────────────────────────────┤   │   │ Search  │ │ │
+│  │  📄    │  │                                                │   │   └─────────┘ │ │
+│  │  ⚙️    │  │    CONTENT AREA (Editor / Canvas / Workflow)   │   │   ┌─────────┐ │ │
+│  │  🤖    │  │                                                │   │   │ Files   │ │ │
+│  │  🔍    │  │                                                │   │   └─────────┘ │ │
+│  │  📊    │  │                                                │   │   ┌─────────┐ │ │
+│  │       │  │                                                │   │   │ Outline │ │ │
+│  │       │  └────────────────────────────────────────────────┘   │   └─────────┘ │ │
+│  │       │  ┌────────────────────────────────────────────────┐   │   ┌─────────┐ │ │
+│  │       │  │  STATUS BAR (line: 42 | col: 12 | lang: JS   )│   │   │ Database│ │ │
+│  │       │  └────────────────────────────────────────────────┘   │   └─────────┘ │ │
+│  └───────┴─────────────────────────────────────────────────────────┴──────────────┘ │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+### 6.2 Views
+
+| View | Content | Activation |
+| :--- | :--- | :--- |
+| **Editor** | Code editing with syntax highlighting, autocomplete, diagnostics | Click code file in sidebar |
+| **Canvas** | Block-based document editing (Notion-style) | Click document in sidebar |
+| **Workflow** | Visual workflow builder (drag-and-drop nodes) | Click workflow in sidebar |
+| **Agent Chat** | Conversational interface with AI agents | Click agent in sidebar |
+| **Artifacts** | View artifacts generated by agents (plans, code diffs, screenshots) | Agent execution completes |
+| **Terminal** | Integrated terminal for command execution | Click terminal icon or Ctrl+` |
+| **Search** | Global search across all content | Ctrl+Shift+F or click search |
+| **Database** | Table/board/gallery view of databases | Click database in sidebar |
+
+### 6.3 Keyboard Shortcuts
+
+| Shortcut | Action | Context |
+| :--- | :--- | :--- |
+| `Ctrl+P` | Command Palette | Global |
+| `Ctrl+S` | Save | Global |
+| `Ctrl+Shift+S` | Save All | Global |
+| `Ctrl+Z` | Undo | Editor/Canvas |
+| `Ctrl+Y` | Redo | Editor/Canvas |
+| `Ctrl+F` | Find | Editor/Canvas |
+| `Ctrl+Shift+F` | Global Search | Global |
+| `Ctrl+Space` | Trigger Autocomplete | Editor/Canvas |
+| `Ctrl+` ` | Toggle Terminal | Global |
+| `Ctrl+B` | Toggle Sidebar | Global |
+| `Ctrl+Shift+E` | Focus File Explorer | Global |
+| `Ctrl+Shift+D` | Focus Database View | Global |
+| `Ctrl+Shift+A` | Focus Agent Chat | Global |
+| `Ctrl+Shift+W` | Focus Workflow Builder | Global |
+| `/` | Slash Command | Canvas/Workflow |
+| `@` | Mention | Canvas/Agent Chat |
+| `Ctrl+Enter` | Execute Workflow | Workflow Builder |
+| `Ctrl+Shift+Enter` | Execute Agent Task | Agent Chat |
+
+---
+
+## 7. Data Flow & Pipeline Orchestration
+
+### 7.1 Single Pipeline Run Flow
+
+```
+┌─────────────────────────────────────────────────────────────────────────────────────┐
+│                           COMPLETE PIPELINE RUN FLOW                                │
+├─────────────────────────────────────────────────────────────────────────────────────┤
+│                                                                                     │
+│   START: ExternalData arrives (file, network, user input, automation trigger,       │
+│          agent command)                                                            │
+│                                                                                     │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 1: DECOMPOSE                                                            │ │
+│   │ Contract: ExternalData → PipelineNode[]                                      │ │
+│   │ Action:    Break raw input into atomic nodes based on format detection       │ │
+│   │ Output:    Nodes array with type, data, source metadata                      │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 2: VALIDATE                                                             │ │
+│   │ Contract: PipelineNode[] → { nodes: PipelineNode[], errors: Diagnostic[] }   │ │
+│   │ Action:    Check schema, syntax, structural integrity                        │ │
+│   │ Output:    Validated nodes + diagnostic errors for rejected nodes            │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 3: PARSE                                                                │ │
+│   │ Contract: PipelineNode[] → PipelineNode[] (with parent/child relationships)  │ │
+│   │ Action:    Organize nodes into hierarchical tree (AST, Block Tree, Workflow) │ │
+│   │ Output:    Nodes with parentId and childrenIds populated                     │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 4: TRANSFORM                                                            │ │
+│   │ Contract: PipelineNode[] → PipelineNode[] (enriched)                          │ │
+│   │ Action:    Normalize, desugar, apply defaults                                 │ │
+│   │ Output:    Nodes with enriched data, computed properties                     │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 5: REASON                                                               │ │
+│   │ Contract: PipelineNode[] → { nodes: PipelineNode[], diagnostics: Diagnostic[]}│ │
+│   │ Action:    Type checking, linting, permissions, business rules               │ │
+│   │ Output:    Nodes with semantic annotations + diagnostics                     │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 6: RESOLVE                                                              │ │
+│   │ Contract: PipelineNode[] → { nodes: PipelineNode[], refMap: Map<string,string>}│ │
+│   │ Action:    Link references to targets (symbols, relations, imports)          │ │
+│   │ Output:    Nodes with resolved references + refMap                           │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 7: INDEX                                                                │ │
+│   │ Contract: PipelineNode[] → Index                                              │ │
+│   │ Action:    Build searchable, queryable index                                 │ │
+│   │ Output:    Inverted index, full-text, property indexes                      │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 8: COMPOSE                                                              │ │
+│   │ Contract: PipelineNode[] → ComposedOutput                                    │ │
+│   │ Action:    Assemble into final flat output structure                         │ │
+│   │ Output:    Render tree, bundle, graph, workflows, agent tasks               │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ├─────────────────────────────────────────────────────────────────────────────┐   │
+│   │                                                                             │   │
+│   ▼                                                                             ▼   │
+│   ┌───────────────────────────┐   ┌─────────────────────────────────────────────┐   │
+│   │ STAGE 9: EXECUTE           │   │ STAGE 10: FORMAT                            │   │
+│   │ Contract: ComposedOutput →  │   │ Contract: ComposedOutput → SerializedFormat │   │
+│   │           ExecutionResult   │   │ Action:    Convert to exportable format    │   │
+│   │ Action:    Run code,        │   │ Output:    JSON, HTML, PDF, XML, Markdown │   │
+│   │            evaluate formulas│   │                                             │   │
+│   │            execute workflows│   └─────────────────────────────────────────────┘   │
+│   │ Output:    Runtime result,  │   │                                             │   │
+│   │            side effects,    │   │                                             │   │
+│   │            performance      │   │                                             │   │
+│   └───────────────────────────┘   │                                             │   │
+│   │                                                                             │   │
+│   └─────────────────────────────────────────────────────────────────────────────┘   │
+│                                    │                                                 │
+│                                    ▼                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 11: DISPLAY                                                             │ │
+│   │ Contract: ComposedOutput | ExecutionResult → DisplayOutput                    │ │
+│   │ Action:    Render to visual surface                                           │ │
+│   │ Output:    DOM elements, views, update function                              │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 12: PERSIST                                                             │ │
+│   │ Contract: PipelineNode[] | ComposedOutput → void                              │ │
+│   │ Action:    Save state to persistent storage                                  │ │
+│   │ Output:    (Side effect) writes to disk, DB, cloud                           │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   ┌───────────────────────────────────────────────────────────────────────────────┐ │
+│   │ STAGE 13: RESPOND                                                             │ │
+│   │ Contract: PipelineNode[] → Trigger                                            │ │
+│   │ Action:    Detect changes, prepare feedback                                   │ │
+│   │ Output:    Events, new input, deltas (loops back to Decompose)              │ │
+│   └───────────────────────────────────────────────────────────────────────────────┘ │
+│   │                                                                                 │
+│   ▼                                                                                 │
+│   LOOP: If Trigger has newInput, go to Decompose (Stage 1)                        │
+│                                                                                     │
+└─────────────────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## 8. Use Cases
+
+### 8.1 Code Editing with Autocomplete
+
+| Step | Action | Pipeline Stage | Description |
+| :--- | :--- | :--- | :--- |
+| 1 | User types `database.conn` in editor | Decompose | Raw keystroke → token nodes |
+| 2 | Pipeline validates text | Validate | Syntax check passes |
+| 3 | Text parsed into AST | Parse | Partial AST built |
+| 4 | AST normalized | Transform | Default scopes applied |
+| 5 | Type inference runs | Reason | Detects `database` type |
+| 6 | Symbol resolution runs | Resolve | Finds `connect`, `connection`, `configure` |
+| 7 | Index updated | Index | New tokens indexed |
+| 8 | Composed output generated | Compose | Diagnostics + completion items |
+| 9 | Display updates editor | Display | Autocomplete popup shows suggestions |
+| 10 | System waits for next keystroke | Respond | Loops back to Decompose |
+
+### 8.2 Document Creation with Slash Commands
+
+| Step | Action | Pipeline Stage | Description |
+| :--- | :--- | :--- | :--- |
+| 1 | User types `/task` in document | Decompose | Slash command detected |
+| 2 | Command validated | Validate | Valid slash command |
+| 3 | Block structure parsed | Parse | Task block created in block tree |
+| 4 | Defaults applied | Transform | Set priority: medium, status: todo |
+| 5 | Permissions checked | Reason | User has permission to create tasks |
+| 6 | Relation resolved | Resolve | Task linked to project database |
+| 7 | Index updated | Index | New task searchable |
+| 8 | Document composed | Compose | Renderable block tree |
+| 9 | Display updates canvas | Display | Task block appears with priority and status |
+| 10 | Auto-save triggered | Persist | Document saved |
+| 11 | Wait for next input | Respond | Loop back to Decompose |
+
+### 8.3 Workflow Automation (n8n-style)
+
+| Step | Action | Pipeline Stage | Description |
+| :--- | :--- | :--- | :--- |
+| 1 | User builds workflow visually | Decompose | Drag-and-drop nodes → PipelineNode[] |
+| 2 | Workflow validated | Validate | Nodes have required properties |
+| 3 | Workflow parsed into DAG | Parse | Directed acyclic graph built |
+| 4 | Normalize node definitions | Transform | Apply node defaults |
+| 5 | Validate execution rules | Reason | Check cycles, deadlocks |
+| 6 | Resolve node references | Resolve | Link nodes to actions/triggers |
+| 7 | Build execution plan | Compose | Topologically sorted execution order |
+| 8 | User clicks "Run" | Execute | Workflow executes |
+| 9 | Progress displayed | Display | Execution logs, node statuses |
+| 10 | Execution log persisted | Persist | Log saved for debugging |
+| 11 | Workflow completes, triggers next | Respond | On completion triggers next workflow |
+
+### 8.4 AI Agent Orchestration (Antigravity-style)
+
+| Step | Action | Pipeline Stage | Description |
+| :--- | :--- | :--- | :--- |
+| 1 | User: "Build a note-taking app with Go and SQLite" | Decompose | Command decomposed into pipeline nodes |
+| 2 | Agent task validated | Validate | Task within scope |
+| 3 | Task parsed into subtasks | Parse | [Build Go API, Schema, Vite, i18n] |
+| 4 | Subtasks normalized | Transform | Detailed task definitions |
+| 5 | Agent selection reasoned | Reason | Orchestrator agent selected |
+| 6 | Subtasks assigned to subagents | Resolve | Subagents linked to tasks |
+| 7 | Parallel execution plan | Compose | Subagents run in parallel |
+| 8 | Subagents execute in parallel | Execute | Code written, tested, built |
+| 9 | Results gathered and formatted | Format | Code diffs, logs, screenshots |
+| 10 | Results displayed to user | Display | Artifacts panel, chat, previews |
+| 11 | Code saved to project | Persist | Code written to disk |
+| 12 | Agent asks for feedback | Respond | User review loop |
+| 13 | User provides feedback | Decompose | Feedback loops back into pipeline |
+
+---
+
+## 9. Implementation Phases
+
+### Phase 1: Core Pipeline (Months 1-3)
+- Implement PipelineNode data model
+- Implement all 13 stages with basic contracts
+- Implement validation and error handling
+- Implement logging and debugging
+- Basic persistence (file system)
+
+### Phase 2: Editor Surface (Months 4-6)
+- Implement editor rendering (Stage 11: Display)
+- Basic syntax highlighting (TextMate grammar support)
+- Autocomplete (Stage 6: Resolve + Stage 13: Respond)
+- Diagnostics (Stage 5: Reason)
+- Tab management and split views
+
+### Phase 3: Document Engine (Months 7-9)
+- Block-based document model
+- Database schema support
+- Database views (table, board, gallery, list, calendar)
+- Relations and rollups
+- Document versioning and history
+
+### Phase 4: Automation Engine (Months 10-12)
+- Visual workflow builder
+- Node types: triggers, actions, conditionals, loops, subworkflows
+- Workflow execution engine (Stage 9: Execute)
+- Workflow logging and debugging
+- Parallel execution support
+
+### Phase 5: Agent Engine (Months 13-15)
+- Agent orchestration (orchestrator + subagents)
+- Agent memory (short-term, long-term, project)
+- Tool calling (terminal, file system, browser, API)
+- Artifact generation and display
+- Approval workflows and human-in-the-loop
+
+### Phase 6: Integration & Polish (Months 16-18)
+- Cross-engine integration (code ↔ docs ↔ workflows ↔ agents)
+- Global search
+- Collaboration (real-time sync)
+- Export/import all formats
+- Performance optimization
+
+---
+
+## 10. Success Metrics
+
+| Metric | Target | Measurement |
+| :--- | :--- | :--- |
+| Pipeline latency (small files) | < 50ms | End-to-end measurement |
+| Autocomplete response time | < 100ms | Keystroke to display |
+| Workflow execution start delay | < 200ms | Click to first node execution |
+| Agent streaming latency (first token) | < 1s | User prompt to first displayed token |
+| Memory usage (idle) | < 100MB | Process memory |
+| Maximum concurrent users (web) | 50 | Load testing |
+| Data loss rate | 0% | Crash recovery testing |
+| Code language support | 20+ | Languages with LSP support |
+| User satisfaction (NPS) | > 50 | User surveys |
+| Adoption rate | 10,000 users in year 1 | Analytics |
+
+---
+
+## 11. Risks & Mitigations
+
+| Risk | Impact | Mitigation |
+| :--- | :--- | :--- |
+| Performance bottlenecks in pipeline | High | Optimize stage contracts; use async where possible; implement caching |
+| Memory leaks with long-running agents | High | Implement agent memory limits; garbage collection monitoring |
+| Complexity of 13-stage pipeline | Medium | Clear documentation; debugging tools; stage isolation |
+| Security vulnerabilities (agent tool access) | High | Sandboxing; permission controls; audit logs |
+| Dependency-free constraint limiting features | Medium | Implement minimal required parsers; reuse browser APIs |
+| Real-time collaboration complexity | Medium | Operational transformation algorithms; offline-first |
+| Cross-engine integration complexity | High | Pipeline as single integration point; unified data model |
+
+---
+
+## 12. Appendices
+
+### Appendix A: Glossary
+
+| Term | Definition |
+| :--- | :--- |
+| **PipelineNode** | The universal data structure that flows through all 13 pipeline stages |
+| **Stage Contract** | The defined input and output types for each pipeline stage |
+| **Decompose** | Stage 1: Break raw input into atomic pipeline nodes |
+| **Validate** | Stage 2: Gatekeeper — reject malformed nodes early |
+| **Parse** | Stage 3: Organize nodes into hierarchical tree |
+| **Transform** | Stage 4: Normalize, desugar, apply defaults |
+| **Reason** | Stage 5: Apply semantic logic (types, rules, permissions) |
+| **Resolve** | Stage 6: Link internal references to targets |
+| **Index** | Stage 7: Build searchable, queryable index |
+| **Compose** | Stage 8: Assemble into final flat output structure |
+| **Execute** | Stage 9: Run code, evaluate formulas, execute workflows |
+| **Format** | Stage 10: Convert to exportable format |
+| **Display** | Stage 11: Render to visual surface (UI) |
+| **Persist** | Stage 12: Save state to persistent storage |
+| **Respond** | Stage 13: Detect changes, loop back to Decompose |
+
+### Appendix B: Data Model Evolution
+
+```
+V1.0: PipelineNode (basic)
+  - id, type, data, metadata, state, diagnostics
+
+V1.1: Added metadata.attributes (extensible)
+  - For custom properties per use case
+
+V1.2: Added metadata.slotMap (component composition)
+  - For Notion-style block nesting
+
+V1.3: Added metadata.templateRef (component references)
+  - For editor UI composition
+
+V1.4: Added metadata.databaseId, propertyValues (database support)
+  - For Notion-style databases
+
+V1.5: Added metadata.workflowNodeType (automation support)
+  - For visual workflow builder
+
+V1.6: Added metadata.agentId, taskId, subagentIds (agent support)
+  - For Antigravity-style agent orchestration
+```
+
+---
+
+## Document Metadata
+
+| Property | Value |
+| :--- | :--- |
+| **Document ID** | PRD-UNIVERSAL-PIPELINE-v1.0 |
+| **Version** | 1.0 |
+| **Date** | 2026-08-21 |
+| **Status** | Draft |
+| **Authors** | [Product Team] |
+| **Stakeholders** | [Engineering, Design, Product] |
+| **Target Release** | Q4 2027 (Full) |

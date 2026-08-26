@@ -1,0 +1,10 @@
+- body > header with nav containing on hover menu items and search and window Controls.
+- Notion based editor, that supports vscode type mulitple tabs.
+- / slash and contextual right click.
+- in cell edit on double click, in item double click to rename. like in All Section of ASide and main > article > header
+- vs code type multi layers auto suggest, auto correct, for words, templates, expression, shapes, and patterns.
+- all book should be able to render in any layout or editor template, like a Notion style book shoudl be able to see as vscode, or like a n8n flow.
+- a window explorer type explorer for all user book, entity.
+- allow user to create, edit, cut, copy, paste, find and replace, in book, insert template cell or blocks. 
+- books are autosaved, with featrue flag based version control for books or cells of books.
+- 

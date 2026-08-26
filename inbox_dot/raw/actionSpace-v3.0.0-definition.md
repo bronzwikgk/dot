@@ -1,0 +1,32 @@
+- ActionSpace is a config and template driven applicaiton that allows users to perform crud and other operation on their entities.
+- Everything is an entity, an applicaiton, a folde,r a file, a template.
+- Each Entity has its own config, containing, its shape, schema, dependency, and all policy, templates[ export,print, ui]
+- each entity is stored as per the location defined in the entity config.
+- Application code doesnt know anything about anyentity.
+- Entity has states, attributes, when in dom its state is visible.
+- Applicaiton has config with default imports, default folder, default files, default loads, default entity, default view, default theme.
+- Application has a entity viewer, and entity Editor.
+- Applicaiton is a js class with no forEach or arrow function.
+- Applicaiton uses actionEntity and validator class and actionEngine and other utility
+- Application on load shows a splash screen while loading app. it shows a button to load folder or skip. the bg is blurry
+- all code is generic, every thing in config.
+- it has dynamic entity with template literanls that gets resolved when in dom. like current active entity explorer, where user has target.
+- has contextual right click menu, depending on which entity or ui element user right clicks on.
+- it has entity explorer, with header and view toolbar with icon of 
+    - minimise, maximise, close. when user clicks on these buttons they should minimise or msimise or close the explorer.
+    Action: Load, allows users to load content of a folder or file, for folder it iterators recursivly
+- Action: "New Entity" with submenu With Templates, via context menu
+- Action: edit on double click and via context menu
+- Action: Toggle View [Raw/Preview] via eye / raw after name
+- Action: View ToolBar - minimise, maximise, close.[ right aligned],
+- all button, anchor, li with anchor or button cursor pointer.
+- Feature request : User shoudl be able to add /discover rss feeds. how to implement
+- It, has a tree based explorer, table based collection explorer, form panel, setting panel
+- User can create template based, applicaiton, config, folder, files, document, more templates, tables, notes, collecitons, lables, projects, plugins, entity, config, layouts, themes, querys, strategy, watchlist, portfolio, Account, Service,Data source, dataStore
+- user shoudl be able to rezsize the entity explorer or any other panel.
+- All content shoudl be visble under parent.
+- body doesnt have scroll, only the element wher content over growing has scroll. 
+- shadowonly on the active panel
+-  when user clicks on a node it expands.
+- user user right click on a node a right click menu appears as per node type or id or state.
+- Application allows users to open a new tree explorer, by creating a new tree or loading one from drive or opening one from storaing or importing one from a path.

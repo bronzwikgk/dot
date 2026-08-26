@@ -1,0 +1,25 @@
+- book type:
+    - notepad
+    - vscode
+    - notion
+    - word
+    - jupiter notebook
+    - n8n, photoshop
+    - openCode
+    - dashboard
+    - windows explorer
+    - workflowwy
+- book block type
+    - rule builder
+    - flow builder
+    - chart panels
+    - code_block
+    - document block
+    - text block
+    - md block
+    - yml block
+    - table
+    - card colleciton block
+    - list item block
+    - canvas
+    - images

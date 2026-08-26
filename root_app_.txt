@@ -1,4 +1,5 @@
 root:
+    - this branch: a text file acting like a inventory and meta for entire branch. Along with short overview of its content.
     - config\
         - config_app.js // A config made from the md file. When ever the md file is updated, app_shell automatically updates config during boot.
     - code:

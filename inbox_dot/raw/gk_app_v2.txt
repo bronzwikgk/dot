@@ -1,0 +1,877 @@
+# Product Requirements Document (PRD)
+## Generic Entity-Based Universal System
+### Code • Documents • Automation • AI Agents
+### Version 1.0 | 2026-08-21
+
+---
+
+## 1. Executive Summary
+
+### 1.1 Product Vision
+
+A single universal system built on a generic entity-based architecture where everything—code, documents, workflows, automations, and AI agents—is represented as generic entities. The system uses a 13-stage pipeline with generic operations (`create`, `append`, `insert`, `transform`, `resolve`, `execute`, `display`) that work on any entity regardless of type. Behavior is determined by traits, not by type. The architecture is fully extensible without changing the core runner.
+
+### 1.2 Core Philosophy
+
+| principle | description |
+| :--- | :--- |
+| **generic entity** | all entities share the same base structure with type discriminators |
+| **trait-based behavior** | behavior is determined by traits, not by type |
+| **generic operations** | operations work on any entity regardless of type |
+| **runner as executor** | the runner executes operations generically |
+| **extensible by design** | new types, traits, and operations can be added without changing core |
+| **snake case only** | all names in snake_case |
+| **zero external dependencies** | pure javascript implementation |
+
+### 1.3 Problem Statement
+
+Users currently juggle separate tools for:
+- code editing (vs code)
+- document management (notion)
+- workflow automation (n8n)
+- ai agent orchestration (antigravity)
+
+This fragmentation causes context switching, data silos, and inefficient workflows. No single tool provides a unified environment where code, documents, automations, and AI agents coexist and interoperate natively.
+
+### 1.4 Core Value Proposition
+
+| benefit | description |
+| :--- | :--- |
+| **one pipeline** | 13-stage pipeline processes all entity types |
+| **generic operations** | create, append, insert, transform, resolve, execute, display work on any entity |
+| **trait-based behavior** | add traits to enable behavior without changing type |
+| **zero dependencies** | pure javascript, runs anywhere |
+| **native interoperability** | entities can link to and interact with any other entity |
+| **extensible** | add new types, traits, operations without changing core |
+| **local-first** | data stays under your control |
+
+---
+
+## 2. Core Architecture
+
+### 2.1 The Generic Entity
+
+Every entity in the system has the same base structure.
+
+| attribute | type | description | constraints |
+| :--- | :--- | :--- | :--- |
+| `id` | `string` | unique identifier | required, uuid v4 |
+| `type` | `string` | entity classification | required, extensible |
+| `data` | `any` | payload | required |
+| `attributes` | `map` | extensible key-value store | required |
+| `traits` | `string[]` | behavior markers | optional, default `[]` |
+| `links` | `link[]` | relationships to other entities | optional, default `[]` |
+| `state` | `state` | pipeline progression flags | required |
+| `diagnostics` | `diagnostic[]` | errors, warnings, hints | optional, default `[]` |
+| `version` | `string` | entity version | required, default `1.0.0` |
+| `created_at` | `number` | creation timestamp | required |
+| `updated_at` | `number` | last update timestamp | required |
+
+### 2.2 The 13-Stage Pipeline
+
+| stage | operation | input | output | description |
+| :--- | :--- | :--- | :--- | :--- |
+| 1 | `decompose` | `external_data` | `entity[]` | break raw input into entities |
+| 2 | `validate` | `entity[]` | `{ entities, diagnostics }` | gatekeeper validation |
+| 3 | `parse` | `entity[]` | `entity[]` | build hierarchical tree |
+| 4 | `transform` | `entity[]` | `entity[]` | normalize and apply defaults |
+| 5 | `reason` | `entity[]` | `{ entities, diagnostics }` | apply semantic logic |
+| 6 | `resolve` | `entity[]` | `{ entities, refs }` | link references to targets |
+| 7 | `index` | `entity[]` | `index` | build searchable index |
+| 8 | `compose` | `entity[]` | `composed` | assemble final output |
+| 9 | `execute` | `composed` | `execution_result` | run code or workflows |
+| 10 | `format` | `composed \| execution_result` | `serialized` | convert to exportable format |
+| 11 | `display` | `composed \| execution_result` | `display_output` | render to visual surface |
+| 12 | `persist` | `entity[] \| composed` | `void` | save to storage |
+| 13 | `respond` | `entity[]` | `trigger` | detect changes and feedback |
+
+### 2.3 The Generic Runner
+
+The runner is the universal executor that processes all entities.
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | runner instance id |
+| `mode` | `string` | `single`, `parallel`, `sequence` |
+| `timeout` | `number` | global execution timeout in ms |
+| `max_parallel` | `number` | maximum parallel executions |
+| `debug` | `boolean` | debug mode enabled |
+| `log_level` | `string` | `debug`, `info`, `warn`, `error` |
+| `storage` | `storage_provider` | storage backend |
+| `index` | `index_provider` | index provider |
+| `display` | `display_provider` | display provider |
+| `context` | `map` | global context |
+
+---
+
+## 3. Functional Requirements
+
+### 3.1 Entity Management Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_entity_001` | system must support creation of entities of any type | p0 |
+| `req_entity_002` | system must support retrieval of entities by id | p0 |
+| `req_entity_003` | system must support updating entity data and attributes | p0 |
+| `req_entity_004` | system must support deletion of entities | p0 |
+| `req_entity_005` | system must support listing entities by type | p0 |
+| `req_entity_006` | system must support querying entities by condition | p0 |
+| `req_entity_007` | system must support appending child entities to parent | p0 |
+| `req_entity_008` | system must support inserting entities at position | p0 |
+| `req_entity_009` | system must support linking entities with relationships | p0 |
+| `req_entity_010` | system must support removing entity links | p0 |
+
+### 3.2 Trait Management Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_trait_001` | system must support checking if entity has a trait | p0 |
+| `req_trait_002` | system must support adding traits to entities | p0 |
+| `req_trait_003` | system must support removing traits from entities | p0 |
+| `req_trait_004` | system must support listing traits on an entity | p0 |
+| `req_trait_005` | system must support getting operations enabled by a trait | p1 |
+
+### 3.3 Attribute Management Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_attr_001` | system must support getting attribute values | p0 |
+| `req_attr_002` | system must support setting attribute values | p0 |
+| `req_attr_003` | system must support deleting attributes | p0 |
+| `req_attr_004` | system must support listing all attributes | p1 |
+| `req_attr_005` | system must support merging attributes | p1 |
+
+### 3.4 Pipeline Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_pipe_001` | system must implement all 13 pipeline stages | p0 |
+| `req_pipe_002` | system must support running individual stages independently | p1 |
+| `req_pipe_003` | system must support stepping through stages (debug mode) | p1 |
+| `req_pipe_004` | system must support dry-run mode (no side effects) | p1 |
+| `req_pipe_005` | system must capture diagnostics at each stage | p0 |
+| `req_pipe_006` | system must maintain state flags for each entity | p0 |
+
+### 3.5 Code Entity Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_code_001` | system must support code entities with language detection | p0 |
+| `req_code_002` | system must provide syntax highlighting for 20+ languages | p0 |
+| `req_code_003` | system must provide autocomplete for code entities | p0 |
+| `req_code_004` | system must provide diagnostics (errors, warnings) for code | p0 |
+| `req_code_005` | system must support symbol resolution (go to definition) | p0 |
+| `req_code_006` | system must support finding references | p1 |
+| `req_code_007` | system must support renaming symbols | p1 |
+| `req_code_008` | system must support code formatting | p1 |
+| `req_code_009` | system must support multiple cursors and selections | p1 |
+
+### 3.6 Document Entity Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_doc_001` | system must support block-based documents | p0 |
+| `req_doc_002` | system must support block types: heading, paragraph, list, callout, code | p0 |
+| `req_doc_003` | system must support nesting blocks | p0 |
+| `req_doc_004` | system must support slash commands (`/`) for block insertion | p0 |
+| `req_doc_005` | system must support mentions (`@`) for linking entities | p0 |
+| `req_doc_006` | system must support comments on blocks | p1 |
+| `req_doc_007` | system must support document version history | p1 |
+| `req_doc_008` | system must support full-text search in documents | p0 |
+
+### 3.7 Database Entity Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_db_001` | system must support database entities with schemas | p0 |
+| `req_db_002` | system must support property types: text, number, select, multi-select, date, relation, rollup, checkbox, formula, files | p0 |
+| `req_db_003` | system must support multiple views: table, board, gallery, list, calendar | p0 |
+| `req_db_004` | system must support filtering views | p0 |
+| `req_db_005` | system must support sorting views | p0 |
+| `req_db_006` | system must support cross-database relations | p1 |
+| `req_db_007` | system must support rollup properties | p1 |
+| `req_db_008` | system must support formula properties | p1 |
+
+### 3.8 Workflow Entity Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_wf_001` | system must support workflow entities | p0 |
+| `req_wf_002` | system must support node types: trigger, action, condition, loop, subworkflow, parallel, merge, timeout | p0 |
+| `req_wf_003` | system must support visual workflow builder (drag-and-drop) | p0 |
+| `req_wf_004` | system must support connecting nodes | p0 |
+| `req_wf_005` | system must support configuring nodes | p0 |
+| `req_wf_006` | system must support executing workflows | p0 |
+| `req_wf_007` | system must support pausing, resuming, stopping workflows | p1 |
+| `req_wf_008` | system must support parallel execution of branches | p1 |
+| `req_wf_009` | system must support subworkflow invocation | p1 |
+| `req_wf_010` | system must support workflow execution logs | p0 |
+| `req_wf_011` | system must support workflow versioning | p1 |
+
+### 3.9 Agent Entity Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_agent_001` | system must support agent entities | p0 |
+| `req_agent_002` | system must support agent types: orchestrator, subagent, tool-caller, observer | p0 |
+| `req_agent_003` | system must support system prompts and instructions | p0 |
+| `req_agent_004` | system must support tool calling (terminal, file system, browser, api, database) | p0 |
+| `req_agent_005` | system must support task decomposition into subtasks | p0 |
+| `req_agent_006` | system must support parallel execution of subagents | p0 |
+| `req_agent_007` | system must support agent memory (short-term, long-term, project) | p0 |
+| `req_agent_008` | system must support agent artifacts (plans, code diffs, screenshots, walkthroughs) | p0 |
+| `req_agent_009` | system must support approval workflows (human-in-the-loop) | p0 |
+| `req_agent_010` | system must support agent-to-agent communication and handoff | p1 |
+| `req_agent_011` | system must support streaming output (real-time thought process) | p0 |
+| `req_agent_012` | system must support fallback llm providers | p1 |
+
+### 3.10 Integration Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_int_001` | code blocks in documents can be executed or edited in code view | p0 |
+| `req_int_002` | workflows can be triggered from documents | p0 |
+| `req_int_003` | agents can read and write documents and code | p0 |
+| `req_int_004` | database changes can trigger workflows | p1 |
+| `req_int_005` | agent execution logs appear in workflow logs | p1 |
+| `req_int_006` | all entities are searchable from one search interface | p0 |
+| `req_int_007` | entities can link to any other entity regardless of type | p0 |
+
+### 3.11 Display Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_display_001` | system must support rendering entities to visual interface | p0 |
+| `req_display_002` | system must support rendering entity trees | p0 |
+| `req_display_003` | system must support rendering entity lists | p0 |
+| `req_display_004` | system must support incremental display updates | p0 |
+| `req_display_005` | system must support destroying display outputs | p0 |
+| `req_display_006` | system must support dark and light themes | p0 |
+| `req_display_007` | system must support customizable keyboard shortcuts | p1 |
+| `req_display_008` | system must support command palette | p0 |
+
+### 3.12 Storage Requirements
+
+| id | requirement | priority |
+| :--- | :--- | :--- |
+| `req_store_001` | system must support saving entities to storage | p0 |
+| `req_store_002` | system must support loading entities from storage | p0 |
+| `req_store_003` | system must support deleting entities from storage | p0 |
+| `req_store_004` | system must support listing stored entities | p0 |
+| `req_store_005` | system must support versioning of entities | p1 |
+| `req_store_006` | system must support reverting to previous versions | p1 |
+| `req_store_007` | system must support local file system storage | p0 |
+| `req_store_008` | system must support browser indexeddb storage | p1 |
+| `req_store_009` | system must support cloud sync (optional) | p2 |
+| `req_store_010` | system must support automatic and manual saves | p0 |
+
+---
+
+## 4. Non-Functional Requirements
+
+### 4.1 Performance
+
+| id | requirement | target |
+| :--- | :--- | :--- |
+| `nfr_perf_001` | pipeline processing latency (small entities) | < 50ms |
+| `nfr_perf_002` | pipeline processing latency (large entities > 10mb) | < 2s |
+| `nfr_perf_003` | autocomplete response time | < 100ms |
+| `nfr_perf_004` | document open time (1000 blocks) | < 500ms |
+| `nfr_perf_005` | workflow execution start delay | < 200ms |
+| `nfr_perf_006` | agent streaming latency (first token) | < 1s |
+| `nfr_perf_007` | memory usage (idle) | < 100mb |
+| `nfr_perf_008` | memory usage (with large entity > 10mb) | < 500mb |
+
+### 4.2 Scalability
+
+| id | requirement | target |
+| :--- | :--- | :--- |
+| `nfr_scale_001` | maximum entity data size | 100mb |
+| `nfr_scale_002` | maximum concurrent entities loaded | 100 |
+| `nfr_scale_003` | maximum concurrent workflows | 50 |
+| `nfr_scale_004` | maximum concurrent agents | 20 |
+| `nfr_scale_005` | maximum database rows per database | 10,000 |
+| `nfr_scale_006` | maximum blocks per document | 10,000 |
+
+### 4.3 Reliability
+
+| id | requirement | target |
+| :--- | :--- | :--- |
+| `nfr_rel_001` | crash recovery (auto-save every 30s) | required |
+| `nfr_rel_002` | data integrity (no data loss on crash) | required |
+| `nfr_rel_003` | autosave frequency | every 5 seconds |
+| `nfr_rel_004` | error handling (graceful degradation) | required |
+
+### 4.4 Security
+
+| id | requirement | target |
+| :--- | :--- | :--- |
+| `nfr_sec_001` | local-first: data never leaves device by default | required |
+| `nfr_sec_002` | optional cloud sync with end-to-end encryption | required |
+| `nfr_sec_003` | agent tool sandboxing (limited file system access) | required |
+| `nfr_sec_004` | workflow execution sandboxing | required |
+
+### 4.5 Maintainability
+
+| id | requirement | target |
+| :--- | :--- | :--- |
+| `nfr_maint_001` | pure javascript (no external dependencies) | required |
+| `nfr_maint_002` | modular design (each component independently swappable) | required |
+| `nfr_maint_003` | snake case only for all names | required |
+| `nfr_maint_004` | comprehensive logging at all stages | required |
+| `nfr_maint_005` | debug mode with detailed traces | required |
+
+### 4.6 Compatibility
+
+| id | requirement | target |
+| :--- | :--- | :--- |
+| `nfr_comp_001` | runtime: node.js 18+, deno 1.0+, bun 1.0+, modern browsers | required |
+| `nfr_comp_002` | operating systems: windows, macos, linux | required |
+| `nfr_comp_003` | export formats: json, html, pdf, markdown, xml | required |
+| `nfr_comp_004` | import formats: json, markdown, csv, xml | required |
+
+---
+
+## 5. System Components
+
+### 5.1 Core Components
+
+| component | description | responsibilities |
+| :--- | :--- | :--- |
+| `runner` | universal executor | execute operations on entities; manage pipeline flow; handle parallel/sequence modes |
+| `entity_store` | entity storage manager | save, load, delete, list entities; manage versions; provide storage abstraction |
+| `entity_index` | search index manager | index entity content and properties; provide search interface; autocomplete |
+| `pipeline` | 13-stage pipeline orchestrator | execute stages in order; manage state; capture diagnostics; handle errors |
+| `operation_registry` | operation registry | register, lookup, invoke operations; manage operation metadata |
+| `type_registry` | entity type registry | register, lookup entity types; manage type metadata and default traits |
+| `trait_registry` | trait registry | register, lookup traits; manage trait operation mappings |
+| `link_manager` | relationship manager | create, delete, query links between entities; traverse relationships |
+| `diagnostic_manager` | diagnostic manager | add, retrieve, clear diagnostics; filter by severity |
+| `display_manager` | display manager | render entities; manage display outputs; handle updates and destruction |
+| `context` | execution context | maintain shared state across operations; store configuration; manage scopes |
+
+### 5.2 Entity Type Components
+
+| component | description | entity types managed |
+| :--- | :--- | :--- |
+| `code_engine` | code entity management | `file`, `symbol` |
+| `document_engine` | document entity management | `block`, `component` |
+| `workflow_engine` | workflow entity management | `workflow`, `trigger`, `action`, `condition`, `loop` |
+| `agent_engine` | agent entity management | `agent`, `task`, `memory`, `tool`, `artifact` |
+| `database_engine` | database entity management | `database`, `view`, `relationship` |
+
+### 5.3 Storage Components
+
+| component | description | storage targets |
+| :--- | :--- | :--- |
+| `file_storage` | file system storage | local files, directories |
+| `memory_storage` | in-memory storage | runtime cache, temporary data |
+| `indexeddb_storage` | browser storage | web applications |
+| `sqlite_storage` | sqlite storage | embedded database |
+| `cloud_storage` | cloud sync | optional remote sync |
+
+### 5.4 Display Components
+
+| component | description | display targets |
+| :--- | :--- | :--- |
+| `dom_renderer` | dom rendering | web ui |
+| `terminal_renderer` | terminal rendering | command line interface |
+| `canvas_renderer` | canvas rendering | custom graphics |
+| `html_renderer` | html rendering | export to html |
+
+### 5.5 Operation Groups
+
+| group | operations | description |
+| :--- | :--- | :--- |
+| `entity_ops` | `create_entity`, `get_entity`, `set_entity`, `delete_entity`, `list_entities`, `find_entities`, `exists_entity` | entity lifecycle management |
+| `attribute_ops` | `get_attribute`, `set_attribute`, `delete_attribute`, `list_attributes`, `merge_attributes` | attribute management |
+| `link_ops` | `get_links`, `get_links_by_type`, `get_targets`, `get_sources`, `find_path`, `trace_connections` | relationship management |
+| `trait_ops` | `has_trait`, `add_trait`, `remove_trait`, `list_traits`, `get_trait_operations` | trait management |
+| `state_ops` | `get_state`, `set_state`, `reset_state`, `get_progress`, `is_complete` | state management |
+| `diagnostic_ops` | `add_diagnostic`, `clear_diagnostics`, `get_diagnostics`, `get_errors`, `get_warnings` | diagnostic management |
+| `pipeline_ops` | `run_decompose`, `run_validate`, `run_parse`, `run_transform`, `run_reason`, `run_resolve`, `run_index`, `run_compose`, `run_execute`, `run_format`, `run_display`, `run_persist`, `run_respond` | pipeline execution |
+| `transform_ops` | `transform_entity`, `transform_all`, `transform_by_type`, `transform_by_trait`, `transform_by_condition` | entity transformation |
+| `resolve_ops` | `resolve_entity`, `resolve_all`, `resolve_by_type`, `resolve_by_trait`, `resolve_symbol`, `resolve_relation` | reference resolution |
+| `index_ops` | `index_entity`, `index_all`, `index_by_type`, `index_by_trait`, `search_entity`, `search_type`, `search_text`, `search_property` | search and indexing |
+| `execute_ops` | `execute_entity`, `execute_all`, `execute_parallel`, `execute_sequence`, `execute_condition`, `execute_loop`, `interrupt_execution`, `resume_execution` | execution management |
+| `display_ops` | `display_entity`, `display_all`, `display_tree`, `display_list`, `update_display`, `destroy_display` | display management |
+| `storage_ops` | `save_entity`, `save_all`, `load_entity`, `load_all`, `delete_stored`, `list_stored`, `version_entity`, `revert_entity` | storage management |
+| `debug_ops` | `debug_entity`, `debug_pipeline`, `step_forward`, `step_backward`, `inspect_entity`, `get_metrics`, `log_message`, `get_logs` | debugging |
+
+---
+
+## 6. Component Specifications
+
+### 6.1 Runner Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | runner instance identifier |
+| `mode` | `string` | `single`, `parallel`, `sequence` |
+| `timeout` | `number` | global execution timeout in ms |
+| `max_parallel` | `number` | maximum parallel executions |
+| `debug` | `boolean` | debug mode enabled |
+| `log_level` | `string` | `debug`, `info`, `warn`, `error` |
+| `storage` | `storage_provider` | storage backend |
+| `index` | `index_provider` | index provider |
+| `display` | `display_provider` | display provider |
+| `context` | `map` | global execution context |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `runner.execute` | `operation: string, entity: entity, context: map` | `response` | execute operation on entity |
+| `runner.execute_batch` | `operations: message[], context: map` | `response[]` | execute batch of operations |
+| `runner.execute_pipeline` | `entity: entity, context: map` | `response` | run full pipeline on entity |
+| `runner.execute_stage` | `stage: string, entity: entity, context: map` | `response` | run single pipeline stage |
+| `runner.interrupt` | `execution_id: string` | `void` | interrupt execution |
+| `runner.resume` | `execution_id: string` | `response` | resume execution |
+| `runner.get_status` | `execution_id: string` | `status` | get execution status |
+| `runner.get_metrics` | `void` | `metrics` | get runner metrics |
+
+### 6.2 Entity Store Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | store instance identifier |
+| `storage` | `storage_provider` | storage backend |
+| `cache_enabled` | `boolean` | cache enabled |
+| `cache_ttl` | `number` | cache ttl in ms |
+| `version_enabled` | `boolean` | versioning enabled |
+| `max_versions` | `number` | maximum versions per entity |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `store.save` | `entity: entity` | `void` | save entity |
+| `store.load` | `id: string` | `entity` | load entity |
+| `store.delete` | `id: string` | `void` | delete entity |
+| `store.list` | `type: string` | `string[]` | list entity ids |
+| `store.find` | `condition: function` | `entity[]` | find entities |
+| `store.get_version` | `id: string, version: string` | `entity` | get version |
+| `store.list_versions` | `id: string` | `string[]` | list versions |
+| `store.revert` | `id: string, version: string` | `entity` | revert to version |
+| `store.clear_cache` | `void` | `void` | clear cache |
+
+### 6.3 Entity Index Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | index instance identifier |
+| `storage` | `storage_provider` | index storage backend |
+| `case_sensitive` | `boolean` | case-sensitive search |
+| `fuzzy_threshold` | `number` | fuzzy search threshold |
+| `autocomplete_limit` | `number` | autocomplete result limit |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `index.index_entity` | `entity: entity` | `void` | index entity |
+| `index.index_batch` | `entities: entity[]` | `void` | index batch |
+| `index.remove_entity` | `id: string` | `void` | remove from index |
+| `index.search_text` | `query: string, options: map` | `entity[]` | full-text search |
+| `index.search_property` | `key: string, value: any` | `entity[]` | property search |
+| `index.search_fuzzy` | `query: string, threshold: number` | `entity[]` | fuzzy search |
+| `index.search_autocomplete` | `query: string, limit: number` | `string[]` | autocomplete |
+| `index.rebuild` | `entities: entity[]` | `void` | rebuild index |
+| `index.get_stats` | `void` | `stats` | get index stats |
+
+### 6.4 Pipeline Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | pipeline instance identifier |
+| `stages` | `string[]` | ordered stage list |
+| `current_stage` | `string` | current execution stage |
+| `mode` | `string` | `normal`, `dry_run`, `step` |
+| `stop_on_error` | `boolean` | stop on error |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `pipeline.run` | `entity: entity, context: map` | `response` | run full pipeline |
+| `pipeline.run_stage` | `stage: string, entity: entity, context: map` | `response` | run single stage |
+| `pipeline.step_forward` | `entity: entity, context: map` | `response` | step to next stage |
+| `pipeline.step_backward` | `entity: entity, context: map` | `response` | step to previous stage |
+| `pipeline.get_progress` | `entity: entity` | `progress` | get pipeline progress |
+| `pipeline.reset` | `entity: entity` | `void` | reset entity state |
+| `pipeline.get_trace` | `run_id: string` | `trace` | get execution trace |
+
+### 6.5 Operation Registry Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | registry instance identifier |
+| `operations` | `map<string, operation>` | registered operations |
+| `aliases` | `map<string, string>` | operation aliases |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `registry.register` | `name: string, operation: function, metadata: map` | `void` | register operation |
+| `registry.register_alias` | `alias: string, target: string` | `void` | register alias |
+| `registry.lookup` | `name: string` | `operation` | lookup operation |
+| `registry.list` | `void` | `string[]` | list operations |
+| `registry.get_metadata` | `name: string` | `map` | get operation metadata |
+| `registry.unregister` | `name: string` | `void` | unregister operation |
+
+### 6.6 Type Registry Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | registry instance identifier |
+| `types` | `map<string, type_metadata>` | registered types |
+| `default_traits` | `map<string, string[]>` | default traits by type |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `registry.register_type` | `name: string, metadata: map, default_traits: string[]` | `void` | register type |
+| `registry.lookup_type` | `name: string` | `type_metadata` | lookup type |
+| `registry.list_types` | `void` | `string[]` | list types |
+| `registry.get_default_traits` | `type: string` | `string[]` | get default traits |
+| `registry.set_default_traits` | `type: string, traits: string[]` | `void` | set default traits |
+
+### 6.7 Trait Registry Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | registry instance identifier |
+| `traits` | `map<string, trait_metadata>` | registered traits |
+| `trait_operations` | `map<string, string[]>` | operations by trait |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `registry.register_trait` | `name: string, description: string, operations: string[]` | `void` | register trait |
+| `registry.lookup_trait` | `name: string` | `trait_metadata` | lookup trait |
+| `registry.list_traits` | `void` | `string[]` | list traits |
+| `registry.get_operations` | `trait: string` | `string[]` | get trait operations |
+| `registry.add_operation` | `trait: string, operation: string` | `void` | add operation to trait |
+| `registry.remove_operation` | `trait: string, operation: string` | `void` | remove operation from trait |
+
+### 6.8 Link Manager Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | link manager instance identifier |
+| `links` | `map<string, link>` | stored links |
+| `index_enabled` | `boolean` | index links for fast query |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `link_manager.create` | `source_id: string, target_id: string, type: string, attributes: map` | `link` | create link |
+| `link_manager.delete` | `link_id: string` | `void` | delete link |
+| `link_manager.get` | `link_id: string` | `link` | get link |
+| `link_manager.get_by_source` | `source_id: string` | `link[]` | get links by source |
+| `link_manager.get_by_target` | `target_id: string` | `link[]` | get links by target |
+| `link_manager.get_by_type` | `type: string` | `link[]` | get links by type |
+| `link_manager.find_path` | `source_id: string, target_id: string` | `entity[]` | find path |
+| `link_manager.trace_connections` | `entity_id: string` | `map` | trace all connections |
+
+### 6.9 Diagnostic Manager Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | diagnostic manager instance identifier |
+| `diagnostics` | `map<string, diagnostic[]>` | diagnostics by entity |
+| `max_diagnostics` | `number` | maximum diagnostics per entity |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `diagnostic.add` | `entity_id: string, diagnostic: diagnostic` | `void` | add diagnostic |
+| `diagnostic.add_batch` | `entity_id: string, diagnostics: diagnostic[]` | `void` | add batch |
+| `diagnostic.clear` | `entity_id: string` | `void` | clear diagnostics |
+| `diagnostic.get` | `entity_id: string` | `diagnostic[]` | get diagnostics |
+| `diagnostic.get_errors` | `entity_id: string` | `diagnostic[]` | get errors |
+| `diagnostic.get_warnings` | `entity_id: string` | `diagnostic[]` | get warnings |
+| `diagnostic.filter` | `entity_id: string, severity: string` | `diagnostic[]` | filter by severity |
+
+### 6.10 Display Manager Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | display manager instance identifier |
+| `displays` | `map<string, display_output>` | active displays |
+| `renderer` | `renderer_provider` | renderer provider |
+| `theme` | `string` | default theme |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `display_manager.render` | `entity: entity, options: map` | `display_output` | render entity |
+| `display_manager.render_tree` | `entity: entity, options: map` | `display_output` | render entity tree |
+| `display_manager.render_list` | `entities: entity[], options: map` | `display_output` | render entity list |
+| `display_manager.update` | `display_id: string, entity: entity` | `display_output` | update display |
+| `display_manager.destroy` | `display_id: string` | `void` | destroy display |
+| `display_manager.list` | `void` | `string[]` | list active displays |
+| `display_manager.set_theme` | `theme: string` | `void` | set default theme |
+
+### 6.11 Context Component
+
+| attribute | type | description |
+| :--- | :--- | :--- |
+| `id` | `string` | context instance identifier |
+| `parent` | `context` | parent context |
+| `data` | `map` | context data |
+| `config` | `map` | configuration |
+| `variables` | `map` | variables |
+| `constants` | `map` | constants |
+| `depth` | `number` | nesting depth |
+
+| operation | input | output | description |
+| :--- | :--- | :--- | :--- |
+| `context.get` | `key: string` | `any` | get value |
+| `context.set` | `key: string, value: any` | `void` | set value |
+| `context.has` | `key: string` | `boolean` | check existence |
+| `context.delete` | `key: string` | `void` | delete value |
+| `context.push` | `data: map` | `context` | create child context |
+| `context.pop` | `void` | `context` | pop to parent |
+| `context.merge` | `data: map` | `void` | merge data |
+| `context.clear` | `void` | `void` | clear context |
+
+---
+
+## 7. Feature List
+
+### 7.1 Core Features
+
+| feature | description | priority |
+| :--- | :--- | :--- |
+| generic entity model | all entities share the same base structure | p0 |
+| 13-stage pipeline | universal processing pipeline for all entities | p0 |
+| generic operations | create, append, insert, transform, resolve, execute, display | p0 |
+| trait-based behavior | behavior determined by traits, not by type | p0 |
+| link-based relationships | entities can link to any other entity | p0 |
+| diagnostic capture | errors, warnings, hints captured at every stage | p0 |
+| state tracking | pipeline progress tracked for every entity | p0 |
+| extensible type system | new types can be added without changing core | p0 |
+| extensible trait system | new traits can be added without changing core | p0 |
+| extensible operation system | new operations can be added without changing core | p0 |
+| local-first storage | data stored locally by default | p0 |
+| full-text search | search across all entities | p0 |
+| command palette | unified command interface | p0 |
+| keyboard shortcuts | customizable shortcuts for all operations | p1 |
+| dark/light themes | visual theme support | p0 |
+
+### 7.2 Code Features
+
+| feature | description | priority |
+| :--- | :--- | :--- |
+| syntax highlighting | 20+ programming languages | p0 |
+| autocomplete | intelligent code completion | p0 |
+| diagnostics | errors, warnings, hints inline | p0 |
+| symbol resolution | go to definition, find references | p0 |
+| code formatting | automatic code formatting | p1 |
+| multiple cursors | edit multiple positions simultaneously | p1 |
+| code folding | collapse/expand code blocks | p1 |
+| line numbers | display line numbers | p0 |
+| minimap | overview of code structure | p2 |
+
+### 7.3 Document Features
+
+| feature | description | priority |
+| :--- | :--- | :--- |
+| block-based editing | structured document blocks | p0 |
+| block types | heading, paragraph, list, callout, code, etc. | p0 |
+| slash commands | `/` to insert blocks | p0 |
+| mentions | `@` to link entities | p0 |
+| nested blocks | blocks within blocks | p0 |
+| block navigation | keyboard navigation between blocks | p1 |
+| comments | add comments to blocks | p1 |
+| version history | track document changes | p1 |
+| document export | export to markdown, html, pdf | p1 |
+
+### 7.4 Database Features
+
+| feature | description | priority |
+| :--- | :--- | :--- |
+| database schema | define properties for databases | p0 |
+| property types | text, number, select, date, relation, rollup, etc. | p0 |
+| multiple views | table, board, gallery, list, calendar | p0 |
+| filtering | filter database rows | p0 |
+| sorting | sort database rows | p0 |
+| relations | cross-database relationships | p1 |
+| rollups | aggregate data from related rows | p1 |
+| formulas | computed properties | p1 |
+
+### 7.5 Workflow Features
+
+| feature | description | priority |
+| :--- | :--- | :--- |
+| visual workflow builder | drag-and-drop workflow construction | p0 |
+| node types | trigger, action, condition, loop, subworkflow, parallel, merge, timeout | p0 |
+| node configuration | configure node settings | p0 |
+| workflow execution | run workflows | p0 |
+| execution logs | see workflow execution history | p0 |
+| parallel execution | run branches in parallel | p1 |
+| subworkflows | nest workflows within workflows | p1 |
+| triggers | schedule, webhook, file change, database change, manual | p0 |
+| error handling | handle execution errors | p1 |
+| workflow versioning | version control for workflows | p1 |
+
+### 7.6 Agent Features
+
+| feature | description | priority |
+| :--- | :--- | :--- |
+| agent orchestration | orchestrator agents decompose complex tasks | p0 |
+| parallel subagents | multiple agents working in parallel | p0 |
+| agent memory | short-term, long-term, project memory | p0 |
+| tool calling | terminal, file system, browser, api, database | p0 |
+| artifacts | plans, code diffs, screenshots, walkthroughs | p0 |
+| approval workflows | human-in-the-loop review | p0 |
+| streaming output | real-time thought process display | p0 |
+| agent handoff | transfer between agents | p1 |
+| custom system prompts | define agent behavior | p0 |
+| multiple llm providers | fallback support | p1 |
+
+### 7.7 Integration Features
+
+| feature | description | priority |
+| :--- | :--- | :--- |
+| code in documents | execute code blocks from documents | p0 |
+| workflow triggers from documents | click to run workflows | p0 |
+| agent access to documents | agents read and write documents | p0 |
+| agent access to code | agents read and write code | p0 |
+| database-driven workflows | database changes trigger workflows | p1 |
+| unified search | search all entity types | p0 |
+| entity linking | link any entity to any other entity | p0 |
+
+---
+
+## 8. Implementation Phases
+
+### Phase 1: Core Infrastructure (months 1-3)
+
+| component | deliverables | description |
+| :--- | :--- | :--- |
+| core entity model | `entity`, `link`, `state`, `diagnostic` | base entity structures |
+| operation registry | `registry.register`, `registry.lookup` | operation registration |
+| type registry | `registry.register_type`, `registry.lookup_type` | entity type registration |
+| trait registry | `registry.register_trait`, `registry.lookup_trait` | trait registration |
+| entity store | `store.save`, `store.load`, `store.delete` | storage operations |
+| entity index | `index.index_entity`, `index.search_text` | search operations |
+| link manager | `link_manager.create`, `link_manager.get_by_source` | relationship management |
+| diagnostic manager | `diagnostic.add`, `diagnostic.get` | diagnostic management |
+| context | `context.get`, `context.set`, `context.push` | execution context |
+| runner | `runner.execute`, `runner.execute_batch` | universal executor |
+| pipeline | `pipeline.run`, `pipeline.run_stage` | 13-stage pipeline |
+| entity operations | `create_entity`, `get_entity`, `set_entity`, `delete_entity` | entity lifecycle |
+
+### Phase 2: Storage & Index (months 4-6)
+
+| component | deliverables | description |
+| :--- | :--- | :--- |
+| file storage | `file_storage.save`, `file_storage.load` | local file storage |
+| memory storage | `memory_storage` | in-memory cache |
+| index storage | index persistence | persistent index |
+| version support | `store.get_version`, `store.list_versions`, `store.revert` | entity versioning |
+| import/export | format support | import/export to formats |
+| search autocomplete | `index.search_autocomplete` | autocomplete suggestions |
+| fuzzy search | `index.search_fuzzy` | fuzzy text search |
+
+### Phase 3: Display & UI (months 7-9)
+
+| component | deliverables | description |
+| :--- | :--- | :--- |
+| dom renderer | `dom_renderer.render` | web ui rendering |
+| display manager | `display_manager.render`, `display_manager.update` | display management |
+| theme support | dark, light themes | visual themes |
+| command palette | unified command interface | command palette |
+| keyboard shortcuts | customizable shortcuts | shortcut support |
+| editor surface | code editing, syntax highlighting | code editor |
+| document surface | block-based editing | document editor |
+
+### Phase 4: Entity Engines (months 10-12)
+
+| component | deliverables | description |
+| :--- | :--- | :--- |
+| code engine | `code_engine` | code entity management |
+| document engine | `document_engine` | document entity management |
+| database engine | `database_engine` | database entity management |
+| workflow engine | `workflow_engine` | workflow entity management |
+| agent engine | `agent_engine` | agent entity management |
+
+### Phase 5: Integration (months 13-15)
+
+| component | deliverables | description |
+| :--- | :--- | :--- |
+| code-document integration | code in documents, document code execution | cross-engine integration |
+| workflow triggers | database triggers, file triggers | workflow automation |
+| agent integration | agent access to documents, code, databases | agent integration |
+| unified search | search across all entity types | global search |
+| entity linking | link any entity to any other entity | cross-entity linking |
+
+### Phase 6: Polish (months 16-18)
+
+| component | deliverables | description |
+| :--- | :--- | :--- |
+| performance optimization | latency, memory improvements | optimization |
+| debugging tools | `debug_entity`, `debug_pipeline`, `step_forward` | debugging |
+| logging | `log_message`, `get_logs` | logging |
+| metrics | `get_metrics`, performance tracking | monitoring |
+| documentation | user and developer documentation | documentation |
+| testing | unit, integration, e2e tests | testing |
+
+---
+
+## 9. Success Metrics
+
+| metric | target | measurement |
+| :--- | :--- | :--- |
+| pipeline latency (small entities) | < 50ms | end-to-end measurement |
+| pipeline latency (large entities) | < 2s | end-to-end measurement |
+| autocomplete response time | < 100ms | keystroke to display |
+| document open time (1000 blocks) | < 500ms | click to render |
+| workflow execution start delay | < 200ms | click to first node |
+| agent streaming latency | < 1s | prompt to first token |
+| memory usage (idle) | < 100mb | process memory |
+| entity type support | 20+ | number of types |
+| language support | 20+ | number of languages |
+| trait support | 23+ | number of traits |
+| operation support | 100+ | number of operations |
+| user satisfaction (nps) | > 50 | user surveys |
+
+---
+
+## 10. Risks and Mitigations
+
+| risk | impact | mitigation |
+| :--- | :--- | :--- |
+| performance bottlenecks in generic pipeline | high | optimize stage contracts; implement caching; async execution |
+| memory leaks with long-running agents | high | memory limits; garbage collection monitoring; memory tracking |
+| complexity of generic entity system | medium | clear documentation; debugging tools; example implementations |
+| security vulnerabilities (agent tool access) | high | sandboxing; permission controls; audit logs |
+| dependency-free constraint limiting features | medium | implement minimal required parsers; reuse browser apis |
+| snake case only naming constraint | low | enforce naming conventions; linting |
+| generic operations complexity | medium | clear operation registry; operation documentation |
+| cross-engine integration complexity | high | pipeline as single integration point; unified entity model |
+
+---
+
+## 11. Glossary
+
+| term | definition |
+| :--- | :--- |
+| `entity` | universal atomic unit that flows through the pipeline |
+| `trait` | behavior marker that enables specific operations |
+| `link` | relationship between two entities |
+| `state` | pipeline progression flags on an entity |
+| `diagnostic` | error, warning, or hint captured during processing |
+| `runner` | universal executor that operates on entities |
+| `pipeline` | 13-stage processing flow |
+| `operation` | generic function that works on any entity |
+| `attribute` | extensible key-value store on an entity |
+| `context` | execution context shared across operations |
+| `storage` | persistence layer for entities |
+| `index` | searchable index of entity content |
+| `display` | visual rendering of entities |
+
+---
+
+## 12. Document Metadata
+
+| property | value |
+| :--- | :--- |
+| document id | `prd-universal-entity-v1.0` |
+| version | `1.0.0` |
+| date | `2026-08-21` |
+| status | `draft` |
+| authors | `product team` |
+| stakeholders | `engineering`, `design`, `product` |
+| target release | `q4 2027` |
+| total requirements | `98` |
+| total features | `64` |
+| total components | `27` |
