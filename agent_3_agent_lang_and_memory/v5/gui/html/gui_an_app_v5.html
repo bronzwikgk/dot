@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semantic Notion - Component Library</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="book.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css">
+</head>
+<body>
+
+<!-- ===== EDITOR (viewport) ===== -->
+<header>
+    <h1>an app</h1>
+    <nav>
+        <menu>
+            <li><a href="#">File</a>
+                <ul>
+                    <li><a href="#"><i class="ri-add-circle-line"></i> New Book</a></li>
+                    <li><a href="#"><i class="ri-layout-grid-line"></i> New from Templates</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-upload-2-line"></i> Import</a></li>
+                    <li><a href="#"><i class="ri-download-2-line"></i> Export</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-save-line"></i> Save</a></li>
+                    <li><a href="#"><i class="ri-settings-3-line"></i> Settings</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Edit</a>
+                <ul>
+                    <li><a href="#"><i class="ri-arrow-go-back-line"></i> Undo</a></li>
+                    <li><a href="#"><i class="ri-arrow-go-forward-line"></i> Redo</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-arrow-up-line"></i> Move Cell Up</a></li>
+                    <li><a href="#"><i class="ri-arrow-down-line"></i> Move Cell Down</a></li>
+                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete Cell</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Insert</a>
+                <ul>
+                    <li><a href="#"><i class="ri-markdown-line"></i> Text Cell</a></li>
+                    <li><a href="#"><i class="ri-terminal-box-line"></i> Pipeline Cell</a></li>
+                    <li><a href="#"><i class="ri-code-line"></i> Code Cell</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-layout-masonry-line"></i> Component</a></li>
+                    <li><a href="#"><i class="ri-filter-3-line"></i> Filter</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Run</a>
+                <ul>
+                    <li><a href="#"><i class="ri-play-line"></i> Run Active</a></li>
+                    <li><a href="#"><i class="ri-play-circle-line"></i> Run Selected</a></li>
+                    <li><a href="#"><i class="ri-play-circle-line"></i> Run All</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-node-tree"></i> Execute DAG</a></li>
+                    <li><a href="#"><i class="ri-play-circle-line"></i> Execute Flow</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-eraser-line"></i> Reset</a></li>
+                </ul>
+            </li>
+            <li><a href="#">View</a>
+                <ul>
+                    <li><a href="#"><i class="ri-terminal-box-line"></i> Jupyter Layout</a></li>
+                    <li><a href="#"><i class="ri-layout-masonry-line"></i> Notion Layout</a></li>
+                    <li><a href="#"><i class="ri-code-s-slash-line"></i> VSCode Layout</a></li>
+                    <li><a href="#"><i class="ri-node-tree"></i> Flow Builder</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-side-bar-line"></i> Toggle Sidebar</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Help</a>
+                <ul>
+                    <li><a href="#"><i class="ri-information-line"></i> About</a></li>
+                    <li><a href="#"><i class="ri-lightbulb-line"></i> Getting Started</a></li>
+                    <li><a href="#"><i class="ri-book-open-line"></i> API Docs</a></li>
+                </ul>
+            </li>
+        </menu>
+    </nav>
+    <form role="search">
+        <i class="ri-search-line"></i>
+        <input type="search" placeholder="Search books, cells...">
+    </form>
+    <section>
+        <button type="button" title="Templates"><i class="ri-layout-grid-line"></i></button>
+        <button type="button" title="Take a Tour"><i class="ri-question-line"></i></button>
+        <button type="button" title="Settings"><i class="ri-settings-3-line"></i></button>
+        <hr>
+        <button type="button" title="Minimize"><i class="ri-subtract-line"></i></button>
+        <button type="button" title="Maximize"><i class="ri-checkbox-blank-line"></i></button>
+        <button type="button" title="Close"><i class="ri-close-line"></i></button>
+    </section>
+</header>
+
+<main>
+    <!-- ===== SIDEBAR ===== -->
+    <aside>
+        <section>
+            <h2>Quick Access</h2>
+            <nav>
+                <a href="#" aria-current="page"><i class="ri-star-line"></i> Favorites</a>
+                <a href="#"><i class="ri-history-line"></i> Recent</a>
+                <a href="#"><i class="ri-archive-line"></i> Archived</a>
+            </nav>
+        </section>
+        <section>
+            <h2>Explorer</h2>
+            <details open>
+                <summary><i class="ri-folder-3-line"></i> Books</summary>
+                <nav>
+                    <a href="#"><i class="ri-file-text-line"></i> Component Library</a>
+                    <a href="#"><i class="ri-file-text-line"></i> Getting Started</a>
+                    <a href="#"><i class="ri-file-code-line"></i> API Reference</a>
+                </nav>
+            </details>
+        </section>
+        <section>
+            <h2>Templates</h2>
+            <nav>
+                <a href="#"><i class="ri-layout-grid-line"></i> Notebook</a>
+                <a href="#"><i class="ri-file-code-line"></i> Code</a>
+                <a href="#"><i class="ri-flow-chart-line"></i> Flow</a>
+                <a href="#"><i class="ri-file-text-line"></i> Meeting Notes</a>
+            </nav>
+        </section>
+        <section>
+            <h2>Tags</h2>
+            <nav>
+                <a href="#"><i class="ri-price-tag-3-line"></i> Reference</a>
+                <a href="#"><i class="ri-price-tag-3-line"></i> Draft</a>
+            </nav>
+        </section>
+        <section>
+            <h2>Trash</h2>
+            <nav>
+                <a href="#"><i class="ri-delete-bin-line"></i> Deleted Items</a>
+            </nav>
+        </section>
+    </aside>
+
+    <!-- ===== BOOK (document) ===== -->
+    <article id="book_01">
+        <header id="book_01_header">
+            <nav>
+                <menu>
+                    <li aria-current="page"><a href="#"><i class="ri-file-text-line"></i> Component Library <i class="ri-close-line"></i></a></li>
+                    <li id="book_01_col_00_block_01_cell_01"><a href="#"><i class="ri-projector-2-line"></i> Getting Started <i class="ri-close-line"></i></a></li>
+                </menu>
+            </nav>
+        </header>
+
+        <!-- Editor area (scrollable) -->
+        <section id="book_01_editor">
+            <section id="book_01_col_00">
+                <h1>Component Library</h1>
+                <p>Complete reference of all Notion block types organized by semantic hierarchy.</p>
+            </section>
+
+        <!-- ===== COLLECTION 1: Text & Structure ===== -->
+        <section id="book_01_col_01">
+            <h2>Text & Structure Blocks</h2>
+            <ul id="book_01_col_01_block_01">
+                <li id="book_01_col_01_block_01_cell_01">
+                    <section>
+                        <h3>Paragraph</h3>
+                        <p>Default text for writing notes and general content. Contains <strong>bold</strong>, <em>italic</em>, <code>inline code</code>, and <a href="#">links</a>.</p>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_01">
+                    <section>
+                        <h3>Headings</h3>
+                        <h1>Heading 1 - Page Title</h1>
+                        <h2>Heading 2 - Section Title</h2>
+                        <h3>Heading 3 - Subsection Title</h3>
+                        <h4>Heading 4 - Minor Title</h4>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_02">
+                    <section>
+                        <h3>Quote</h3>
+                        <blockquote>
+                            <p>The best way to predict the future is to invent it.</p>
+                            <cite>Alan Kay</cite>
+                        </blockquote>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_03">
+                    <section>
+                        <h3>Callout</h3>
+                        <aside>
+                            <p><strong>Important:</strong> Callout blocks draw attention to key information.</p>
+                        </aside>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_04">
+                    <section>
+                        <h3>Code</h3>
+                        <pre><code>function greet(name) {
+    return `Hello, ${name}!`;
+}</code></pre>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_05">
+                    <section>
+                        <h3>Equation</h3>
+                        <p>Inline: <span>E = mc<sup>2</sup></span></p>
+                        <p>Block: <strong>f(x) = (-b + sqrt(b<sup>2</sup> - 4ac)) / 2a</strong></p>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_06">
+                    <section>
+                        <h3>Divider</h3>
+                        <hr>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_07">
+                    <section>
+                        <h3>Table of Contents</h3>
+                        <nav>
+                            <ol>
+                                <li id="book_01_col_02_block_01_cell_08"><a href="#">Text & Structure</a></li>
+                                <li id="book_01_col_02_block_01_cell_09"><a href="#">List & Interactive</a></li>
+                                <li id="book_01_col_02_block_01_cell_10"><a href="#">Media</a></li>
+                                <li id="book_01_col_02_block_01_cell_11"><a href="#">Database</a></li>
+                            </ol>
+                        </nav>
+                    </section>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ===== COLLECTION 2: List & Interactive ===== -->
+        <section>
+            <h2>List & Interactive Blocks</h2>
+            <ul>
+                <li id="book_01_col_02_block_01_cell_12">
+                    <section>
+                        <h3>Bulleted List</h3>
+                        <ul>
+                            <li id="book_01_col_02_block_01_cell_13">First item</li>
+                            <li id="book_01_col_02_block_01_cell_14">Second item</li>
+                            <li id="book_01_col_02_block_01_cell_15">Third item</li>
+                        </ul>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_16">
+                    <section>
+                        <h3>Numbered List</h3>
+                        <ol>
+                            <li id="book_01_col_02_block_01_cell_17">Step one</li>
+                            <li id="book_01_col_02_block_01_cell_18">Step two</li>
+                            <li id="book_01_col_02_block_01_cell_19">Step three</li>
+                        </ol>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_20">
+                    <section>
+                        <h3>To-Do List</h3>
+                        <ul>
+                            <li aria-checked="true">Task completed</li>
+                            <li aria-checked="true">Task done</li>
+                            <li aria-checked="false">Task pending</li>
+                        </ul>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_21">
+                    <section>
+                        <h3>Toggle</h3>
+                        <details>
+                            <summary>Click to expand</summary>
+                            <p>Hidden content revealed on click. Great for FAQ and collapsible sections.</p>
+                        </details>
+                    </section>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ===== COLLECTION 3: Media ===== -->
+        <section>
+            <h2>Media Blocks</h2>
+            <ul>
+                <li id="book_01_col_02_block_01_cell_22">
+                    <section>
+                        <h3>Image</h3>
+                        <figure>
+                            <img src="https://picsum.photos/800/400" alt="Sample image">
+                            <figcaption>Figure 1: Sample image with caption</figcaption>
+                        </figure>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_23">
+                    <section>
+                        <h3>Video</h3>
+                        <video controls>
+                            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+                        </video>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_24">
+                    <section>
+                        <h3>Audio</h3>
+                        <audio controls>
+                            <source src="https://www.w3schools.com/html/horse.mp3" type="audio/mpeg">
+                        </audio>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_25">
+                    <section>
+                        <h3>File</h3>
+                        <a href="#" download><i class="ri-file-download-line"></i> document.pdf (2.4 MB)</a>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_26">
+                    <section>
+                        <h3>Bookmark</h3>
+                        <a href="https://notion.so" target="_blank"><i class="ri-links-line"></i> Notion - Your workspace</a>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_27">
+                    <section>
+                        <h3>Embed</h3>
+                        <figure>
+                            <iframe src="https://www.openstreetmap.org/export/embed.html?bbox=-0.1,51.5,0.1,51.6&layer=mapnik" width="100%" height="300"></iframe>
+                            <figcaption>Embedded map</figcaption>
+                        </figure>
+                    </section>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ===== COLLECTION 4: Database ===== -->
+        <section>
+            <h2>Database Blocks</h2>
+            <ul>
+                <li id="book_01_col_02_block_01_cell_28">
+                    <section>
+                        <h3>Table</h3>
+                        <table>
+                            <thead>
+                                <tr><th>Task</th><th>Assignee</th><th>Status</th><th>Due</th></tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>Design</td><td>Sarah</td><td>In Progress</td><td><time datetime="2026-09-01">Sep 1</time></td></tr>
+                                <tr><td>Build API</td><td>Mike</td><td>Todo</td><td><time datetime="2026-09-15">Sep 15</time></td></tr>
+                                <tr><td>Docs</td><td>Emma</td><td>Done</td><td><time datetime="2026-08-20">Aug 20</time></td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_29">
+                    <section>
+                        <h3>Board (Kanban)</h3>
+                        <ul>
+                            <li id="book_01_col_02_block_01_cell_30">Todo: Research</li>
+                            <li id="book_01_col_02_block_01_cell_31">In Progress: Design</li>
+                            <li id="book_01_col_02_block_01_cell_32">Done: Kickoff</li>
+                        </ul>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_33">
+                    <section>
+                        <h3>Gallery</h3>
+                        <ul>
+                            <li id="book_01_col_02_block_01_cell_34"><figure><img src="https://picsum.photos/200/150?random=1" alt="P1"><figcaption>Project Alpha</figcaption></figure></li>
+                            <li id="book_01_col_02_block_01_cell_35"><figure><img src="https://picsum.photos/200/150?random=2" alt="P2"><figcaption>Project Beta</figcaption></figure></li>
+                        </ul>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_36">
+                    <section>
+                        <h3>Calendar</h3>
+                        <table>
+                            <thead><tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr></thead>
+                            <tbody>
+                                <tr><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td><td>6</td></tr>
+                                <tr><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td><td>12</td><td>13</td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_37">
+                    <section>
+                        <h3>Timeline</h3>
+                        <table>
+                            <thead><tr><th>Task</th><th>Start</th><th>Duration</th><th>Progress</th></tr></thead>
+                            <tbody>
+                                <tr><td>Research</td><td><time datetime="2026-09-01">Sep 1</time></td><td>2 weeks</td><td><progress value="100" max="100"></progress></td></tr>
+                                <tr><td>Design</td><td><time datetime="2026-09-15">Sep 15</time></td><td>3 weeks</td><td><progress value="60" max="100"></progress></td></tr>
+                            </tbody>
+                        </table>
+                    </section>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ===== COLLECTION 5: Forms ===== -->
+        <section>
+            <h2>Form Elements</h2>
+            <ul>
+                <li id="book_01_col_02_block_01_cell_38">
+                    <section>
+                        <h3>Contact Form</h3>
+                        <form>
+                            <fieldset>
+                                <legend>Send Message</legend>
+                                <label for="name">Name</label>
+                                <input type="text" id="name" placeholder="Your name...">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" placeholder="you@example.com">
+                                <label for="subject">Subject</label>
+                                <select id="subject">
+                                    <option value="general">General</option>
+                                    <option value="support">Support</option>
+                                </select>
+                                <label for="msg">Message</label>
+                                <textarea id="msg" placeholder="Write here..."></textarea>
+                                <button type="submit">Send</button>
+                            </fieldset>
+                        </form>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_39">
+                    <section>
+                        <h3>Progress Bars</h3>
+                        <ul>
+                            <li id="book_01_col_02_block_01_cell_40">
+                                <p>Website Redesign</p>
+                                <progress value="75" max="100">75%</progress>
+                                <p><strong>75%</strong> complete</p>
+                            </li>
+                            <li id="book_01_col_02_block_01_cell_41">
+                                <p>Mobile App</p>
+                                <progress value="40" max="100">40%</progress>
+                                <p><strong>40%</strong> complete</p>
+                            </li>
+                        </ul>
+                    </section>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ===== COLLECTION 6: Layout ===== -->
+        <section>
+            <h2>Layout Blocks</h2>
+            <ul>
+                <li id="book_01_col_02_block_01_cell_42">
+                    <section>
+                        <h3>Columns</h3>
+                        <ul>
+                            <li id="book_01_col_02_block_01_cell_43">Column 1 content</li>
+                            <li id="book_01_col_02_block_01_cell_44">Column 2 content</li>
+                        </ul>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_45">
+                    <section>
+                        <h3>Breadcrumb</h3>
+                        <nav>
+                            <a href="#">Home</a> / <a href="#">Projects</a> / <a href="#">Library</a>
+                        </nav>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_46">
+                    <section>
+                        <h3>Child Page</h3>
+                        <a href="#"><i class="ri-file-text-line"></i> Project Requirements</a>
+                    </section>
+                </li>
+                <li id="book_01_col_02_block_01_cell_47">
+                    <section>
+                        <h3>Link to Page</h3>
+                        <a href="#"><i class="ri-link"></i> Design System Docs</a>
+                    </section>
+                </li>
+            </ul>
+        </section>
+
+        <!-- ===== COLLECTION 7: Team Updates (nested articles) ===== -->
+        <section>
+            <h2>Team Updates</h2>
+            <ul>
+                <li id="book_01_col_02_block_01_cell_48">
+                    <article>
+                        <h3>Design System v2.0</h3>
+                        <p><strong>Sarah Chen</strong> <time datetime="2026-08-24T10:30">Today 10:30 AM</time></p>
+                        <p>Includes <strong>component library</strong> updates and <em>accessibility improvements</em>.</p>
+                        <blockquote>
+                            <p>"Major milestone for product consistency."</p>
+                            <cite>Sarah Chen</cite>
+                        </blockquote>
+                    </article>
+                </li>
+                <li id="book_01_col_02_block_01_cell_49">
+                    <article>
+                        <h3>Q3 Performance</h3>
+                        <p><strong>Mike Johnson</strong> <time datetime="2026-08-23T15:45">Yesterday 3:45 PM</time></p>
+                        <p><strong>15% growth</strong> in engagement and <em>record-low churn</em>.</p>
+                    </article>
+                </li>
+            </ul>
+        </section>
+
+        </section>
+
+        <footer>
+            <p>Component Library | 30 blocks | <time datetime="2026-08-25">Aug 25, 2026</time></p>
+        </footer>
+    </article>
+</main>
+
+<footer>
+    <p><time datetime="2026-08-25">August 25, 2026</time></p>
+    <nav>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Help</a>
+    </nav>
+</footer>
+
+</body>
+</html>

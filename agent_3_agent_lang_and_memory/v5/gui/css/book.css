@@ -1,0 +1,264 @@
+/* book.css
+ * 5-level semantic hierarchy:
+ * Editor (main) > Book (article) > Collection (section) > Block (ul/ol) > Cell (li)
+ * Section must contain ul > li, li can contain section (recursive)
+ */
+
+/* ===== ARTICLE ===== */
+body > main > article {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* ===== ARTICLE HEADER (tabs only - same style as body header) ===== */
+body > main > article > header {
+    flex-shrink: 0;
+    background: var(--color-bg-surface);
+    border-bottom: var(--border-width-default) solid var(--color-border-default);
+    padding: var(--space-4) var(--space-7);
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: var(--space-5);
+}
+
+body > main > article > header > nav {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+body > main > article > header > nav > menu {
+    display: flex;
+    gap: var(--space-1);
+    list-style: none;
+}
+
+body > main > article > header > nav > menu > li {
+    position: relative;
+}
+
+body > main > article > header > nav > menu > li > a {
+    display: block;
+    padding: var(--space-4) var(--space-7);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-lg);
+}
+
+body > main > article > header > nav > menu > li > a:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}
+
+body > main > article > header > nav > menu > li[aria-current="page"] > a {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+body > main > article > header > nav > menu > li > a > i:first-child {
+    font-size: var(--font-size-base-rem);
+}
+
+body > main > article > header > nav > menu > li > a > i:last-child {
+    font-size: var(--font-size-xs);
+    color: var(--color-text-disabled);
+    opacity: 0;
+}
+
+body > main > article > header > nav > menu > li > a:hover > i:last-child {
+    opacity: 1;
+}
+
+/* ===== EDITOR AREA (scrollable) ===== */
+body > main > article > section {
+    flex: 1;
+    overflow: var(--scroll-enabled, auto);
+}
+
+/* ===== CONTENT SECTIONS ===== */
+body > main > article > section > section {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80%;
+    padding: var(--space-15) var(--space-20);
+    border-bottom: var(--border-width-default) solid var(--color-border-default);
+}
+
+body > main > article > section > section:last-child {
+    border-bottom: none;
+}
+
+body > main > article > section > section > h1 {
+    margin-bottom: var(--space-7);
+}
+
+body > main > article > section > section > h2 {
+    margin-bottom: var(--space-10);
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+}
+
+body > main > article > section > section > h3 {
+    margin: var(--space-12) 0 var(--space-7) 0;
+}
+
+body > main > article > section > section > p {
+    margin-bottom: var(--space-10);
+}
+
+/* ===== BLOCK: section > ul ===== */
+body > main > article > section > section > ul {
+    list-style: none;
+    margin: var(--space-7) 0 var(--space-12) 0;
+    padding: var(--space-5);
+}
+
+body > main > article > section > section > ul > li {
+    padding: var(--space-5) var(--space-7);
+    display: block;
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+}
+
+body > main > article > section > section > ul > li:hover {
+    background: var(--color-bg-hover-light);
+}
+
+/* Only task list items get checkboxes */
+body > main > article > section > section > ul > li[aria-checked]::before {
+    content: "\2610";
+    color: var(--color-text-faint);
+    flex-shrink: 0;
+    margin-right: var(--space-3);
+}
+
+body > main > article > section > section > ul > li[aria-checked="true"]::before {
+    content: "\2611";
+    color: var(--color-brand-primary);
+}
+
+body > main > article > section > section > ul > li[aria-checked="true"] {
+    text-decoration: line-through;
+    color: var(--color-text-disabled);
+}
+
+/* ===== TABLE ===== */
+body > main > article > section > section > table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size-sm);
+}
+
+body > main > article > section > section > table > thead {
+    background: var(--color-bg-table-header);
+    border-bottom: var(--border-width-heavy) solid var(--color-border-default);
+}
+
+body > main > article > section > section > table > thead > tr > th {
+    text-align: left;
+    padding: var(--space-5) var(--space-7);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-body);
+}
+
+body > main > article > section > section > table > tbody > tr > td {
+    padding: var(--space-5) var(--space-7);
+    border-bottom: var(--border-width-default) solid var(--color-bg-hover);
+    color: var(--color-text-em);
+}
+
+body > main > article > section > section > table > tbody > tr:hover {
+    background: var(--color-bg-table-row-hover);
+}
+
+/* ===== FORM IN BOOK ===== */
+body > main > article > section > section > form > fieldset {
+    border: var(--border-width-default) solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-10);
+}
+
+body > main > article > section > section > form > fieldset > legend {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    padding: 0 var(--space-3);
+}
+
+/* ===== NESTED ARTICLE (team updates) ===== */
+body > main > article > section > section > article {
+    padding: var(--space-7) 0;
+    border-bottom: var(--border-width-default) solid var(--color-border-default);
+}
+
+body > main > article > section > section > article:last-child {
+    border-bottom: none;
+}
+
+body > main > article > section > section > article > h3 {
+    margin: 0 0 var(--space-3) 0;
+}
+
+body > main > article > section > section > article > p {
+    margin-bottom: var(--space-3);
+}
+
+body > main > article > section > section > article > blockquote {
+    margin-top: var(--space-5);
+}
+
+/* ===== IFRAME / EMBED ===== */
+body > main > article > section > section > figure > iframe {
+    width: 100%;
+    height: 300px;
+    border: var(--border-width-default) solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+}
+
+/* ===== ARTICLE FOOTER (status bar) ===== */
+body > main > article > footer {
+    flex-shrink: 0;
+    background: var(--color-bg-surface);
+    border-top: var(--border-width-default) solid var(--color-border-default);
+    padding: var(--space-3) var(--space-7);
+    font-size: var(--font-size-xs);
+    color: var(--color-text-disabled);
+}
+
+body > main > article > footer > p {
+    margin-bottom: 0;
+}
+
+/* ===== CELL: li > section (nested content) ===== */
+body > main > article > section > section > ul > li > section {
+    padding: var(--space-5) 0;
+}
+
+body > main > article > section > section > ul > li > section > h3 {
+    margin: 0 0 var(--space-3) 0;
+}
+
+body > main > article > section > section > ul > li > section > p {
+    margin-bottom: var(--space-3);
+}
+
+body > main > article > section > section > ul > li > article {
+    padding: var(--space-5) 0;
+    border-bottom: var(--border-width-default) solid var(--color-border-default);
+}
+
+body > main > article > section > section > ul > li > article:last-child {
+    border-bottom: none;
+}
+
+body > main > article > section > section > ul > li > article > h3 {
+    margin: 0 0 var(--space-3) 0;
+}
+
+body > main > article > section > section > ul > li > article > p {
+    margin-bottom: var(--space-3);
+}

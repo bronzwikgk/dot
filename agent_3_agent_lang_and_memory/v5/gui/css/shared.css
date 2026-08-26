@@ -1,0 +1,220 @@
+/* shared.css
+ * Generic component styles reusable everywhere
+ * Buttons, links, inputs, headings, menus, tabs, progress, details
+ * No layout rules - only appearance
+ */
+
+/* ===== ICONS ===== */
+i {
+    font-size: var(--font-size-base-rem);
+    line-height: 1;
+    vertical-align: middle;
+}
+
+/* ===== BUTTONS ===== */
+button {
+    font-family: inherit;
+    font-size: inherit;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+}
+
+button > i {
+    pointer-events: none;
+}
+
+/* ===== LINKS ===== */
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.15s ease;
+}
+
+/* ===== HEADINGS ===== */
+h1 {
+    font-size: var(--font-size-4xl);
+    font-weight: var(--font-weight-bold);
+    color: var(--color-text-primary);
+    padding: var(--space-7) 0;
+}
+
+h2 {
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-primary);
+    padding: var(--space-5) 0;
+}
+
+h3 {
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    padding: var(--space-4) 0;
+}
+
+h4, h5, h6 {
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-secondary);
+    padding: var(--space-3) 0;
+}
+
+/* ===== PARAGRAPHS ===== */
+p {
+    color: var(--color-text-body);
+    font-size: var(--font-size-base);
+    margin-bottom: var(--space-10);
+    line-height: 1.6;
+}
+
+/* ===== LISTS ===== */
+ul, ol {
+    list-style: none;
+    margin-bottom: var(--space-10);
+}
+
+ul > li, ol > li {
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    margin-bottom: var(--space-3);
+}
+
+/* ===== INLINE ===== */
+strong, b {
+    color: var(--color-text-primary);
+    font-weight: var(--font-weight-semibold);
+}
+
+em, i {
+    color: var(--color-text-em);
+    font-style: italic;
+}
+
+code {
+    background: var(--color-bg-code);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-md);
+    font-size: var(--font-size-md);
+    color: var(--color-text-code);
+}
+
+/* ===== BLOCKQUOTE ===== */
+blockquote {
+    border-left: var(--border-width-accent) solid var(--color-brand-primary);
+    padding: var(--space-5) var(--space-10);
+    background: var(--color-bg-blockquote);
+    border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+}
+
+blockquote > p {
+    color: var(--color-text-secondary);
+    font-style: italic;
+    margin-bottom: 0;
+}
+
+blockquote > cite {
+    display: block;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-faint);
+    margin-top: var(--space-2);
+}
+
+/* ===== TIME ===== */
+time {
+    color: var(--color-text-faint);
+    font-size: var(--font-size-xs);
+}
+
+/* ===== HORIZONTAL RULE ===== */
+hr {
+    border: none;
+    border-top: var(--border-width-default) solid var(--color-border-default);
+    margin: var(--space-2) 0;
+}
+
+/* ===== FORM ELEMENTS ===== */
+label {
+    display: block;
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-2);
+}
+
+input, textarea, select {
+    font-family: inherit;
+    font-size: var(--font-size-sm);
+    padding: var(--space-4) var(--space-7);
+    border: var(--border-width-default) solid var(--color-border-input);
+    border-radius: var(--radius-lg);
+    background: var(--color-bg-surface);
+    color: var(--color-text-body);
+    width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--color-brand-primary);
+    box-shadow: 0 0 0 var(--focus-ring-width) var(--color-brand-focus-ring);
+}
+
+textarea {
+    resize: vertical;
+    min-height: var(--textarea-min-height);
+}
+
+/* ===== PROGRESS ===== */
+progress {
+    width: 100%;
+    height: var(--progress-height);
+    border-radius: var(--radius-sm);
+    border: none;
+    background: var(--color-border-default);
+}
+
+progress::-webkit-progress-bar {
+    background: var(--color-border-default);
+    border-radius: var(--radius-sm);
+}
+
+progress::-webkit-progress-value {
+    background: var(--color-brand-primary);
+    border-radius: var(--radius-sm);
+}
+
+progress::-moz-progress-bar {
+    background: var(--color-brand-primary);
+    border-radius: var(--radius-sm);
+}
+
+/* ===== DETAILS / SUMMARY ===== */
+details > summary {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    cursor: pointer;
+    list-style: none;
+}
+
+details > summary::-webkit-details-marker {
+    display: none;
+}
+
+details > summary::before {
+    content: "\25B6";
+    font-size: var(--font-size-xs);
+    color: var(--color-text-muted);
+    transition: transform 0.15s ease;
+}
+
+details[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+details > summary > i {
+    color: var(--color-text-muted);
+}
+
+/* ===== CHECKBOX / RADIO ===== */
+input[type="checkbox"], input[type="radio"] {
+    width: auto;
+    accent-color: var(--color-brand-primary);
+}

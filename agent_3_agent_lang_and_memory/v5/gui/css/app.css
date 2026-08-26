@@ -1,0 +1,356 @@
+/* app.css
+ * App workspace: body > main layout, header, aside, footer
+ * Body is the app workspace, main is the editor viewport
+ */
+
+/* ===== BASE LAYOUT ===== */
+html {
+    height: 100%;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--color-text-primary);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background: var(--color-bg-body);
+    overflow: var(--scroll-enabled, hidden);
+}
+
+/* ===== HEADER ===== */
+body > header {
+    background: var(--color-bg-surface);
+    border-bottom: var(--border-width-default) solid var(--color-border-default);
+    padding: var(--space-4) var(--space-7);
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    width: 100%;
+    gap: var(--space-5);
+}
+
+body > header > h1 {
+    font-size: var(--font-size-lg);
+    padding: 0 var(--space-7) 0 var(--space-10);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* ===== HEADER MENU BAR ===== */
+body > header > nav:first-of-type {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+body > header > nav:first-of-type > menu {
+    display: flex;
+    gap: var(--space-1);
+    list-style: none;
+}
+
+body > header > nav:first-of-type > menu > li {
+    position: relative;
+}
+
+body > header > nav:first-of-type > menu > li > a {
+    display: block;
+    padding: var(--space-4) var(--space-7);
+    color: var(--color-text-muted);
+    font-size: var(--font-size-sm);
+    border-radius: var(--radius-lg);
+}
+
+body > header > nav:first-of-type > menu > li > a:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}
+
+/* ===== DROPDOWN ===== */
+body > header > nav:first-of-type > menu > li > ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: var(--color-bg-surface);
+    border: var(--border-width-default) solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-2) 0;
+    min-width: max-content;
+    z-index: 100;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+body > header > nav:first-of-type > menu > li::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: var(--space-5);
+}
+
+body > header > nav:first-of-type > menu > li:hover > ul {
+    display: block;
+}
+
+body > header > nav:first-of-type > menu > li > ul > li {
+    white-space: nowrap;
+}
+
+body > header > nav:first-of-type > menu > li > ul > li > a {
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    padding: var(--space-4) var(--space-7);
+    color: var(--color-text-body);
+    font-size: var(--font-size-sm);
+    white-space: nowrap;
+}
+
+body > header > nav:first-of-type > menu > li > ul > li > a:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}
+
+body > header > nav:first-of-type > menu > li > ul > li > a > i {
+    font-size: var(--font-size-base-rem);
+    color: var(--color-text-muted);
+}
+
+body > header > nav:first-of-type > menu > li > ul > hr {
+    border: none;
+    border-top: var(--border-width-default) solid var(--color-border-default);
+    margin: var(--space-2) 0;
+}
+
+/* ===== SEARCH ===== */
+body > header > form {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: var(--color-bg-hover);
+    border: var(--border-width-default) solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--space-3) var(--space-7);
+    flex-shrink: 0;
+}
+
+body > header > form > i {
+    color: var(--color-text-muted);
+    font-size: var(--font-size-base-rem);
+}
+
+body > header > form > input {
+    background: transparent;
+    border: none;
+    outline: none;
+    font-size: var(--font-size-sm);
+    color: var(--color-text-body);
+    width: 12rem;
+    padding: 0;
+}
+
+body > header > form > input::placeholder {
+    color: var(--color-text-disabled);
+}
+
+/* ===== WINDOW CONTROLS ===== */
+body > header > section {
+    margin-left: auto;
+    display: flex;
+    gap: var(--space-5);
+    align-items: center;
+    flex-shrink: 0;
+}
+
+body > header > section > button {
+    background: transparent;
+    color: var(--color-text-muted);
+    border: none;
+    width: 1.75rem;
+    height: 1.75rem;
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: var(--font-size-base-rem);
+}
+
+body > header > section > button:hover {
+    background: var(--color-bg-hover);
+    color: var(--color-text-primary);
+}
+
+body > header > section > button:last-child:hover {
+    background: #e53e3e;
+    color: var(--color-text-white);
+}
+
+body > header > section > hr {
+    width: var(--border-width-default);
+    height: 1.25rem;
+    background: var(--color-border-default);
+    border: none;
+    margin: 0 var(--space-2);
+}
+
+/* ===== MAIN LAYOUT ===== */
+body > main {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+/* ===== ASIDE ===== */
+body > main > aside {
+    width: var(--sidebar-width);
+    min-width: var(--sidebar-width);
+    max-width: var(--sidebar-width);
+    background: var(--aside-bg);
+    border-right: var(--border-width-default) solid var(--color-border);
+    padding: var(--space-7);
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+body > main > aside > section {
+    margin-bottom: var(--space-10);
+}
+
+body > main > aside > section > h2 {
+    font-size: var(--font-size-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing-wide);
+    color: var(--color-text-disabled);
+    padding: 0 var(--space-5);
+    margin-bottom: var(--space-4);
+}
+
+body > main > aside > section > nav {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+}
+
+body > main > aside > section > nav > a {
+    padding: var(--space-4) var(--space-7);
+    border-radius: var(--radius-lg);
+    color: var(--color-text-body);
+    font-size: var(--font-size-sm);
+    display: flex;
+    align-items: center;
+    gap: var(--space-5);
+    white-space: nowrap;
+}
+
+body > main > aside > section > nav > a:hover {
+    background: var(--color-bg-hover);
+}
+
+body > main > aside > section > nav > a[aria-current="page"] {
+    background: var(--color-brand-primary-subtle);
+    color: var(--color-brand-primary);
+    font-weight: var(--font-weight-medium);
+}
+
+body > main > aside > section > nav > a > i {
+    font-size: var(--font-size-base-rem);
+    color: var(--color-text-muted);
+}
+
+/* ===== ASIDE EXPLORER TREE ===== */
+body > main > aside > section > details {
+    margin-bottom: var(--space-2);
+    overflow: hidden;
+}
+
+body > main > aside > section > details > summary {
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--font-size-sm);
+    color: var(--color-text-body);
+    font-weight: var(--font-weight-medium);
+    border-radius: var(--radius-lg);
+    cursor: pointer;
+    user-select: none;
+}
+
+body > main > aside > section > details > summary:hover {
+    background: var(--color-bg-hover);
+}
+
+body > main > aside > section > details > summary > i {
+    font-size: var(--font-size-base-rem);
+    color: var(--color-text-muted);
+}
+
+body > main > aside > section > details > nav {
+    display: flex;
+    flex-direction: column;
+    padding-left: var(--space-10);
+    overflow: hidden;
+}
+
+body > main > aside > section > details > nav > a {
+    padding: var(--space-3) var(--space-5);
+    font-size: var(--font-size-xs);
+}
+
+body > main > aside > section > details > nav > a > i {
+    font-size: var(--font-size-sm);
+}
+
+/* ===== FOOTER ===== */
+body > footer {
+    background: var(--color-bg-surface);
+    border-top: var(--border-width-default) solid var(--color-border-default);
+    padding: var(--space-4) var(--space-7);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    font-size: var(--font-size-xs);
+    color: var(--color-text-disabled);
+}
+
+body > footer > nav {
+    display: flex;
+    gap: var(--space-10);
+}
+
+body > footer > nav > a {
+    color: var(--color-text-disabled);
+}
+
+body > footer > nav > a:hover {
+    color: var(--color-text-body);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: var(--breakpoint-tablet)) {
+    body > main > aside {
+        width: var(--sidebar-width-mobile);
+        padding: var(--space-5);
+    }
+}
+
+@media (max-width: var(--breakpoint-mobile)) {
+    body {
+        flex-direction: column;
+    }
+
+    body > main {
+        flex-direction: column;
+    }
+
+    body > main > aside {
+        width: 100%;
+        border-right: none;
+        border-bottom: var(--border-width-default) solid var(--color-border-default);
+        max-height: var(--sidebar-max-height-mobile);
+        overflow-y: auto;
+    }
+}
