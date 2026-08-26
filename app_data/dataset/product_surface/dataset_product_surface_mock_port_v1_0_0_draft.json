@@ -1,7 +1,0 @@
-[
-  "entity_store_port",
-  "runner_port",
-  "command_intent_port",
-  "template_port",
-  "version_port"
-]

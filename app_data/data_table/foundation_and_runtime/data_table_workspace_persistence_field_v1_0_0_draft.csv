@@ -1,8 +1,0 @@
-field_name,data_type,required,description
-key,text,true,snake_path storage key
-state,json,true,persisted workspace state
-saved_at,timestamp,true,save timestamp
-actor,text,true,actor that wrote the record
-checkpoint_id,text,false,version checkpoint id for undo and redo
-entity_id,text,false,entity restored by undo or redo
-audit,json,false,audit record for the storage action

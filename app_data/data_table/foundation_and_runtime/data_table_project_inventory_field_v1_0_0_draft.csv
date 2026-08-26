@@ -1,9 +1,0 @@
-field_name,data_type,required,description
-id,text,true,snake_path record id
-path,text,true,relative file path
-resolved_path,text,false,absolute resolved path
-relative_path,text,false,base-relative normalized path
-hash,text,false,docs route hash
-href,text,false,docs route link
-exists,boolean,false,true when local path exists
-status,text,false,active or stale
