@@ -1,0 +1,22 @@
+root:
+    - config\
+        - config_app.js // A config made from the md file. When ever the md file is updated, app_shell automatically updates config during boot.
+    - code:
+        - core\
+            - entry+ project name .js // all product have their own single entry file for all runtime [ nodejs/browser]
+                - import config and app shell
+                - initate an instance by creating a new instacne with the imported config
+            - app_shell.js \\ an outer shell, to manage runtime, resolve all dependency and defualts using
+                - detect runtime
+                - resolve()
+                - load()
+                - import ()
+                - resolve_runtime()
+                - - start()
+        - plugins
+            - actionEntity
+            - runner
+            - parser
+            - translator
+        - utility
+            - derivatives
