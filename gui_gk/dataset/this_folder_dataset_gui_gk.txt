@@ -1,2 +1,0 @@
-- this folder contains dataset files, containing all the data sets for gui of this  framework.
-- data is always a 1d list of names of related unique items, like list of names of type of semantic tags, or names of types of relationships, or list of all the semantic tags, or layout types, etc 
