@@ -1,0 +1,28 @@
+/* tokens_saas_dashboard.css - SaaS Dashboard Page Type - COMPLETE TOKEN SET */
+:root {
+    /* Colors */
+    --color-text-primary: #0f172a;
+    --color-text-secondary: #64748b;
+    --color-text-body: #334155;
+    --color-text-muted: #94a3b8;
+    --color-bg-body: #f1f5f9;
+    --color-bg-surface: #ffffff;
+    --color-bg-hover: #e2e8f0;
+    --color-brand-primary: #6366f1;
+    --color-brand-primary-hover: #4f46e5;
+    --color-border: #e2e8f0;
+
+    /* Typography */
+    --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-size-base: 0.875rem;
+    --font-size-h1: 1.5rem;
+    --font-size-h2: 1rem;
+    --font-size-h3: 0.875rem;
+    --font-size-sm: 0.75rem;
+
+    /* Layout */
+    --header-bg: #1e293b;
+    --aside-bg: #f8fafc;
+    --scroll-container: none;
+    --scroll-enabled: hidden;
+}

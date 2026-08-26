@@ -1,0 +1,219 @@
+APP TREE - COMPLETE COMPONENT MAP
+===================================
+Version: v1.0.0
+File: gui_an_app_v5.html
+
+Structure: body > main > aside + article
+
+
+BODY (app workspace)
+├── HEADER (app header)
+│   ├── h1#brand "an app"
+│   ├── nav#menu_bar
+│   │   └── menu
+│   │       ├── li > a "File"
+│   │       │   └── ul (dropdown)
+│   │       │       ├── li > a > i.ri-add-circle-line "New Book"
+│   │       │       ├── li > a > i.ri-layout-grid-line "New from Templates"
+│   │       │       ├── hr
+│   │       │       ├── li > a > i.ri-upload-2-line "Import"
+│   │       │       ├── li > a > i.ri-download-2-line "Export"
+│   │       │       ├── hr
+│   │       │       ├── li > a > i.ri-save-line "Save"
+│   │       │       └── li > a > i.ri-settings-3-line "Settings"
+│   │       ├── li > a "Edit"
+│   │       │   └── ul (dropdown)
+│   │       │       ├── li > a > i.ri-arrow-go-back-line "Undo"
+│   │       │       ├── li > a > i.ri-arrow-go-forward-line "Redo"
+│   │       │       ├── hr
+│   │       │       ├── li > a > i.ri-arrow-up-line "Move Cell Up"
+│   │       │       ├── li > a > i.ri-arrow-down-line "Move Cell Down"
+│   │       │       └── li > a > i.ri-delete-bin-line "Delete Cell"
+│   │       ├── li > a "Insert"
+│   │       │   └── ul (dropdown)
+│   │       │       ├── li > a > i.ri-markdown-line "Text Cell"
+│   │       │       ├── li > a > i.ri-terminal-box-line "Pipeline Cell"
+│   │       │       ├── li > a > i.ri-code-line "Code Cell"
+│   │       │       ├── hr
+│   │       │       ├── li > a > i.ri-layout-masonry-line "Component"
+│   │       │       └── li > a > i.ri-filter-3-line "Filter"
+│   │       ├── li > a "Run"
+│   │       │   └── ul (dropdown)
+│   │       │       ├── li > a > i.ri-play-line "Run Active"
+│   │       │       ├── li > a > i.ri-play-circle-line "Run Selected"
+│   │       │       ├── li > a > i.ri-play-circle-line "Run All"
+│   │       │       ├── hr
+│   │       │       ├── li > a > i.ri-node-tree "Execute DAG"
+│   │       │       ├── li > a > i.ri-play-circle-line "Execute Flow"
+│   │       │       ├── hr
+│   │       │       └── li > a > i.ri-eraser-line "Reset"
+│   │       ├── li > a "View"
+│   │       │   └── ul (dropdown)
+│   │       │       ├── li > a > i.ri-terminal-box-line "Jupyter Layout"
+│   │       │       ├── li > a > i.ri-layout-masonry-line "Notion Layout"
+│   │       │       ├── li > a > i.ri-code-s-slash-line "VSCode Layout"
+│   │       │       ├── li > a > i.ri-node-tree "Flow Builder"
+│   │       │       ├── hr
+│   │       │       └── li > a > i.ri-side-bar-line "Toggle Sidebar"
+│   │       └── li > a "Help"
+│   │           └── ul (dropdown)
+│   │               ├── li > a > i.ri-information-line "About"
+│   │               ├── li > a > i.ri-lightbulb-line "Getting Started"
+│   │               └── li > a > i.ri-book-open-line "API Docs"
+│   ├── form[role="search"]
+│   │   ├── i.ri-search-line
+│   │   └── input[type="search"]
+│   └── section#window_controls
+│       ├── button > i.ri-layout-grid-line "Templates"
+│       ├── button > i.ri-question-line "Tour"
+│       ├── button > i.ri-settings-3-line "Settings"
+│       ├── hr
+│       ├── button > i.ri-subtract-line "Minimize"
+│       ├── button > i.ri-checkbox-blank-line "Maximize"
+│       └── button > i.ri-close-line "Close"
+
+
+MAIN (editor viewport)
+├── ASIDE (sidebar)
+│   ├── section#quick_access
+│   │   ├── h2 "Quick Access"
+│   │   └── nav
+│   │       ├── a[aria-current="page"] > i.ri-star-line "Favorites"
+│   │       ├── a > i.ri-history-line "Recent"
+│   │       └── a > i.ri-archive-line "Archived"
+│   ├── section#explorer
+│   │   ├── h2 "Explorer"
+│   │   └── details[open]
+│   │       ├── summary > i.ri-folder-3-line "Books"
+│   │       └── nav
+│   │           ├── a > i.ri-file-text-line "Component Library"
+│   │           ├── a > i.ri-file-text-line "Getting Started"
+│   │           └── a > i.ri-file-code-line "API Reference"
+│   ├── section#templates
+│   │   ├── h2 "Templates"
+│   │   └── nav
+│   │       ├── a > i.ri-layout-grid-line "Notebook"
+│   │       ├── a > i.ri-file-code-line "Code"
+│   │       ├── a > i.ri-flow-chart-line "Flow"
+│   │       └── a > i.ri-file-text-line "Meeting Notes"
+│   ├── section#tags
+│   │   ├── h2 "Tags"
+│   │   └── nav
+│   │       ├── a > i.ri-price-tag-3-line "Reference"
+│   │       └── a > i.ri-price-tag-3-line "Draft"
+│   └── section#trash
+│       ├── h2 "Trash"
+│       └── nav
+│           └── a > i.ri-delete-bin-line "Deleted Items"
+│
+└── ARTICLE#book_01 (book)
+    ├── header#book_01_header (tab bar)
+    │   └── nav > menu
+    │       ├── li[aria-current="page"] > a > i.ri-file-text-line "Component Library" + i.ri-close-line
+    │       └── li > a > i.ri-projector-2-line "Getting Started" + i.ri-close-line
+    │
+    ├── section#book_01_editor (editor area - scrollable)
+    │   ├── section#book_01_col_00 (page title)
+    │   │   ├── h1 "Component Library"
+    │   │   └── p "Complete reference..."
+    │   │
+    │   ├── section#book_01_col_01 (Text & Structure)
+    │   │   ├── h2 "Text & Structure Blocks"
+    │   │   └── ul#book_01_col_01_block_01
+    │   │       ├── li#book_01_col_01_block_01_cell_01 > section > h3 "Paragraph" + p
+    │   │       ├── li#book_01_col_01_block_01_cell_02 > section > h3 "Headings" + h1,h2,h3,h4
+    │   │       ├── li#book_01_col_01_block_01_cell_03 > section > h3 "Quote" + blockquote
+    │   │       ├── li#book_01_col_01_block_01_cell_04 > section > h3 "Callout" + aside
+    │   │       ├── li#book_01_col_01_block_01_cell_05 > section > h3 "Code" + pre>code
+    │   │       ├── li#book_01_col_01_block_01_cell_06 > section > h3 "Equation"
+    │   │       ├── li#book_01_col_01_block_01_cell_07 > section > h3 "Divider" + hr
+    │   │       └── li#book_01_col_01_block_01_cell_08 > section > h3 "Table of Contents" + nav>ol
+    │   │
+    │   ├── section#book_01_col_02 (List & Interactive)
+    │   │   ├── h2 "List & Interactive Blocks"
+    │   │   └── ul#book_01_col_02_block_01
+    │   │       ├── li#book_01_col_02_block_01_cell_01 > section > h3 "Bulleted List" + ul
+    │   │       ├── li#book_01_col_02_block_01_cell_02 > section > h3 "Numbered List" + ol
+    │   │       ├── li#book_01_col_02_block_01_cell_03 > section > h3 "To-Do List" + ul[aria-checked]
+    │   │       └── li#book_01_col_02_block_01_cell_04 > section > h3 "Toggle" + details
+    │   │
+    │   ├── section#book_01_col_03 (Media)
+    │   │   ├── h2 "Media Blocks"
+    │   │   └── ul#book_01_col_03_block_01
+    │   │       ├── li#book_01_col_03_block_01_cell_01 > section > h3 "Image" + figure>img
+    │   │       ├── li#book_01_col_03_block_01_cell_02 > section > h3 "Video" + video
+    │   │       ├── li#book_01_col_03_block_01_cell_03 > section > h3 "Audio" + audio
+    │   │       ├── li#book_01_col_03_block_01_cell_04 > section > h3 "File" + a[download]
+    │   │       ├── li#book_01_col_03_block_01_cell_05 > section > h3 "Bookmark" + a[target]
+    │   │       └── li#book_01_col_03_block_01_cell_06 > section > h3 "Embed" + figure>iframe
+    │   │
+    │   ├── section#book_01_col_04 (Database)
+    │   │   ├── h2 "Database Blocks"
+    │   │   └── ul#book_01_col_04_block_01
+    │   │       ├── li#book_01_col_04_block_01_cell_01 > section > h3 "Table" + table
+    │   │       ├── li#book_01_col_04_block_01_cell_02 > section > h3 "Board" + ul
+    │   │       ├── li#book_01_col_04_block_01_cell_03 > section > h3 "Gallery" + ul>li>figure
+    │   │       ├── li#book_01_col_04_block_01_cell_04 > section > h3 "Calendar" + table
+    │   │       └── li#book_01_col_04_block_01_cell_05 > section > h3 "Timeline" + table+progress
+    │   │
+    │   ├── section#book_01_col_05 (Forms)
+    │   │   ├── h2 "Form Elements"
+    │   │   └── ul#book_01_col_05_block_01
+    │   │       ├── li#book_01_col_05_block_01_cell_01 > section > h3 "Contact Form" + form>fieldset
+    │   │       └── li#book_01_col_05_block_01_cell_02 > section > h3 "Progress Bars" + ul>li>progress
+    │   │
+    │   ├── section#book_01_col_06 (Layout)
+    │   │   ├── h2 "Layout Blocks"
+    │   │   └── ul#book_01_col_06_block_01
+    │   │       ├── li#book_01_col_06_block_01_cell_01 > section > h3 "Columns" + ul
+    │   │       ├── li#book_01_col_06_block_01_cell_02 > section > h3 "Breadcrumb" + nav
+    │   │       ├── li#book_01_col_06_block_01_cell_03 > section > h3 "Child Page" + a>i
+    │   │       └── li#book_01_col_06_block_01_cell_04 > section > h3 "Link to Page" + a>i
+    │   │
+    │   └── section#book_01_col_07 (Team Updates)
+    │       ├── h2 "Team Updates"
+    │       └── ul#book_01_col_07_block_01
+    │           ├── li#book_01_col_07_block_01_cell_01 > article > h3 "Design System v2.0" + p,blockquote
+    │           └── li#book_01_col_07_block_01_cell_02 > article > h3 "Q3 Performance" + p
+    │
+    └── footer#book_01_footer (status bar)
+        └── p "Component Library | 30 blocks | Aug 25, 2026"
+
+
+FOOTER (app footer)
+├── p > time "August 25, 2026"
+└── nav
+    ├── a "Privacy"
+    ├── a "Terms"
+    └── a "Help"
+
+
+CSS FILES
+---------
+reset.css     - Browser reset
+tokens.css    - Design tokens (rem)
+shared.css    - Component styles
+app.css       - Layout (header, aside, footer)
+book.css      - Document content (article, sections, cells)
+
+
+SELECTOR REFERENCE
+------------------
+body                              - app workspace
+body > header                     - app header
+body > header > h1                - brand name
+body > header > nav               - menu bar
+body > header > form              - search
+body > header > section           - window controls
+body > main                       - editor viewport
+body > main > aside               - sidebar
+body > main > aside > section     - sidebar panels
+body > main > article             - book
+body > main > article > header    - tab bar
+body > main > article > section   - editor area
+body > main > article > footer    - status bar
+article > section > section       - collection
+article > section > section > ul  - block
+article > section > section > ul > li - cell
+ul > li > section                 - nested content
+ul > li > article                 - nested article

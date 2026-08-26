@@ -1,0 +1,12 @@
+Root: 
+Sectioning:
+Text: 
+Embedded:
+Interactive: 
+Tabular:
+Form: 
+Metadata: 
+
+
+
+we will do definition later, right now I need first dataset as 1d array, and then using that items in array of dataset we will creating defitions for each item later, I need currently need only dataset, my idea is to make a system, where we have dataset to validate the autheticity of an key words and its catogary, use it to define relationship between them, that can be used for wehn composiing resolving, or validating and define their attritue and patamers in a data table. , so that we create a definition doc referrint these, so that we can have a framework for browser based apps, that compose a ui from dataset, data map and data table.

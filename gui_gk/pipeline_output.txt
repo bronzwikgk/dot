@@ -1,0 +1,88 @@
+=== PIPELINE OUTPUT ===
+
+STEP 1: DECOMPOSE
+------------------
+Dataset (22 components):
+header, h1, nav, menu, li, a, ul, form, input, section, aside, details, summary, article, footer, p, h2, h3, pre, code, figure, img, figcaption, table, thead, tbody, tr, td
+
+Datamap (30 relationships):
+header_contains_h1_1_1
+header_contains_nav_1_1
+header_contains_form_0_1
+header_contains_section_1_1
+nav_contains_menu_1_1
+menu_contains_li_1_n
+li_contains_a_0_n
+li_contains_ul_0_n
+main_contains_aside_1_1
+main_contains_article_1_1
+aside_contains_section_1_n
+section_contains_h2_1_n
+section_contains_nav_0_n
+section_contains_details_0_n
+details_contains_summary_1_1
+article_contains_header_1_1
+article_contains_section_1_n
+article_contains_footer_1_1
+section_contains_ul_1_n
+ul_contains_li_1_n
+li_contains_section_0_n
+li_contains_h3_0_n
+li_contains_p_0_n
+li_contains_pre_0_n
+li_contains_ul_0_n
+section_contains_h1_1_1
+section_contains_p_1_n
+figure_contains_img_0_1
+figure_contains_figcaption_0_1
+table_contains_thead_1_1
+table_contains_tbody_1_1
+
+DataTable (22 entries):
+header: {tag: "header", id: "header_01"}
+h1: {tag: "h1", text: "an app"}
+nav: {tag: "nav", id: "menu_bar"}
+menu: {tag: "menu"}
+li: {tag: "li"}
+a: {tag: "a"}
+ul: {tag: "ul"}
+form: {tag: "form", role: "search"}
+input: {tag: "input", type: "search", placeholder: "Search..."}
+section: {tag: "section"}
+aside: {tag: "aside"}
+details: {tag: "details", open: ""}
+summary: {tag: "summary"}
+article: {tag: "article"}
+footer: {tag: "footer"}
+p: {tag: "p"}
+h2: {tag: "h2"}
+h3: {tag: "h3"}
+pre: {tag: "pre"}
+code: {tag: "code"}
+figure: {tag: "figure"}
+img: {tag: "img", src: "https://picsum.photos/400/200", alt: "Sample"}
+figcaption: {tag: "figcaption", text: "Sample"}
+table: {tag: "table"}
+thead: {tag: "thead"}
+tbody: {tag: "tbody"}
+tr: {tag: "tr"}
+td: {tag: "td"}
+
+
+STEP 2: RESOLVE
+------------------
+Valid: true
+Issues: 0
+Added relationships: 5
+Generated IDs: 0 (all had IDs)
+
+
+STEP 3: COMPOSE
+------------------
+Root: main
+Children: 3 (aside, article, footer)
+Schema depth: 5 levels
+
+
+STEP 4: RENDER
+------------------

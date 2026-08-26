@@ -1,0 +1,28 @@
+/* tokens_blog.css - Blog Page Type - COMPLETE TOKEN SET */
+:root {
+    /* Colors */
+    --color-text-primary: #2d2d2d;
+    --color-text-secondary: #6c757d;
+    --color-text-body: #444444;
+    --color-text-muted: #999999;
+    --color-bg-body: #fafafa;
+    --color-bg-surface: #ffffff;
+    --color-bg-hover: #f0f0f0;
+    --color-brand-primary: #e74c3c;
+    --color-brand-primary-hover: #c0392b;
+    --color-border: #e9ecef;
+
+    /* Typography */
+    --font-family-base: 'Helvetica Neue', 'Arial', sans-serif;
+    --font-size-base: 1rem;
+    --font-size-h1: 2.25rem;
+    --font-size-h2: 1.375rem;
+    --font-size-h3: 1.125rem;
+    --font-size-sm: 0.875rem;
+
+    /* Layout */
+    --header-bg: #ffffff;
+    --aside-bg: #f8f9fa;
+    --scroll-container: article;
+    --scroll-enabled: auto;
+}

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V5 Clone - Composed from Datasets</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="book.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css">
+</head>
+<body>
+
+<!-- Content composed from datasets at runtime -->
+<main id="app"></main>
+
+<script type="module">
+// Load already-decomposed data from dataset files
+import { datatable_component_attributes } from './dataset/datatable_gui_components_v1.js';
+import { render } from './js/render.js';
+
+// Data already decomposed from v5 - stored in dataset files
+const decomposed_data = {
+    dataset: Object.keys(datatable_component_attributes),
+    datamap: [
+        "header_contains_h1_1_1",
+        "header_contains_nav_1_1",
+        "header_contains_form_0_1",
+        "header_contains_section_1_1",
+        "nav_contains_menu_1_1",
+        "menu_contains_li_1_n",
+        "li_contains_a_0_n",
+        "li_contains_ul_0_n",
+        "main_contains_aside_1_1",
+        "main_contains_article_1_1",
+        "aside_contains_section_1_n",
+        "article_contains_header_1_1",
+        "article_contains_section_1_n",
+        "article_contains_footer_1_1",
+        "section_contains_ul_1_n",
+        "ul_contains_li_1_n",
+        "li_contains_section_0_n"
+    ],
+    datatable: datatable_component_attributes
+};
+
+// Build schema directly from datamap
+function build_schema(type) {
+    const attrs = datatable_component_attributes[type] || {};
+    const children = [];
+    
+    for (const rel of decomposed_data.datamap) {
+        const parts = rel.split('_contains_');
+        if (parts.length === 2) {
+            const parent = parts[0];
+            const child_with_card = parts[1];
+            const child = child_with_card.replace(/_\d+_\d+$/, '');
+            
+            if (parent === type && datatable_component_attributes[child]) {
+                children.push(build_schema(child));
+            }
+        }
+    }
+    
+    return {
+        type,
+        id: attrs.id || null,
+        attributes: attrs,
+        content: attrs.text || attrs.label || '',
+        children
+    };
+}
+
+// Build schema from root
+const schema = build_schema('main');
+
+// Render HTML from schema
+const html = render(schema);
+
+// Inject into DOM
+document.getElementById('app').innerHTML = html;
+
+console.log('V5 clone composed from datasets');
+</script>
+
+</body>
+</html>

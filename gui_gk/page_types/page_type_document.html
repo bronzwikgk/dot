@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document - Page Type</title>
+    <link rel="stylesheet" href="../reset.css">
+    <link rel="stylesheet" href="../tokens.css">
+    <link rel="stylesheet" href="../shared.css">
+    <link rel="stylesheet" href="tokens_document.css">
+    <link rel="stylesheet" href="../app.css">
+    <link rel="stylesheet" href="../book.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css">
+</head>
+<body>
+
+<header>
+    <h1>Technical Documentation</h1>
+    <nav>
+        <menu>
+            <li><a href="#">File</a></li>
+            <li><a href="#">Edit</a></li>
+            <li><a href="#">View</a></li>
+        </menu>
+    </nav>
+</header>
+
+<main>
+    <aside>
+        <section>
+            <h2>Table of Contents</h2>
+            <nav>
+                <a href="#"><i class="ri-book-open-line"></i> 1. Introduction</a>
+                <a href="#"><i class="ri-book-open-line"></i> 2. Architecture</a>
+                <a href="#"><i class="ri-book-open-line"></i> 3. API Reference</a>
+            </nav>
+        </section>
+    </aside>
+
+    <article>
+        <header>
+            <nav>
+                <menu>
+                    <li aria-current="page"><a href="#"><i class="ri-book-open-line"></i> Documentation</a></li>
+                    <li><a href="#"><i class="ri-code-line"></i> API</a></li>
+                </menu>
+            </nav>
+        </header>
+
+        <section>
+            <section>
+                <h1>System Architecture</h1>
+                <p>Technical documentation for the framework.</p>
+            </section>
+
+            <section>
+                <h2>1. Introduction</h2>
+                <p>An App is a semantic UI framework for building component-based interfaces.</p>
+            </section>
+
+            <section>
+                <h2>2. Architecture</h2>
+                <p>Data flows from Editor through Collections to Cells.</p>
+                <pre><code>editor.createBook("Doc");</code></pre>
+            </section>
+
+            <section>
+                <h2>3. API Reference</h2>
+                <table>
+                    <tr><th>Method</th><th>Description</th></tr>
+                    <tr><td><code>createBook()</code></td><td>Creates new book</td></tr>
+                    <tr><td><code>addCollection()</code></td><td>Adds collection</td></tr>
+                </table>
+            </section>
+        </section>
+
+        <footer>
+            <p>Document v1.0 | Last updated: 2026-08-25</p>
+        </footer>
+    </article>
+</main>
+
+<footer>
+    <p>An App Documentation</p>
+    <nav>
+        <a href="#">Search</a>
+        <a href="#">Glossary</a>
+    </nav>
+</footer>
+
+</body>
+</html>

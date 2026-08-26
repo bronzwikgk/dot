@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>V5 Clone - Built from Pipeline</title>
+    <link rel="stylesheet" href="reset.css">
+    <link rel="stylesheet" href="tokens.css">
+    <link rel="stylesheet" href="shared.css">
+    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="book.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css">
+    <style>
+        body { font-family: monospace; padding: 1rem; }
+        .source { background: #f5f5f5; padding: 1rem; margin-bottom: 1rem; border-radius: 4px; }
+        .output { border: 2px solid #2383e2; padding: 1rem; margin-top: 1rem; }
+        h1 { font-size: 1.25rem; }
+        pre { background: white; padding: 0.5rem; border-radius: 4px; font-size: 0.75rem; max-height: 200px; overflow: auto; }
+        button { margin: 0.5rem; padding: 0.5rem 1rem; cursor: pointer; background: #2383e2; color: white; border: none; border-radius: 4px; }
+        button:hover { background: #1a6fc7; }
+    </style>
+</head>
+<body>
+
+<h1>V5 Clone - Built from Dataset Pipeline</h1>
+
+<section class="source">
+    <h2>Source V5 HTML (Input)</h2>
+    <pre id="source_html"></pre>
+</section>
+
+<button onclick="buildClone()">Build Clone from Pipeline</button>
+
+<section class="output">
+    <h2>Rendered Clone (Output)</h2>
+    <article id="clone_output"></article>
+</section>
+
+<!-- Hidden V5 source -->
+<template id="v5_template">
+<header>
+    <h1>an app</h1>
+    <nav>
+        <menu>
+            <li><a href="#">File</a>
+                <ul>
+                    <li><a href="#"><i class="ri-add-circle-line"></i> New Book</a></li>
+                    <li><a href="#"><i class="ri-layout-grid-line"></i> Templates</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-upload-2-line"></i> Import</a></li>
+                    <li><a href="#"><i class="ri-download-2-line"></i> Export</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-save-line"></i> Save</a></li>
+                    <li><a href="#"><i class="ri-settings-3-line"></i> Settings</a></li>
+                </ul>
+            </li>
+            <li><a href="#">Edit</a>
+                <ul>
+                    <li><a href="#"><i class="ri-arrow-go-back-line"></i> Undo</a></li>
+                    <li><a href="#"><i class="ri-arrow-go-forward-line"></i> Redo</a></li>
+                    <hr>
+                    <li><a href="#"><i class="ri-delete-bin-line"></i> Delete</a></li>
+                </ul>
+            </li>
+            <li><a href="#">View</a>
+                <ul>
+                    <li><a href="#"><i class="ri-layout-masonry-line"></i> Notion</a></li>
+                    <li><a href="#"><i class="ri-code-s-slash-line"></i> Code</a></li>
+                    <li><a href="#"><i class="ri-node-tree"></i> Flow</a></li>
+                </ul>
+            </li>
+        </menu>
+    </nav>
+    <form role="search">
+        <i class="ri-search-line"></i>
+        <input type="search" placeholder="Search...">
+    </form>
+    <section>
+        <button type="button" title="Minimize"><i class="ri-subtract-line"></i></button>
+        <button type="button" title="Maximize"><i class="ri-checkbox-blank-line"></i></button>
+        <button type="button" title="Close"><i class="ri-close-line"></i></button>
+    </section>
+</header>
+<main>
+    <aside>
+        <section>
+            <h2>Quick Access</h2>
+            <nav>
+                <a href="#"><i class="ri-star-line"></i> Favorites</a>
+                <a href="#"><i class="ri-history-line"></i> Recent</a>
+                <a href="#"><i class="ri-archive-line"></i> Archived</a>
+            </nav>
+        </section>
+        <section>
+            <h2>Explorer</h2>
+            <details open>
+                <summary><i class="ri-folder-3-line"></i> Books</summary>
+                <nav>
+                    <a href="#"><i class="ri-file-text-line"></i> Library</a>
+                    <a href="#"><i class="ri-file-text-line"></i> Docs</a>
+                </nav>
+            </details>
+        </section>
+        <section>
+            <h2>Templates</h2>
+            <nav>
+                <a href="#"><i class="ri-layout-grid-line"></i> Notebook</a>
+                <a href="#"><i class="ri-file-code-line"></i> Code</a>
+            </nav>
+        </section>
+    </aside>
+    <article>
+        <header>
+            <nav>
+                <menu>
+                    <li><a href="#"><i class="ri-file-text-line"></i> Library</a></li>
+                    <li><a href="#"><i class="ri-projector-2-line"></i> Docs</a></li>
+                </menu>
+            </nav>
+        </header>
+        <section>
+            <section>
+                <h1>Component Library</h1>
+                <p>Reference of semantic blocks.</p>
+            </section>
+            <section>
+                <h2>Text Blocks</h2>
+                <ul>
+                    <li><section><h3>Paragraph</h3><p>Default text block.</p></section></li>
+                    <li><section><h3>Headings</h3><h1>H1</h1><h2>H2</h2></section></li>
+                    <li><section><h3>Code</h3><pre><code>const app = new AnApp();</code></pre></section></li>
+                </ul>
+            </section>
+            <section>
+                <h2>List Blocks</h2>
+                <ul>
+                    <li><section><h3>Bulleted</h3><ul><li>Item one</li><li>Item two</li></ul></section></li>
+                    <li><section><h3>To-Do</h3><ul><li>Done</li><li>Pending</li></ul></section></li>
+                </ul>
+            </section>
+            <section>
+                <h2>Media Blocks</h2>
+                <ul>
+                    <li><section><h3>Image</h3><figure><img src="https://picsum.photos/400/200" alt="Sample"><figcaption>Sample</figcaption></figure></section></li>
+                    <li><section><h3>Table</h3><table><thead><tr><th>Name</th><th>Status</th></tr></thead><tbody><tr><td>Design</td><td>Done</td></tr></tbody></table></section></li>
+                </ul>
+            </section>
+        </section>
+        <footer><p>Library | Aug 25</p></footer>
+    </article>
+</main>
+<footer><p>An App v1.0</p></footer>
+</template>
+
+<script type="module">
+import { decompose } from './js/decompose.js';
+import { resolve } from './js/resolve.js';
+import { compose_from_data } from './js/compose.js';
+import { render } from './js/render.js';
+
+// Get source HTML from template
+const template = document.getElementById('v5_template');
+const source_html = template.innerHTML.trim();
+document.getElementById('source_html').textContent = source_html;
+
+// Build clone using pipeline
+window.buildClone = function() {
+    console.log('Starting pipeline...');
+    
+    // Step 1: Decompose
+    console.log('1. Decomposing...');
+    const decomposed = decompose(source_html);
+    console.log('   Dataset:', decomposed.dataset.length, 'components');
+    console.log('   Datamap:', decomposed.datamap.length, 'relationships');
+    console.log('   DataTable:', Object.keys(decomposed.datatable).length, 'entries');
+    
+    // Step 2: Resolve
+    console.log('2. Resolving...');
+    const resolved = resolve(decomposed);
+    console.log('   Valid:', resolved.valid);
+    console.log('   Issues:', resolved.issues.length);
+    
+    // Step 3: Compose
+    console.log('3. Composing...');
+    const schema = compose_from_data(resolved.resolved);
+    console.log('   Root:', schema.type);
+    console.log('   Children:', schema.children.length);
+    
+    // Step 4: Render
+    console.log('4. Rendering...');
+    const html = render(schema);
+    console.log('   HTML length:', html.length);
+    
+    // Display result
+    document.getElementById('clone_output').innerHTML = html;
+    
+    console.log('Pipeline complete!');
+};
+</script>
+
+</body>
+</html>

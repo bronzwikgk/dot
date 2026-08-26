@@ -1,0 +1,52 @@
+- contains a work in progress for building a framework to build semantic compoenent and  content based ui,
+    - page type
+        - website
+        - blog
+        - document
+        - application
+        - saas dashboard
+    - layout
+        - list
+        - card
+        - Kanban
+        - calendar
+        - workflowy tree
+        - time line
+    - compoenent type
+        - workspace
+        - editor 
+        - content collection
+        - content block
+        - content cell
+        - content
+
+
+
+The Critical Rule for This Framework
+Layer	Responsibility	Knows About
+Page Type	Defines styling and component mapping	Nothing
+Workspace	Manages UI state (which editor, which layout)	Page Type, Editors
+Editor	Manages content and undo/redo	ContentCollections
+ContentCollection	Groups blocks semantically	ContentBlocks
+ContentBlock	Holds the actual "thing" (paragraph, task, metric)	ContentCells + semantic metadata
+ContentCell	Holds styled text	Nothing
+Layout Renderer	Transforms blocks into visual UI (List, Kanban, etc.)	ContentCollections + Blocks (read-only)
+
+
+
+Agent, we are building a universal semantic UI framework.
+
+The core rule: We strictly separate "What the content IS" (semantic data) from "How it LOOKS" (layout/UI).
+
+NO DIV, NO SPAN< NO Class
+The 4 immutable layers are:
+
+Page Type (Config): Defines the theme (Website, Blog, SaaS Dashboard). This is CSS variables and component mappings—not a component.
+
+Workspace (Shell): The main UI container. Manages the sidebar, toolbar, which document is open, and which layout view is active.
+
+Semantic Core (Data): The pure data backbone. This NEVER changes regardless of design. It is: Editor ➔ ContentCollection ➔ ContentBlock ➔ ContentCell.
+
+Layout Renderer (View): A projection engine that takes the Semantic Core and renders it as a List, Kanban, Calendar, Workflowy, or Timeline—without mutating the underlying data.
+
+Your primary job is to build Layer 3 (Semantic Core) and Layer 4 (Layout Renderer). Layer 1 and 2 are just orchestrators.
