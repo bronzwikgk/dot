@@ -1,0 +1,7 @@
+Search Results - 26-08-2026 14:39:30.93 
+ 
+Search text: hello 
+Search path: E:\workspace_september_2026\shared\tests\search\test_data 
+ 
+ 
+Total files containing "hello": 2 
